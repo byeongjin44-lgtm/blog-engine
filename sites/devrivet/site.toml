@@ -26,7 +26,7 @@ path = "content/blog"
 token_env = "TARGET_GITHUB_TOKEN"
 
 [models]
-writer = "claude-sonnet-5-5"
+writer = "claude-haiku-5-5"  # trial from 2026-10-31; switch back to claude-sonnet-5-5 if quality is not good enough
 reviewer = "claude-haiku-5-5"
 
 # Mirror of TOOLS in src/lib/site-config.ts (only slug/name/path/description are needed).
