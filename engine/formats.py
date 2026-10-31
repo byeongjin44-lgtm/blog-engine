@@ -36,15 +36,38 @@ DEVRIVET_SCHEMA = {
         "description": {"type": "string", "description": "Meta description, 120-160 characters, states the answer"},
         "body": {
             "type": "array",
+            "description": "The post body as a list of blocks, in reading order.",
             "items": {
-                "type": "object",
-                "required": ["type"],
-                "properties": {
-                    "type": {"type": "string", "enum": ["p", "h2", "h3", "ul", "ol", "code"]},
-                    "text": {"type": "string", "description": "For p/h2/h3/code. Inline `code` and [label](/path) links allowed in p/h2/h3."},
-                    "items": {"type": "array", "items": {"type": "string"}, "description": "For ul/ol"},
-                    "lang": {"type": "string", "description": "Optional, for code"},
-                },
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "description": "Paragraph or heading. Inline `code` and [label](/path) links allowed.",
+                        "required": ["type", "text"],
+                        "properties": {
+                            "type": {"type": "string", "enum": ["p", "h2", "h3"]},
+                            "text": {"type": "string"},
+                        },
+                    },
+                    {
+                        "type": "object",
+                        "description": "Bulleted (ul) or numbered (ol) list. Inline `code` and links allowed in items.",
+                        "required": ["type", "items"],
+                        "properties": {
+                            "type": {"type": "string", "enum": ["ul", "ol"]},
+                            "items": {"type": "array", "items": {"type": "string"}},
+                        },
+                    },
+                    {
+                        "type": "object",
+                        "description": "Code block. `text` holds the exact code, with \\n line breaks. Never empty.",
+                        "required": ["type", "lang", "text"],
+                        "properties": {
+                            "type": {"type": "string", "enum": ["code"]},
+                            "lang": {"type": "string", "description": "e.g. bash, javascript, python, json, text"},
+                            "text": {"type": "string"},
+                        },
+                    },
+                ]
             },
         },
     },
