@@ -1,7 +1,7 @@
 {
   "id": "866ce0f0",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-10-31T08:47:40Z",
   "topic": {
     "title": "Cron expression for every day at midnight (and other daily schedules)",
@@ -226,7 +226,8 @@
         "text": "Nothing. In implementations that support them, both are aliases for `0 0 * * *`."
       }
     ],
-    "relatedTool": "cron-generator"
+    "relatedTool": "cron-generator",
+    "published": "2026-10-31"
   },
   "review": {
     "title_ko": "매일 자정에 실행되는 크론: 0 0 * * * 및 기타 매일 일정",
@@ -249,5 +250,7 @@
     "verdict": "ok",
     "word_count": 1078
   },
-  "telegram_message_id": 8
+  "telegram_message_id": 8,
+  "decided": "2026-10-31T12:36:30Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/cron-every-day-at-midnight.json"
 }
