@@ -1,7 +1,12 @@
-"""Claude API client. Structured output is obtained by forcing a single tool call."""
+"""Claude API client. Structured output uses `output_config.format` (JSON schema outputs).
+
+Docs: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
+"""
 
 from __future__ import annotations
 
+import copy
+import json
 import os
 from typing import Any, Callable
 
@@ -22,8 +27,26 @@ def _default_transport(payload: dict) -> dict:
         API_URL,
         payload,
         headers={"x-api-key": key, "anthropic-version": "2023-06-01"},
-        timeout=300,
+        timeout=600,
     )
+
+
+def strict_schema(schema: dict) -> dict:
+    """JSON outputs require additionalProperties: false on every object."""
+    schema = copy.deepcopy(schema)
+
+    def walk(node: Any) -> None:
+        if isinstance(node, dict):
+            if node.get("type") == "object":
+                node["additionalProperties"] = False
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(schema)
+    return schema
 
 
 def structured_call(
@@ -31,25 +54,26 @@ def structured_call(
     model: str,
     system: str,
     prompt: str,
-    tool_name: str,
-    tool_description: str,
     schema: dict,
     max_tokens: int = 8000,
     transport: Transport | None = None,
 ) -> dict[str, Any]:
-    """Ask Claude to answer by calling `tool_name`; returns the tool input (already JSON)."""
+    """Ask Claude for a JSON object matching `schema`; returns it parsed."""
     payload = {
         "model": model,
         "max_tokens": max_tokens,
         "system": system,
         "messages": [{"role": "user", "content": prompt}],
-        "tools": [{"name": tool_name, "description": tool_description, "input_schema": schema}],
-        "tool_choice": {"type": "tool", "name": tool_name},
+        "output_config": {"format": {"type": "json_schema", "schema": strict_schema(schema)}},
     }
     response = (transport or _default_transport)(payload)
-    if response.get("stop_reason") == "max_tokens":
+    stop = response.get("stop_reason")
+    if stop == "max_tokens":
         raise RuntimeError("Claude response was cut off (max_tokens); increase max_tokens")
-    for block in response.get("content", []):
-        if block.get("type") == "tool_use" and block.get("name") == tool_name:
-            return block["input"]
-    raise RuntimeError(f"Claude did not call {tool_name}: {response}")
+    if stop == "refusal":
+        raise RuntimeError("Claude declined to write this content")
+    text = "".join(b.get("text", "") for b in response.get("content", []) if b.get("type") == "text")
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"Claude returned invalid JSON ({e}): {text[:300]}") from None

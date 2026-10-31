@@ -40,10 +40,23 @@ class FakeLLM:
         self.posts, self.reviews, self.calls = list(posts), list(reviews), []
 
     def __call__(self, payload):
-        name = payload["tool_choice"]["name"]
+        schema = payload["output_config"]["format"]["schema"]
+        name = "submit_review" if "summary_ko" in schema["properties"] else "submit_post"
         self.calls.append((name, payload))
+        self.check_strict(schema)
         data = self.posts.pop(0) if name == "submit_post" else self.reviews.pop(0)
-        return {"stop_reason": "tool_use", "content": [{"type": "tool_use", "name": name, "input": data}]}
+        return {"stop_reason": "end_turn", "content": [{"type": "text", "text": json.dumps(data)}]}
+
+    @classmethod
+    def check_strict(cls, node):
+        if isinstance(node, dict):
+            if node.get("type") == "object":
+                assert node.get("additionalProperties") is False, node
+            for value in node.values():
+                cls.check_strict(value)
+        elif isinstance(node, list):
+            for item in node:
+                cls.check_strict(item)
 
 
 OK_REVIEW = {"title_ko": "매주 월요일 cron 표현식", "summary_ko": ["요약 1", "요약 2"], "issues": [], "verdict": "ok"}
