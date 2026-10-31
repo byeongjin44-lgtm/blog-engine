@@ -67,33 +67,53 @@ def run_draft(site_ids: list[str], *, state_dir: Path = state.STATE_DIR, telegra
     tg = telegram or Telegram()
     failures = 0
     for site_id in site_ids:
-        site = load_site(site_id)
-        publisher = get_publisher(site.publisher, transport=github_transport)
-        for _ in range(max(0, site.posts_per_day - state.drafted_today(site.id, state_dir))):
-            topic = pick_topic(site, state.used_topics(site.id, state_dir))
-            if topic is None:
-                tg.send(f"📭 <b>[{esc(site.name)}]</b> 주제 목록이 비었습니다. sites/{site.id}/topics.toml에 주제를 추가해 주세요.")
-                break
-            existing = existing_posts(site, publisher, state_dir)
-            try:
-                post, review = draft(site, topic, existing, transport=llm_transport)
-            except Exception as e:  # noqa: BLE001 — report any failure, keep other sites running
-                failures += 1
-                tg.send(f"🚫 <b>[{esc(site.name)}]</b> 초안 생성 실패\n주제: {esc(topic.title)}\n사유: {esc(str(e))[:800]}")
-                continue
-            d = {
-                "id": state.new_draft_id(site.id, post["slug"]),
-                "site": site.id,
-                "status": "pending",
-                "created": state.now_iso(),
-                "topic": {"title": topic.title, "keyword": topic.keyword, "related_tool": topic.related_tool},
-                "post": post,
-                "review": review,
-            }
-            state.save_draft(d, state_dir)
-            d["telegram_message_id"] = tg.send(format_review_message(site, d), approval_buttons(d["id"]))
-            state.save_draft(d, state_dir)
-            print(f"[{site.id}] drafted {post['slug']} ({d['id']})")
+        try:
+            failures += _draft_site(site_id, tg, state_dir, llm_transport, github_transport)
+        except Exception as e:  # noqa: BLE001 — setup errors (bad token, config) must still be reported
+            failures += 1
+            report_error(tg, f"[{site_id}] 초안 작업 오류", e)
+    return failures
+
+
+def report_error(tg: Telegram, title: str, error: Exception) -> None:
+    """Show the error as a GitHub Actions annotation (visible on the run page) and in Telegram."""
+    message = f"{type(error).__name__}: {error}"
+    print(f"::error title={title}::{message[:1500]}".replace("\n", " "))
+    try:
+        tg.send(f"🚫 <b>{esc(title)}</b>\n{esc(message)[:1500]}")
+    except Exception as tg_error:  # noqa: BLE001
+        print(f"::error title=Telegram 전송 실패::{type(tg_error).__name__}: {tg_error}"[:1500].replace("\n", " "))
+
+
+def _draft_site(site_id: str, tg: Telegram, state_dir: Path, llm_transport, github_transport) -> int:
+    failures = 0
+    site = load_site(site_id)
+    publisher = get_publisher(site.publisher, transport=github_transport)
+    for _ in range(max(0, site.posts_per_day - state.drafted_today(site.id, state_dir))):
+        topic = pick_topic(site, state.used_topics(site.id, state_dir))
+        if topic is None:
+            tg.send(f"📭 <b>[{esc(site.name)}]</b> 주제 목록이 비었습니다. sites/{site.id}/topics.toml에 주제를 추가해 주세요.")
+            break
+        existing = existing_posts(site, publisher, state_dir)
+        try:
+            post, review = draft(site, topic, existing, transport=llm_transport)
+        except Exception as e:  # noqa: BLE001 — report any failure, keep other sites running
+            failures += 1
+            report_error(tg, f"[{site.name}] 초안 생성 실패 — {topic.title}", e)
+            continue
+        d = {
+            "id": state.new_draft_id(site.id, post["slug"]),
+            "site": site.id,
+            "status": "pending",
+            "created": state.now_iso(),
+            "topic": {"title": topic.title, "keyword": topic.keyword, "related_tool": topic.related_tool},
+            "post": post,
+            "review": review,
+        }
+        state.save_draft(d, state_dir)
+        d["telegram_message_id"] = tg.send(format_review_message(site, d), approval_buttons(d["id"]))
+        state.save_draft(d, state_dir)
+        print(f"[{site.id}] drafted {post['slug']} ({d['id']})")
     return failures
 
 
@@ -168,12 +188,16 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("check")
     args = parser.parse_args(argv)
 
-    if args.command == "draft":
-        return 1 if run_draft([args.site] if args.site else all_site_ids()) else 0
-    if args.command == "poll":
-        run_poll()
-    elif args.command == "check":
-        run_check()
+    try:
+        if args.command == "draft":
+            return 1 if run_draft([args.site] if args.site else all_site_ids()) else 0
+        if args.command == "poll":
+            run_poll()
+        elif args.command == "check":
+            run_check()
+    except Exception as e:  # noqa: BLE001
+        report_error(Telegram(), f"엔진 {args.command} 오류", e)
+        return 1
     return 0
 
 
