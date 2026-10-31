@@ -136,39 +136,62 @@ def publish_draft(d: dict, *, github_transport=None, today: str | None = None) -
 def run_poll(*, state_dir: Path = state.STATE_DIR, telegram: Telegram | None = None, github_transport=None) -> None:
     tg = telegram or Telegram()
     offset = state.get_offset(state_dir)
-    for update in tg.updates(offset):
+    updates = tg.updates(offset)
+    print(f"{len(updates)} Telegram update(s)")
+    for update in updates:
         offset = max(offset, update["update_id"] + 1)
-        cq = update.get("callback_query")
-        if not cq or ":" not in cq.get("data", ""):
-            continue
-        if str(cq.get("message", {}).get("chat", {}).get("id")) != str(tg.chat_id):
-            continue  # buttons only work in the owner's chat
-        action, draft_id = cq["data"].split(":", 1)
-        d = state.load_draft(draft_id, state_dir)
-        if d is None or d["status"] != "pending":
-            tg.answer(cq["id"], "이미 처리된 글입니다.")
-            continue
-        site = load_site(d["site"])
-        message_id = d.get("telegram_message_id") or cq["message"]["message_id"]
-        base = format_review_message(site, d)
-        if action == "reject":
-            d["status"], d["decided"] = "rejected", state.now_iso()
-            state.save_draft(d, state_dir)
-            tg.answer(cq["id"], "폐기했습니다.")
-            tg.edit(message_id, base + "\n\n❌ <b>폐기됨</b>")
-        elif action == "approve":
-            try:
-                url = publish_draft(d, github_transport=github_transport)
-            except Exception as e:  # noqa: BLE001
-                tg.answer(cq["id"], "발행 실패")
-                tg.send(f"🚫 <b>[{esc(site.name)}]</b> 발행 실패: {esc(d['post']['title'])}\n사유: {esc(str(e))[:800]}")
-                continue
-            d["status"], d["decided"], d["published_file"] = "published", state.now_iso(), url
-            state.save_draft(d, state_dir)
-            tg.answer(cq["id"], "발행했습니다.")
-            live = f"{site.url}/blog/{d['post']['slug']}"
-            tg.edit(message_id, base + f'\n\n✅ <b>발행됨</b> — 배포 후 몇 분 뒤 <a href="{live}">여기</a>에서 보입니다.')
+        try:
+            _handle_update(update, tg, state_dir, github_transport)
+        except Exception as e:  # noqa: BLE001 — one bad update must not block the others
+            report_error(tg, "버튼 처리 오류", e)
     state.set_offset(offset, state_dir)
+
+
+def _answer(tg: Telegram, callback_id: str, text: str) -> None:
+    """Telegram rejects answers to buttons pressed long ago; that must not stop processing."""
+    try:
+        tg.answer(callback_id, text)
+    except Exception as e:  # noqa: BLE001
+        print(f"answerCallbackQuery skipped: {e}")
+
+
+def _handle_update(update: dict, tg: Telegram, state_dir: Path, github_transport) -> None:
+    cq = update.get("callback_query")
+    if not cq or ":" not in cq.get("data", ""):
+        print(f"update {update['update_id']}: not a button press, ignored")
+        return
+    if str(cq.get("message", {}).get("chat", {}).get("id")) != str(tg.chat_id):
+        # Chat ids are not printed: Actions logs of a public repo are public.
+        print(f"::warning title=다른 채팅의 버튼::update {update['update_id']} came from a chat that is not TELEGRAM_CHAT_ID")
+        _answer(tg, cq["id"], "이 채팅에서는 승인할 수 없습니다.")
+        return
+    action, draft_id = cq["data"].split(":", 1)
+    d = state.load_draft(draft_id, state_dir)
+    if d is None or d["status"] != "pending":
+        _answer(tg, cq["id"], "이미 처리된 글입니다.")
+        return
+    site = load_site(d["site"])
+    message_id = d.get("telegram_message_id") or cq["message"]["message_id"]
+    base = format_review_message(site, d)
+    if action == "reject":
+        d["status"], d["decided"] = "rejected", state.now_iso()
+        state.save_draft(d, state_dir)
+        _answer(tg, cq["id"], "폐기했습니다.")
+        tg.edit(message_id, base + "\n\n❌ <b>폐기됨</b>")
+        print(f"rejected {d['post']['slug']}")
+    elif action == "approve":
+        try:
+            url = publish_draft(d, github_transport=github_transport)
+        except Exception as e:  # noqa: BLE001
+            _answer(tg, cq["id"], "발행 실패")
+            report_error(tg, f"[{site.name}] 발행 실패 — {d['post']['title']}", e)
+            return
+        d["status"], d["decided"], d["published_file"] = "published", state.now_iso(), url
+        state.save_draft(d, state_dir)
+        _answer(tg, cq["id"], "발행했습니다.")
+        live = f"{site.url}/blog/{d['post']['slug']}"
+        tg.edit(message_id, base + f'\n\n✅ <b>발행됨</b> — 배포 후 몇 분 뒤 <a href="{live}">여기</a>에서 보입니다.')
+        print(f"published {d['post']['slug']}")
 
 
 def run_check() -> None:

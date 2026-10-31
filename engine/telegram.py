@@ -17,7 +17,7 @@ MAX_MESSAGE = 4000  # Telegram's limit is 4096 characters
 class Telegram:
     def __init__(self, transport: TelegramTransport | None = None):
         self._transport = transport
-        self.chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
+        self.chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
 
     def call(self, method: str, payload: dict):
         if self._transport:
