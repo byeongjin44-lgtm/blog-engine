@@ -1,0 +1,91 @@
+# DevRivet — developer tools site with a /blog of tool-linked guides.
+id = "devrivet"
+name = "DevRivet"
+url = "https://devrivettools.com"
+language = "en"
+audience = "software developers who need a quick, correct answer to an everyday task"
+niche = "developer tools: JSON, SQL, regex, cron, JWT, encoding, hashing, UUIDs, timestamps"
+format = "devrivet-json"  # must match src/lib/blog.ts in the devrivet repo
+posts_per_day = 1
+min_words = 700
+max_words = 1800
+
+style_notes = """
+- Readers are developers: skip beginner hand-holding, but explain gotchas clearly.
+- Show code in the most common languages (JavaScript first, then Python) only when it helps.
+- Mention that DevRivet tools run entirely in the browser only where it matters (e.g. pasting tokens or secrets).
+"""
+
+banned_phrases = []
+
+[publisher]
+type = "github_files"
+repo = "byeongjin44-lgtm/devrivet"
+branch = "master"
+path = "content/blog"
+token_env = "TARGET_GITHUB_TOKEN"
+
+[models]
+writer = "claude-sonnet-5-5"
+reviewer = "claude-haiku-5-5"
+
+# Mirror of TOOLS in src/lib/site-config.ts (only slug/name/path/description are needed).
+[[tools]]
+slug = "base64"
+name = "Base64 Encoder / Decoder"
+path = "/base64"
+description = "Encode and decode Base64 with full UTF-8 support."
+
+[[tools]]
+slug = "uuid-generator"
+name = "UUID Generator"
+path = "/uuid-generator"
+description = "Generate UUID v4 and v7, bulk generate and validate."
+
+[[tools]]
+slug = "sql-formatter"
+name = "SQL Formatter"
+path = "/sql-formatter"
+description = "Format SQL for Standard SQL, MySQL, PostgreSQL, SQL Server and SQLite."
+
+[[tools]]
+slug = "cron-generator"
+name = "Cron Expression Generator"
+path = "/cron-generator"
+description = "Build and explain 5-field cron expressions and preview next run times."
+
+[[tools]]
+slug = "json-formatter"
+name = "JSON Formatter / Validator"
+path = "/json-formatter"
+description = "Pretty-print, minify and validate JSON with error line and column."
+
+[[tools]]
+slug = "url-encoder"
+name = "URL Encoder / Decoder"
+path = "/url-encoder"
+description = "Percent-encode and decode URL components (encodeURIComponent)."
+
+[[tools]]
+slug = "timestamp-converter"
+name = "Unix Timestamp Converter"
+path = "/timestamp-converter"
+description = "Convert Unix epoch seconds or milliseconds to dates and back."
+
+[[tools]]
+slug = "jwt-decoder"
+name = "JWT Decoder"
+path = "/jwt-decoder"
+description = "Decode a JWT header and payload, with iat/nbf/exp as dates. No signature verification."
+
+[[tools]]
+slug = "regex-tester"
+name = "Regex Tester"
+path = "/regex-tester"
+description = "Test JavaScript regular expressions with highlighting and capture groups."
+
+[[tools]]
+slug = "hash-generator"
+name = "Hash Generator"
+path = "/hash-generator"
+description = "Generate SHA-256, SHA-384, SHA-512 and SHA-1 hashes of text."

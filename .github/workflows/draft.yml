@@ -1,0 +1,39 @@
+name: Draft posts
+
+on:
+  schedule:
+    - cron: "47 23 * * *" # 08:47 KST every day
+  workflow_dispatch:
+    inputs:
+      site:
+        description: "Site id (empty = all sites)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: engine-state
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Draft
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TARGET_GITHUB_TOKEN: ${{ secrets.TARGET_GITHUB_TOKEN }}
+          SITE: ${{ inputs.site }}
+        run: |
+          if [ -n "$SITE" ]; then python -m engine draft --site "$SITE"; else python -m engine draft; fi
+      - name: Save state
+        if: always()
+        run: ./scripts/commit-state.sh "Draft posts"

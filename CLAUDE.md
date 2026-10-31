@@ -1,0 +1,26 @@
+# CLAUDE.md
+
+Multi-site blog automation engine. Each day it drafts posts with the Claude API, sends a Korean
+summary to Telegram with Approve / Reject buttons, and publishes approved posts to the site.
+The owner does not read English: the Korean summary and review are how posts get approved.
+
+## Layout
+
+- `engine/` — Python, **standard library only** (no pip install; runs as-is on GitHub Actions).
+  - `config.py` loads `sites/<id>/site.toml` + `topics.toml`
+  - `writer.py` drafting prompts, validation retry, Korean review, revision on high-severity issues
+  - `formats.py` post formats (`devrivet-json` mirrors `src/lib/blog.ts` in the devrivet repo — keep in sync)
+  - `publishers.py` delivery (`github_files` commits into the site repo)
+  - `telegram.py`, `state.py`, `cli.py` (`python -m engine draft|poll|check`)
+- `sites/<id>/` — one folder per site. Adding a site = adding a folder; no engine change unless it
+  needs a new format or publisher.
+- `state/drafts/<id>.json` — one file per draft (`pending | published | rejected`), committed by the workflows.
+- `.github/workflows/` — `draft.yml` (daily), `poll.yml` (every 15 min), `test.yml`.
+
+## Rules
+
+- Never publish without an explicit Approve from Telegram. No auto-approve.
+- Content must be genuinely useful and correct; no fake traffic, no mass low-quality pages (Google spam
+  policy, AdSense invalid-traffic policy).
+- Secrets only via environment variables / GitHub Actions secrets. Never commit them.
+- Run `python -m unittest discover -s tests` and `python -m engine check` after any change.

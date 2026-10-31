@@ -1,0 +1,31 @@
+name: Process approvals
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # Telegram buttons are picked up within ~15 minutes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: engine-state
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Process Telegram buttons
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TARGET_GITHUB_TOKEN: ${{ secrets.TARGET_GITHUB_TOKEN }}
+        run: python -m engine poll
+      - name: Save state
+        if: always()
+        run: ./scripts/commit-state.sh "Process approvals"

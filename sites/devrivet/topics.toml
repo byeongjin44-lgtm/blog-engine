@@ -1,0 +1,108 @@
+# Topic queue for DevRivet, used top to bottom. Add new topics at the end.
+# A topic is skipped once it has a pending or published draft (rejected topics come back).
+# Phase 2 will add topics automatically from Search Console queries.
+
+[[topics]]
+title = "Cron expression for every day at midnight (and other daily schedules)"
+keyword = "cron every day at midnight"
+related_tool = "cron-generator"
+
+[[topics]]
+title = "Cron expression for every Monday (weekly schedules explained)"
+keyword = "cron every monday"
+related_tool = "cron-generator"
+notes = "Cover day-of-week numbering (0 and 7 are Sunday), named days, and the day-of-month vs day-of-week OR rule."
+
+[[topics]]
+title = "Fixing \"Unexpected token in JSON at position\" errors"
+keyword = "unexpected token in json at position"
+related_tool = "json-formatter"
+notes = "Cover common causes: HTML error page parsed as JSON, trailing commas, single quotes, BOM, empty response."
+
+[[topics]]
+title = "JSON trailing comma: why it breaks and how to fix it"
+keyword = "json trailing comma"
+related_tool = "json-formatter"
+
+[[topics]]
+title = "Regex for email validation: practical patterns and their limits"
+keyword = "regex email validation"
+related_tool = "regex-tester"
+notes = "Be honest that no regex fully validates RFC 5322; recommend a pragmatic pattern plus a confirmation email."
+
+[[topics]]
+title = "Regex for phone numbers: matching common formats"
+keyword = "regex phone number"
+related_tool = "regex-tester"
+
+[[topics]]
+title = "Named capture groups in JavaScript regex"
+keyword = "javascript regex named groups"
+related_tool = "regex-tester"
+
+[[topics]]
+title = "How to check when a JWT expires (exp claim explained)"
+keyword = "jwt expiration time"
+related_tool = "jwt-decoder"
+notes = "exp is seconds since epoch, not milliseconds; clock skew; decoding is not verification."
+
+[[topics]]
+title = "Decoding a JWT vs verifying it: what's the difference?"
+keyword = "decode jwt vs verify"
+related_tool = "jwt-decoder"
+
+[[topics]]
+title = "Unix timestamp in seconds vs milliseconds: how to tell and convert"
+keyword = "unix timestamp seconds vs milliseconds"
+related_tool = "timestamp-converter"
+
+[[topics]]
+title = "How to get the current Unix timestamp in JavaScript, Python and SQL"
+keyword = "get current unix timestamp"
+related_tool = "timestamp-converter"
+
+[[topics]]
+title = "UUID v4 vs UUID v7: which should you use?"
+keyword = "uuid v4 vs v7"
+related_tool = "uuid-generator"
+
+[[topics]]
+title = "Are UUIDs really unique? Collision probability explained"
+keyword = "uuid collision probability"
+related_tool = "uuid-generator"
+
+[[topics]]
+title = "Base64 encoding explained: why it makes data about 33% bigger"
+keyword = "base64 size increase"
+related_tool = "base64"
+
+[[topics]]
+title = "Base64 vs Base64URL: the differences and when to use each"
+keyword = "base64 vs base64url"
+related_tool = "base64"
+
+[[topics]]
+title = "encodeURIComponent vs encodeURI in JavaScript"
+keyword = "encodeuricomponent vs encodeuri"
+related_tool = "url-encoder"
+
+[[topics]]
+title = "Why spaces become %20 or + in URLs"
+keyword = "url encode space %20 or +"
+related_tool = "url-encoder"
+
+[[topics]]
+title = "SHA-256 vs SHA-1: why SHA-1 is no longer considered secure"
+keyword = "sha256 vs sha1"
+related_tool = "hash-generator"
+
+[[topics]]
+title = "Why you should not use SHA-256 alone to hash passwords"
+keyword = "sha256 password hashing"
+related_tool = "hash-generator"
+notes = "Explain fast hashes vs password hashing functions (bcrypt, scrypt, Argon2) without overstating."
+
+[[topics]]
+title = "SQL formatting conventions: a readable style guide"
+keyword = "sql formatting best practices"
+related_tool = "sql-formatter"
