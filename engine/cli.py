@@ -2,7 +2,8 @@
 
     python -m engine draft            # draft today's posts for every site (respects posts_per_day)
     python -m engine draft --site X   # one site only
-    python -m engine poll             # process Telegram Approve / Reject buttons and publish
+    python -m engine poll             # process Telegram Approve / Reject buttons once
+    python -m engine listen           # wait for buttons and handle them immediately (up to 4 h)
     python -m engine check            # validate every site config (used by the test workflow)
 """
 
@@ -11,7 +12,8 @@ from __future__ import annotations
 import argparse
 import os
 import sys
-from datetime import datetime, timezone
+import time
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from engine import state
@@ -133,10 +135,12 @@ def publish_draft(d: dict, *, github_transport=None, today: str | None = None) -
     return url
 
 
-def run_poll(*, state_dir: Path = state.STATE_DIR, telegram: Telegram | None = None, github_transport=None) -> None:
+def run_poll(*, state_dir: Path = state.STATE_DIR, telegram: Telegram | None = None, github_transport=None,
+             wait: int = 0) -> int:
+    """Process button presses once. Returns how many updates were received."""
     tg = telegram or Telegram()
     offset = state.get_offset(state_dir)
-    updates = tg.updates(offset)
+    updates = tg.updates(offset, wait=wait)
     print(f"{len(updates)} Telegram update(s)")
     for update in updates:
         offset = max(offset, update["update_id"] + 1)
@@ -145,6 +149,28 @@ def run_poll(*, state_dir: Path = state.STATE_DIR, telegram: Telegram | None = N
         except Exception as e:  # noqa: BLE001 — one bad update must not block the others
             report_error(tg, "버튼 처리 오류", e)
     state.set_offset(offset, state_dir)
+    return len(updates)
+
+
+def has_pending(state_dir: Path = state.STATE_DIR, max_age_hours: float = 24) -> bool:
+    """Is a recent draft waiting for a decision? Old undecided drafts are left to the hourly poll."""
+    cutoff = (datetime.now(timezone.utc) - timedelta(hours=max_age_hours)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return any(d["status"] == "pending" and d["created"] >= cutoff for d in state.all_drafts(state_dir))
+
+
+def run_listen(minutes: float, *, state_dir: Path = state.STATE_DIR, telegram: Telegram | None = None,
+               github_transport=None, clock=time.monotonic) -> None:
+    """Wait for Approve / Reject presses and handle each within seconds.
+
+    Runs right after drafting, so the owner gets an immediate result instead of depending on
+    GitHub's best-effort schedule. Stops as soon as no draft is pending, or after `minutes`.
+    """
+    tg = telegram or Telegram()
+    deadline = clock() + minutes * 60
+    while has_pending(state_dir) and clock() < deadline:
+        wait = int(max(1, min(50, deadline - clock())))
+        run_poll(state_dir=state_dir, telegram=tg, github_transport=github_transport, wait=wait)
+    print("listen: done" if not has_pending(state_dir) else "listen: time limit reached, drafts still pending")
 
 
 def _answer(tg: Telegram, callback_id: str, text: str) -> None:
@@ -208,6 +234,8 @@ def main(argv: list[str] | None = None) -> int:
     p_draft = sub.add_parser("draft")
     p_draft.add_argument("--site", help="site id (default: all sites)")
     sub.add_parser("poll")
+    p_listen = sub.add_parser("listen")
+    p_listen.add_argument("--minutes", type=float, default=240)
     sub.add_parser("check")
     args = parser.parse_args(argv)
 
@@ -216,6 +244,8 @@ def main(argv: list[str] | None = None) -> int:
             return 1 if run_draft([args.site] if args.site else all_site_ids()) else 0
         if args.command == "poll":
             run_poll()
+        elif args.command == "listen":
+            run_listen(args.minutes)
         elif args.command == "check":
             run_check()
     except Exception as e:  # noqa: BLE001

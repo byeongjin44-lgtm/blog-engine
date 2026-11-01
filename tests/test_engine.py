@@ -209,6 +209,30 @@ class FlowTests(unittest.TestCase):
         self.assertIn("&lt;script&gt;", text)
 
 
+class ListenTests(unittest.TestCase):
+    def test_listen_handles_press_and_stops_when_nothing_pending(self):
+        from engine.cli import run_listen
+
+        tmp = Path(tempfile.mkdtemp())
+        gh = FakeGitHub()
+        run_draft(["devrivet"], state_dir=tmp, telegram=FakeTelegram(), llm_transport=FakeLLM([make_post()], [OK_REVIEW]), github_transport=gh)
+        d = state.all_drafts(tmp)[0]
+        press = {"update_id": 3, "callback_query": {"id": "z", "data": f"approve:{d['id']}", "message": {"message_id": 1, "chat": {"id": 42}}}}
+        tg = FakeTelegram([press])
+        run_listen(240, state_dir=tmp, telegram=tg, github_transport=gh)
+        self.assertEqual(state.load_draft(d["id"], tmp)["status"], "published")
+        self.assertEqual(len(gh.puts), 1)
+
+    def test_listen_respects_time_limit(self):
+        from engine.cli import run_listen
+
+        tmp = Path(tempfile.mkdtemp())
+        run_draft(["devrivet"], state_dir=tmp, telegram=FakeTelegram(), llm_transport=FakeLLM([make_post()], [OK_REVIEW]), github_transport=FakeGitHub())
+        ticks = iter(range(0, 100000, 60))
+        run_listen(5, state_dir=tmp, telegram=FakeTelegram(), github_transport=FakeGitHub(), clock=lambda: next(ticks))
+        self.assertEqual(state.all_drafts(tmp)[0]["status"], "pending")
+
+
 class PublisherTests(unittest.TestCase):
     def test_missing_folder_means_no_posts(self):
         from engine.publishers import get_publisher

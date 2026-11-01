@@ -19,13 +19,13 @@ class Telegram:
         self._transport = transport
         self.chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
 
-    def call(self, method: str, payload: dict):
+    def call(self, method: str, payload: dict, timeout: float = 60):
         if self._transport:
             return self._transport(method, payload)
         token = os.environ.get("TELEGRAM_BOT_TOKEN")
         if not token or not self.chat_id:
             raise RuntimeError("TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID must be set")
-        response = request_json("POST", f"https://api.telegram.org/bot{token}/{method}", payload, timeout=60)
+        response = request_json("POST", f"https://api.telegram.org/bot{token}/{method}", payload, timeout=timeout)
         if not response.get("ok"):
             raise RuntimeError(f"Telegram {method} failed: {response}")
         return response["result"]
@@ -51,8 +51,10 @@ class Telegram:
     def answer(self, callback_id: str, text: str) -> None:
         self.call("answerCallbackQuery", {"callback_query_id": callback_id, "text": text})
 
-    def updates(self, offset: int) -> list[dict]:
-        return self.call("getUpdates", {"offset": offset, "timeout": 0, "allowed_updates": ["callback_query"]}) or []
+    def updates(self, offset: int, wait: int = 0) -> list[dict]:
+        """Pending button presses. With `wait` > 0, long-polls: returns as soon as one arrives."""
+        payload = {"offset": offset, "timeout": wait, "allowed_updates": ["callback_query"]}
+        return self.call("getUpdates", payload, timeout=wait + 30) or []
 
 
 def esc(text: str) -> str:

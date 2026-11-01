@@ -2,7 +2,8 @@ name: Process approvals
 
 on:
   schedule:
-    - cron: "*/15 * * * *" # Telegram buttons are picked up within ~15 minutes
+    # Fallback for buttons pressed after the draft run stopped waiting (best-effort schedule).
+    - cron: "23 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -15,6 +16,7 @@ concurrency:
 jobs:
   poll:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

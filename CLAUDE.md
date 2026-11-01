@@ -15,7 +15,9 @@ The owner does not read English: the Korean summary and review are how posts get
 - `sites/<id>/` — one folder per site. Adding a site = adding a folder; no engine change unless it
   needs a new format or publisher.
 - `state/drafts/<id>.json` — one file per draft (`pending | published | rejected`), committed by the workflows.
-- `.github/workflows/` — `draft.yml` (daily), `poll.yml` (every 15 min), `test.yml`.
+- `.github/workflows/` — `draft.yml` (daily; after drafting it runs `engine listen` for up to 4 h so
+  button presses are handled within seconds — GitHub's cron is best-effort and can be hours late),
+  `poll.yml` (hourly fallback), `test.yml`. Don't turn `listen` into a 24/7 loop: Actions is not a server.
 
 ## Rules
 

@@ -20,6 +20,7 @@ concurrency:
 jobs:
   draft:
     runs-on: ubuntu-latest
+    timeout-minutes: 280
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,3 +38,14 @@ jobs:
       - name: Save state
         if: always()
         run: ./scripts/commit-state.sh "Draft posts"
+      # GitHub's schedule is best-effort (runs can be hours late), so instead of relying on the
+      # hourly poll, wait here for the Approve / Reject button and handle it within seconds.
+      - name: Wait for approval
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TARGET_GITHUB_TOKEN: ${{ secrets.TARGET_GITHUB_TOKEN }}
+        run: python -m engine listen --minutes 240
+      - name: Save state after approval
+        if: always()
+        run: ./scripts/commit-state.sh "Process approvals"
