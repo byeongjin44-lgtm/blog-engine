@@ -5,6 +5,11 @@ on:
     # Fallback for buttons pressed after the draft run stopped waiting (best-effort schedule).
     - cron: "23 * * * *"
   workflow_dispatch:
+    inputs:
+      minutes:
+        description: "Keep waiting for button presses for this many minutes (0 = check once)"
+        required: false
+        default: "0"
 
 permissions:
   contents: write
@@ -16,7 +21,7 @@ concurrency:
 jobs:
   poll:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -27,7 +32,9 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TARGET_GITHUB_TOKEN: ${{ secrets.TARGET_GITHUB_TOKEN }}
-        run: python -m engine poll
+          MINUTES: ${{ inputs.minutes || '0' }}
+        run: |
+          if [ "$MINUTES" != "0" ]; then python -m engine listen --minutes "$MINUTES"; else python -m engine poll; fi
       - name: Save state
         if: always()
         run: ./scripts/commit-state.sh "Process approvals"

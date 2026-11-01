@@ -141,7 +141,8 @@ def run_poll(*, state_dir: Path = state.STATE_DIR, telegram: Telegram | None = N
     tg = telegram or Telegram()
     offset = state.get_offset(state_dir)
     updates = tg.updates(offset, wait=wait)
-    print(f"{len(updates)} Telegram update(s)")
+    if updates or not wait:
+        print(f"::notice title=Telegram::{len(updates)} button press(es) received")
     for update in updates:
         offset = max(offset, update["update_id"] + 1)
         try:
