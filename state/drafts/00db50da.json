@@ -1,7 +1,7 @@
 {
   "id": "00db50da",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-01T02:35:51Z",
   "topic": {
     "title": "Cron expression for every Monday (weekly schedules explained)",
@@ -198,7 +198,8 @@
         "text": "Not with a single five-field expression. Run the job weekly and have the script check the ISO week number, or use a scheduler that supports intervals."
       }
     ],
-    "relatedTool": "cron-generator"
+    "relatedTool": "cron-generator",
+    "published": "2026-11-01"
   },
   "review": {
     "title_ko": "매주 월요일 실행 Cron: 표현식과 주간 스케줄",
@@ -220,5 +221,7 @@
     "verdict": "ok",
     "word_count": 958
   },
-  "telegram_message_id": 9
+  "telegram_message_id": 9,
+  "decided": "2026-11-01T04:01:28Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/cron-every-monday-weekly-schedule.json"
 }
