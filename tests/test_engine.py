@@ -36,15 +36,20 @@ def make_post(slug="cron-every-monday", words=800, link=True, extra=None):
 class FakeLLM:
     """Answers submit_post with queued posts and submit_review with queued reviews."""
 
-    def __init__(self, posts, reviews):
+    def __init__(self, posts, reviews, topics=None):
         self.posts, self.reviews, self.calls = list(posts), list(reviews), []
+        self.topics = list(topics or [])
 
     def __call__(self, payload):
         schema = payload["output_config"]["format"]["schema"]
-        name = "submit_review" if "summary_ko" in schema["properties"] else "submit_post"
+        props = schema["properties"]
+        name = "submit_review" if "summary_ko" in props else "propose_topics" if "topics" in props else "submit_post"
         self.calls.append((name, payload))
         self.check_strict(schema)
-        data = self.posts.pop(0) if name == "submit_post" else self.reviews.pop(0)
+        if name == "propose_topics":
+            data = {"topics": self.topics.pop(0) if self.topics else []}
+        else:
+            data = self.posts.pop(0) if name == "submit_post" else self.reviews.pop(0)
         return {"stop_reason": "end_turn", "content": [{"type": "text", "text": json.dumps(data)}]}
 
     @classmethod
@@ -231,6 +236,40 @@ class ListenTests(unittest.TestCase):
         ticks = iter(range(0, 100000, 60))
         run_listen(5, state_dir=tmp, telegram=FakeTelegram(), github_transport=FakeGitHub(), clock=lambda: next(ticks))
         self.assertEqual(state.all_drafts(tmp)[0]["status"], "pending")
+
+
+class TopicRefillTests(unittest.TestCase):
+    def test_refills_when_low_dedupes_and_notifies(self):
+        from engine import topics as topic_queue
+
+        tmp = Path(tempfile.mkdtemp())
+        # Mark all but 3 hand-written topics as used.
+        for i, t in enumerate(SITE.topics[:-3]):
+            state.save_draft({"id": f"u{i}", "site": "devrivet", "status": "published", "created": "2026-01-01T00:00:00Z",
+                              "topic": {"title": t.title, "keyword": t.keyword, "related_tool": t.related_tool},
+                              "post": {"slug": f"s{i}", "title": t.title}, "review": {}}, tmp)
+        proposals = [
+            {"title": "Cron expression for every 15 minutes", "keyword": "cron every 15 minutes", "related_tool": "cron-generator",
+             "notes": "", "title_ko": "15분마다 실행하는 cron"},
+            {"title": SITE.topics[0].title, "keyword": "dup", "related_tool": "cron-generator", "notes": "", "title_ko": "중복"},
+            {"title": "Unknown tool topic", "keyword": "x y z", "related_tool": "image-resizer", "notes": "", "title_ko": "없는 도구"},
+        ]
+        llm = FakeLLM([], [], topics=[proposals])  # drafting itself fails here; only the refill matters
+        tg = FakeTelegram()
+        run_draft(["devrivet"], state_dir=tmp, telegram=tg, llm_transport=llm, github_transport=FakeGitHub())
+
+        auto = topic_queue.load_auto("devrivet", tmp)
+        self.assertEqual([t["title"] for t in auto], ["Cron expression for every 15 minutes"])
+        self.assertIn("새 주제 1개", tg.sent[0]["text"])
+        self.assertIn("15분마다 실행하는 cron", tg.sent[0]["text"])
+        # Hand-written topics still come first, the new topic is queued after them.
+        left = topic_queue.remaining(SITE, tmp)
+        self.assertEqual([t.title for t in left], [t.title for t in SITE.topics[-3:]] + ["Cron expression for every 15 minutes"])
+
+    def test_no_refill_when_queue_is_long(self):
+        llm = FakeLLM([make_post()], [OK_REVIEW])
+        run_draft(["devrivet"], state_dir=Path(tempfile.mkdtemp()), telegram=FakeTelegram(), llm_transport=llm, github_transport=FakeGitHub())
+        self.assertNotIn("propose_topics", [c[0] for c in llm.calls])
 
 
 class PublisherTests(unittest.TestCase):

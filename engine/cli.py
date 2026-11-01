@@ -21,7 +21,8 @@ from engine.config import Site, all_site_ids, load_site
 from engine.formats import get_format
 from engine.publishers import get_publisher
 from engine.telegram import Telegram, approval_buttons, esc
-from engine.writer import DraftError, draft, pick_topic
+from engine import topics as topic_queue
+from engine.writer import DraftError, draft
 
 
 def draft_link(draft_id: str) -> str:
@@ -92,7 +93,16 @@ def _draft_site(site_id: str, tg: Telegram, state_dir: Path, llm_transport, gith
     site = load_site(site_id)
     publisher = get_publisher(site.publisher, transport=github_transport)
     for _ in range(max(0, site.posts_per_day - state.drafted_today(site.id, state_dir))):
-        topic = pick_topic(site, state.used_topics(site.id, state_dir))
+        try:
+            added = topic_queue.refill_if_low(site, state_dir, transport=llm_transport)
+        except Exception as e:  # noqa: BLE001 — drafting can continue with the topics left
+            added = []
+            report_error(tg, f"[{site.name}] 주제 자동 보충 실패", e)
+        if added:
+            lines = "\n".join(f"• {esc(t['title_ko'])} <i>({esc(t['keyword'])})</i>" for t in added)
+            tg.send(f"🗂 <b>[{esc(site.name)}]</b> 주제가 부족해 새 주제 {len(added)}개를 추가했습니다.\n{lines}")
+        left = topic_queue.remaining(site, state_dir)
+        topic = left[0] if left else None
         if topic is None:
             tg.send(f"📭 <b>[{esc(site.name)}]</b> 주제 목록이 비었습니다. sites/{site.id}/topics.toml에 주제를 추가해 주세요.")
             break

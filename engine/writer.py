@@ -40,10 +40,6 @@ class DraftError(RuntimeError):
     pass
 
 
-def pick_topic(site: Site, used_titles: set[str]) -> Topic | None:
-    return next((t for t in site.topics if t.title not in used_titles), None)
-
-
 def _writer_system(site: Site) -> str:
     tools = "\n".join(f"- {t.name}: {t.path} — {t.description}" for t in site.tools)
     return f"""You write blog posts for {site.name} ({site.url}), a site for {site.audience}. Niche: {site.niche}.

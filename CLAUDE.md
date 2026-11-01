@@ -11,6 +11,8 @@ The owner does not read English: the Korean summary and review are how posts get
   - `writer.py` drafting prompts, validation retry, Korean review, revision on high-severity issues
   - `formats.py` post formats (`devrivet-json` mirrors `src/lib/blog.ts` in the devrivet repo — keep in sync)
   - `publishers.py` delivery (`github_files` commits into the site repo)
+  - `topics.py` topic queue: hand-written `topics.toml` first, then topics the engine proposes itself
+    (`state/topics/<id>.json`) when fewer than 7 remain
   - `telegram.py`, `state.py`, `cli.py` (`python -m engine draft|poll|check`)
 - `sites/<id>/` — one folder per site. Adding a site = adding a folder; no engine change unless it
   needs a new format or publisher.
