@@ -1,0 +1,224 @@
+{
+  "id": "00db50da",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-01T02:35:51Z",
+  "topic": {
+    "title": "Cron expression for every Monday (weekly schedules explained)",
+    "keyword": "cron every monday",
+    "related_tool": "cron-generator"
+  },
+  "post": {
+    "slug": "cron-every-monday-weekly-schedule",
+    "title": "Cron Every Monday: Expressions and Weekly Schedules",
+    "description": "Use 0 9 * * 1 to run a cron job every Monday at 9:00 AM. Covers day-of-week numbers, named days, and the day-of-month OR rule that trips people up.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To run a cron job every Monday at 9:00 AM, use `0 9 * * 1`. The fifth field is day of week, and `1` means Monday. For midnight on Monday, use `0 0 * * 1`. You can build either one in the [Cron Expression Generator](/cron-generator) and preview the next run times before you deploy it."
+      },
+      {
+        "type": "h2",
+        "text": "The five fields"
+      },
+      {
+        "type": "p",
+        "text": "A standard cron expression has five fields, separated by spaces, in this order:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Minute (0-59)",
+          "Hour (0-23)",
+          "Day of month (1-31)",
+          "Month (1-12 or JAN-DEC)",
+          "Day of week (0-7, where 0 and 7 are Sunday, or SUN-SAT)"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "For a weekly job, the first three fields usually set the time and the last field sets the day. Month and day of month stay as `*`, which means every value."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "# minute hour day-of-month month day-of-week\n0 9 * * 1"
+      },
+      {
+        "type": "h2",
+        "text": "Common Monday schedules"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 0 * * 1       00:00 every Monday (start of Monday)\n0 9 * * 1       09:00 every Monday\n30 8 * * MON    08:30 every Monday (named day)\n0 9 * * 1,5     09:00 every Monday and Friday\n0 9 * * 1-5     09:00 Monday through Friday"
+      },
+      {
+        "type": "p",
+        "text": "The midnight entry is easy to misread. `0 0 * * 1` fires at the start of Monday, so for a job that should summarize last week, the run happens just after Sunday ends."
+      },
+      {
+        "type": "h2",
+        "text": "Day-of-week numbering: 0 and 7 are Sunday"
+      },
+      {
+        "type": "p",
+        "text": "Day of week counts from Sunday. Here is the mapping:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "0: Sunday",
+          "1: Monday",
+          "2: Tuesday",
+          "3: Wednesday",
+          "4: Thursday",
+          "5: Friday",
+          "6: Saturday",
+          "7: Sunday"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Both 0 and 7 mean Sunday. Most cron implementations accept both. If you need the widest compatibility, use 0 for Sunday. The most common mistake is treating 0 as Monday because a week starts there in many calendars. In cron, Monday is always 1."
+      },
+      {
+        "type": "h2",
+        "text": "Named days"
+      },
+      {
+        "type": "p",
+        "text": "You can use three-letter names instead of numbers: SUN, MON, TUE, WED, THU, FRI, SAT. They are case-insensitive, so `mon` and `MON` both work in implementations that support names. Names make the expression easier to read, especially for ranges and lists."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 9 * * MON-FRI\n0 9 * * MON,FRI"
+      },
+      {
+        "type": "p",
+        "text": "Names are not supported in every minimal cron implementation, so if you write crontabs for embedded devices or small containers, test them first. Numbers work everywhere."
+      },
+      {
+        "type": "h2",
+        "text": "Day of month and day of week use OR, not AND"
+      },
+      {
+        "type": "p",
+        "text": "This is the rule that surprises most people. When both the day-of-month field and the day-of-week field are restricted (neither is `*`), a standard cron job runs when either one matches. It does not require both to match."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 9 1 * 1 /usr/local/bin/job.sh"
+      },
+      {
+        "type": "p",
+        "text": "That line does not mean \"Mondays that fall on the 1st.\" It runs at 09:00 on the 1st of every month and at 09:00 every Monday. If you only wanted the 1st, set the day of week to `*`. If you only wanted Mondays, set the day of month to `*`."
+      },
+      {
+        "type": "p",
+        "text": "Some schedulers do not follow this rule. Quartz, for example, requires you to put `?` in one of the two fields, and it uses a different numbering for days of the week. Always check the documentation for the system that runs your job."
+      },
+      {
+        "type": "h2",
+        "text": "Harder Monday schedules"
+      },
+      {
+        "type": "p",
+        "text": "Standard cron cannot express \"first Monday of the month\" or \"every other Monday\" directly. You can get close with a small wrapper."
+      },
+      {
+        "type": "p",
+        "text": "For the first Monday of the month, run the job on days 1 through 7, which always contain exactly one Monday, and check the weekday inside the command. `date +%u` prints the ISO weekday, where Monday is 1. In a crontab, the percent sign must be escaped as `\\%`."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 9 1-7 * * [ \"$(date +\\%u)\" = 1 ] && /usr/local/bin/job.sh"
+      },
+      {
+        "type": "p",
+        "text": "For every other Monday, a common approach is to run weekly and have the script check whether the ISO week number is even or odd, using `date +%V`. Keep the zero-padded value in mind when doing arithmetic in shell, because a value like `08` can be parsed as octal."
+      },
+      {
+        "type": "p",
+        "text": "If your scheduler supports a calendar or interval feature, such as systemd timers or a cloud scheduler, it may be simpler to use that instead."
+      },
+      {
+        "type": "h2",
+        "text": "Time zones and checking your schedule"
+      },
+      {
+        "type": "p",
+        "text": "Cron usually evaluates times in the system's local time zone, not UTC. A server set to UTC will run your Monday 9:00 job at 09:00 UTC, which may be the middle of the night for your team. Run `date` on the host to see which zone it uses, and check how your platform handles time zones before you rely on the schedule."
+      },
+      {
+        "type": "p",
+        "text": "Before you deploy, paste the expression into the [Cron Expression Generator](/cron-generator) to confirm the next several run times. It is the fastest way to catch a wrong day number or an OR surprise."
+      },
+      {
+        "type": "p",
+        "text": "If you need a daily job instead, see [Cron Every Day at Midnight](/blog/cron-every-day-at-midnight). For shorter intervals, see [cron every 5 minutes](/blog/cron-every-5-minutes)."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "What cron expression runs every Monday at midnight?"
+      },
+      {
+        "type": "p",
+        "text": "Use `0 0 * * 1`. It fires at 00:00 on Monday. If your scheduler uses 1 as Sunday, as Quartz does, the same job would be written differently, so check the documentation."
+      },
+      {
+        "type": "h3",
+        "text": "Is 0 or 7 Sunday in cron?"
+      },
+      {
+        "type": "p",
+        "text": "Both are Sunday in most cron implementations. Use 0 if you want the widest compatibility. Monday is always 1."
+      },
+      {
+        "type": "h3",
+        "text": "Why did my job run on the 1st of the month when I only wanted Mondays?"
+      },
+      {
+        "type": "p",
+        "text": "You probably set both the day of month and the day of week. Standard cron treats those two fields with OR, so the job runs when either one matches. Set the day-of-month field to `*` to run only on the days of week you specify."
+      },
+      {
+        "type": "h3",
+        "text": "Can cron run a job on every other Monday?"
+      },
+      {
+        "type": "p",
+        "text": "Not with a single five-field expression. Run the job weekly and have the script check the ISO week number, or use a scheduler that supports intervals."
+      }
+    ],
+    "relatedTool": "cron-generator"
+  },
+  "review": {
+    "title_ko": "매주 월요일 실행 Cron: 표현식과 주간 스케줄",
+    "summary_ko": [
+      "매주 월요일 오전 9시에 cron 작업을 실행하려면 `0 9 * * 1`을 사용합니다. 다섯 번째 필드가 요일이고 1이 월요일입니다. 월요일 자정은 `0 0 * * 1`입니다.",
+      "다섯 필드(분, 시, 일, 월, 요일)의 순서와 허용 범위를 설명합니다. 주간 작업에서는 앞의 시간 필드로 시각을, 마지막 필드로 요일을 지정하고 나머지는 `*`로 둡니다.",
+      "자주 쓰는 월요일 스케줄 예시를 보여줍니다. 월요일 자정, 9시, 8:30(MON 이름 사용), 월요일과 금요일(1,5), 월~금(1-5)입니다.",
+      "요일 번호는 0과 7이 모두 일요일이며 월요일은 항상 1입니다. 요일 이름(SUN~SAT)도 사용할 수 있지만 일부 최소 구현에서는 지원되지 않아 테스트가 필요합니다.",
+      "일(day of month)과 요일(day of week)을 둘 다 지정하면 표준 cron은 AND가 아니라 OR로 동작합니다. 예를 들어 `0 9 1 * 1`은 매월 1일과 매주 월요일에 실행됩니다. Quartz는 다르게 동작하므로 문서를 확인해야 합니다.",
+      "첫째 월요일이나 격주 월요일은 cron 한 줄로 직접 표현할 수 없어서 `date +%u`, `date +%V`를 이용한 래퍼 스크립트 방식을 소개합니다. 시간대는 보통 서버의 로컬 시간을 따르므로 배포 전 확인하고, 생성기 도구로 다음 실행 시각을 미리 확인하라고 권합니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"For a weekly job, the first three fields usually set the time and the last field sets the day.\" 시간을 정하는 것은 분과 시(처음 두 필드)이고, 세 번째 필드는 일(day of month)입니다. 바로 다음 문장에서 일 필드를 `*`로 둔다고 설명하므로 모순되어 보입니다.",
+        "en": "The sentence says the first three fields set the time, but only the minute and hour (first two) set the time. The third field is day of month, which the next sentence says stays as *. Change to 'the first two fields set the time and the last field sets the day'."
+      }
+    ],
+    "verdict": "ok",
+    "word_count": 958
+  },
+  "telegram_message_id": 9
+}
