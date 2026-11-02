@@ -14,6 +14,10 @@ from engine.http import request_json
 
 API_URL = "https://api.anthropic.com/v1/messages"
 
+class TruncatedError(RuntimeError):
+    """The answer hit max_tokens before the JSON was complete."""
+
+
 # Injected in tests: (payload) -> response dict.
 Transport = Callable[[dict], dict]
 
@@ -69,7 +73,7 @@ def structured_call(
     response = (transport or _default_transport)(payload)
     stop = response.get("stop_reason")
     if stop == "max_tokens":
-        raise RuntimeError("Claude response was cut off (max_tokens); increase max_tokens")
+        raise TruncatedError(f"Claude response was cut off at {max_tokens} tokens")
     if stop == "refusal":
         raise RuntimeError("Claude declined to write this content")
     text = "".join(b.get("text", "") for b in response.get("content", []) if b.get("type") == "text")

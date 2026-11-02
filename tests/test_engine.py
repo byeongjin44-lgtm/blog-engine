@@ -50,6 +50,8 @@ class FakeLLM:
             data = {"topics": self.topics.pop(0) if self.topics else []}
         else:
             data = self.posts.pop(0) if name == "submit_post" else self.reviews.pop(0)
+        if data == "TRUNCATED":
+            return {"stop_reason": "max_tokens", "content": [{"type": "text", "text": '{"slug": "cut'}]}
         return {"stop_reason": "end_turn", "content": [{"type": "text", "text": json.dumps(data)}]}
 
     @classmethod
@@ -194,6 +196,13 @@ class FlowTests(unittest.TestCase):
         self.assertEqual(state.all_drafts(self.tmp), [])
         self.assertIn("초안 생성 실패", tg.sent[0]["text"])
         self.assertIn("too short", llm.calls[1][1]["messages"][0]["content"])
+
+    def test_cut_off_post_is_retried_shorter(self):
+        llm = FakeLLM(["TRUNCATED", make_post()], [OK_REVIEW])
+        failures = run_draft(["devrivet"], state_dir=self.tmp, telegram=FakeTelegram(), llm_transport=llm, github_transport=FakeGitHub())
+        self.assertEqual(failures, 0)
+        self.assertEqual(state.all_drafts(self.tmp)[0]["status"], "pending")
+        self.assertIn("got cut off", llm.calls[1][1]["messages"][0]["content"])
 
     def test_high_severity_review_triggers_revision(self):
         high = {**OK_REVIEW, "issues": [{"severity": "high", "ko": "표현식 오류", "en": "Expression is wrong"}], "verdict": "fix"}

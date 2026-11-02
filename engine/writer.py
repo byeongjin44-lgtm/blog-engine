@@ -6,7 +6,7 @@ import json
 
 from engine.config import Site, Topic
 from engine.formats import get_format, word_count
-from engine.llm import Transport, structured_call
+from engine.llm import Transport, TruncatedError, structured_call
 
 REVIEW_SCHEMA = {
     "type": "object",
@@ -92,7 +92,7 @@ def write_post(site: Site, topic: Topic, existing: dict[str, str], transport: Tr
         system=_writer_system(site),
         prompt=_writer_prompt(site, topic, existing, feedback, previous),
         schema=fmt["schema"],
-        max_tokens=12000,
+        max_tokens=16000,
         transport=transport,
     )
     if site.tool(topic.related_tool):
@@ -124,7 +124,13 @@ def draft(site: Site, topic: Topic, existing: dict[str, str], transport: Transpo
     fmt = get_format(site.format)
     existing_slugs = set(existing)
 
-    post = write_post(site, topic, existing, transport)
+    try:
+        post = write_post(site, topic, existing, transport)
+    except TruncatedError:
+        # Usually a post that tried to cover too much; one shorter attempt.
+        shorter = (f"Your previous answer was too long and got cut off. Write a tighter post of at most "
+                   f"{site.max_words} words: fewer, shorter code samples and only the most common cases.")
+        post = write_post(site, topic, existing, transport, feedback=[shorter], previous={"note": "cut off"})
     errors = fmt["validate"](post, site, existing_slugs)
     if errors:
         post = write_post(site, topic, existing, transport, feedback=errors, previous=post)
