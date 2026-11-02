@@ -21,6 +21,15 @@ The owner does not read English: the Korean summary and review are how posts get
   button presses are handled within seconds — GitHub's cron is best-effort and can be hours late),
   `poll.yml` (hourly fallback), `test.yml`. Don't turn `listen` into a 24/7 loop: Actions is not a server.
 
+## Recovery (no human or AI fix needed for ordinary failures)
+
+- Transient API/network errors (429, 5xx, 529, timeouts) are retried with pauses (`llm.py`, `publishers.py`).
+- A draft that fails (validation, cut-off, bad JSON…) is rewritten with `models.fallback` (Sonnet), then the
+  next topic is tried; failed topics are parked for 14 days (`state/failed/<id>.json`). The owner hears
+  about it only if every attempt failed.
+- Problems only the owner can fix (API key, credit, GitHub token) raise `OwnerActionRequired` and send a
+  Korean message saying exactly what to change; drafting stops for that site until then.
+
 ## Rules
 
 - Never publish without an explicit Approve from Telegram. No auto-approve.

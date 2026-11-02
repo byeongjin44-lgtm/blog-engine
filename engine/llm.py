@@ -10,7 +10,12 @@ import json
 import os
 from typing import Any, Callable
 
-from engine.http import request_json
+import time
+
+from engine.errors import is_transient, owner_action_for_anthropic
+from engine.http import HttpError, request_json
+
+RETRY_WAITS = (20, 60, 120)  # seconds between attempts on transient errors
 
 API_URL = "https://api.anthropic.com/v1/messages"
 
@@ -22,17 +27,32 @@ class TruncatedError(RuntimeError):
 Transport = Callable[[dict], dict]
 
 
-def _default_transport(payload: dict) -> dict:
+def _default_transport(payload: dict, sleep=time.sleep) -> dict:
     key = os.environ.get("ANTHROPIC_API_KEY")
     if not key:
         raise RuntimeError("ANTHROPIC_API_KEY is not set")
-    return request_json(
-        "POST",
-        API_URL,
-        payload,
-        headers={"x-api-key": key, "anthropic-version": "2023-06-01"},
-        timeout=600,
-    )
+    for attempt in range(len(RETRY_WAITS) + 1):
+        try:
+            return request_json(
+                "POST",
+                API_URL,
+                payload,
+                headers={"x-api-key": key, "anthropic-version": "2023-06-01"},
+                timeout=600,
+            )
+        except HttpError as e:
+            owner = owner_action_for_anthropic(e)
+            if owner:
+                raise owner from None
+            if not is_transient(e) or attempt == len(RETRY_WAITS):
+                raise
+            print(f"Claude API busy ({e.status}), retrying in {RETRY_WAITS[attempt]}s")
+        except Exception as e:  # noqa: BLE001
+            if not is_transient(e) or attempt == len(RETRY_WAITS):
+                raise
+            print(f"Network error ({e}), retrying in {RETRY_WAITS[attempt]}s")
+        sleep(RETRY_WAITS[attempt])
+    raise AssertionError("unreachable")
 
 
 def strict_schema(schema: dict) -> dict:

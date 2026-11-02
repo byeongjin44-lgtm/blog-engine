@@ -11,6 +11,9 @@ import os
 from typing import Callable
 from urllib.parse import quote
 
+import time
+
+from engine.errors import is_transient, owner_action_for_github
 from engine.http import HttpError, request_json
 
 GITHUB_API = "https://api.github.com"
@@ -33,12 +36,24 @@ class GitHubFilesPublisher:
         token = os.environ.get(self.token_env)
         if not token:
             raise RuntimeError(f"{self.token_env} is not set")
-        return request_json(
-            method,
-            url,
-            payload,
-            headers={"Authorization": f"Bearer {token}", "X-GitHub-Api-Version": "2022-11-28"},
-        )
+        for attempt, wait in enumerate((10, 30, None)):
+            try:
+                return request_json(
+                    method,
+                    url,
+                    payload,
+                    headers={"Authorization": f"Bearer {token}", "X-GitHub-Api-Version": "2022-11-28"},
+                )
+            except HttpError as e:
+                owner = owner_action_for_github(e)
+                if owner:
+                    raise owner from None
+                if not is_transient(e) or wait is None:
+                    raise
+            except Exception as e:  # noqa: BLE001
+                if not is_transient(e) or wait is None:
+                    raise
+            time.sleep(wait)
 
     def existing_slugs(self) -> set[str]:
         url = f"{GITHUB_API}/repos/{self.repo}/contents/{quote(self.path)}?ref={quote(self.branch)}"

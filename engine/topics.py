@@ -37,7 +37,7 @@ def all_topics(site: Site, state_dir: Path = state.STATE_DIR) -> list[Topic]:
 
 
 def remaining(site: Site, state_dir: Path = state.STATE_DIR) -> list[Topic]:
-    used = state.used_topics(site.id, state_dir)
+    used = state.used_topics(site.id, state_dir) | state.recently_failed_topics(site.id, state_dir=state_dir)
     return [t for t in all_topics(site, state_dir) if t.title not in used]
 
 

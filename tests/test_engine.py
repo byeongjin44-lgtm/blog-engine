@@ -194,7 +194,9 @@ class FlowTests(unittest.TestCase):
         failures = run_draft(["devrivet"], state_dir=self.tmp, telegram=tg, llm_transport=llm, github_transport=FakeGitHub())
         self.assertEqual(failures, 1)
         self.assertEqual(state.all_drafts(self.tmp), [])
-        self.assertIn("초안 생성 실패", tg.sent[0]["text"])
+        self.assertIn("오늘 글을 만들지 못했습니다", tg.sent[0]["text"])
+        # Both models were tried on both candidate topics, and both topics are parked for two weeks.
+        self.assertEqual(len(state.recently_failed_topics("devrivet", state_dir=self.tmp)), 2)
         self.assertIn("too short", llm.calls[1][1]["messages"][0]["content"])
 
     def test_cut_off_post_is_retried_shorter(self):
@@ -221,6 +223,77 @@ class FlowTests(unittest.TestCase):
         text = format_review_message(SITE, d)
         self.assertIn("x &amp; y", text)
         self.assertIn("&lt;script&gt;", text)
+
+
+class RecoveryTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+
+    def test_falls_back_to_stronger_model(self):
+        bad = make_post(words=100, link=False)
+        llm = FakeLLM([bad, bad, make_post()], [OK_REVIEW])
+        tg = FakeTelegram()
+        self.assertEqual(run_draft(["devrivet"], state_dir=self.tmp, telegram=tg, llm_transport=llm, github_transport=FakeGitHub()), 0)
+        d = state.all_drafts(self.tmp)[0]
+        self.assertEqual(d["model"], SITE.fallback_model)
+        self.assertEqual(len(d["recovered_from"]), 1)
+        models = [c[1]["model"] for c in llm.calls if c[0] == "submit_post"]
+        self.assertEqual(models, [SITE.writer_model, SITE.writer_model, SITE.fallback_model])
+        self.assertIn("새 글 검토", tg.sent[0]["text"])
+
+    def test_moves_to_next_topic(self):
+        bad = make_post(words=100, link=False)
+        llm = FakeLLM([bad, bad, bad, bad, make_post()], [OK_REVIEW])
+        run_draft(["devrivet"], state_dir=self.tmp, telegram=FakeTelegram(), llm_transport=llm, github_transport=FakeGitHub())
+        d = state.all_drafts(self.tmp)[0]
+        self.assertEqual(d["topic"]["title"], SITE.topics[1].title)
+        self.assertEqual(state.recently_failed_topics("devrivet", state_dir=self.tmp), {SITE.topics[0].title})
+
+    def test_owner_action_stops_and_explains_in_korean(self):
+        from engine.errors import OwnerActionRequired
+
+        def broke(payload):
+            raise OwnerActionRequired("Claude API 크레딧이 모두 소진되었습니다.", "credit balance too low")
+
+        tg = FakeTelegram()
+        failures = run_draft(["devrivet"], state_dir=self.tmp, telegram=tg, llm_transport=broke, github_transport=FakeGitHub(), extra=2)
+        self.assertEqual(failures, 1)  # stopped after the first: retrying cannot help
+        self.assertEqual(len(tg.sent), 1)
+        self.assertIn("직접 처리해 주셔야 할 일", tg.sent[0]["text"])
+        self.assertIn("크레딧", tg.sent[0]["text"])
+        self.assertEqual(state.recently_failed_topics("devrivet", state_dir=self.tmp), set())
+
+    def test_extra_drafts_beyond_daily_quota(self):
+        # The first two queued topics are both cron topics, which make_post() fits.
+        llm = FakeLLM([make_post(), make_post(slug="cron-every-monday-2")], [OK_REVIEW, OK_REVIEW])
+        run_draft(["devrivet"], state_dir=self.tmp, telegram=FakeTelegram(), llm_transport=llm, github_transport=FakeGitHub(), extra=1)
+        self.assertEqual(len(state.all_drafts(self.tmp)), 2)
+
+    def test_api_transport_retries_transient_errors_only(self):
+        import os
+        from unittest import mock
+        from engine import llm as llm_mod
+        from engine.errors import OwnerActionRequired
+
+        calls = []
+
+        def flaky(method, url, payload, headers, timeout):
+            calls.append(1)
+            if len(calls) < 3:
+                raise HttpError(529, '{"error":{"type":"overloaded_error"}}', url)
+            return {"ok": True}
+
+        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": "k"}), mock.patch.object(llm_mod, "request_json", flaky):
+            self.assertEqual(llm_mod._default_transport({}, sleep=lambda s: None), {"ok": True})
+        self.assertEqual(len(calls), 3)
+
+        def no_credit(method, url, payload, headers, timeout):
+            raise HttpError(400, '{"error":{"message":"Your credit balance is too low"}}', url)
+
+        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": "k"}), mock.patch.object(llm_mod, "request_json", no_credit):
+            with self.assertRaises(OwnerActionRequired) as ctx:
+                llm_mod._default_transport({}, sleep=lambda s: None)
+        self.assertIn("크레딧", ctx.exception.message_ko)
 
 
 class ListenTests(unittest.TestCase):
@@ -272,8 +345,9 @@ class TopicRefillTests(unittest.TestCase):
         self.assertIn("새 주제 1개", tg.sent[0]["text"])
         self.assertIn("15분마다 실행하는 cron", tg.sent[0]["text"])
         # Hand-written topics still come first, the new topic is queued after them.
+        # (Drafting failed in this test, so the two topics it tried are parked.)
         left = topic_queue.remaining(SITE, tmp)
-        self.assertEqual([t.title for t in left], [t.title for t in SITE.topics[-3:]] + ["Cron expression for every 15 minutes"])
+        self.assertEqual([t.title for t in left], [t.title for t in SITE.topics[-1:]] + ["Cron expression for every 15 minutes"])
 
     def test_no_refill_when_queue_is_long(self):
         llm = FakeLLM([make_post()], [OK_REVIEW])

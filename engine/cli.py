@@ -13,11 +13,13 @@ import argparse
 import os
 import sys
 import time
+from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from engine import state
 from engine.config import Site, all_site_ids, load_site
+from engine.errors import OwnerActionRequired
 from engine.formats import get_format
 from engine.publishers import get_publisher
 from engine.telegram import Telegram, approval_buttons, esc
@@ -66,12 +68,12 @@ def existing_posts(site: Site, publisher, state_dir: Path) -> dict[str, str]:
 
 
 def run_draft(site_ids: list[str], *, state_dir: Path = state.STATE_DIR, telegram: Telegram | None = None,
-              llm_transport=None, github_transport=None) -> int:
+              llm_transport=None, github_transport=None, extra: int = 0) -> int:
     tg = telegram or Telegram()
     failures = 0
     for site_id in site_ids:
         try:
-            failures += _draft_site(site_id, tg, state_dir, llm_transport, github_transport)
+            failures += _draft_site(site_id, tg, state_dir, llm_transport, github_transport, extra=extra)
         except Exception as e:  # noqa: BLE001 — setup errors (bad token, config) must still be reported
             failures += 1
             report_error(tg, f"[{site_id}] 초안 작업 오류", e)
@@ -88,45 +90,82 @@ def report_error(tg: Telegram, title: str, error: Exception) -> None:
         print(f"::error title=Telegram 전송 실패::{type(tg_error).__name__}: {tg_error}"[:1500].replace("\n", " "))
 
 
-def _draft_site(site_id: str, tg: Telegram, state_dir: Path, llm_transport, github_transport) -> int:
+MAX_TOPICS_PER_POST = 2  # topics tried before giving up on a post for the day
+
+
+def _draft_site(site_id: str, tg: Telegram, state_dir: Path, llm_transport, github_transport, extra: int = 0) -> int:
     failures = 0
     site = load_site(site_id)
     publisher = get_publisher(site.publisher, transport=github_transport)
-    for _ in range(max(0, site.posts_per_day - state.drafted_today(site.id, state_dir))):
+    wanted = max(0, site.posts_per_day - state.drafted_today(site.id, state_dir)) + extra
+    for _ in range(wanted):
         try:
-            added = topic_queue.refill_if_low(site, state_dir, transport=llm_transport)
-        except Exception as e:  # noqa: BLE001 — drafting can continue with the topics left
-            added = []
-            report_error(tg, f"[{site.name}] 주제 자동 보충 실패", e)
-        if added:
-            lines = "\n".join(f"• {esc(t['title_ko'])} <i>({esc(t['keyword'])})</i>" for t in added)
-            tg.send(f"🗂 <b>[{esc(site.name)}]</b> 주제가 부족해 새 주제 {len(added)}개를 추가했습니다.\n{lines}")
-        left = topic_queue.remaining(site, state_dir)
-        topic = left[0] if left else None
-        if topic is None:
-            tg.send(f"📭 <b>[{esc(site.name)}]</b> 주제 목록이 비었습니다. sites/{site.id}/topics.toml에 주제를 추가해 주세요.")
-            break
-        existing = existing_posts(site, publisher, state_dir)
-        try:
-            post, review = draft(site, topic, existing, transport=llm_transport)
-        except Exception as e:  # noqa: BLE001 — report any failure, keep other sites running
+            if not _draft_one(site, tg, state_dir, publisher, llm_transport):
+                failures += 1
+        except OwnerActionRequired as e:
             failures += 1
-            report_error(tg, f"[{site.name}] 초안 생성 실패 — {topic.title}", e)
-            continue
-        d = {
-            "id": state.new_draft_id(site.id, post["slug"]),
-            "site": site.id,
-            "status": "pending",
-            "created": state.now_iso(),
-            "topic": {"title": topic.title, "keyword": topic.keyword, "related_tool": topic.related_tool},
-            "post": post,
-            "review": review,
-        }
-        state.save_draft(d, state_dir)
-        d["telegram_message_id"] = tg.send(format_review_message(site, d), approval_buttons(d["id"]))
-        state.save_draft(d, state_dir)
-        print(f"[{site.id}] drafted {post['slug']} ({d['id']})")
+            print(f"::error title=사용자 조치 필요::{e}".replace("\n", " ")[:1500])
+            tg.send(f"🛠 <b>[{esc(site.name)}] 직접 처리해 주셔야 할 일이 있습니다</b>\n{esc(e.message_ko)}")
+            break  # retrying cannot help until the owner fixes it
     return failures
+
+
+def _draft_one(site: Site, tg: Telegram, state_dir: Path, publisher, llm_transport) -> bool:
+    """Draft one post, recovering on its own: retry with the fallback model, then try the next topic.
+    Returns False only if every attempt failed (the owner then gets one summary message)."""
+    try:
+        added = topic_queue.refill_if_low(site, state_dir, transport=llm_transport)
+    except OwnerActionRequired:
+        raise
+    except Exception as e:  # noqa: BLE001 — drafting can continue with the topics left
+        added = []
+        print(f"::warning title=주제 자동 보충 실패::{e}"[:1500].replace("\n", " "))
+    if added:
+        lines = "\n".join(f"• {esc(t['title_ko'])} <i>({esc(t['keyword'])})</i>" for t in added)
+        tg.send(f"🗂 <b>[{esc(site.name)}]</b> 주제가 부족해 새 주제 {len(added)}개를 추가했습니다.\n{lines}")
+
+    candidates = topic_queue.remaining(site, state_dir)[:MAX_TOPICS_PER_POST]
+    if not candidates:
+        tg.send(f"📭 <b>[{esc(site.name)}]</b> 쓸 수 있는 주제가 없습니다. sites/{site.id}/topics.toml에 주제를 추가해 주세요.")
+        return False
+
+    models = list(dict.fromkeys([site.writer_model, site.fallback_model]))
+    attempts: list[str] = []
+    for topic in candidates:
+        existing = existing_posts(site, publisher, state_dir)
+        for model in models:
+            try:
+                post, review = draft(replace(site, writer_model=model), topic, existing, transport=llm_transport)
+            except OwnerActionRequired:
+                raise
+            except Exception as e:  # noqa: BLE001 — recover by changing model, then topic
+                reason = f"{type(e).__name__}: {e}"
+                attempts.append(f"{topic.title} / {model}: {reason[:200]}")
+                print(f"::warning title=자동 복구 시도::{topic.title} / {model}: {reason}"[:1500].replace("\n", " "))
+                continue
+            d = {
+                "id": state.new_draft_id(site.id, post["slug"]),
+                "site": site.id,
+                "status": "pending",
+                "created": state.now_iso(),
+                "topic": {"title": topic.title, "keyword": topic.keyword, "related_tool": topic.related_tool},
+                "post": post,
+                "review": review,
+                "model": model,
+                "recovered_from": attempts,
+            }
+            state.save_draft(d, state_dir)
+            d["telegram_message_id"] = tg.send(format_review_message(site, d), approval_buttons(d["id"]))
+            state.save_draft(d, state_dir)
+            print(f"[{site.id}] drafted {post['slug']} ({d['id']}) with {model}")
+            return True
+        state.record_failed_topic(site.id, topic.title, attempts[-1] if attempts else "", state_dir)
+
+    detail = "\n".join(f"• {esc(a)}" for a in attempts)
+    print(f"::error title=[{site.name}] 자동 복구 실패::{' | '.join(attempts)}"[:1500].replace("\n", " "))
+    tg.send(f"🚫 <b>[{esc(site.name)}]</b> 오늘 글을 만들지 못했습니다. 모델 교체·주제 교체까지 자동으로 시도했지만 모두 실패했습니다. "
+            f"실패한 주제는 2주간 건너뛰고, 내일 다시 시도합니다.\n{detail}")
+    return False
 
 
 def publish_draft(d: dict, *, github_transport=None, today: str | None = None) -> str:
@@ -244,6 +283,7 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     p_draft = sub.add_parser("draft")
     p_draft.add_argument("--site", help="site id (default: all sites)")
+    p_draft.add_argument("--extra", type=int, default=0, help="draft this many posts beyond today's quota")
     sub.add_parser("poll")
     p_listen = sub.add_parser("listen")
     p_listen.add_argument("--minutes", type=float, default=240)
@@ -252,7 +292,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if args.command == "draft":
-            return 1 if run_draft([args.site] if args.site else all_site_ids()) else 0
+            return 1 if run_draft([args.site] if args.site else all_site_ids(), extra=args.extra) else 0
         if args.command == "poll":
             run_poll()
         elif args.command == "listen":

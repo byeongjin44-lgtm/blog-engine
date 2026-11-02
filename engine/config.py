@@ -11,6 +11,7 @@ SITES_DIR = ROOT / "sites"
 
 DEFAULT_WRITER_MODEL = "claude-sonnet-5-5"
 DEFAULT_REVIEWER_MODEL = "claude-haiku-5-5"
+DEFAULT_FALLBACK_MODEL = "claude-sonnet-5-5"
 
 
 @dataclass(frozen=True)
@@ -46,6 +47,7 @@ class Site:
     topics: tuple[Topic, ...] = ()
     writer_model: str = DEFAULT_WRITER_MODEL
     reviewer_model: str = DEFAULT_REVIEWER_MODEL
+    fallback_model: str = DEFAULT_FALLBACK_MODEL
     style_notes: str = ""
     banned_phrases: tuple[str, ...] = field(default_factory=tuple)
 
@@ -87,6 +89,7 @@ def load_site(site_id: str, sites_dir: Path = SITES_DIR) -> Site:
         topics=topics,
         writer_model=models.get("writer", DEFAULT_WRITER_MODEL),
         reviewer_model=models.get("reviewer", DEFAULT_REVIEWER_MODEL),
+        fallback_model=models.get("fallback", DEFAULT_FALLBACK_MODEL),
         style_notes=raw.get("style_notes", ""),
         banned_phrases=tuple(raw.get("banned_phrases", [])),
     )

@@ -9,6 +9,10 @@ on:
         description: "Site id (empty = all sites)"
         required: false
         default: ""
+      extra:
+        description: "Extra posts beyond today's quota (manual test runs)"
+        required: false
+        default: "0"
 
 permissions:
   contents: write
@@ -33,8 +37,9 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TARGET_GITHUB_TOKEN: ${{ secrets.TARGET_GITHUB_TOKEN }}
           SITE: ${{ inputs.site }}
+          EXTRA: ${{ inputs.extra || '0' }}
         run: |
-          if [ -n "$SITE" ]; then python -m engine draft --site "$SITE"; else python -m engine draft; fi
+          if [ -n "$SITE" ]; then python -m engine draft --site "$SITE" --extra "$EXTRA"; else python -m engine draft --extra "$EXTRA"; fi
       - name: Save state
         if: always()
         run: ./scripts/commit-state.sh "Draft posts"

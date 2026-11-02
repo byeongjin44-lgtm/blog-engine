@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from engine.config import ROOT
@@ -71,3 +71,25 @@ def get_offset(state_dir: Path = STATE_DIR) -> int:
 def set_offset(offset: int, state_dir: Path = STATE_DIR) -> None:
     state_dir.mkdir(parents=True, exist_ok=True)
     (state_dir / "telegram.json").write_text(json.dumps({"offset": offset}) + "\n")
+
+
+def _failed_path(site_id: str, state_dir: Path) -> Path:
+    d = state_dir / "failed"
+    d.mkdir(parents=True, exist_ok=True)
+    return d / f"{site_id}.json"
+
+
+def record_failed_topic(site_id: str, title: str, reason: str, state_dir: Path = STATE_DIR) -> None:
+    path = _failed_path(site_id, state_dir)
+    entries = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
+    entries.append({"title": title, "at": now_iso(), "reason": reason[:500]})
+    path.write_text(json.dumps(entries, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def recently_failed_topics(site_id: str, days: int = 14, state_dir: Path = STATE_DIR) -> set[str]:
+    """Topics that failed recently are skipped for a while so they don't block every day."""
+    path = _failed_path(site_id, state_dir)
+    if not path.exists():
+        return set()
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return {e["title"] for e in json.loads(path.read_text(encoding="utf-8")) if e["at"] >= cutoff}
