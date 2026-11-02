@@ -75,7 +75,8 @@ def _calc_block(calc: dict | None) -> str:
         "Calculator results for this post, computed by the site's own calculator code:\n"
         + calculator.describe(calc["results"], calc["fields"])
         + "\n\nNumber rules (strict):\n"
-        "- Use these results as the post's worked example. Every HEADLINE result must appear in the post exactly as written.\n"
+        "- Use these results as the post's worked example. Every HEADLINE number and unit must appear in the post exactly as "
+        "written (e.g. \"2 gallons\"). Write the sentences naturally: do not copy the result labels (\"Paint to buy:\") into the text.\n"
         "- Never calculate, estimate, round or convert any quantity yourself. Do not add other worked examples, "
         "\"for a bigger room\" variations, totals, prices or costs. Only these inputs and results may appear as numbers, "
         "plus the published figures stated on the calculator page (its formula constants).\n"
