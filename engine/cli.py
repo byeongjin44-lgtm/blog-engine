@@ -19,7 +19,9 @@ from pathlib import Path
 
 from engine import state
 from engine.config import Site, all_site_ids, load_site
+from engine.budget import BUDGET_KRW, BudgetExceeded, CostGuard
 from engine.errors import OwnerActionRequired
+from engine.llm import _default_transport as default_transport
 from engine.formats import get_format
 from engine.publishers import get_publisher
 from engine.telegram import Telegram, approval_buttons, esc
@@ -41,6 +43,7 @@ def format_review_message(site: Site, d: dict) -> str:
         f"<b>한글 제목</b>: {esc(review.get('title_ko', ''))}",
         f"<b>키워드</b>: {esc(d['topic']['keyword'])}",
         f"<b>분량</b>: {review.get('word_count', '?')}단어",
+        f"<b>작성 비용</b>: 약 {d.get('cost_krw', '?')}원 (모델: {esc(d.get('model', '?'))})",
         "",
         "<b>내용 요약</b>",
         *[f"• {esc(s)}" for s in review.get("summary_ko", [])],
@@ -95,7 +98,9 @@ def report_error(tg: Telegram, title: str, error: Exception) -> None:
         print(f"::error title=Telegram 전송 실패::{type(tg_error).__name__}: {tg_error}"[:1500].replace("\n", " "))
 
 
-MAX_TOPICS_PER_POST = 2  # topics tried before giving up on a post for the day
+# Owner decision (2026-11-02, cost): one topic per post per day, at most Haiku then Sonnet, within the
+# per-post budget in engine/budget.py. If that fails, stop for the day. Locked by tests.
+MAX_TOPICS_PER_POST = 1
 
 
 def _draft_site(site_id: str, tg: Telegram, state_dir: Path, llm_transport, github_transport, extra: int = 0) -> int:
@@ -107,6 +112,7 @@ def _draft_site(site_id: str, tg: Telegram, state_dir: Path, llm_transport, gith
         try:
             if not _draft_one(site, tg, state_dir, publisher, llm_transport):
                 failures += 1
+                break  # do not spend more today: the next scheduled run tries again
         except OwnerActionRequired as e:
             failures += 1
             print(f"::error title=사용자 조치 필요::{e}".replace("\n", " ")[:1500])
@@ -134,15 +140,19 @@ def _draft_one(site: Site, tg: Telegram, state_dir: Path, publisher, llm_transpo
         tg.send(f"📭 <b>[{esc(site.name)}]</b> 쓸 수 있는 주제가 없습니다. sites/{site.id}/topics.toml에 주제를 추가해 주세요.")
         return False
 
-    models = list(dict.fromkeys([site.writer_model, site.fallback_model]))
+    models = list(dict.fromkeys([site.writer_model, site.fallback_model]))[:2]
     attempts: list[str] = []
+    guard = CostGuard(llm_transport or default_transport)  # one budget for this whole post
     for topic in candidates:
         existing = existing_posts(site, publisher, state_dir)
         for model in models:
             try:
-                post, review = draft(replace(site, writer_model=model), topic, existing, transport=llm_transport)
+                post, review = draft(replace(site, writer_model=model), topic, existing, transport=guard)
             except OwnerActionRequired:
                 raise
+            except BudgetExceeded as e:
+                attempts.append(f"{topic.title} / {model}: {e}")
+                break
             except Exception as e:  # noqa: BLE001 — recover by changing model, then topic
                 reason = f"{type(e).__name__}: {e}"
                 attempts.append(f"{topic.title} / {model}: {reason[:200]}")
@@ -158,6 +168,8 @@ def _draft_one(site: Site, tg: Telegram, state_dir: Path, publisher, llm_transpo
                 "review": review,
                 "model": model,
                 "recovered_from": attempts,
+                "cost_krw": guard.spent_krw,
+                "api_calls": guard.calls,
             }
             state.save_draft(d, state_dir)
             d["telegram_message_id"] = tg.send(format_review_message(site, d), approval_buttons(d["id"]))
@@ -168,8 +180,9 @@ def _draft_one(site: Site, tg: Telegram, state_dir: Path, publisher, llm_transpo
 
     detail = "\n".join(f"• {esc(a)}" for a in attempts)
     print(f"::error title=[{site.name}] 자동 복구 실패::{' | '.join(attempts)}"[:1500].replace("\n", " "))
-    tg.send(f"🚫 <b>[{esc(site.name)}]</b> 오늘 글을 만들지 못했습니다. 모델 교체·주제 교체까지 자동으로 시도했지만 모두 실패했습니다. "
-            f"실패한 주제는 2주간 건너뛰고, 내일 다시 시도합니다.\n{detail}")
+    tg.send(f"🚫 <b>[{esc(site.name)}]</b> 오늘 글을 만들지 못했습니다. Haiku → Sonnet 순서로 자동 재작성까지 시도했지만 실패해, "
+            f"정해진 한도(글 1개당 {BUDGET_KRW}원)에서 작업을 멈췄습니다. 이번에 쓴 비용: 약 {guard.spent_krw}원.\n"
+            f"이 주제는 2주간 건너뛰고, 다음 예약 실행 때 다른 주제로 다시 시도합니다.\n{detail}")
     return False
 
 

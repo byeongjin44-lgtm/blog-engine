@@ -24,14 +24,18 @@ The owner does not read English: the Korean summary and review are how posts get
 ## Recovery (no human or AI fix needed for ordinary failures)
 
 - Transient API/network errors (429, 5xx, 529, timeouts) are retried with pauses (`llm.py`, `publishers.py`).
-- A draft that fails (validation, cut-off, bad JSON…) is rewritten with `models.fallback` (Sonnet), then the
-  next topic is tried; failed topics are parked for 14 days (`state/failed/<id>.json`). The owner hears
-  about it only if every attempt failed.
+- A draft that fails (validation, cut-off, bad JSON…) is rewritten with `models.fallback` (Sonnet) — within
+  the per-post budget below. If that fails too, the topic is parked for 14 days (`state/failed/<id>.json`),
+  drafting stops for the day, and the owner gets one Korean message.
 - Problems only the owner can fix (API key, credit, GitHub token) raise `OwnerActionRequired` and send a
   Korean message saying exactly what to change; drafting stops for that site until then.
 
 ## Rules
 
+- **Per-post spending cap: 150 KRW (owner decision, 2026-11-02).** Allowed path per post: Haiku, then Sonnet
+  (`models.fallback`), on ONE topic, with up to 2 review rewrite rounds. If that fails, stop for the day —
+  no next topic, no more posts. Enforced by `engine/budget.py` (`CostGuard` caps `max_tokens` and tracks real
+  usage), `MAX_TOPICS_PER_POST = 1` in `cli.py`, and locked by tests. Never change without explicit approval.
 - **Review rewrite rounds are capped at 2 per post (owner decision, cost). Never raise the cap without the
   owner's explicit approval** — `REVIEW_ROUNDS` in `writer.py`, also hard-capped in the loop and locked by a test.
 

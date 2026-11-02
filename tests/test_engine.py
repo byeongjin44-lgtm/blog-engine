@@ -195,8 +195,8 @@ class FlowTests(unittest.TestCase):
         self.assertEqual(failures, 1)
         self.assertEqual(state.all_drafts(self.tmp), [])
         self.assertIn("오늘 글을 만들지 못했습니다", tg.sent[0]["text"])
-        # Both models were tried on both candidate topics, and both topics are parked for two weeks.
-        self.assertEqual(len(state.recently_failed_topics("devrivet", state_dir=self.tmp)), 2)
+        # Haiku then Sonnet on one topic only; that topic is parked for two weeks.
+        self.assertEqual(len(state.recently_failed_topics("devrivet", state_dir=self.tmp)), 1)
         self.assertIn("too short", llm.calls[1][1]["messages"][0]["content"])
 
     def test_cut_off_post_is_retried_shorter(self):
@@ -268,13 +268,17 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(models, [SITE.writer_model, SITE.writer_model, SITE.fallback_model])
         self.assertIn("새 글 검토", tg.sent[0]["text"])
 
-    def test_moves_to_next_topic(self):
+    def test_stops_after_haiku_and_sonnet_on_one_topic(self):
         bad = make_post(words=100, link=False)
         llm = FakeLLM([bad, bad, bad, bad, make_post()], [OK_REVIEW])
-        run_draft(["devrivet"], state_dir=self.tmp, telegram=FakeTelegram(), llm_transport=llm, github_transport=FakeGitHub())
-        d = state.all_drafts(self.tmp)[0]
-        self.assertEqual(d["topic"]["title"], SITE.topics[1].title)
+        tg = FakeTelegram()
+        failures = run_draft(["devrivet"], state_dir=self.tmp, telegram=tg, llm_transport=llm,
+                             github_transport=FakeGitHub(), extra=2)
+        self.assertEqual(failures, 1)
+        self.assertEqual(state.all_drafts(self.tmp), [])          # no next topic, no further posts today
+        self.assertEqual(len([c for c in llm.calls if c[0] == "submit_post"]), 4)  # Haiku x2, Sonnet x2
         self.assertEqual(state.recently_failed_topics("devrivet", state_dir=self.tmp), {SITE.topics[0].title})
+        self.assertIn("150원", tg.sent[-1]["text"])
 
     def test_owner_action_stops_and_explains_in_korean(self):
         from engine.errors import OwnerActionRequired
@@ -321,6 +325,59 @@ class RecoveryTests(unittest.TestCase):
             with self.assertRaises(OwnerActionRequired) as ctx:
                 llm_mod._default_transport({}, sleep=lambda s: None)
         self.assertIn("크레딧", ctx.exception.message_ko)
+
+
+class BudgetTests(unittest.TestCase):
+    def test_owner_limits_are_locked(self):
+        from engine import budget, cli
+        msg = "Owner decision 2026-11-02: max 150 KRW per post, one topic, Haiku then Sonnet. Do not change without approval."
+        self.assertEqual(budget.BUDGET_KRW, 150, msg)
+        self.assertEqual(cli.MAX_TOPICS_PER_POST, 1, msg)
+
+    def test_guard_caps_output_and_stops_at_budget(self):
+        from engine.budget import BudgetExceeded, CostGuard
+
+        seen = []
+
+        def api(payload):
+            seen.append(payload["max_tokens"])
+            # Sonnet writing a long post: 3,000 input + 2,500 output tokens = about 40 KRW.
+            return {"stop_reason": "end_turn", "usage": {"input_tokens": 3000, "output_tokens": 2500},
+                    "content": [{"type": "text", "text": "{}"}]}
+
+        guard = CostGuard(api)
+        payload = {"model": "claude-sonnet-5-5", "max_tokens": 16000, "messages": [{"role": "user", "content": "x"}]}
+        with self.assertRaises(BudgetExceeded):
+            for _ in range(10):
+                guard(payload)
+        self.assertLessEqual(guard.spent_krw, 150)
+        self.assertEqual(guard.calls, 3)                    # the 4th Sonnet call is refused before it is made
+        self.assertTrue(all(m <= 16000 for m in seen))
+        self.assertLess(seen[-1], 16000)                    # output was capped to what the budget allows
+
+    def test_allowed_path_fits_the_budget(self):
+        """Haiku fails twice, Sonnet writes, 2 review rewrite rounds: must complete under 150 KRW."""
+        from engine.budget import CostGuard
+
+        usage = {"claude-haiku-5-5": (2500, 2500), "claude-sonnet-5-5": (3000, 2500)}
+        bad = make_post(words=100, link=False)
+        posts = [bad, bad, make_post(), make_post(), make_post()]
+        nag = {**OK_REVIEW, "issues": [{"severity": "low", "ko": "보완", "en": "improve"}]}
+        reviews = [nag, nag, OK_REVIEW]
+
+        def api(payload):
+            schema = payload["output_config"]["format"]["schema"]
+            data = reviews.pop(0) if "summary_ko" in schema["properties"] else posts.pop(0)
+            i, o = usage[payload["model"]] if "summary_ko" not in schema["properties"] else (3000, 800)
+            return {"stop_reason": "end_turn", "usage": {"input_tokens": i, "output_tokens": o},
+                    "content": [{"type": "text", "text": json.dumps(data)}]}
+
+        tmp = Path(tempfile.mkdtemp())
+        run_draft(["devrivet"], state_dir=tmp, telegram=FakeTelegram(), llm_transport=api, github_transport=FakeGitHub())
+        d = state.all_drafts(tmp)[0]
+        self.assertEqual(d["model"], "claude-sonnet-5-5")
+        self.assertEqual(len(d["review"]["applied"]), 2)
+        self.assertLessEqual(d["cost_krw"], 150)
 
 
 class ListenTests(unittest.TestCase):
@@ -374,7 +431,7 @@ class TopicRefillTests(unittest.TestCase):
         # Hand-written topics still come first, the new topic is queued after them.
         # (Drafting failed in this test, so the two topics it tried are parked.)
         left = topic_queue.remaining(SITE, tmp)
-        self.assertEqual([t.title for t in left], [t.title for t in SITE.topics[-1:]] + ["Cron expression for every 15 minutes"])
+        self.assertEqual([t.title for t in left], [t.title for t in SITE.topics[-2:]] + ["Cron expression for every 15 minutes"])
 
     def test_no_refill_when_queue_is_long(self):
         llm = FakeLLM([make_post()], [OK_REVIEW])

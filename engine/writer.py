@@ -6,6 +6,7 @@ import json
 
 from engine.config import Site, Topic
 from engine.formats import get_format, word_count
+from engine.budget import BudgetExceeded
 from engine.llm import Transport, TruncatedError, structured_call
 
 REVIEW_SCHEMA = {
@@ -151,13 +152,16 @@ def draft(site: Site, topic: Topic, existing: dict[str, str], transport: Transpo
         issues = review.get("issues", [])
         if not issues:
             break
-        revised = write_post(site, topic, existing, transport,
-                             feedback=[i.get("en") or i["ko"] for i in issues], previous=post)
-        if fmt["validate"](revised, site, existing_slugs):
-            break  # the revision broke the post's structure: keep the last valid version
-        post = revised
+        try:
+            revised = write_post(site, topic, existing, transport,
+                                 feedback=[i.get("en") or i["ko"] for i in issues], previous=post)
+            if fmt["validate"](revised, site, existing_slugs):
+                break  # the revision broke the post's structure: keep the last valid version
+            new_review = review_post(site, revised, transport)
+        except BudgetExceeded:
+            break  # out of budget: keep the last fully reviewed version
+        post, review = revised, new_review
         applied += [i["ko"] for i in issues]
-        review = review_post(site, post, transport)
     review["applied"] = applied
     review["word_count"] = word_count(post["body"])
     return post, review
