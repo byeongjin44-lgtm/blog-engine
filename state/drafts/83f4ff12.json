@@ -1,0 +1,238 @@
+{
+  "id": "83f4ff12",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-02T09:22:05Z",
+  "topic": {
+    "title": "Regex for phone numbers: matching common formats",
+    "keyword": "regex phone number",
+    "related_tool": "regex-tester"
+  },
+  "post": {
+    "slug": "regex-phone-number-common-formats",
+    "title": "Regex Phone Number Patterns for Common Formats",
+    "description": "Use this regex to match common US and Canadian phone formats like (555) 123-4567 and +1 555.123.4567, plus extraction, E.164 and pitfalls.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A single regex can match the common written forms of North American (NANP) phone numbers, including an optional +1 country code. Here is the pattern:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "^(?:\\+?1[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]?\\d{3}[-.\\s]?\\d{4}$"
+      },
+      {
+        "type": "p",
+        "text": "It checks the shape of the number, not whether the number is assigned or in service. For numbers outside the US and Canada, normalize to E.164 and use a library instead (see below). You can paste the pattern into the [Regex Tester](/regex-tester) along with a list of sample numbers to see which lines match before you put it in code. The tester uses JavaScript regex syntax, so test the JavaScript version of the pattern there."
+      },
+      {
+        "type": "h2",
+        "text": "Common US formats and what they match"
+      },
+      {
+        "type": "p",
+        "text": "Against the pattern above:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "`555-123-4567` matches",
+          "`(555) 123-4567` matches",
+          "`555.123.4567` matches",
+          "`555 123 4567` matches",
+          "`5551234567` matches",
+          "`1-555-123-4567` matches",
+          "`+1 555 123 4567` matches",
+          "`555-1234` does not match (no area code)",
+          "`555-123-456` does not match (too short)",
+          "`0555 123 4567` does not match (the leading 0 makes the area code and exchange fail to line up)",
+          "`(555-123-4567` does not match (unbalanced parenthesis)"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Breaking down the pattern"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "`^` and `$` anchor the match to the whole string, so extra characters cause a failure.",
+          "`(?:\\+?1[-.\\s]?)?` is an optional country code: an optional plus sign, the digit 1, and an optional separator. The group is non-capturing, so match results don't include extra groups.",
+          "`(?:\\(\\d{3}\\)|\\d{3})` is the area code, either in parentheses or bare. The two alternatives keep unbalanced input like `(555` out.",
+          "`[-.\\s]?\\d{3}[-.\\s]?\\d{4}` is the exchange and line number, each optionally preceded by a dash, dot or whitespace."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Validating a number in code"
+      },
+      {
+        "type": "p",
+        "text": "In JavaScript, use a regex literal with the anchors:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const US_PHONE = /^(?:\\+?1[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]?\\d{3}[-.\\s]?\\d{4}$/;\nUS_PHONE.test('(555) 123-4567'); // true\nUS_PHONE.test('+1 555 123 4567'); // true\nUS_PHONE.test('555-1234');        // false"
+      },
+      {
+        "type": "p",
+        "text": "In Python, drop the anchors and use fullmatch on the stripped input:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import re\n\nUS_PHONE = re.compile(r'(?:\\+?1[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]?\\d{3}[-.\\s]?\\d{4}')\n\nprint(bool(US_PHONE.fullmatch('+1 555 123 4567'.strip())))  # True\nprint(bool(US_PHONE.fullmatch('555-1234')))                # False"
+      },
+      {
+        "type": "h2",
+        "text": "Extracting phone numbers from text"
+      },
+      {
+        "type": "p",
+        "text": "To find numbers inside a longer string, the anchors won't work. Use lookarounds so you don't match ten digits in the middle of a longer number, such as an order ID."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const re = /(?<!\\d)(?:\\+?1[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?!\\d)/g;\nconst text = 'Call (555) 123-4567 or +1 555.987.6543 today.';\nconsole.log(text.match(re));\n// [ '(555) 123-4567', '+1 555.987.6543' ]"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import re\n\npattern = re.compile(r'(?<!\\d)(?:\\+?1[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?!\\d)')\nprint(pattern.findall('Call (555) 123-4567 or +1 555.987.6543 today.'))\n# ['(555) 123-4567', '+1 555.987.6543']"
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls that show up in real code"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Missing anchors. Without `^` and `$` (or fullmatch in Python), the pattern succeeds on any string that contains ten digits somewhere, such as `order 12345678901234`.",
+          "Trailing newlines in Python. In a pattern that ends with `$`, `re.match` treats `$` as matching before a final newline, so `'555-123-4567\\n'` passes. Use `fullmatch`, or end the pattern with `\\Z`, and strip input first. In JavaScript, `$` without the `m` flag only matches at the very end of the string.",
+          "Unicode digits in Python. `\\d` matches any Unicode decimal digit, such as Arabic-Indic digits. Use `[0-9]` or the `re.ASCII` flag if you only want ASCII.",
+          "Non-breaking spaces. Text copied from web pages often contains U+00A0, which `\\s` matches. That's usually what you want, but it can surprise you when you compare strings.",
+          "Separators that are too narrow. A pattern that only allows dashes misses the dot and space formats that people commonly type.",
+          "Structure is not validity. NANP rules require the first digit of the area code and the exchange to be 2 through 9. The pattern above doesn't enforce that, so `555-000-0000` passes. Add `[2-9]` to those positions if you need that rule."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Validate by digits first"
+      },
+      {
+        "type": "p",
+        "text": "Many forms are easier to handle if you strip everything except digits, then check the length. This also handles inputs that mix styles."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const digits = input.replace(/\\D/g, '');\nconst isUs = /^1?\\d{10}$/.test(digits);"
+      },
+      {
+        "type": "p",
+        "text": "This accepts `1234567890`, which is not a valid NANP number, so add the area code rule if you need it. Extensions such as `ext. 89` will fail this check, so handle them separately before stripping."
+      },
+      {
+        "type": "h2",
+        "text": "International numbers and E.164"
+      },
+      {
+        "type": "p",
+        "text": "E.164 is the international format: a plus sign, a country code, and the subscriber number, with no separators. It is at most 15 digits in total, and the first digit after the plus sign is never 0. A simple shape check is:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const E164 = /^\\+[1-9]\\d{1,14}$/;\nE164.test('+442071838750'); // true (shape only)\nE164.test('+0123');         // false"
+      },
+      {
+        "type": "p",
+        "text": "This checks length and shape only. It doesn't confirm that the country code exists or that the number is in service. For forms that accept numbers from many countries, use a library built on country numbering plans, such as Google's libphonenumber or a port of it for your language. Store numbers in E.164 for matching and deduplication, and format them for display separately."
+      },
+      {
+        "type": "p",
+        "text": "To normalize user input before storing, remove common separators, then check the result:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const normalized = input.replace(/[\\s().-]/g, '');"
+      },
+      {
+        "type": "p",
+        "text": "This doesn't add a country code, so you still need to know which country the number belongs to."
+      },
+      {
+        "type": "h2",
+        "text": "What regex can't tell you"
+      },
+      {
+        "type": "p",
+        "text": "Regex can check that a string looks like a phone number. It can't tell you that the number belongs to the person who entered it. The same limits apply to email. See [Regex for Email Validation](/blog/regex-email-validation-practical-patterns-limits) for a longer discussion. If the number matters for sign-up or account recovery, send a verification code."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Should I use a regex or a library for phone validation?"
+      },
+      {
+        "type": "p",
+        "text": "For one country with a fixed format, a regex is usually enough. For international forms, use a library that knows numbering plans, since lengths and prefixes differ by country."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my pattern match numbers inside longer strings?"
+      },
+      {
+        "type": "p",
+        "text": "You're missing anchors, or you're using a search function where you need a full match. Use `^` and `$` in JavaScript, `fullmatch` in Python, or lookarounds like `(?<!\\d)` and `(?!\\d)` when extracting from text."
+      },
+      {
+        "type": "h3",
+        "text": "Can one regex match phone numbers from every country?"
+      },
+      {
+        "type": "p",
+        "text": "Not practically. Lengths, prefixes, trunk digits and separators vary by country. A shape check against E.164 plus a library for country-specific rules is a more reliable approach."
+      },
+      {
+        "type": "h3",
+        "text": "Should I strip spaces and dashes before saving a phone number?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, if you need matching or deduplication. Store a normalized form such as `+15551234567` and keep the formatted version separately for display."
+      }
+    ],
+    "relatedTool": "regex-tester"
+  },
+  "review": {
+    "title_ko": "일반 형식 전화번호 정규식 패턴",
+    "summary_ko": [
+      "북미(NANP) 전화번호의 흔한 표기 형식(선택적 +1 국가번호 포함)을 매칭하는 단일 정규식을 제시합니다.",
+      "패턴은 번호의 모양만 검사하며, 실제 할당이나 사용 여부는 확인하지 않습니다. 국제 번호는 E.164로 정규화하고 라이브러리를 쓰라고 권장합니다.",
+      "매칭되는 예(555-123-4567, (555) 123-4567, +1 555 123 4567 등)와 매칭되지 않는 예(555-1234, 괄호 짝이 안 맞는 번호 등)를 나열합니다.",
+      "패턴 구성요소(앵커, 선택적 국가번호, 지역번호, 교환번호와 회선번호)를 설명합니다.",
+      "JavaScript와 Python에서 검증 코드를 제시하고, 텍스트에서 번호를 추출할 때는 룩어라운드를 사용하라고 설명합니다.",
+      "자주 생기는 함정을 다룹니다: 앵커 누락, Python의 후행 줄바꿈과 $, 유니코드 숫자, 줄바꿈 없는 공백, 지역번호 첫 자리 규칙(2–9) 미적용.",
+      "숫자만 남겨 길이로 검사하는 방법, E.164 형식의 간단한 모양 검사, 정규화 방법, 정규식으로 할 수 없는 일(소유자 확인 등)과 FAQ를 다룹니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"Sample numbers stay in your browser there\"라는 문장은 Regex Tester가 입력 데이터를 브라우저 안에서만 처리한다는 제품 동작에 대한 주장입니다. 게시 전에 실제 동작과 일치하는지 확인하세요."
+    ],
+    "word_count": 1130
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 20,
+  "api_calls": 4,
+  "telegram_message_id": 14
+}
