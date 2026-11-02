@@ -1,7 +1,7 @@
 {
   "id": "e11d79d8",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-02T03:09:09Z",
   "topic": {
     "title": "Fixing \"Unexpected token in JSON at position\" errors",
@@ -213,7 +213,8 @@
         "text": "In JavaScript it is an index into the string, counted in UTF-16 code units, not a byte offset in the file. Python reports character positions in its own messages, so compare against the same decoded text."
       }
     ],
-    "relatedTool": "json-formatter"
+    "relatedTool": "json-formatter",
+    "published": "2026-11-02"
   },
   "review": {
     "title_ko": "JSON의 'Unexpected token ... at position' 오류: 원인과 해결법",
@@ -235,5 +236,7 @@
     "verdict": "ok",
     "word_count": 1201
   },
-  "telegram_message_id": 11
+  "telegram_message_id": 11,
+  "decided": "2026-11-02T04:11:15Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/fix-unexpected-token-in-json-at-position.json"
 }
