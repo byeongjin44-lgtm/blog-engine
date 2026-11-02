@@ -13,9 +13,12 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
+# Its own group: sharing the draft group made this hourly run replace (cancel) a draft run that was
+# queued behind a listening draft job. GitHub keeps only one pending run per concurrency group.
 concurrency:
-  group: engine-state
+  group: engine-poll
   cancel-in-progress: false
 
 jobs:
@@ -23,11 +26,24 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 75
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Skip while a draft run is active
+        id: busy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          active=$(gh run list -R "$GITHUB_REPOSITORY" --workflow draft.yml --limit 20 --json status \
+            --jq '[.[] | select(.status != "completed")] | length')
+          echo "active draft runs: $active"
+          # A running draft job already handles button presses; a queued one will start soon.
+          if [ "$active" != "0" ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; else echo "skip=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.busy.outputs.skip == 'false'
+        uses: actions/checkout@v4
+      - if: steps.busy.outputs.skip == 'false'
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Process Telegram buttons
+        if: steps.busy.outputs.skip == 'false'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -36,5 +52,5 @@ jobs:
         run: |
           if [ "$MINUTES" != "0" ]; then python -m engine listen --minutes "$MINUTES"; else python -m engine poll; fi
       - name: Save state
-        if: always()
+        if: always() && steps.busy.outputs.skip == 'false'
         run: ./scripts/commit-state.sh "Process approvals"
