@@ -36,7 +36,9 @@ REVIEW_SCHEMA = {
 }
 
 
-REVIEW_ROUNDS = 2  # rewrite rounds to resolve review comments
+# Owner decision (2026-11-02, cost per post): at most 2 rewrite rounds for review comments.
+# Never raise this without the owner's explicit approval; tests fail if it changes.
+REVIEW_ROUNDS = 2
 
 
 class DraftError(RuntimeError):
@@ -145,7 +147,7 @@ def draft(site: Site, topic: Topic, existing: dict[str, str], transport: Transpo
     # cannot act on English review notes, so they must be resolved here. Up to REVIEW_ROUNDS rounds.
     review = review_post(site, post, transport)
     applied: list[str] = []
-    for _ in range(REVIEW_ROUNDS):
+    for _ in range(min(REVIEW_ROUNDS, 2)):  # hard cap, even if the constant is edited
         issues = review.get("issues", [])
         if not issues:
             break

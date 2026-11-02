@@ -239,6 +239,10 @@ class ReviewFixTests(unittest.TestCase):
         self.assertIn("도입부가 장황함", text)
         self.assertIn("남은 문제 없음", text)
 
+    def test_review_rounds_are_locked_at_two(self):
+        from engine import writer
+        self.assertEqual(writer.REVIEW_ROUNDS, 2, "Owner decision: max 2 review rewrite rounds. Do not change without approval.")
+
     def test_stops_after_two_rounds_and_shows_what_is_left(self):
         nag = {**OK_REVIEW, "issues": [{"severity": "low", "ko": "예시 하나 더", "en": "Add one more example"}], "verdict": "fix"}
         llm = FakeLLM([make_post(), make_post(), make_post()], [nag, nag, nag])

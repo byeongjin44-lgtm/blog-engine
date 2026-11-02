@@ -32,6 +32,9 @@ The owner does not read English: the Korean summary and review are how posts get
 
 ## Rules
 
+- **Review rewrite rounds are capped at 2 per post (owner decision, cost). Never raise the cap without the
+  owner's explicit approval** — `REVIEW_ROUNDS` in `writer.py`, also hard-capped in the loop and locked by a test.
+
 - Never publish without an explicit Approve from Telegram. No auto-approve.
 - Content must be genuinely useful and correct; no fake traffic, no mass low-quality pages (Google spam
   policy, AdSense invalid-traffic policy).
