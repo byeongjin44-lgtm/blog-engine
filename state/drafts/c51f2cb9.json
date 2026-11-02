@@ -1,0 +1,156 @@
+{
+  "id": "c51f2cb9",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-02T05:20:14Z",
+  "topic": {
+    "title": "Regex for email validation: practical patterns and their limits",
+    "keyword": "regex email validation",
+    "related_tool": "regex-tester"
+  },
+  "post": {
+    "slug": "regex-email-validation-practical-patterns-limits",
+    "title": "Regex for Email Validation: Practical Patterns and Limits",
+    "description": "A simple regex catches obvious email typos, but no regex fully validates RFC 5322. Here are practical patterns, their limits, and why to confirm by email.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A simple email regex checks that an address has one @, a non-empty local part, and a domain containing a dot: `^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$`. It catches obvious typos such as missing @ signs, spaces, and incomplete domains. It cannot prove the mailbox exists, and no regex fully matches RFC 5322. For real validation, combine a simple pattern with a confirmation email."
+      },
+      {
+        "type": "h2",
+        "text": "Test patterns in the Regex Tester first"
+      },
+      {
+        "type": "p",
+        "text": "Before you ship a pattern, paste it into the [Regex Tester](/regex-tester) and run it against a list of valid and invalid addresses. The highlighted matches make it obvious when a pattern is too loose or too strict. The Regex Tester runs entirely in your browser, which matters when the test list is real customer data, because the addresses never leave your machine."
+      },
+      {
+        "type": "h2",
+        "text": "Three practical patterns"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Lenient: `^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$`. Rejects spaces, a missing @, and a domain with no dot. Accepts anything else with that shape, including a@b.c and josé@example.com, because the character class allows non-ASCII characters. Use this on sign-up forms where you do not want to block real people.",
+          "Strict ASCII: `^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$`. Limits the local part to common ASCII characters and requires a top-level domain of at least two letters. Suitable for internal tools with known inputs. It rejects internationalized addresses such as josé@example.com, and it also rejects internationalized top-level domains written in their ASCII form (xn--...), because the TLD must be letters only.",
+          "Browser check: setting type=\"email\" on an input makes the browser validate the value against the address grammar in the HTML specification. You do not write that grammar yourself. The browser check is looser than the strict pattern and accepts user@localhost. Treat it as a first filter, never the only check."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Test cases that show the trade-offs"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "jane.doe@example.com: both accepted.",
+          "jane+news@mail.example.org: both accepted.",
+          "user@localhost: both rejected, because the domain has no dot. The browser's type=\"email\" check accepts it.",
+          "user@example.c: lenient accepts, strict rejects (one-letter top-level domain).",
+          "user@@example.com: both rejected.",
+          "a..b@example.com: both accepted, although RFC 5322 dot-atom syntax does not allow consecutive dots unless the local part is quoted.",
+          "josé@example.com: lenient accepts, strict rejects.",
+          "user@example.com with a trailing space: both rejected. Trim input before testing."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Two pitfalls come up often. First, trim whitespace before matching, since addresses copied from spreadsheets and emails often carry it. Second, in Python, do not rely on $ alone, because it also matches before a trailing newline. Use fullmatch or the \\Z anchor instead."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const EMAIL_RE = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\nEMAIL_RE.test(\"jane.doe@example.com\"); // true\nEMAIL_RE.test(\"user@localhost\");       // false"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import re\n\nEMAIL = re.compile(r\"[^\\s@]+@[^\\s@]+\\.[^\\s@]+\")\n\n\ndef is_plausible_email(value: str) -> bool:\n    return EMAIL.fullmatch(value.strip()) is not None"
+      },
+      {
+        "type": "h2",
+        "text": "What a regex cannot tell you"
+      },
+      {
+        "type": "p",
+        "text": "A regex only checks shape. It cannot tell whether the mailbox exists, whether the domain accepts mail, or whether the person typing owns the address. Full RFC 5322 validation is not practical as a regex, because the grammar allows quoted strings, comments, and other forms that most mail systems reject anyway. A stricter pattern also rejects real addresses, so each tightening is a trade-off."
+      },
+      {
+        "type": "p",
+        "text": "Length limits matter too. RFC 5321 limits the local part to 64 octets and the full address to 254 characters. Neither pattern above enforces that, so add a length check in code."
+      },
+      {
+        "type": "h2",
+        "text": "Recommended approach"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Trim the input, then run the lenient pattern to catch obvious shape errors.",
+          "Enforce length limits: 254 characters total and 64 in the local part.",
+          "Send a confirmation email with a single-use link before enabling anything sensitive.",
+          "Store the domain in lowercase, since domain names are case-insensitive. For the local part, RFC 5321 technically treats it as case-sensitive, but most providers do not. Comparing local parts case-insensitively is the practical choice, so use it when you look up existing accounts."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Do not keep tightening the regex to catch every typo. Typos that look valid, such as gmial.com, are better handled by a confirmation email or a domain suggestion than by a longer pattern."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Should I use the HTML email input type instead of a regex?"
+      },
+      {
+        "type": "p",
+        "text": "Use type=\"email\" for the browser's built-in check, but do not stop there. It is looser than the strict pattern, and it does nothing on the server. Always validate on the server as well."
+      },
+      {
+        "type": "h3",
+        "text": "Can a regex check whether an email address exists?"
+      },
+      {
+        "type": "p",
+        "text": "No. Existence requires a delivery attempt or a confirmation link. A DNS MX lookup can show whether a domain accepts mail, but it cannot confirm that a specific mailbox exists."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my pattern reject addresses with plus signs?"
+      },
+      {
+        "type": "p",
+        "text": "It usually should not, as long as the plus sign is in the local-part character class. If you wrote [A-Za-z0-9._-] without the plus, addresses like jane+news@example.com fail. Add %+ to that class."
+      }
+    ],
+    "relatedTool": "regex-tester"
+  },
+  "review": {
+    "title_ko": "이메일 검증을 위한 정규식: 실용적인 패턴과 한계",
+    "summary_ko": [
+      "간단한 정규식으로 @ 누락, 공백, 불완전한 도메인 같은 명백한 오타를 잡을 수 있지만, 메일함의 실제 존재 여부는 확인할 수 없고 RFC 5322를 완전히 구현할 수도 없다.",
+      "정규식을 배포하기 전에 Regex Tester에서 유효/무효 주소 목록으로 테스트하라고 안내하며, 이 도구는 브라우저에서만 실행된다고 설명한다.",
+      "세 가지 패턴을 소개한다: 느슨한 패턴(josé@example.com 허용), 엄격한 ASCII 패턴(TLD는 2자 이상 영문자만 허용, 국제화 주소 거부), 브라우저의 type=\"email\" 검사(user@localhost 허용, 1차 필터로만 사용).",
+      "주소 예시별 결과를 표로 비교한다. 예: user@localhost는 두 패턴 모두 거부, a..b@example.com은 두 패턴 모두 허용, 끝에 공백이 있는 주소는 두 패턴 모두 거부.",
+      "JavaScript와 Python 코드 예시를 제시한다. Python에서는 $ 대신 fullmatch를 쓰고 입력값을 trim하라고 권고한다.",
+      "정규식은 형식만 검사하며 RFC 5321 길이 제한(로컬 파트 64옥텟, 전체 254자)을 별도 코드로 검사해야 한다고 설명한다.",
+      "권장 절차는 입력 trim, 느슨한 패턴 적용, 길이 제한 확인, 확인 메일 발송, 도메인 소문자 저장, 로컬 파트는 대소문자 무시 비교이며, FAQ에서 type=\"email\", 존재 확인, 플러스 기호 문제를 다룬다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "테스트 케이스 \"josé@example.com: both rejected.\"가 틀렸습니다. 느슨한 패턴 [^\\s@]+는 é를 포함한 모든 문자를 허용하므로 이 주소는 느슨한 패턴에서 통과합니다. 엄격한 패턴만 거부합니다.",
+      "\"The built-in email input type applies the HTML spec's own pattern\"은 부정확합니다. HTML 명세는 valid email address 규칙을 정의하고, 브라우저는 type=\"email\"일 때 그 규칙으로 검사합니다. pattern 속성을 따로 쓰지 않는 한 \"pattern을 적용한다\"는 표현은 오해를 줄 수 있습니다.",
+      "\"Compare local parts case-insensitively in practice, since most providers do.\" 문장이 모호합니다. RFC 5321상 로컬 파트는 대소문자를 구분하지만 대부분의 제공자는 구분하지 않는다는 점을 명시하면 더 정확합니다."
+    ],
+    "word_count": 819
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 21,
+  "api_calls": 6,
+  "telegram_message_id": 13
+}
