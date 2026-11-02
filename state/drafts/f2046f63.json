@@ -1,0 +1,241 @@
+{
+  "id": "f2046f63",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-02T04:16:45Z",
+  "topic": {
+    "title": "JSON trailing comma: why it breaks and how to fix it",
+    "keyword": "json trailing comma",
+    "related_tool": "json-formatter"
+  },
+  "post": {
+    "slug": "json-trailing-comma-why-it-breaks-and-how-to-fix",
+    "title": "JSON Trailing Comma: Why It Breaks and How to Fix It",
+    "description": "A trailing comma makes JSON invalid. Learn why JSON.parse and other parsers reject it, how to find and remove it, and when trailing commas are allowed.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A trailing comma is a comma after the last item in a JSON array or object, like [1, 2,] or {\"a\": 1,}. Standard JSON does not allow it, so every strict parser rejects the document. The fix is to delete the comma after the last element."
+      },
+      {
+        "type": "p",
+        "text": "If you have a file that won't parse, paste it into the [JSON Formatter / Validator](/json-formatter). It reports the line and column of the error, which usually points right at the stray comma."
+      },
+      {
+        "type": "h2",
+        "text": "Why trailing commas are invalid JSON"
+      },
+      {
+        "type": "p",
+        "text": "The JSON grammar (RFC 8259 and ECMA-404) defines an array as zero or more values separated by commas, and an object as zero or more name/value pairs separated by commas. A comma is a separator, so it must be followed by another element. A comma with nothing after it is a syntax error."
+      },
+      {
+        "type": "code",
+        "lang": "json",
+        "text": "[\n  \"red\",\n  \"green\",\n  \"blue\",\n]"
+      },
+      {
+        "type": "p",
+        "text": "The same rule applies to objects:"
+      },
+      {
+        "type": "code",
+        "lang": "json",
+        "text": "{\n  \"name\": \"devrivet\",\n  \"version\": \"1.0.0\",\n}"
+      },
+      {
+        "type": "p",
+        "text": "Both documents look fine to a human, but a strict parser stops at the comma before the closing bracket or brace."
+      },
+      {
+        "type": "h2",
+        "text": "What the error looks like"
+      },
+      {
+        "type": "p",
+        "text": "The message depends on the parser and its version, so treat the wording below as examples. The position almost always points at the closing } or ] or at the comma just before it."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "JSON.parse('{\"a\": 1,}')\n// SyntaxError: Expected double-quoted property name in JSON at position 8"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import json\n\njson.loads('{\"a\": 1,}')\n# json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 9 (char 8)"
+      },
+      {
+        "type": "p",
+        "text": "Older JavaScript engines report a message like \"Unexpected token } in JSON at position 8\". If you see that form, the cause is the same. See [Unexpected Token in JSON at Position: Causes and Fixes](/blog/fix-unexpected-token-in-json-at-position) for more error messages and what they usually mean."
+      },
+      {
+        "type": "p",
+        "text": "Tools that read JSON files often fail with their own wording. A package manager reading package.json, a CI job loading a config, or an API rejecting a request body will all fail for the same reason."
+      },
+      {
+        "type": "h2",
+        "text": "Fix it by removing the comma"
+      },
+      {
+        "type": "p",
+        "text": "Delete the comma after the last item. The rest of the file stays the same."
+      },
+      {
+        "type": "code",
+        "lang": "json",
+        "text": "[\n  \"red\",\n  \"green\",\n  \"blue\"\n]"
+      },
+      {
+        "type": "p",
+        "text": "If you generate JSON in code, avoid writing separators by hand. Build the structure and serialize it, and the serializer will place commas correctly."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const config = { name: 'devrivet', version: '1.0.0' };\nconst text = JSON.stringify(config, null, 2);"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import json\n\nconfig = {\"name\": \"devrivet\", \"version\": \"1.0.0\"}\ntext = json.dumps(config, indent=2)"
+      },
+      {
+        "type": "h2",
+        "text": "Finding trailing commas in a large file"
+      },
+      {
+        "type": "p",
+        "text": "In a short file you can spot the problem by eye. In a long one, use the line and column from your parser or validator and look just before the closing bracket. Common places to find them:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "The last key in an object that was added by copy and paste.",
+          "The last element of an array after an item was deleted.",
+          "Hand-edited fixtures, seed data, and mock API responses.",
+          "Multi-line objects where a new entry was inserted above a comma you did not notice."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "You can write a regular expression to remove trailing commas automatically, but treat it as a shortcut for trusted files only:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const cleaned = text.replace(/,\\s*([}\\]])/g, '$1');"
+      },
+      {
+        "type": "p",
+        "text": "This pattern also matches text inside strings. For example, \"[a, ]\" as a string value would be altered. It also cannot handle comments or other non-JSON syntax. For anything you didn't write yourself, fix the file manually or use a proper parser."
+      },
+      {
+        "type": "h2",
+        "text": "When trailing commas are allowed"
+      },
+      {
+        "type": "p",
+        "text": "Some formats are close to JSON and accept trailing commas, and some tools that look like JSON use them by design. Know which parser you are using before you assume a file is wrong."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "JSON5 allows trailing commas, comments and unquoted keys. The json5 package for JavaScript parses them, for example JSON5.parse('{\"a\": 1,}').",
+          "JSONC (JSON with Comments) is used by many editor config files and allows comments and trailing commas in many implementations. Support depends on the tool.",
+          "tsconfig.json is parsed by the TypeScript compiler, which accepts comments and trailing commas in that file.",
+          "VS Code settings files are parsed as JSONC, so trailing commas are accepted there.",
+          "Standard JSON parsers such as JSON.parse, json.loads, and most APIs do not accept them."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "A file that works in your editor can still fail in a script or CI job. If a file has a .json extension and a tool reads it with a standard parser, remove the trailing commas even if your editor does not complain."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls to watch for"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Empty elements are also invalid. [1,,2] and [,] fail for the same reason.",
+          "A comma after the only element of an empty object or array is invalid too. {,} is not valid JSON.",
+          "Single quotes, comments and unquoted keys are invalid in standard JSON, so fixing a trailing comma may not be enough.",
+          "Minified JSON makes trailing commas harder to see. Format the text first, then check the reported position.",
+          "Formatting does not fix every problem. A file can be pretty-printed and still contain a trailing comma."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you paste a config with real tokens, passwords, or customer data into an online tool, check how that tool handles the text. DevRivet's JSON Formatter runs entirely in your browser, so the content is not sent to a server. Other tools may behave differently, so read their documentation before pasting anything sensitive."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Does JSON.parse accept a trailing comma?"
+      },
+      {
+        "type": "p",
+        "text": "No. JSON.parse follows the JSON specification, so a trailing comma in an array or object throws a SyntaxError. Remove the comma before parsing."
+      },
+      {
+        "type": "h3",
+        "text": "Can I allow trailing commas in JSON.parse?"
+      },
+      {
+        "type": "p",
+        "text": "No. JSON.parse has no option for that. If you must read JSON with trailing commas, use a JSON5 or JSONC parser, or clean the text before parsing, and only for input you control."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my editor accept a trailing comma in a .json file?"
+      },
+      {
+        "type": "p",
+        "text": "Many editors use a JSONC-aware mode for .json files, and some tools read those files with a parser that allows trailing commas. The file is still invalid under the strict JSON standard, and a strict parser elsewhere in your pipeline will reject it."
+      },
+      {
+        "type": "h3",
+        "text": "How do I find the trailing comma in a long file?"
+      },
+      {
+        "type": "p",
+        "text": "Use a validator that reports the line and column, such as the [JSON Formatter / Validator](/json-formatter). The error position usually points at the closing bracket or the comma just before it."
+      }
+    ],
+    "relatedTool": "json-formatter"
+  },
+  "review": {
+    "title_ko": "JSON 후행 쉼표: 왜 깨지고 어떻게 고치나",
+    "summary_ko": [
+      "배열이나 객체의 마지막 항목 뒤에 붙은 쉼표(후행 쉼표)는 표준 JSON에서 허용되지 않아 엄격한 파서가 문서 전체를 거부하며, 해결법은 마지막 쉼표를 지우는 것이다.",
+      "RFC 8259와 ECMA-404 문법에서 쉼표는 구분자이므로 뒤에 다른 요소가 와야 하고, 이 규칙이 배열과 객체 모두에 적용된다고 설명한다.",
+      "JSON.parse, Python json.loads의 오류 메시지 예시와 위치 표시 방식을 보여주고, 구형 엔진의 'Unexpected token' 메시지도 같은 원인이라고 설명한다.",
+      "직접 JSON을 만들 때는 손으로 쉼표를 쓰지 말고 JSON.stringify나 json.dumps로 직렬화하라고 권한다.",
+      "긴 파일에서 쉼표를 찾는 방법(복사·붙여넣기, 항목 삭제, 수동 편집 등 흔한 위치)과, 정규식으로 자동 제거하는 방법 및 그 한계(문자열 내부 훼손, 주석 미지원)를 다룬다.",
+      "JSON5, JSONC, tsconfig.json, VS Code 설정 파일처럼 후행 쉼표를 허용하는 형식과 도구를 구분해 설명하고, 표준 파서에서는 여전히 실패할 수 있음을 강조한다.",
+      "빈 요소, 단일 따옴표, 주석, 압축된 JSON 등 함께 주의할 점과 FAQ를 정리하며, 민감한 데이터는 도구의 처리 방식을 확인하라고 안내한다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"A comma after the only element of an empty object or array is invalid too.\" 문장은 빈 객체나 배열에는 요소가 없다는 점에서 모순된다. 바로 뒤의 예시 {,}만으로 충분하므로 문장을 \"A lone comma inside an empty object or array is invalid too.\"처럼 고치는 것이 좋다.",
+        "en": "\"A comma after the only element of an empty object or array\" is self-contradictory because an empty object or array has no element. Reword it, e.g. \"A lone comma inside an empty object or array is invalid too.\""
+      },
+      {
+        "severity": "low",
+        "ko": "\"DevRivet's JSON Formatter runs entirely in your browser, so the content is not sent to a server.\" 문장은 사이트 도구의 개인정보 관련 사실 주장이다. 게시 전에 실제 동작(클라이언트 측 처리)을 직접 확인해 두는 것이 안전하다.",
+        "en": "The claim that the DevRivet JSON Formatter runs entirely in the browser and never sends content to a server is a factual statement about your own tool. Verify it before publishing."
+      }
+    ],
+    "verdict": "ok",
+    "word_count": 1053
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "telegram_message_id": 12
+}
