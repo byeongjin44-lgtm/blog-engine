@@ -30,6 +30,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      # HomeRivet's numbers come from its own calculator code (engine/calculator.py runs it with Node).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/checkout@v4
+        with:
+          repository: byeongjin44-lgtm/homerivettools
+          path: vendor/homerivettools
+          persist-credentials: false
       - name: Draft
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

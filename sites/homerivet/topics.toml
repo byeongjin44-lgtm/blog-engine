@@ -1,0 +1,151 @@
+# Topic queue for HomeRivet, used top to bottom. Add new topics at the end.
+# Every topic needs at least one [[topics.calculations]]: the engine runs the site's calculator code
+# with these inputs and the post may only use those numbers. Inputs not listed keep the calculator's
+# defaults. `python -m engine check --require-calculator` verifies every input against the real code.
+
+[[topics]]
+title = "How much paint do I need for a 12x12 bedroom?"
+keyword = "how much paint for a 12x12 room"
+related_tool = "paint-calculator"
+notes = "Walk through wall area, door and window deductions, two coats and rounding up to whole gallons. Mention that ceilings and trim are separate."
+[[topics.calculations]]
+calculator = "paint-calculator"
+input = { lengthFt = 12, widthFt = 12, heightFt = 8, doors = 1, windows = 1 }
+
+[[topics]]
+title = "How many bags of concrete for a 10x10 slab?"
+keyword = "how many bags of concrete for a 10x10 slab"
+related_tool = "concrete-calculator"
+notes = "Show cubic feet, cubic yards and the bag count for 80 lb and 60 lb bags. Explain why bag yield matters and when ready-mix may be worth comparing."
+[[topics.calculations]]
+calculator = "concrete-calculator"
+input = { lengthFt = 10, widthFt = 10, thicknessIn = 4, bagLb = "80" }
+[[topics.calculations]]
+calculator = "concrete-calculator"
+input = { lengthFt = 10, widthFt = 10, thicknessIn = 4, bagLb = "60" }
+
+[[topics]]
+title = "How much mulch do I need for 100 square feet?"
+keyword = "how much mulch for 100 square feet"
+related_tool = "mulch-calculator"
+notes = "Explain the 324 sq ft per cubic yard per inch rule and compare bulk cubic yards with 2 cu ft bags."
+[[topics.calculations]]
+calculator = "mulch-calculator"
+input = { lengthFt = 10, widthFt = 10, depthIn = 3, bagCuFt = "2" }
+
+[[topics]]
+title = "How many boxes of laminate flooring for a 12x14 room?"
+keyword = "how much laminate flooring do i need"
+related_tool = "flooring-calculator"
+notes = "Compare a straight layout (7% extra) with a diagonal layout (15% extra) for the same room and box size."
+[[topics.calculations]]
+calculator = "flooring-calculator"
+input = { lengthFt = 12, widthFt = 14, sqFtPerBox = 20, layout = "straight" }
+[[topics.calculations]]
+calculator = "flooring-calculator"
+input = { lengthFt = 12, widthFt = 14, sqFtPerBox = 20, layout = "diagonal" }
+
+[[topics]]
+title = "How much tile do I need for a 5x8 bathroom floor?"
+keyword = "how much tile for a 5x8 bathroom"
+related_tool = "tile-calculator"
+notes = "Explain the 10% extra for cuts and breakage and keeping spare tile from the same lot for repairs."
+[[topics.calculations]]
+calculator = "tile-calculator"
+input = { lengthFt = 8, widthFt = 5, sqFtPerBox = 10 }
+
+[[topics]]
+title = "How many tons of gravel for a 12x50 driveway?"
+keyword = "how much gravel for a driveway"
+related_tool = "gravel-calculator"
+notes = "Cubic yards first, then tons with the default weight per cubic yard; tell readers to ask the supplier for the weight of their exact material. Quantity only."
+[[topics.calculations]]
+calculator = "gravel-calculator"
+input = { lengthFt = 50, widthFt = 12, depthIn = 4 }
+
+[[topics]]
+title = "How many deck boards do I need for a 12x16 deck?"
+keyword = "how many deck boards do i need"
+related_tool = "deck-board-calculator"
+notes = "Surface boards only. Explain actual vs nominal board width, the 3/16 in gap and choosing a board length that fits the deck length."
+[[topics.calculations]]
+calculator = "deck-board-calculator"
+input = { deckLengthFt = 16, deckWidthFt = 12, boardLengthFt = "16" }
+
+[[topics]]
+title = "How to calculate the square footage of a room"
+keyword = "how to calculate square footage of a room"
+related_tool = "square-footage-calculator"
+notes = "Rectangle example, then splitting an L-shaped room into rectangles conceptually (use only the given numbers), converting inches to feet, and square yards / square meters."
+[[topics.calculations]]
+calculator = "square-footage-calculator"
+input = { shape = "rectangle", lengthFt = 12, widthFt = 14 }
+
+[[topics]]
+title = "How many rolls of wallpaper do I need for a 10x12 room?"
+keyword = "how many rolls of wallpaper do i need"
+related_tool = "wallpaper-calculator"
+notes = "Compare a plain paper (no repeat) with a large 21 in pattern repeat to show why repeat changes the roll count. Single vs double rolls."
+[[topics.calculations]]
+calculator = "wallpaper-calculator"
+input = { lengthFt = 10, widthFt = 12, heightFt = 8, doors = 1, windows = 1, repeatIn = 0 }
+[[topics.calculations]]
+calculator = "wallpaper-calculator"
+input = { lengthFt = 10, widthFt = 12, heightFt = 8, doors = 1, windows = 1, repeatIn = 21 }
+
+[[topics]]
+title = "How much topsoil do I need for a 4x8 raised garden bed?"
+keyword = "how much soil for a 4x8 raised bed"
+related_tool = "mulch-calculator"
+notes = "Same volume formula as mulch: cubic yards and 1.5 cu ft bags for a bed 12 inches deep."
+[[topics.calculations]]
+calculator = "mulch-calculator"
+input = { lengthFt = 8, widthFt = 4, depthIn = 12, bagCuFt = "1.5" }
+
+[[topics]]
+title = "How many cubic yards of concrete for a 20x20 patio?"
+keyword = "how many yards of concrete for a 20x20 patio"
+related_tool = "concrete-calculator"
+notes = "Cubic yards for ordering ready-mix and the equivalent 80 lb bag count. Quantity only — no reinforcement or base design."
+[[topics.calculations]]
+calculator = "concrete-calculator"
+input = { lengthFt = 20, widthFt = 20, thicknessIn = 4, bagLb = "80" }
+
+[[topics]]
+title = "How much paint do I need for one coat vs two coats?"
+keyword = "how much paint for two coats"
+related_tool = "paint-calculator"
+notes = "Same 12x15 room with one coat and with two coats. Explain when a second coat is usually needed and to follow the label."
+[[topics.calculations]]
+calculator = "paint-calculator"
+input = { lengthFt = 12, widthFt = 15, heightFt = 8, doors = 1, windows = 2, coats = 1 }
+[[topics.calculations]]
+calculator = "paint-calculator"
+input = { lengthFt = 12, widthFt = 15, heightFt = 8, doors = 1, windows = 2, coats = 2 }
+
+[[topics]]
+title = "How much attic insulation do I need to reach R-38?"
+keyword = "how much insulation to reach r38"
+related_tool = "insulation-calculator"
+notes = "Thickness from the product's R-value per inch, and packages from the coverage on the package label. Recommended R-values depend on climate zone; do not give a zone table."
+[[topics.calculations]]
+calculator = "insulation-calculator"
+input = { areaSqFt = 1000, targetR = 38, rPerInch = 2.5, sqFtPerPackage = 40 }
+
+[[topics]]
+title = "How much pea gravel for a 10x10 patio?"
+keyword = "how much pea gravel for a 10x10 area"
+related_tool = "gravel-calculator"
+notes = "Cubic yards and tons for a 2 inch layer; weight varies by material, so confirm with the supplier."
+[[topics.calculations]]
+calculator = "gravel-calculator"
+input = { lengthFt = 10, widthFt = 10, depthIn = 2 }
+
+[[topics]]
+title = "How many boxes of 12x24 tile for a 10x10 floor?"
+keyword = "how many boxes of 12x24 tile do i need"
+related_tool = "tile-calculator"
+notes = "Use the coverage per box printed on the box (example: 16 sq ft per box). Explain why large tiles can need more extra in small rooms."
+[[topics.calculations]]
+calculator = "tile-calculator"
+input = { lengthFt = 10, widthFt = 10, sqFtPerBox = 16 }

@@ -1,0 +1,122 @@
+# HomeRivet — home & garden material calculators with a /blog of calculator-linked guides.
+# LOCKED content rules (owner decision, 2026-11-01): material quantities only, every number from the
+# site's calculator code (engine/calculator.py), sources cited, manufacturer-label reminder.
+id = "homerivet"
+name = "HomeRivet"
+url = "https://homerivettools.com"
+language = "en"
+audience = "US homeowners and DIYers planning a home or garden project who want to buy the right amount of material"
+niche = "material quantity estimates: paint, concrete, tile, flooring, mulch and soil, square footage, wallpaper, gravel, deck boards, insulation"
+format = "homerivet-json"  # must match src/lib/blog.ts + src/lib/content-policy.ts in the homerivettools repo
+posts_per_day = 1
+min_words = 700
+max_words = 1500
+
+style_notes = """
+- This site only estimates material quantities. Never give instructions or advice on electrical work, structural
+  design or loads, framing, footings, gas, roofing or ladders, plumbing installation, asbestos, lead paint, mold,
+  permits or building codes. Do not even mention those words; if the reader would need that, simply say to ask
+  a qualified professional.
+- No external links at all. Sources are added to the post automatically below the article.
+- Write for US readers in US units (feet, inches, square feet, gallons, cubic yards, pounds, tons).
+- Use the worked example from the calculator results given in the prompt; explain each step of the formula in words.
+- Always tell readers to check the coverage or yield printed on the product label, because products differ.
+- No code blocks. Use a short bulleted or numbered list for the calculation steps.
+"""
+
+banned_phrases = []
+
+[publisher]
+type = "github_files"
+repo = "byeongjin44-lgtm/homerivettools"
+branch = "main"
+path = "content/blog"
+token_env = "TARGET_GITHUB_TOKEN"
+
+[models]
+writer = "claude-haiku-5-5"   # same trial as DevRivet; fallback is Sonnet within the 150 KRW per-post cap
+reviewer = "claude-haiku-5-5"
+
+[calculator]
+# The draft workflow checks out the site repo into vendor/homerivettools (see .github/workflows/draft.yml).
+command = ["node", "--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "vendor/homerivettools/scripts/calc.mts"]
+# Published figures shown on the calculator pages, allowed as decimals in posts in addition to the
+# calculator's own inputs and results: DOE R-value-per-inch ranges, m² per sq ft, deck gap/board width.
+extra_numbers = [2.2, 2.5, 3.6, 3.7, 3.75, 3.8, 4.4, 6.5, 0.0929, 0.1875, 5.5, 1.3, 1.4, 0.3, 0.375, 0.45, 0.6, 0.675]
+
+# Mirror of TOOLS in src/lib/site-config.ts (slug/name/path/description/sources).
+[[tools]]
+slug = "paint-calculator"
+name = "Paint Calculator"
+path = "/paint-calculator"
+description = "Gallons of paint for a room: wall area = (length + width) x 2 x height, minus 20 sq ft per door and window, x coats / 350 sq ft per gallon (default), rounded up."
+sources = [
+  { title = "Sherwin-Williams paint calculator", url = "https://www.sherwin-williams.com/en-us/color/color-tools/paint-calculator" },
+  { title = "Sherwin-Williams: How to estimate how much wallpaper you need", url = "https://www.sherwin-williams.com/homeowners/how-to/wallpapering-how-tos/sw-article-dir-howtoestimate" },
+]
+
+[[tools]]
+slug = "concrete-calculator"
+name = "Concrete Calculator"
+path = "/concrete-calculator"
+description = "Concrete for a slab: cubic feet = length x width x thickness (in) / 12, cubic yards = cu ft / 27, bags = cu ft / bag yield (Quikrete: 40 lb 0.30, 50 lb 0.375, 60 lb 0.45, 80 lb 0.60, 90 lb 0.675 cu ft), rounded up."
+sources = [{ title = "Quikrete Concrete Mix No. 1101 data sheet", url = "https://www.quikrete.com/pdfs/data_sheet-concrete%20mix%201101.pdf" }]
+
+[[tools]]
+slug = "tile-calculator"
+name = "Tile Calculator"
+path = "/tile-calculator"
+description = "Boxes of tile: floor area x 1.10 (10% extra for cuts and breakage, per Lowe's and Daltile) / coverage per box, rounded up."
+sources = [
+  { title = "Lowe's tile flooring calculator", url = "https://www.lowes.com/n/calculators/tile-floor-calculator" },
+  { title = "Daltile tile & stone FAQs", url = "https://www.daltile.com/how-to/faqs" },
+]
+
+[[tools]]
+slug = "flooring-calculator"
+name = "Flooring Calculator"
+path = "/flooring-calculator"
+description = "Boxes of laminate, hardwood or vinyl plank: floor area x (1 + extra) / coverage per box, rounded up; extra is 7% straight or 15% diagonal (Lowe's: 5-7% and 10-15%)."
+sources = [{ title = "Lowe's: How to calculate the correct footage when purchasing flooring", url = "https://pdf.lowes.com/productdocuments/3f70b1c9-8ab7-4125-a2e7-9a3d080d2861/08130541.pdf" }]
+
+[[tools]]
+slug = "mulch-calculator"
+name = "Mulch & Soil Calculator"
+path = "/mulch-calculator"
+description = "Mulch, topsoil or compost: cubic yards = area (sq ft) x depth (in) / 324 (one cubic yard covers 324 sq ft one inch deep), bags = cu yd x 27 / bag size (1.5, 2 or 3 cu ft), rounded up."
+sources = [{ title = "Mississippi State University Extension: Calculate mulch, soil needs for plant beds", url = "https://extension.msstate.edu/news/southern-gardening/1997/calculate-mulch-soil-needs-for-plant-beds" }]
+
+[[tools]]
+slug = "square-footage-calculator"
+name = "Square Footage Calculator"
+path = "/square-footage-calculator"
+description = "Area of a rectangle (length x width), triangle (1/2 x base x height) or circle (pi x radius squared) in sq ft, sq yd (/9) and square meters (x 0.0929)."
+sources = [{ title = "NIST Guide to the SI, Appendix B.8: Factors for units listed alphabetically", url = "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8" }]
+
+[[tools]]
+slug = "wallpaper-calculator"
+name = "Wallpaper Calculator"
+path = "/wallpaper-calculator"
+description = "Wallpaper rolls: wall area minus 20 sq ft per door and window, / usable sq ft per single roll by pattern repeat (25 up to 6 in, 22 up to 12 in, 20 up to 18 in, 18 up to 23 in; Sherwin-Williams), double rolls = singles / 2, rounded up."
+sources = [{ title = "Sherwin-Williams: How to estimate how much wallpaper you need", url = "https://www.sherwin-williams.com/homeowners/how-to/wallpapering-how-tos/sw-article-dir-howtoestimate" }]
+
+[[tools]]
+slug = "gravel-calculator"
+name = "Gravel & Sand Calculator"
+path = "/gravel-calculator"
+description = "Gravel, crushed stone or sand: cubic yards = area x depth (in) / 324, tons = cu yd x weight per cu yd (default 1.4 tons = 2,800 lb; supplier tables list most gravel at about 2,600-2,800 lb)."
+sources = [{ title = "Mulch Pros: Material weight and coverage", url = "https://mulchpros.com/material-weight-and-coverage/" }]
+
+[[tools]]
+slug = "deck-board-calculator"
+name = "Deck Board Calculator"
+path = "/deck-board-calculator"
+description = "Surface deck boards only: rows = deck width (in) / (actual board width + gap), boards per row = deck length / board length, both rounded up; default gap 3/16 in (Trex), board width 5.5 in."
+sources = [{ title = "Trex: How to space deck boards", url = "https://www.trex.com/deck-ideas/how-to-space-deck-boards/" }]
+
+[[tools]]
+slug = "insulation-calculator"
+name = "Insulation Calculator"
+path = "/insulation-calculator"
+description = "Insulation: thickness = target R-value / the product's R-value per inch, packages = area / coverage per package, rounded up. DOE reference R per inch: batts about 2.5-3.7, loose-fill 2.2-3.75, XPS about 5, polyiso and closed-cell foam about 6.5."
+sources = [{ title = "U.S. Department of Energy: Guide to home insulation", url = "https://www.energy.gov/sites/prod/files/guide_to_home_insulation.pdf" }]

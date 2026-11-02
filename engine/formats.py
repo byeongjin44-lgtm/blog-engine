@@ -182,3 +182,137 @@ def get_format(name: str) -> dict:
     if name not in FORMATS:
         raise ValueError(f"unknown format '{name}' (known: {', '.join(FORMATS)})")
     return FORMATS[name]
+
+
+# ---------------------------------------------------------------------------------------------
+# homerivet-json — mirrors src/lib/blog.ts + src/lib/content-policy.ts in the homerivettools repo.
+# Keep in sync: the engine must reject everything the site's build would reject (an approved post
+# that fails the site build never goes live). The engine adds stricter checks on top.
+#
+# LOCKED content rules (owner decision, 2026-11-01): material quantities only, numbers from the
+# calculator code, cited sources, manufacturer-label reminder. Never loosen without approval.
+# ---------------------------------------------------------------------------------------------
+
+FORBIDDEN_TOPICS = {
+    "electrical": ["wiring", "rewire", "circuit breaker", "electrical panel", "breaker box", "outlet installation",
+                   "install an outlet", "light fixture installation"],
+    "structural": ["load-bearing", "load bearing", "load calculation", "span table", "joist span", "joist sizing",
+                   "beam size", "beam sizing", "footing size", "footing design", "post size", "structural design"],
+    "gas": ["gas line", "gas pipe", "gas appliance installation"],
+    "roofing": ["roofing", "roof repair", "shingle installation", "ladder safety"],
+    "plumbing": ["plumbing installation", "pipe sweating", "drain line installation"],
+    "hazardous": ["asbestos", "lead paint", "lead-based paint", "mold remediation", "mold removal"],
+    "codes": ["building code", "code requirement", "permit requirement"],
+}
+
+_FORBIDDEN_PATTERNS = [
+    (topic, phrase, re.compile(r"\b" + r"[\s-]+".join(map(re.escape, re.split(r"[ -]+", phrase))) + r"\b", re.I))
+    for topic, phrases in FORBIDDEN_TOPICS.items() for phrase in phrases
+]
+MANUFACTURER_NOTE_RE = re.compile(r"manufacturer|product label|on the (?:bag|box|can|package|label)", re.I)
+DECIMAL_RE = re.compile(r"(?<![\d.,])\d[\d,]*\.\d+(?![\d])")
+EXTERNAL_LINK_RE = re.compile(r"\]\((?!/)[^)]*\)|https?://", re.I)
+
+
+def find_forbidden(text: str) -> list[str]:
+    return [f"{topic}: {phrase}" for topic, phrase, rx in _FORBIDDEN_PATTERNS if rx.search(text)]
+
+
+HOMERIVET_SCHEMA = {
+    "type": "object",
+    "required": ["slug", "title", "description", "body"],
+    "properties": {
+        "slug": DEVRIVET_SCHEMA["properties"]["slug"],
+        "title": DEVRIVET_SCHEMA["properties"]["title"],
+        "description": DEVRIVET_SCHEMA["properties"]["description"],
+        "body": {
+            "type": "array",
+            "description": "The post body as a list of blocks, in reading order.",
+            "items": {"anyOf": DEVRIVET_SCHEMA["properties"]["body"]["items"]["anyOf"][:2]},
+        },
+    },
+}
+
+
+def homerivet_text(post: dict) -> str:
+    """Reader-visible text, as the site's postText() builds it (title, description, all blocks)."""
+    parts = [str(post.get("title", "")), str(post.get("description", ""))]
+    for b in post.get("body") or []:
+        if isinstance(b, dict):
+            if "text" in b:
+                parts.append(str(b["text"]))
+            if isinstance(b.get("items"), list):
+                parts += [str(x) for x in b["items"]]
+    return "\n".join(parts)
+
+
+def number_appears(number: str, text: str) -> bool:
+    """Same rule as the site build: the exact number text, not inside a bigger number."""
+    escaped = re.sub(r"([.,])", r"\\\1", number)
+    return re.search(r"(^|[^\d.,])" + escaped + r"(?![\d]|[.,]\d)", text) is not None
+
+
+def validate_homerivet(post: dict, site: Site, existing_slugs: set[str]) -> list[str]:
+    from engine import calculator  # local import: formats must stay importable without the site repo
+
+    errors = validate_devrivet(post, site, existing_slugs)
+    if any(isinstance(b, dict) and b.get("type") == "code" for b in post.get("body") or []):
+        errors.append("code blocks are not used on this site")
+    text = homerivet_text(post)
+
+    forbidden = find_forbidden(text)
+    if forbidden:
+        errors.append("forbidden topic (material quantities only): " + "; ".join(forbidden))
+    if not MANUFACTURER_NOTE_RE.search(text):
+        errors.append("must tell readers to check the manufacturer's label (e.g. 'check the coverage printed on the can')")
+    if EXTERNAL_LINK_RE.search(_body_only(post)):
+        errors.append("no external links in the body; sources are added automatically")
+
+    sources = post.get("sources")
+    if not isinstance(sources, list) or not sources:
+        errors.append("sources must list at least one source")
+    elif not all(isinstance(s, dict) and str(s.get("title", "")).strip() and re.match(r"^https://\S+$", str(s.get("url", "")))
+                 for s in sources):
+        errors.append("every source needs a title and an https url")
+
+    calcs, results = post.get("calculations"), post.get("_calc_results")
+    if not calcs or not results:
+        errors.append("posts on this site need at least one calculator run (numbers must come from the calculator)")
+        return errors
+    for run_ in results:
+        for r in run_["results"]:
+            if r.get("primary") and not number_appears(r["number"], text):
+                errors.append(f"calculator result \"{r['display']}\" ({r['label']}) must appear exactly as written")
+    known = calculator.known_numbers(site, results, post.get("_calc_fields"))
+    for m in DECIMAL_RE.findall(text):
+        if float(m.replace(",", "")) not in known:
+            errors.append(f"number {m} does not come from the calculator results — use only the numbers provided")
+    return errors
+
+
+def _body_only(post: dict) -> str:
+    return homerivet_text({"body": post.get("body")})
+
+
+def finalize_homerivet(post: dict, site: Site, topic, calc_results: list[dict] | None, calc_fields: list[dict] | None) -> None:
+    """Engine-owned fields: the AI never writes sources or calculator inputs."""
+    tool = site.tool(topic.related_tool)
+    post["sources"] = [dict(s) for s in (tool.sources if tool else ())]
+    post["calculations"] = [{"calculator": c["calculator"], "input": dict(c.get("input", {}))} for c in topic.calculations]
+    post["_calc_results"] = calc_results or []
+    used = {c["calculator"] for c in topic.calculations}
+    post["_calc_fields"] = [f for f in (calc_fields or []) if f.get("calculator") in used]
+
+
+def serialize_homerivet(post: dict) -> tuple[str, str]:
+    keys = ("slug", "title", "description", "published", "updated", "relatedTool", "sources", "calculations", "body")
+    ordered = {k: post[k] for k in keys if k in post}
+    return f"{post['slug']}.json", json.dumps(ordered, ensure_ascii=False, indent=2) + "\n"
+
+
+FORMATS["homerivet-json"] = {
+    "schema": HOMERIVET_SCHEMA,
+    "validate": validate_homerivet,
+    "serialize": serialize_homerivet,
+    "finalize": finalize_homerivet,
+}

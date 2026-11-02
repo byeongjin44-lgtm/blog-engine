@@ -20,6 +20,8 @@ class Tool:
     name: str
     path: str
     description: str
+    # Manufacturer / public-agency sources ({title, url}) — copied into posts by formats that cite them.
+    sources: tuple[dict, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -28,6 +30,8 @@ class Topic:
     keyword: str
     related_tool: str | None = None
     notes: str = ""
+    # Calculator runs whose results the post must use ({calculator, input}); see engine/calculator.py.
+    calculations: tuple[dict, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -50,6 +54,8 @@ class Site:
     fallback_model: str = DEFAULT_FALLBACK_MODEL
     style_notes: str = ""
     banned_phrases: tuple[str, ...] = field(default_factory=tuple)
+    # Sites whose numbers must come from code: {"command": [...], "extra_numbers": [...]}.
+    calculator: dict | None = None
 
     def tool(self, slug: str | None) -> Tool | None:
         return next((t for t in self.tools if t.slug == slug), None)
@@ -66,9 +72,9 @@ def load_site(site_id: str, sites_dir: Path = SITES_DIR) -> Site:
 
     if raw.get("id") != site_id:
         raise ValueError(f"sites/{site_id}/site.toml must have id = \"{site_id}\"")
-    tools = tuple(Tool(**t) for t in raw.get("tools", []))
+    tools = tuple(Tool(**{**t, "sources": tuple(t.get("sources", []))}) for t in raw.get("tools", []))
     tool_slugs = {t.slug for t in tools}
-    topics = tuple(Topic(**t) for t in topics_raw.get("topics", []))
+    topics = tuple(Topic(**{**t, "calculations": tuple(t.get("calculations", []))}) for t in topics_raw.get("topics", []))
     for t in topics:
         if t.related_tool and t.related_tool not in tool_slugs:
             raise ValueError(f"topic {t.title!r} references unknown tool {t.related_tool!r}")
@@ -92,6 +98,7 @@ def load_site(site_id: str, sites_dir: Path = SITES_DIR) -> Site:
         fallback_model=models.get("fallback", DEFAULT_FALLBACK_MODEL),
         style_notes=raw.get("style_notes", ""),
         banned_phrases=tuple(raw.get("banned_phrases", [])),
+        calculator=raw.get("calculator"),
     )
 
 

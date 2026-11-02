@@ -64,6 +64,14 @@ GitHub의 예약 실행은 몇 시간씩 늦어질 수 있어서, 매일 글이 
 - API 키·크레딧·GitHub 토큰 문제처럼 직접 처리해야 하는 일은 🛠 메시지로 무엇을 바꾸면 되는지 안내합니다.
 - 테스트로 하루에 글을 더 받고 싶으면: Actions → **Draft posts** → Run workflow → `extra`에 추가 개수 입력.
 
+## HomeRivet (집·DIY 자재 계산기 사이트)
+
+- 설정: `sites/homerivet/site.toml`, 주제: `sites/homerivet/topics.toml`
+- 글 속 숫자는 AI가 아니라 **사이트의 계산기 코드**가 계산합니다. 주제마다 계산기 입력값(`[[topics.calculations]]`)이 있고, 엔진이 글을 쓰기 전에 계산해 AI에게 그 숫자만 줍니다. 본문 숫자가 계산 결과와 다르면 텔레그램까지 오지 않습니다.
+- 전기·구조·가스·지붕·석면 등 위험 주제는 자동 차단, 출처는 엔진이 자동으로 붙입니다.
+- 텔레그램 검토 메시지에 🧮 계산기 결과가 함께 표시됩니다.
+- `TARGET_GITHUB_TOKEN`에 `homerivettools` 저장소의 **Contents: Read and write** 권한이 있어야 발행됩니다.
+
 ## 사이트 추가
 
 `sites/<사이트id>/site.toml`과 `topics.toml`을 만들면 됩니다. 워드프레스 사이트는 발행 모듈(`wordpress`)을 추가한 뒤 연결합니다.

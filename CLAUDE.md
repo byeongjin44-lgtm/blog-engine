@@ -9,7 +9,10 @@ The owner does not read English: the Korean summary and review are how posts get
 - `engine/` — Python, **standard library only** (no pip install; runs as-is on GitHub Actions).
   - `config.py` loads `sites/<id>/site.toml` + `topics.toml`
   - `writer.py` drafting prompts, validation retry, Korean review; every review comment is applied (up to 2 rewrite rounds) before the owner sees the post — the owner cannot act on review notes
-  - `formats.py` post formats (`devrivet-json` mirrors `src/lib/blog.ts` in the devrivet repo — keep in sync)
+  - `formats.py` post formats (`devrivet-json` mirrors `src/lib/blog.ts` in the devrivet repo; `homerivet-json`
+    mirrors `src/lib/blog.ts` + `src/lib/content-policy.ts` in the homerivettools repo — keep both in sync)
+  - `calculator.py` runs a site's own calculator code (HomeRivet: `node vendor/homerivettools/scripts/calc.mts`;
+    the workflows check that repo out) so every number in a post comes from code, never from the AI
   - `publishers.py` delivery (`github_files` commits into the site repo)
   - `topics.py` topic queue: hand-written `topics.toml` first, then topics the engine proposes itself
     (`state/topics/<id>.json`) when fewer than 7 remain
@@ -39,8 +42,15 @@ The owner does not read English: the Korean summary and review are how posts get
 - **Review rewrite rounds are capped at 2 per post (owner decision, cost). Never raise the cap without the
   owner's explicit approval** — `REVIEW_ROUNDS` in `writer.py`, also hard-capped in the loop and locked by a test.
 
+- **HomeRivet content rules are LOCKED (owner decision, 2026-11-01) — never loosen without explicit approval:**
+  numbers come only from the calculator (topics carry `calculations`; the engine runs them before any AI call,
+  headline results must appear exactly and other decimals must be known numbers), material quantities only
+  (`FORBIDDEN_TOPICS` in `formats.py`, also filters proposed topics), sources are added by the engine from
+  `site.toml` (no external links in the body), and every post points readers to the manufacturer's label.
+  Locked by `tests/test_homerivet.py`.
 - Never publish without an explicit Approve from Telegram. No auto-approve.
 - Content must be genuinely useful and correct; no fake traffic, no mass low-quality pages (Google spam
   policy, AdSense invalid-traffic policy).
 - Secrets only via environment variables / GitHub Actions secrets. Never commit them.
-- Run `python -m unittest discover -s tests` and `python -m engine check` after any change.
+- Run `python -m unittest discover -s tests` and `python -m engine check` after any change
+  (`--require-calculator` with the site repo at `vendor/homerivettools`, as the test workflow does).

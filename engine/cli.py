@@ -17,7 +17,7 @@ from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from engine import state
+from engine import calculator, state
 from engine.config import Site, all_site_ids, load_site
 from engine.budget import BUDGET_KRW, BudgetExceeded, CostGuard
 from engine.errors import OwnerActionRequired
@@ -45,6 +45,15 @@ def format_review_message(site: Site, d: dict) -> str:
         f"<b>분량</b>: {review.get('word_count', '?')}단어",
         f"<b>작성 비용</b>: 약 {d.get('cost_krw', '?')}원 (모델: {esc(d.get('model', '?'))})",
         "",
+    ]
+    calc_results = post.get("_calc_results") or []
+    if calc_results:
+        lines.append("<b>글에 쓰인 계산기 결과</b> (코드로 계산, 본문 숫자 자동 대조 통과)")
+        for run_ in calc_results:
+            headline = ", ".join(r["display"] for r in run_["results"] if r.get("primary"))
+            lines.append(f"🧮 {esc(run_['calculator'])}: {esc(headline)}")
+        lines.append("")
+    lines += [
         "<b>내용 요약</b>",
         *[f"• {esc(s)}" for s in review.get("summary_ko", [])],
         "",
@@ -145,9 +154,21 @@ def _draft_one(site: Site, tg: Telegram, state_dir: Path, publisher, llm_transpo
     guard = CostGuard(llm_transport or default_transport)  # one budget for this whole post
     for topic in candidates:
         existing = existing_posts(site, publisher, state_dir)
+        calc = None
+        if site.calculator:
+            # Numbers come from the site's calculator code, computed before any AI call (no cost).
+            try:
+                if not topic.calculations:
+                    raise calculator.CalculatorError("topic has no calculations")
+                calc = {"results": calculator.run(site, list(topic.calculations)), "fields": calculator.fields(site)}
+            except calculator.CalculatorError as e:
+                attempts.append(f"{topic.title} / 계산기: {e}")
+                print(f"::warning title=계산기 오류::{topic.title}: {e}"[:1500].replace("\n", " "))
+                state.record_failed_topic(site.id, topic.title, attempts[-1], state_dir)
+                continue
         for model in models:
             try:
-                post, review = draft(replace(site, writer_model=model), topic, existing, transport=guard)
+                post, review = draft(replace(site, writer_model=model), topic, existing, transport=guard, calc=calc)
             except OwnerActionRequired:
                 raise
             except BudgetExceeded as e:
@@ -163,7 +184,8 @@ def _draft_one(site: Site, tg: Telegram, state_dir: Path, publisher, llm_transpo
                 "site": site.id,
                 "status": "pending",
                 "created": state.now_iso(),
-                "topic": {"title": topic.title, "keyword": topic.keyword, "related_tool": topic.related_tool},
+                "topic": {"title": topic.title, "keyword": topic.keyword, "related_tool": topic.related_tool,
+                          **({"calculations": list(topic.calculations)} if topic.calculations else {})},
                 "post": post,
                 "review": review,
                 "model": model,
@@ -288,12 +310,26 @@ def _handle_update(update: dict, tg: Telegram, state_dir: Path, github_transport
         print(f"published {d['post']['slug']}")
 
 
-def run_check() -> None:
+def run_check(*, require_calculator: bool = False) -> None:
     for site_id in all_site_ids():
         site = load_site(site_id)
         get_format(site.format)
         get_publisher(site.publisher)
-        print(f"[{site.id}] ok: {len(site.tools)} tools, {len(site.topics)} topics")
+        note = ""
+        if site.calculator:
+            missing = [t.title for t in site.topics if not t.calculations]
+            if missing:
+                raise ValueError(f"[{site.id}] topics without calculations: {missing}")
+            try:
+                # Every hand-written topic's calculator input must be valid for the site's real code.
+                for t in site.topics:
+                    calculator.run(site, list(t.calculations))
+                note = ", all topic calculations valid"
+            except calculator.CalculatorError as e:
+                if require_calculator or "not found" not in str(e):
+                    raise
+                note = " (calculator not available here, calculations not checked)"
+        print(f"[{site.id}] ok: {len(site.tools)} tools, {len(site.topics)} topics{note}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -305,7 +341,8 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("poll")
     p_listen = sub.add_parser("listen")
     p_listen.add_argument("--minutes", type=float, default=240)
-    sub.add_parser("check")
+    p_check = sub.add_parser("check")
+    p_check.add_argument("--require-calculator", action="store_true", help="fail if a site's calculator cannot run")
     args = parser.parse_args(argv)
 
     try:
@@ -316,7 +353,7 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "listen":
             run_listen(args.minutes)
         elif args.command == "check":
-            run_check()
+            run_check(require_calculator=args.require_calculator)
     except Exception as e:  # noqa: BLE001
         report_error(Telegram(), f"엔진 {args.command} 오류", e)
         return 1
