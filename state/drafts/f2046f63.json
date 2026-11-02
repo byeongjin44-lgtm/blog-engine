@@ -1,7 +1,7 @@
 {
   "id": "f2046f63",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-02T04:16:45Z",
   "topic": {
     "title": "JSON trailing comma: why it breaks and how to fix it",
@@ -207,7 +207,8 @@
         "text": "Use a validator that reports the line and column, such as the [JSON Formatter / Validator](/json-formatter). The error position usually points at the closing bracket or the comma just before it."
       }
     ],
-    "relatedTool": "json-formatter"
+    "relatedTool": "json-formatter",
+    "published": "2026-11-02"
   },
   "review": {
     "title_ko": "JSON 후행 쉼표: 왜 깨지고 어떻게 고치나",
@@ -237,5 +238,7 @@
   },
   "model": "claude-haiku-5-5",
   "recovered_from": [],
-  "telegram_message_id": 12
+  "telegram_message_id": 12,
+  "decided": "2026-11-02T04:25:57Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/json-trailing-comma-why-it-breaks-and-how-to-fix.json"
 }
