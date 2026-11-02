@@ -1,7 +1,7 @@
 {
   "id": "c51f2cb9",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-02T05:20:14Z",
   "topic": {
     "title": "Regex for email validation: practical patterns and their limits",
@@ -126,7 +126,8 @@
         "text": "It usually should not, as long as the plus sign is in the local-part character class. If you wrote [A-Za-z0-9._-] without the plus, addresses like jane+news@example.com fail. Add %+ to that class."
       }
     ],
-    "relatedTool": "regex-tester"
+    "relatedTool": "regex-tester",
+    "published": "2026-11-02"
   },
   "review": {
     "title_ko": "이메일 검증을 위한 정규식: 실용적인 패턴과 한계",
@@ -152,5 +153,7 @@
   "recovered_from": [],
   "cost_krw": 21,
   "api_calls": 6,
-  "telegram_message_id": 13
+  "telegram_message_id": 13,
+  "decided": "2026-11-02T09:22:50Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/regex-email-validation-practical-patterns-limits.json"
 }

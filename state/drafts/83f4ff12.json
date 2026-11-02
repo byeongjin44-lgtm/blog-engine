@@ -1,7 +1,7 @@
 {
   "id": "83f4ff12",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-02T09:22:05Z",
   "topic": {
     "title": "Regex for phone numbers: matching common formats",
@@ -210,7 +210,8 @@
         "text": "Yes, if you need matching or deduplication. Store a normalized form such as `+15551234567` and keep the formatted version separately for display."
       }
     ],
-    "relatedTool": "regex-tester"
+    "relatedTool": "regex-tester",
+    "published": "2026-11-02"
   },
   "review": {
     "title_ko": "일반 형식 전화번호 정규식 패턴",
@@ -234,5 +235,7 @@
   "recovered_from": [],
   "cost_krw": 20,
   "api_calls": 4,
-  "telegram_message_id": 14
+  "telegram_message_id": 14,
+  "decided": "2026-11-02T09:22:52Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/regex-phone-number-common-formats.json"
 }
