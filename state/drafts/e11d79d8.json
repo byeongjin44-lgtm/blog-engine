@@ -1,0 +1,239 @@
+{
+  "id": "e11d79d8",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-02T03:09:09Z",
+  "topic": {
+    "title": "Fixing \"Unexpected token in JSON at position\" errors",
+    "keyword": "unexpected token in json at position",
+    "related_tool": "json-formatter"
+  },
+  "post": {
+    "slug": "fix-unexpected-token-in-json-at-position",
+    "title": "Unexpected Token in JSON at Position: Causes and Fixes",
+    "description": "Unexpected token in JSON at position means JSON.parse hit a character it does not accept. Causes: HTML pages, trailing commas, single quotes, BOMs.",
+    "body": [
+      {
+        "type": "p",
+        "text": "\"Unexpected token in JSON at position N\" means JSON.parse() found a character at index N that cannot appear at that point in valid JSON. The fix depends on what that character is, and the most common culprit is not your JSON at all but an HTML error page that your code tried to parse."
+      },
+      {
+        "type": "p",
+        "text": "If you have a string and want to see exactly where it breaks, paste it into the [JSON Formatter / Validator](/json-formatter). It reports the error line and column, which is easier to read than a character index. DevRivet's JSON Formatter runs entirely in your browser, so you can paste a response that contains tokens or customer data without it being sent to a server."
+      },
+      {
+        "type": "h2",
+        "text": "What the position number means"
+      },
+      {
+        "type": "p",
+        "text": "The number is a zero-based index into the string you passed to JSON.parse(), counted in UTF-16 code units. It is not a byte offset into the file on disk. If the file has multibyte characters before the error, the number will not match what a hex editor shows."
+      },
+      {
+        "type": "p",
+        "text": "The wording varies by runtime. Older V8 builds (Chrome, Node) print the message shown above. Newer builds phrase it differently, for example `\"<!DOCTYPE \"... is not valid JSON`. Firefox and Safari use their own messages. The underlying problem is the same."
+      },
+      {
+        "type": "p",
+        "text": "Start by logging the raw text before parsing it. Many bugs come from parsing something that is not the JSON you think it is."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "try {\n  JSON.parse(text);\n} catch (err) {\n  console.error(err.message);\n  console.error(\"length:\", text.length);\n  console.error(\"first 100 chars:\", text.slice(0, 100));\n}"
+      },
+      {
+        "type": "h2",
+        "text": "Cause 1: The server returned an HTML page"
+      },
+      {
+        "type": "p",
+        "text": "This is the most common cause. If the body is an HTML page, the first character is usually `<`, so the error points at position 0. Typical sources are a 404 or 500 page, a login redirect that returns the sign-in page, a reverse proxy or CDN error page, or a framework error handler that renders HTML."
+      },
+      {
+        "type": "p",
+        "text": "Note that fetch() does not reject on a 404 or 500. It only rejects on network failures, so you have to check res.ok yourself. Check the status and the Content-Type before parsing:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "async function fetchJson(url) {\n  const res = await fetch(url);\n  const body = await res.text();\n\n  if (!res.ok) {\n    throw new Error(`HTTP ${res.status} from ${url}: ${body.slice(0, 200)}`);\n  }\n\n  const type = res.headers.get(\"content-type\") ?? \"\";\n  if (!type.includes(\"json\")) {\n    throw new Error(`Expected JSON but got \"${type}\": ${body.slice(0, 200)}`);\n  }\n\n  return JSON.parse(body);\n}"
+      },
+      {
+        "type": "p",
+        "text": "The check uses includes(\"json\") rather than an exact match because some APIs use other JSON media types, such as application/problem+json."
+      },
+      {
+        "type": "h2",
+        "text": "Cause 2: Trailing commas"
+      },
+      {
+        "type": "p",
+        "text": "JSON does not allow a comma after the last member of an object or the last element of an array. JavaScript and many config formats allow it, so the mistake is easy to make."
+      },
+      {
+        "type": "code",
+        "lang": "json",
+        "text": "{\n  \"name\": \"api\",\n  \"tags\": [\"json\", \"http\"],\n}"
+      },
+      {
+        "type": "p",
+        "text": "The error points at the closing brace or the character right after the comma. Remove the comma and it parses."
+      },
+      {
+        "type": "p",
+        "text": "This bites people with tsconfig.json. TypeScript reads that file with its own parser, which accepts comments and trailing commas. The file looks fine in the editor, then fails when a script passes it to JSON.parse()."
+      },
+      {
+        "type": "h2",
+        "text": "Cause 3: Single quotes and unquoted keys"
+      },
+      {
+        "type": "p",
+        "text": "JSON strings and keys must use double quotes. A JavaScript object literal such as `{'name': 'api'}` fails at the first single quote, which is usually position 1. Unquoted keys, such as `{name: \"api\"}`, fail the same way."
+      },
+      {
+        "type": "p",
+        "text": "Python is a frequent source of this. print(d) on a dict shows single quotes and Python's True, False and None, none of which are valid JSON. Use json.dumps() instead:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import json\n\nprint(json.dumps({\"name\": \"api\", \"active\": True}))\n# {\"name\": \"api\", \"active\": true}"
+      },
+      {
+        "type": "h2",
+        "text": "Cause 4: A byte order mark (BOM)"
+      },
+      {
+        "type": "p",
+        "text": "Some editors, especially on Windows, save UTF-8 files with a byte order mark: three bytes (EF BB BF) that decode to the character U+FEFF at the start of the file. The mark is invisible in most editors. JSON.parse() does not skip it, so the error points at position 0 and the first character looks like a valid `{`."
+      },
+      {
+        "type": "p",
+        "text": "If the text is read as UTF-8 and you suspect a BOM, check the first code unit and strip it:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const clean = text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;\nconst data = JSON.parse(clean);"
+      },
+      {
+        "type": "p",
+        "text": "In Python, open the file with the utf-8-sig codec, which removes the BOM if present:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import json\n\nwith open(\"config.json\", encoding=\"utf-8-sig\") as f:\n    data = json.load(f)"
+      },
+      {
+        "type": "h2",
+        "text": "Cause 5: Empty or truncated responses"
+      },
+      {
+        "type": "p",
+        "text": "Parsing an empty string does not produce a position. In V8 it throws \"Unexpected end of JSON input\". A truncated body, such as one cut off by a dropped connection or a size limit, usually gives the same message or an error near the end of the text."
+      },
+      {
+        "type": "p",
+        "text": "A common case is calling res.json() on a 204 No Content response, or on a DELETE endpoint that returns nothing. Handle empty bodies explicitly:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const body = await res.text();\nconst data = body.trim() === \"\" ? null : JSON.parse(body);"
+      },
+      {
+        "type": "h2",
+        "text": "Cause 6: Parsing a value that is not a string"
+      },
+      {
+        "type": "p",
+        "text": "JSON.parse() converts its argument to a string first. If you pass an object, you get \"[object Object]\", and the error is `Unexpected token o in JSON at position 1`, because the second character is `o`. Passing undefined gives `Unexpected token u` at position 0, since the string is \"undefined\"."
+      },
+      {
+        "type": "p",
+        "text": "If a value is already an object, use it directly. Only parse strings that actually contain JSON."
+      },
+      {
+        "type": "h2",
+        "text": "Other things that trigger the same error"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Comments. Lines starting with // and block comments with /* */ are not allowed.",
+          "Non-JSON values. NaN, Infinity and undefined are not valid JSON values.",
+          "Leading zeros in numbers, such as 007. Write 7.",
+          "Raw control characters inside strings, such as a literal newline or tab. They must be escaped as \\n or \\t.",
+          "Invalid escape sequences. A Windows path like \"C:\\users\\app\" fails because \\u must be followed by four hex digits. Write \"C:\\\\users\\\\app\" instead."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "A quick checklist"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Log the status code, the Content-Type and the first 100 characters of the raw body.",
+          "If the body starts with `<`, you received HTML. Fix the request or the endpoint.",
+          "If the first character is a BOM (U+FEFF), strip it before parsing.",
+          "If the body is empty, skip parsing or handle the empty case.",
+          "Otherwise, paste the text into the [JSON Formatter / Validator](/json-formatter) and fix the reported line and column."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Why does the error say position 0?"
+      },
+      {
+        "type": "p",
+        "text": "Position 0 means the first character is wrong. The usual causes are an HTML response starting with `<`, a UTF-8 BOM, or a non-JSON value such as undefined."
+      },
+      {
+        "type": "h3",
+        "text": "Can JSON.parse accept comments or trailing commas?"
+      },
+      {
+        "type": "p",
+        "text": "No. For files that people edit by hand, use a parser that supports JSONC or JSON5, or strip comments first with a real parser. A regex can break on strings that contain // or /* sequences."
+      },
+      {
+        "type": "h3",
+        "text": "Is the position a byte offset or a character offset?"
+      },
+      {
+        "type": "p",
+        "text": "In JavaScript it is an index into the string, counted in UTF-16 code units, not a byte offset in the file. Python reports character positions in its own messages, so compare against the same decoded text."
+      }
+    ],
+    "relatedTool": "json-formatter"
+  },
+  "review": {
+    "title_ko": "JSON의 'Unexpected token ... at position' 오류: 원인과 해결법",
+    "summary_ko": [
+      "JSON.parse()가 유효하지 않은 문자를 만났을 때 나오는 오류의 의미를 설명하고, 가장 흔한 원인이 JSON 자체가 아니라 HTML 오류 페이지라고 짚습니다.",
+      "position 번호는 JS 문자열 기준 0부터 시작하는 UTF-16 코드 유닛 인덱스이며, 파일의 바이트 오프셋이 아니라고 설명합니다. 브라우저와 런타임마다 메시지가 다르다는 점도 언급합니다.",
+      "원인 1: 서버가 HTML을 반환하는 경우. fetch()는 404/500에서 reject하지 않으므로 res.ok와 Content-Type을 먼저 확인하는 코드를 제시합니다.",
+      "원인 2~3: 후행 쉼표, 작은따옴표와 따옴표 없는 키. tsconfig.json 사례와 Python dict 출력 문제를 다루고 json.dumps() 예제를 보여줍니다.",
+      "원인 4~6: BOM 제거(JS와 Python utf-8-sig), 빈 응답이나 204 응답 처리, 문자열이 아닌 값을 파싱하는 경우([object Object], undefined)를 설명합니다.",
+      "주석, NaN/Infinity, 앞자리 0, 제어 문자, 잘못된 이스케이프(Windows 경로) 등 추가 원인과 체크리스트, FAQ로 마무리합니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "BOM 설명의 \"the first character looks like a valid `{`\" 문장이 모호합니다. 실제로 오류가 나는 것은 보이지 않는 U+FEFF 문자이고, 그 뒤의 `{`가 보이는 첫 글자라는 점을 구분해서 쓰면 더 명확합니다.",
+        "en": "In the BOM section, \"the first character looks like a valid `{`\" is ambiguous. The error is at position 0 because of the invisible U+FEFF, and the visible `{` is the second code unit. Saying that explicitly would be clearer."
+      }
+    ],
+    "verdict": "ok",
+    "word_count": 1201
+  },
+  "telegram_message_id": 11
+}
