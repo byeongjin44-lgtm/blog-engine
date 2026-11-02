@@ -36,6 +36,9 @@ REVIEW_SCHEMA = {
 }
 
 
+REVIEW_ROUNDS = 2  # rewrite rounds to resolve review comments
+
+
 class DraftError(RuntimeError):
     pass
 
@@ -138,13 +141,21 @@ def draft(site: Site, topic: Topic, existing: dict[str, str], transport: Transpo
         if errors:
             raise DraftError("draft failed validation twice: " + "; ".join(errors))
 
+    # Apply every review comment (not only serious ones) before the owner sees the post: the owner
+    # cannot act on English review notes, so they must be resolved here. Up to REVIEW_ROUNDS rounds.
     review = review_post(site, post, transport)
-    high = [i for i in review.get("issues", []) if i.get("severity") == "high"]
-    if high:
+    applied: list[str] = []
+    for _ in range(REVIEW_ROUNDS):
+        issues = review.get("issues", [])
+        if not issues:
+            break
         revised = write_post(site, topic, existing, transport,
-                             feedback=[i.get("en") or i["ko"] for i in high], previous=post)
-        if not fmt["validate"](revised, site, existing_slugs):
-            post = revised
-            review = review_post(site, post, transport)
+                             feedback=[i.get("en") or i["ko"] for i in issues], previous=post)
+        if fmt["validate"](revised, site, existing_slugs):
+            break  # the revision broke the post's structure: keep the last valid version
+        post = revised
+        applied += [i["ko"] for i in issues]
+        review = review_post(site, post, transport)
+    review["applied"] = applied
     review["word_count"] = word_count(post["body"])
     return post, review

@@ -8,7 +8,7 @@ The owner does not read English: the Korean summary and review are how posts get
 
 - `engine/` — Python, **standard library only** (no pip install; runs as-is on GitHub Actions).
   - `config.py` loads `sites/<id>/site.toml` + `topics.toml`
-  - `writer.py` drafting prompts, validation retry, Korean review, revision on high-severity issues
+  - `writer.py` drafting prompts, validation retry, Korean review; every review comment is applied (up to 2 rewrite rounds) before the owner sees the post — the owner cannot act on review notes
   - `formats.py` post formats (`devrivet-json` mirrors `src/lib/blog.ts` in the devrivet repo — keep in sync)
   - `publishers.py` delivery (`github_files` commits into the site repo)
   - `topics.py` topic queue: hand-written `topics.toml` first, then topics the engine proposes itself

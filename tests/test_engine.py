@@ -225,6 +225,29 @@ class FlowTests(unittest.TestCase):
         self.assertIn("&lt;script&gt;", text)
 
 
+class ReviewFixTests(unittest.TestCase):
+    def test_all_review_comments_are_applied_before_sending(self):
+        low = {**OK_REVIEW, "issues": [{"severity": "low", "ko": "도입부가 장황함", "en": "Intro is wordy"}], "verdict": "fix"}
+        revised = make_post()
+        revised["title"] = "Cron expression for every Monday (tightened)"
+        llm = FakeLLM([make_post(), revised], [low, OK_REVIEW])
+        tg = FakeTelegram()
+        run_draft(["devrivet"], state_dir=Path(tempfile.mkdtemp()), telegram=tg, llm_transport=llm, github_transport=FakeGitHub())
+        self.assertIn("Intro is wordy", [c for c in llm.calls if c[0] == "submit_post"][1][1]["messages"][0]["content"])
+        text = tg.sent[0]["text"]
+        self.assertIn("검토 의견 1건 자동 반영 완료", text)
+        self.assertIn("도입부가 장황함", text)
+        self.assertIn("남은 문제 없음", text)
+
+    def test_stops_after_two_rounds_and_shows_what_is_left(self):
+        nag = {**OK_REVIEW, "issues": [{"severity": "low", "ko": "예시 하나 더", "en": "Add one more example"}], "verdict": "fix"}
+        llm = FakeLLM([make_post(), make_post(), make_post()], [nag, nag, nag])
+        tg = FakeTelegram()
+        run_draft(["devrivet"], state_dir=Path(tempfile.mkdtemp()), telegram=tg, llm_transport=llm, github_transport=FakeGitHub())
+        self.assertEqual(len([c for c in llm.calls if c[0] == "submit_post"]), 3)  # first draft + 2 rounds
+        self.assertIn("남은 의견", tg.sent[0]["text"])
+
+
 class RecoveryTests(unittest.TestCase):
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp())

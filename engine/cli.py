@@ -46,14 +46,19 @@ def format_review_message(site: Site, d: dict) -> str:
         *[f"• {esc(s)}" for s in review.get("summary_ko", [])],
         "",
     ]
+    applied = review.get("applied", [])
+    if applied:
+        lines.append(f"<b>검토 의견 {len(applied)}건 자동 반영 완료</b>")
+        lines += [f"✔️ {esc(a)}" for a in applied]
+        lines.append("")
     issues = review.get("issues", [])
     if issues:
-        lines.append("<b>검토 의견</b>")
+        lines.append("<b>자동 반영 후에도 남은 의견</b> (내용을 보고 승인 또는 폐기만 결정하시면 됩니다)")
         for issue in issues:
             mark = "⚠️" if issue.get("severity") == "high" else "ℹ️"
             lines.append(f"{mark} {esc(issue.get('ko', ''))}")
     else:
-        lines.append("<b>검토 의견</b>: 문제 없음")
+        lines.append("<b>최종 검토</b>: 남은 문제 없음 ✅")
     lines += ["", f'<a href="{draft_link(d["id"])}">전체 원고 보기</a>']
     return "\n".join(lines)
 
