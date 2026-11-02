@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -56,6 +57,8 @@ class Site:
     banned_phrases: tuple[str, ...] = field(default_factory=tuple)
     # Sites whose numbers must come from code: {"command": [...], "extra_numbers": [...]}.
     calculator: dict | None = None
+    # IndexNow key; the site must serve it at <url>/<key>.txt. Empty = don't announce new posts.
+    indexnow_key: str = ""
 
     def tool(self, slug: str | None) -> Tool | None:
         return next((t for t in self.tools if t.slug == slug), None)
@@ -78,6 +81,8 @@ def load_site(site_id: str, sites_dir: Path = SITES_DIR) -> Site:
     for t in topics:
         if t.related_tool and t.related_tool not in tool_slugs:
             raise ValueError(f"topic {t.title!r} references unknown tool {t.related_tool!r}")
+    if not re.fullmatch(r"[a-zA-Z0-9-]{8,128}", raw.get("indexnow_key", "") or "x" * 8):
+        raise ValueError(f"sites/{site_id}/site.toml: indexnow_key must be 8-128 letters, digits or dashes")
     models = raw.get("models", {})
     return Site(
         id=raw["id"],
@@ -99,6 +104,7 @@ def load_site(site_id: str, sites_dir: Path = SITES_DIR) -> Site:
         style_notes=raw.get("style_notes", ""),
         banned_phrases=tuple(raw.get("banned_phrases", [])),
         calculator=raw.get("calculator"),
+        indexnow_key=raw.get("indexnow_key", ""),
     )
 
 

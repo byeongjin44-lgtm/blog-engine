@@ -18,6 +18,9 @@ style_notes = """
 
 banned_phrases = []
 
+# IndexNow: new posts are announced to Bing & co. The devrivet repo serves public/<key>.txt with this key.
+indexnow_key = "aa8a9969005bcd05fafbb0ff0312b276"
+
 [publisher]
 type = "github_files"
 repo = "byeongjin44-lgtm/devrivet"

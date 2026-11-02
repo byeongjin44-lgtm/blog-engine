@@ -16,7 +16,9 @@ The owner does not read English: the Korean summary and review are how posts get
   - `publishers.py` delivery (`github_files` commits into the site repo)
   - `topics.py` topic queue: hand-written `topics.toml` first, then topics the engine proposes itself
     (`state/topics/<id>.json`) when fewer than 7 remain
-  - `telegram.py`, `state.py`, `cli.py` (`python -m engine draft|poll|check`)
+  - `indexnow.py` announces published posts to Bing & co. once live (`python -m engine notify`, hourly in
+    `poll.yml`); best-effort, never fails a workflow. The site serves the key at `/<indexnow_key>.txt`
+  - `telegram.py`, `state.py`, `cli.py` (`python -m engine draft|poll|check|notify`)
 - `sites/<id>/` — one folder per site. Adding a site = adding a folder; no engine change unless it
   needs a new format or publisher.
 - `state/drafts/<id>.json` — one file per draft (`pending | published | rejected`), committed by the workflows.

@@ -51,6 +51,12 @@ jobs:
           MINUTES: ${{ inputs.minutes || '0' }}
         run: |
           if [ "$MINUTES" != "0" ]; then python -m engine listen --minutes "$MINUTES"; else python -m engine poll; fi
+      # Tell Bing & co. (IndexNow) about posts published since the last run, once their pages are live.
+      # Best-effort: never fails this job and sends no Telegram message.
+      - name: Announce new posts to search engines
+        if: steps.busy.outputs.skip == 'false'
+        continue-on-error: true
+        run: python -m engine notify
       - name: Save state
         if: always() && steps.busy.outputs.skip == 'false'
         run: ./scripts/commit-state.sh "Process approvals"

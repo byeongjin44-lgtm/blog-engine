@@ -451,3 +451,71 @@ class PublisherTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class IndexNowTests(unittest.TestCase):
+    """New posts are announced once, only when live, and failures never raise."""
+
+    KEY = SITE.indexnow_key
+
+    def setUp(self):
+        from datetime import datetime, timezone
+        self.tmp = Path(tempfile.mkdtemp())
+        self.now = datetime(2026, 11, 3, tzinfo=timezone.utc)
+        for i, (status, decided) in enumerate([("published", "2026-11-02T10:00:00Z"),
+                                               ("published", "2026-10-01T10:00:00Z"),  # too old
+                                               ("rejected", "2026-11-02T10:00:00Z")]):
+            state.save_draft({"id": f"d{i}", "site": "devrivet", "status": status, "decided": decided,
+                              "created": decided, "post": {"slug": f"post-{i}"}}, self.tmp)
+
+    def fake_http(self, key_status=200, page_status=200, post_status=202, raises=False):
+        calls = []
+
+        def http(method, url, body=None):
+            calls.append((method, url, body))
+            if raises:
+                raise OSError("network down")
+            if url.endswith(f"/{self.KEY}.txt"):
+                return key_status, self.KEY
+            if method == "POST":
+                return post_status, ""
+            return page_status, "<html>"
+        return http, calls
+
+    def run_notify(self, http):
+        from engine.indexnow import run_notify
+        return run_notify(state_dir=self.tmp, http=http, now=self.now)
+
+    def test_site_has_key(self):
+        self.assertRegex(self.KEY, r"^[0-9a-f]{32}$")
+
+    def test_announces_recent_live_post_once(self):
+        http, calls = self.fake_http()
+        self.assertEqual(self.run_notify(http), 1)
+        post = [c for c in calls if c[0] == "POST"][0][2]
+        self.assertEqual(post["host"], "devrivettools.com")
+        self.assertEqual(post["urlList"], ["https://devrivettools.com/blog/post-0"])
+        self.assertEqual(post["keyLocation"], f"https://devrivettools.com/{self.KEY}.txt")
+        self.assertTrue(state.load_draft("d0", self.tmp)["indexnow"])
+        self.assertNotIn("indexnow", state.load_draft("d1", self.tmp))  # older than 3 days: left alone
+        http2, calls2 = self.fake_http()
+        self.assertEqual(self.run_notify(http2), 0)
+        self.assertEqual(calls2, [])  # nothing left to announce, no requests at all
+
+    def test_waits_for_key_file_and_page(self):
+        for kwargs in ({"key_status": 404}, {"page_status": 404}, {"post_status": 403}):
+            http, calls = self.fake_http(**kwargs)
+            self.assertEqual(self.run_notify(http), 0, kwargs)
+            self.assertNotIn("indexnow", state.load_draft("d0", self.tmp), kwargs)  # retried next run
+            if "key_status" in kwargs:
+                self.assertFalse([c for c in calls if c[0] == "POST"])
+
+    def test_network_failure_never_raises(self):
+        http, _ = self.fake_http(raises=True)
+        self.assertEqual(self.run_notify(http), 0)
+
+    def test_cli_notify_always_succeeds(self):
+        from unittest import mock
+        from engine import cli
+        with mock.patch("engine.indexnow.run_notify", side_effect=RuntimeError("boom")):
+            self.assertEqual(cli.main(["notify"]), 0)

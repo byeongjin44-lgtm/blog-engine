@@ -5,6 +5,7 @@
     python -m engine poll             # process Telegram Approve / Reject buttons once
     python -m engine listen           # wait for buttons and handle them immediately (up to 4 h)
     python -m engine check            # validate every site config (used by the test workflow)
+    python -m engine notify           # announce newly published posts via IndexNow (best-effort)
 """
 
 from __future__ import annotations
@@ -343,7 +344,17 @@ def main(argv: list[str] | None = None) -> int:
     p_listen.add_argument("--minutes", type=float, default=240)
     p_check = sub.add_parser("check")
     p_check.add_argument("--require-calculator", action="store_true", help="fail if a site's calculator cannot run")
+    sub.add_parser("notify")
     args = parser.parse_args(argv)
+
+    if args.command == "notify":
+        # Best-effort: never fails the workflow and never sends Telegram messages.
+        from engine.indexnow import run_notify
+        try:
+            run_notify()
+        except Exception as e:  # noqa: BLE001
+            print(f"::warning title=IndexNow::{e}")
+        return 0
 
     try:
         if args.command == "draft":
