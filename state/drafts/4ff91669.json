@@ -1,7 +1,7 @@
 {
   "id": "4ff91669",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-02T13:49:26Z",
   "topic": {
     "title": "How many bags of concrete for a 10x10 slab?",
@@ -381,7 +381,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-02"
   },
   "review": {
     "title_ko": "10x10 슬래브에는 콘크리트가 몇 포대 필요할까? 4인치 예시",
@@ -409,5 +410,7 @@
   "recovered_from": [],
   "cost_krw": 11,
   "api_calls": 4,
-  "telegram_message_id": 16
+  "telegram_message_id": 16,
+  "decided": "2026-11-02T13:51:33Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-bags-of-concrete-for-10x10-slab.json"
 }
