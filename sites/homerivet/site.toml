@@ -26,6 +26,9 @@ style_notes = """
 
 banned_phrases = []
 
+# IndexNow: new posts are announced to Bing & co. The homerivettools repo serves public/<key>.txt with this key.
+indexnow_key = "bca38dabec3141b71af7da40b3c0070e"
+
 [publisher]
 type = "github_files"
 repo = "byeongjin44-lgtm/homerivettools"
