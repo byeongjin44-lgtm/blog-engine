@@ -1,7 +1,7 @@
 {
   "id": "1013d42e",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-03T04:05:19Z",
   "topic": {
     "title": "How much mulch do I need for 100 square feet?",
@@ -260,7 +260,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-03"
   },
   "review": {
     "title_ko": "100 제곱피트 멀치는 얼마나 필요할까? 벌크와 포대 기준 수량",
@@ -299,5 +300,7 @@
   "recovered_from": [],
   "cost_krw": 17,
   "api_calls": 6,
-  "telegram_message_id": 18
+  "telegram_message_id": 18,
+  "decided": "2026-11-03T06:38:35Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-mulch-for-100-square-feet.json"
 }
