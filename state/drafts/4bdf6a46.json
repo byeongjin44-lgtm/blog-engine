@@ -1,0 +1,212 @@
+{
+  "id": "4bdf6a46",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-03T04:03:54Z",
+  "topic": {
+    "title": "Named capture groups in JavaScript regex",
+    "keyword": "javascript regex named groups",
+    "related_tool": "regex-tester"
+  },
+  "post": {
+    "slug": "javascript-regex-named-groups",
+    "title": "JavaScript Regex Named Groups: Syntax, Access and Replace",
+    "description": "Name a JavaScript regex capture group with (?<name>...), read it from match.groups, and reference it with \\k<name> or $<name>. Examples and pitfalls.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A named capture group gives a regex group a name, like (?<year>\\d{4}), so you can read the match as match.groups.year instead of counting positions with match[1]. The syntax is (?<name>pattern). It works in regex literals and in new RegExp() strings, and it is supported in all current evergreen browsers and in Node.js."
+      },
+      {
+        "type": "p",
+        "text": "To try a pattern against sample input while you write it, paste it into the [Regex Tester](/regex-tester). It highlights matches and shows each capture group, which makes it easy to confirm that a name is attached to the part of the string you expect."
+      },
+      {
+        "type": "h2",
+        "text": "Basic syntax and match.groups"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const re = /(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})/;\nconst match = 'Released 2024-03-09'.match(re);\n\nconsole.log(match.groups.year);  // '2024'\nconsole.log(match.groups);       // [Object: null prototype] { year: '2024', month: '03', day: '09' }\nconsole.log(match[1]);           // '2024'"
+      },
+      {
+        "type": "p",
+        "text": "The groups object is created with a null prototype. It has no inherited methods such as hasOwnProperty or toString, so use Object.hasOwn(match.groups, 'year') or check for undefined directly when you need to test for a group."
+      },
+      {
+        "type": "p",
+        "text": "Named groups are still numbered. match[1] returns the same value as match.groups.year, so existing code that uses numeric indexes keeps working if you add names later."
+      },
+      {
+        "type": "h2",
+        "text": "Referencing a group inside the pattern"
+      },
+      {
+        "type": "p",
+        "text": "Use \\k<name> to match the same text that an earlier named group matched. This is the named form of a backreference. It is easier to read than \\1 once a pattern has several groups."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const quoted = /(?<q>['\"]).*?\\k<q>/;\n\nquoted.test('say \"hi\"');  // true\nquoted.test(\"it's\");      // false: no closing quote\nquoted.test(\"'a\\\"\");     // false: opening ' does not match closing \""
+      },
+      {
+        "type": "p",
+        "text": "A backreference to a group that has not matched yet does not cause a failure. In JavaScript, \\k<name> matches the empty string in two cases: when the named group appears later in the pattern (a forward reference), and when the group exists but did not participate in the match."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "/\\k<word>(?<word>\\w+)/.exec('abc');\n// ['abc', 'abc']  forward reference matched '' and the group then matched 'abc'\n\n/(?<a>x)?\\k<a>y/.exec('y');\n// ['y', undefined]  group a did not participate, so \\k<a> matched ''"
+      },
+      {
+        "type": "p",
+        "text": "Both cases are usually bugs. Keep each group before its \\k<name> reference so the intent is clear, and make sure the group is required if the reference is meant to match real text."
+      },
+      {
+        "type": "h2",
+        "text": "Using named groups in replace()"
+      },
+      {
+        "type": "p",
+        "text": "In a replacement string, $<name> inserts the text captured by that group. This lets you reorder dates or rewrite fields without touching the numeric positions."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "'2024-03-09'.replace(\n  /(?<y>\\d{4})-(?<m>\\d{2})-(?<d>\\d{2})/,\n  '$<d>/$<m>/$<y>'\n);\n// '09/03/2024'"
+      },
+      {
+        "type": "p",
+        "text": "If the pattern has no named groups, $<name> is not special. The text $<name> stays in the output as literal characters. This is a common source of confusion when a regex loses its names during an edit."
+      },
+      {
+        "type": "p",
+        "text": "For more logic, pass a function. Its first argument is the full match, followed by one argument per numbered group. Named groups are passed as positional arguments too. After the groups come the offset of the match and the full input string. When the pattern has named groups, an object with those groups is appended as the last argument. The example below uses only the first four parameters, so the offset, the input string and the groups object are ignored."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const out = 'Due 2024-03-09'.replace(\n  /(?<y>\\d{4})-(?<m>\\d{2})-(?<d>\\d{2})/,\n  (_, y, m, d) => `${d}.${m}.${y}`\n);\n// 'Due 09.03.2024'"
+      },
+      {
+        "type": "h2",
+        "text": "Iterating over every match with matchAll"
+      },
+      {
+        "type": "p",
+        "text": "String.prototype.matchAll returns an iterator of match objects, and each one has its own groups object. The regex must have the g flag, or matchAll throws a TypeError."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const log = 'a=1 b=22 c=333';\n\nfor (const m of log.matchAll(/(?<key>\\w+)=(?<value>\\d+)/g)) {\n  const { key, value } = m.groups;\n  console.log(key, value);\n}\n// a 1\n// b 22\n// c 333"
+      },
+      {
+        "type": "h2",
+        "text": "Optional groups return undefined"
+      },
+      {
+        "type": "p",
+        "text": "A named group that did not participate in the match has the value undefined, not an empty string. This matters when you concatenate values or compare them."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const re = /(?<prefix>[a-z]+)?:(?<id>\\d+)/;\nconst m = re.exec(':42');\n\nm.groups;               // [Object: null prototype] { prefix: undefined, id: '42' }\nconst prefix = m.groups.prefix ?? '';  // ''"
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls that cause real bugs"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Names must be valid identifiers: letters, digits, $ and _, and the name cannot start with a digit. A name like (?<first-name>) or (?<2fa>) is a SyntaxError when the regex is created.",
+          "Names are case-sensitive. match.groups.Year is undefined if the group is named year.",
+          "match.groups is undefined when the regex has no named groups. Reading match.groups.year then throws a TypeError. Check for a match first, and check that the pattern really contains named groups.",
+          "When you destructure, a group name can collide with a variable you already have. Rename it in the destructuring pattern, for example: const { year: y } = match.groups;",
+          "Do not rely on reusing the same group name twice in one pattern. Support for duplicate names differs across engines and versions, so pick unique names.",
+          "Other languages use different syntax. Python's re module uses (?P<name>...) and match.group('name'). A pattern copied from Python will not run in JavaScript without changes."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Getting group positions"
+      },
+      {
+        "type": "p",
+        "text": "If you need the start and end index of a named group, add the d flag. The match then has an indices property, and indices.groups holds a [start, end] pair for each named group."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const m = /(?<year>\\d{4})/d.exec('in 2024');\n\nm.indices.groups.year;  // [3, 7]"
+      },
+      {
+        "type": "h2",
+        "text": "Validating real input"
+      },
+      {
+        "type": "p",
+        "text": "Named groups are most useful when a pattern has several fields, such as a phone number or an address. The [phone number patterns guide](/blog/regex-phone-number-common-formats) shows how groups split regional formats, and the [email validation article](/blog/regex-email-validation-practical-patterns-limits) explains why a single regex has limits for that kind of input. Test each pattern against both valid and invalid samples before you rely on it."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I combine named groups with flags like i, s or u?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Flags such as g, i, m, s and u do not change the group syntax. You can use them together with named groups in the same way as numbered groups."
+      },
+      {
+        "type": "h3",
+        "text": "Do named groups make a regex slower?"
+      },
+      {
+        "type": "p",
+        "text": "A named group is still a capture group, and the name is only metadata for lookup. In practice, the difference is negligible for most code. If performance matters, measure your actual input rather than relying on general rules."
+      },
+      {
+        "type": "h3",
+        "text": "Why does match.groups show [Object: null prototype]?"
+      },
+      {
+        "type": "p",
+        "text": "The object is created without a prototype on purpose, so a group named toString or constructor cannot collide with built-in properties. Read the values with normal property access, such as match.groups.year."
+      }
+    ],
+    "relatedTool": "regex-tester"
+  },
+  "review": {
+    "title_ko": "JavaScript 정규식 이름 있는 캡처 그룹: 문법, 접근, 치환",
+    "summary_ko": [
+      "이름 있는 캡처 그룹 (?<name>...)을 쓰면 match[1] 대신 match.groups.year처럼 이름으로 값을 읽을 수 있고, 번호 접근도 그대로 동작합니다.",
+      "match.groups는 프로토타입이 없는 객체이므로 그룹 존재 여부는 Object.hasOwn 또는 undefined 검사로 확인합니다.",
+      "패턴 안에서는 \\k<name>으로 같은 텍스트를 역참조합니다. 뒤에 정의된 그룹을 가리키거나 참여하지 않은 그룹을 참조하면 빈 문자열로 매치된다는 예시를 설명합니다.",
+      "replace()에서는 $<name>으로 그룹 값을 넣어 날짜 순서를 바꿀 수 있고, 이름 그룹이 없으면 $<name>은 문자 그대로 출력됩니다.",
+      "함수 치환자는 번호 그룹과 이름 그룹을 인자로 받고, 이름 그룹이 있으면 마지막 인자로 groups 객체가 붙습니다.",
+      "matchAll은 g 플래그가 필수이며 각 매치마다 groups를 제공합니다. 참여하지 않은 선택적 그룹의 값은 빈 문자열이 아니라 undefined입니다.",
+      "흔한 실수로 잘못된 식별자 이름, 대소문자 구분, 이름 그룹이 없을 때 groups 접근 시 TypeError, Python 문법 혼용, d 플래그로 indices.groups 위치 확인을 다룹니다. 기술적으로 정확하여 발행해도 됩니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"The backreference must refer to a group that is defined earlier in the pattern, or the reference matches nothing useful.\" 부분은 뒤에서 정의된 그룹을 참조하거나 참여하지 않은 그룹을 참조할 때 JS가 빈 문자열로 매칭한다는 점을 구체적으로 말하지 않아 모호합니다.",
+      "\"const prefix = m.groups.prefix ?? '';\" 위의 주석 \"m.groups; // { prefix: undefined, id: '42' }\"는 실제 콘솔에서는 [Object: null prototype] 형태로 출력되므로 앞 절과 표현이 어긋납니다.",
+      "구조분해 예시 \"const { year: y } = match.groups.\"가 문장 끝에서 잘린 것처럼 보입니다. 완전한 한 줄 예시(예: const { year: y } = match.groups;)로 고치는 편이 명확합니다.",
+      "\"Its first argument is the full match, followed by one argument per numbered group\" 설명에서 치환 함수가 offset과 전체 문자열도 받는다는 점이 빠져 있습니다. 예제가 (_, y, m, d)만 쓰므로 독자가 인자 순서를 오해할 수 있습니다."
+    ],
+    "word_count": 1125
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 23,
+  "api_calls": 6,
+  "telegram_message_id": 17
+}
