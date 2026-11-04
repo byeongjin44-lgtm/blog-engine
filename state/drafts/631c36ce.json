@@ -1,7 +1,7 @@
 {
   "id": "631c36ce",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-04T03:18:11Z",
   "topic": {
     "title": "How to check when a JWT expires (exp claim explained)",
@@ -166,7 +166,8 @@
         "text": "Decode the payload, read `exp`, and compare it with the current Unix time in seconds. That tells you whether the token is past its expiration, but it does not prove the token is genuine. You still need signature verification before trusting any claim."
       }
     ],
-    "relatedTool": "jwt-decoder"
+    "relatedTool": "jwt-decoder",
+    "published": "2026-11-04"
   },
   "review": {
     "title_ko": "JWT 만료 시간: exp 클레임 확인 방법",
@@ -188,5 +189,7 @@
   "recovered_from": [],
   "cost_krw": 8,
   "api_calls": 2,
-  "telegram_message_id": 19
+  "telegram_message_id": 19,
+  "decided": "2026-11-04T03:24:32Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/jwt-expiration-time-check-exp-claim.json"
 }

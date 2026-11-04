@@ -1,7 +1,7 @@
 {
   "id": "107bb2c6",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-04T03:18:57Z",
   "topic": {
     "title": "How many boxes of laminate flooring for a 12x14 room?",
@@ -336,7 +336,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-04"
   },
   "review": {
     "title_ko": "12x14 방 라미네이트 바닥재는 몇 박스가 필요할까?",
@@ -364,5 +365,7 @@
   "recovered_from": [],
   "cost_krw": 9,
   "api_calls": 3,
-  "telegram_message_id": 20
+  "telegram_message_id": 20,
+  "decided": "2026-11-04T03:24:36Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-laminate-flooring-12x14-room.json"
 }
