@@ -1,0 +1,368 @@
+{
+  "id": "107bb2c6",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-04T03:18:57Z",
+  "topic": {
+    "title": "How many boxes of laminate flooring for a 12x14 room?",
+    "keyword": "how much laminate flooring do i need",
+    "related_tool": "flooring-calculator",
+    "calculations": [
+      {
+        "calculator": "flooring-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 14,
+          "sqFtPerBox": 20,
+          "layout": "straight"
+        }
+      },
+      {
+        "calculator": "flooring-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 14,
+          "sqFtPerBox": 20,
+          "layout": "diagonal"
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-laminate-flooring-12x14-room",
+    "title": "How Much Laminate Flooring Do I Need for a 12x14 Room?",
+    "description": "A 12x14 room needs 9 boxes of laminate with a straight layout (7% extra) or 10 boxes on a diagonal (15% extra), at 20 sq ft per box. Here is how the count works.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 12x14 room needs 9 boxes of laminate flooring for a straight layout with 7% extra, or 10 boxes for a diagonal layout with 15% extra, if each box covers 20 sq ft. You can run the same numbers for your own room with the [Flooring Calculator](/flooring-calculator). The steps below show how the result is reached."
+      },
+      {
+        "type": "h2",
+        "text": "How the calculation works"
+      },
+      {
+        "type": "p",
+        "text": "Laminate, hardwood and vinyl plank are all sold by the box, and each box covers a set number of square feet. The calculator uses three steps:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the floor area. Multiply the room length by the room width. A 12 ft by 14 ft room is 168 sq ft.",
+          "Add the extra for cuts and waste. A straight layout adds 7%, and a diagonal layout adds 15%.",
+          "Divide the total by the coverage printed on one box, then round up to a whole box. In this example, each box covers 20 sq ft."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Worked example: straight versus diagonal"
+      },
+      {
+        "type": "p",
+        "text": "Here is the same 12x14 room with the same 20 sq ft box, compared across the two layouts."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Straight layout (7% extra): 168 sq ft of floor plus 7% extra comes to 179.8 sq ft of flooring. That means you should buy 9 boxes.",
+          "Diagonal layout (15% extra): 168 sq ft of floor plus 15% extra comes to 193.2 sq ft of flooring. That means you should buy 10 boxes."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The diagonal layout needs one more box. Nine boxes cover 180 sq ft, which is not enough for the 193.2 sq ft the diagonal layout calls for. Diagonal rows create more angled cuts along the walls, so the calculator adds a larger allowance for them."
+      },
+      {
+        "type": "h2",
+        "text": "Why the extra matters"
+      },
+      {
+        "type": "p",
+        "text": "The extra percentage covers the pieces you cut at the walls, around doorways and at the end of each row, plus any boards that crack during installation and cannot be reused. Offcuts from one row can sometimes start the next row, but some material is always lost to waste."
+      },
+      {
+        "type": "p",
+        "text": "If you skip the extra and buy exactly the floor area divided by the box coverage, you will almost always come up short partway through the job. Running out in the middle of a room is harder to fix than buying one more box up front, especially if the color varies between production runs."
+      },
+      {
+        "type": "h2",
+        "text": "Check the box label before you buy"
+      },
+      {
+        "type": "p",
+        "text": "The calculator uses 20 sq ft per box because that is the coverage for this example. Products differ. Coverage varies between laminate brands and product lines, so check the coverage or yield printed on the label of the box you plan to buy. Enter that number into the calculator, because a different coverage figure changes the box count."
+      },
+      {
+        "type": "p",
+        "text": "Measure the length and width of the room in feet, to the nearest inch if you can. Measure at the widest points and include closets, alcoves and other openings that will receive flooring."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls to avoid"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Measuring only the open part of the room and forgetting closets or alcoves that will get flooring.",
+          "Using the box count from one product with the coverage figure from another.",
+          "Choosing the straight layout extra when you actually plan a diagonal install.",
+          "Buying exactly the calculated number with nothing to spare for repairs."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you are also painting the room, the [How Much Paint for a 12x12 Room?](/blog/how-much-paint-for-a-12x12-room) guide covers that calculation in the same step-by-step way."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Should I always buy the 7% extra?"
+      },
+      {
+        "type": "p",
+        "text": "The 7% figure is the straight-layout setting in the calculator. If you plan a diagonal layout, use the 15% setting instead. Choose the layout you will actually install, and enter your own room measurements into the [Flooring Calculator](/flooring-calculator)."
+      },
+      {
+        "type": "h3",
+        "text": "Does the same method work for hardwood and vinyl plank?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. The formula is the same for laminate, hardwood and vinyl plank: floor area times (1 plus the extra), divided by the coverage per box, rounded up. Use the coverage printed on the label of the product you are buying."
+      },
+      {
+        "type": "h3",
+        "text": "What if my room is not a simple rectangle?"
+      },
+      {
+        "type": "p",
+        "text": "Sketch the room and split it into rectangles. Measure the length and width of each part, and enter those measurements into the calculator. Check the coverage on the label before you buy, and plan your layout for the whole room rather than each piece on its own."
+      }
+    ],
+    "relatedTool": "flooring-calculator",
+    "sources": [
+      {
+        "title": "Lowe's: How to calculate the correct footage when purchasing flooring",
+        "url": "https://pdf.lowes.com/productdocuments/3f70b1c9-8ab7-4125-a2e7-9a3d080d2861/08130541.pdf"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "flooring-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 14,
+          "sqFtPerBox": 20,
+          "layout": "straight"
+        }
+      },
+      {
+        "calculator": "flooring-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 14,
+          "sqFtPerBox": 20,
+          "layout": "diagonal"
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "flooring-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 14,
+          "sqFtPerBox": 20,
+          "layout": "straight"
+        },
+        "results": [
+          {
+            "key": "boxes",
+            "label": "Boxes to buy",
+            "value": 9,
+            "unit": "boxes",
+            "digits": 0,
+            "primary": true,
+            "number": "9",
+            "display": "9 boxes"
+          },
+          {
+            "key": "neededSqFt",
+            "label": "Flooring needed incl. extra",
+            "value": 179.8,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "179.8",
+            "display": "179.8 sq ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Floor area",
+            "value": 168,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "168",
+            "display": "168 sq ft"
+          },
+          {
+            "key": "wastePct",
+            "label": "Extra included",
+            "value": 7,
+            "unit": "%",
+            "digits": 0,
+            "primary": false,
+            "number": "7",
+            "display": "7 %"
+          }
+        ]
+      },
+      {
+        "calculator": "flooring-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 14,
+          "sqFtPerBox": 20,
+          "layout": "diagonal"
+        },
+        "results": [
+          {
+            "key": "boxes",
+            "label": "Boxes to buy",
+            "value": 10,
+            "unit": "boxes",
+            "digits": 0,
+            "primary": true,
+            "number": "10",
+            "display": "10 boxes"
+          },
+          {
+            "key": "neededSqFt",
+            "label": "Flooring needed incl. extra",
+            "value": 193.2,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "193.2",
+            "display": "193.2 sq ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Floor area",
+            "value": 168,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "168",
+            "display": "168 sq ft"
+          },
+          {
+            "key": "wastePct",
+            "label": "Extra included",
+            "value": 15,
+            "unit": "%",
+            "digits": 0,
+            "primary": false,
+            "number": "15",
+            "display": "15 %"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "flooring-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Room length",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Room width",
+            "unit": "ft",
+            "default": 15,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerBox",
+            "label": "Coverage per box",
+            "unit": "sq ft",
+            "default": 20,
+            "step": 0.1,
+            "help": "Printed on the flooring box or product page."
+          },
+          {
+            "kind": "select",
+            "key": "layout",
+            "label": "Layout",
+            "default": "straight",
+            "options": [
+              {
+                "value": "straight",
+                "label": "Straight (7% extra)"
+              },
+              {
+                "value": "diagonal",
+                "label": "Diagonal (15% extra)"
+              },
+              {
+                "value": "custom",
+                "label": "Custom extra %"
+              }
+            ]
+          },
+          {
+            "kind": "number",
+            "key": "wastePct",
+            "label": "Extra for cuts",
+            "unit": "%",
+            "default": 10,
+            "step": 1,
+            "showWhen": {
+              "key": "layout",
+              "equals": "custom"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "12x14 방 라미네이트 바닥재는 몇 박스가 필요할까?",
+    "summary_ko": [
+      "20 sq ft짜리 박스 기준으로 12x14 방은 직선 배치(7% 여유)에 9박스, 대각선 배치(15% 여유)에 10박스가 필요하다고 설명합니다.",
+      "계산 순서: 바닥 면적(12ft x 14ft = 168 sq ft)을 구하고, 여유분을 더한 뒤, 박스당 커버리지로 나누어 올림합니다.",
+      "직선 배치: 168 sq ft + 7% = 179.8 sq ft, 9박스입니다.",
+      "대각선 배치: 168 sq ft + 15% = 193.2 sq ft, 10박스입니다. 대각선은 벽을 따라 사선 절단이 많아 여유분이 더 큽니다.",
+      "여유분은 벽, 문, 행 끝의 절단분과 설치 중 파손분을 메우기 위한 것이며, 여유 없이 구매하면 시공 중간에 자재가 부족해질 수 있다고 강조합니다.",
+      "구매 전 제품 라벨의 커버리지를 확인하고 계산기에 입력할 것, 벽장과 알코브까지 포함해 측정할 것, 흔한 실수 목록, 페인트 계산 가이드 링크를 안내합니다.",
+      "FAQ: 직선과 대각선 중 실제 설치 방식에 맞게 선택, 원목·비닐 플랭크도 같은 공식 사용, 비정형 방은 직사각형으로 나눠 계산하라고 설명합니다."
+    ],
+    "issues": [
+      {
+        "severity": "high",
+        "ko": "\"Nine boxes cover 180 sq ft\" 문장의 180 sq ft는 계산기 결과에 없는 수치입니다. 작성자가 직접 계산한 값(9 x 20)이므로 결과 목록과 맞지 않습니다.",
+        "en": "\"Nine boxes cover 180 sq ft\" uses a figure (180 sq ft) that is not one of the calculator results. It is the writer's own product of 9 x 20, so it must be removed or replaced with a calculator figure."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [],
+    "word_count": 713
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 9,
+  "api_calls": 3,
+  "telegram_message_id": 20
+}

@@ -1,0 +1,192 @@
+{
+  "id": "631c36ce",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-04T03:18:11Z",
+  "topic": {
+    "title": "How to check when a JWT expires (exp claim explained)",
+    "keyword": "jwt expiration time",
+    "related_tool": "jwt-decoder"
+  },
+  "post": {
+    "slug": "jwt-expiration-time-check-exp-claim",
+    "title": "JWT Expiration Time: How to Check the exp Claim",
+    "description": "Read the exp claim in a JWT payload. It is a Unix timestamp in seconds (UTC). Convert it to a date, then compare it with the current time.",
+    "body": [
+      {
+        "type": "p",
+        "text": "The `exp` claim holds a JWT's expiration time as a Unix timestamp: the number of seconds since 1970-01-01 00:00:00 UTC. To check when a token expires, decode its payload, read `exp`, convert it from seconds to a date, and compare it with the current time. The [JWT Decoder](/jwt-decoder) does the first two steps for you and shows `exp` as a readable date."
+      },
+      {
+        "type": "h2",
+        "text": "What the exp claim means"
+      },
+      {
+        "type": "p",
+        "text": "`exp` is a registered claim defined in [RFC 7519](https://www.rfc-editor.org/rfc/rfc7519). Its value is a NumericDate: seconds since the Unix epoch, in UTC. A token is expired once the current time is at or after that moment. The spec says the current time must be before the `exp` time for the token to be accepted."
+      },
+      {
+        "type": "p",
+        "text": "Because the value is absolute, there is no time zone to worry about. The same `exp` number refers to the same instant everywhere."
+      },
+      {
+        "type": "h2",
+        "text": "Seconds, not milliseconds"
+      },
+      {
+        "type": "p",
+        "text": "This is the most common mistake. `exp` is in seconds, but JavaScript's `Date` and `Date.now()` use milliseconds. If you pass `exp` straight to `new Date()`, you get a date in January 1970."
+      },
+      {
+        "type": "p",
+        "text": "For example, an `exp` of 1700000000 is 2023-11-14 22:13:20 UTC. Passed directly to `new Date(1700000000)`, it is read as 1,700,000,000 milliseconds, which is under 20 days after the epoch. Multiply by 1000 first."
+      },
+      {
+        "type": "p",
+        "text": "A quick sanity check: a 10-digit value is almost certainly seconds, and a 13-digit value is milliseconds. If you need to convert a value by hand, the [Unix Timestamp Converter](/timestamp-converter) handles both units."
+      },
+      {
+        "type": "h2",
+        "text": "Read the exp claim in JavaScript"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "function getClaims(token) {\n  const payload = token.split('.')[1];\n  const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');\n  return JSON.parse(atob(base64));\n}\n\nconst claims = getClaims(token);\nconst expiresAt = new Date(claims.exp * 1000);\nconst isExpired = Date.now() >= claims.exp * 1000;\n\nconsole.log(expiresAt.toISOString());\nconsole.log(isExpired ? 'expired' : 'still valid');"
+      },
+      {
+        "type": "p",
+        "text": "`atob` returns a binary string, not UTF-8. If the payload contains non-ASCII characters, such as a name with accents, the decoded text will be garbled. For full UTF-8 support, decode the bytes with a `TextDecoder` or use the [Base64 Encoder / Decoder](/base64), which handles UTF-8."
+      },
+      {
+        "type": "h2",
+        "text": "Read the exp claim in Python"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import base64\nimport json\nfrom datetime import datetime, timezone\n\ndef get_claims(token):\n    payload = token.split('.')[1]\n    payload += '=' * (-len(payload) % 4)\n    return json.loads(base64.urlsafe_b64decode(payload))\n\nclaims = get_claims(token)\nexpires_at = datetime.fromtimestamp(claims['exp'], tz=timezone.utc)\nprint(expires_at.isoformat())"
+      },
+      {
+        "type": "p",
+        "text": "The padding line matters. JWTs use base64url without `=` padding, and `urlsafe_b64decode` expects padding, so the code adds it back before decoding."
+      },
+      {
+        "type": "h2",
+        "text": "Check whether a token has expired"
+      },
+      {
+        "type": "p",
+        "text": "A token is expired when its `exp` is less than or equal to the current time, both in seconds. In JavaScript, use `Math.floor(Date.now() / 1000)` to get the current Unix time in seconds. In Python, `time.time()` returns seconds as a float, so compare it with `claims['exp']` directly."
+      },
+      {
+        "type": "h2",
+        "text": "Clock skew and leeway"
+      },
+      {
+        "type": "p",
+        "text": "Servers and clients do not always agree on the time. If the issuer's clock is a few seconds ahead of yours, a freshly issued token can appear to be issued in the future, and a token can appear expired a moment early."
+      },
+      {
+        "type": "p",
+        "text": "Most JWT libraries let you allow a small leeway when checking `exp`, `nbf` and `iat`. The jsonwebtoken package for Node calls this option `clockTolerance`, and PyJWT calls it `leeway`. Check your library's documentation for the exact name and units."
+      },
+      {
+        "type": "p",
+        "text": "Leeway absorbs small differences between clocks. It is not a way to extend a token's life, so keep it small."
+      },
+      {
+        "type": "h2",
+        "text": "Decoding is not verification"
+      },
+      {
+        "type": "p",
+        "text": "Reading `exp` from a payload tells you what the issuer claimed. It does not prove the claim is true. Anyone can edit a JWT payload, and only the signature check detects that change."
+      },
+      {
+        "type": "p",
+        "text": "The [JWT Decoder](/jwt-decoder) reads the header and payload and shows dates, but it does not verify the signature. In your application, verify the signature with the trusted key and let your JWT library check `exp` as part of verification. Never make an authorization decision based only on a decoded payload."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Milliseconds in a seconds field: if `exp` has 13 digits, it is probably milliseconds, or the issuer used the wrong unit. Divide by 1000 before comparing with seconds.",
+          "Missing exp: the claim is optional. A token without `exp` does not expire according to the claim, so your application must decide whether to reject it.",
+          "Confusing iat with expiry: `iat` is the time the token was issued. The lifetime is `exp` minus `iat`, in seconds.",
+          "Comparing formatted strings: `exp` is an absolute instant in UTC. Convert it to a date object and compare instants, not local-time strings.",
+          "Stale tokens in logs or caches: a token copied from a log may be expired by the time you read it. Compare `exp` with the current time at the moment of use."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Privacy note"
+      },
+      {
+        "type": "p",
+        "text": "Access tokens are credentials. The DevRivet JWT Decoder runs entirely in your browser, so the token is not sent to a server. Even so, avoid pasting live production tokens into any online tool, and use a test token when you can."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is the exp claim in seconds or milliseconds?"
+      },
+      {
+        "type": "p",
+        "text": "Seconds. RFC 7519 defines NumericDate as the number of seconds since the Unix epoch. Multiply by 1000 before passing the value to JavaScript's Date constructor."
+      },
+      {
+        "type": "h3",
+        "text": "What happens when a JWT expires?"
+      },
+      {
+        "type": "p",
+        "text": "Verifying libraries reject it with an error. jsonwebtoken throws a TokenExpiredError, and PyJWT raises an ExpiredSignatureError. Your application should treat that as a signal to re-authenticate or refresh the token."
+      },
+      {
+        "type": "h3",
+        "text": "Can I extend a JWT's expiration by editing exp?"
+      },
+      {
+        "type": "p",
+        "text": "No. Changing the payload breaks the signature, so verification fails. The issuer has to create a new token with a new `exp`, usually through a refresh flow."
+      },
+      {
+        "type": "h3",
+        "text": "How do I check expiry without a JWT library?"
+      },
+      {
+        "type": "p",
+        "text": "Decode the payload, read `exp`, and compare it with the current Unix time in seconds. That tells you whether the token is past its expiration, but it does not prove the token is genuine. You still need signature verification before trusting any claim."
+      }
+    ],
+    "relatedTool": "jwt-decoder"
+  },
+  "review": {
+    "title_ko": "JWT 만료 시간: exp 클레임 확인 방법",
+    "summary_ko": [
+      "exp 클레임은 JWT의 만료 시각을 나타내는 Unix 타임스탬프(1970-01-01 00:00:00 UTC 이후 경과 초)이며, 페이로드를 디코딩해 값을 읽고 날짜로 변환한 뒤 현재 시각과 비교하면 된다.",
+      "RFC 7519에 정의된 NumericDate이며, 현재 시각이 exp 이상이면 토큰은 만료된 것이다. 절대 시각이라 시간대 문제는 없다.",
+      "exp는 초 단위인데 JavaScript Date는 밀리초 단위이므로 1000을 곱해야 한다. 1700000000은 2023-11-14 22:13:20 UTC이며, 곱하지 않으면 1970년 1월 무렵으로 읽힌다.",
+      "JavaScript와 Python 예제로 base64url 페이로드를 디코딩하고 exp를 날짜로 바꾸며 만료 여부를 확인한다. atob는 UTF-8을 처리하지 못하므로 TextDecoder 사용을 권장하고, Python은 base64 패딩을 복원한다.",
+      "시계 오차는 leeway로 흡수할 수 있으며 jsonwebtoken은 clockTolerance, PyJWT는 leeway 옵션을 쓴다. 다만 토큰 수명을 늘리는 수단으로 쓰면 안 된다.",
+      "디코딩은 검증이 아니므로 서명 검증이 필요하고, 디코딩된 페이로드만으로 인가 결정을 해서는 안 된다. 흔한 실수로 밀리초/초 혼동, exp 누락, iat와 혼동, 문자열 비교, 오래된 토큰 사용이 있다.",
+      "FAQ에서 seconds 단위, 만료 시 jsonwebtoken의 TokenExpiredError와 PyJWT의 ExpiredSignatureError, exp 수정 불가(서명 깨짐), 라이브러리 없이 확인하는 방법을 다룬다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [],
+    "word_count": 1004
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 8,
+  "api_calls": 2,
+  "telegram_message_id": 19
+}
