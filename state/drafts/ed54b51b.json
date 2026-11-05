@@ -1,0 +1,295 @@
+{
+  "id": "ed54b51b",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-05T03:49:26Z",
+  "topic": {
+    "title": "How much tile do I need for a 5x8 bathroom floor?",
+    "keyword": "how much tile for a 5x8 bathroom",
+    "related_tool": "tile-calculator",
+    "calculations": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 8,
+          "widthFt": 5,
+          "sqFtPerBox": 10
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-tile-for-5x8-bathroom",
+    "title": "How Much Tile for a 5x8 Bathroom? Boxes Needed",
+    "description": "A 5x8 bathroom floor is 40 sq ft. With 10 percent extra for cuts and breakage, plan for 44 sq ft of tile, which is 5 boxes if each box covers 10 sq ft.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 5x8 bathroom floor is 40 sq ft. With 10 percent extra for cuts and breakage, you need 44 sq ft of tile, which means 5 boxes if each box covers 10 sq ft. To get the number for your own room, enter your measurements into the [Tile Calculator](/tile-calculator), and check the coverage printed on your box before you buy, because products differ."
+      },
+      {
+        "type": "h2",
+        "text": "The worked example"
+      },
+      {
+        "type": "p",
+        "text": "The Tile Calculator uses four inputs. For a 5x8 bathroom with boxes that cover 10 sq ft each, they are:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Floor length: 8 ft",
+          "Floor width: 5 ft",
+          "Coverage per box: 10 sq ft",
+          "Extra for cuts: 10 percent"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The calculator works through the problem in three steps:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the floor area by multiplying length by width. For this room, 8 ft times 5 ft gives 40 sq ft.",
+          "Add the extra allowance. Adding 10 percent to the 40 sq ft floor area gives 44 sq ft of tile.",
+          "Divide the total by the coverage per box, then round up to a whole number of boxes. The result is 5 boxes."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "So a 5x8 bathroom floor with boxes that cover 10 sq ft each needs 5 boxes. Tile is sold in whole boxes, so any partial box is rounded up to the next full box. The calculator does this rounding for you."
+      },
+      {
+        "type": "h2",
+        "text": "How to measure the floor"
+      },
+      {
+        "type": "p",
+        "text": "Measure the finished floor's length and width directly, in feet. Run your tape from wall to wall along each of the two sides of the room, and record both numbers. Measure the room as it will look after the tile goes down, so account for any existing flooring you are removing and any new underlayment that will change the surface."
+      },
+      {
+        "type": "p",
+        "text": "If the bathroom is not a simple rectangle, split it into rectangles, find the area of each one, and add the results together. The [Square Footage Calculator](/square-footage-calculator) handles rectangles, triangles, and circles, and shows the result in square feet, square yards, and square meters."
+      },
+      {
+        "type": "h2",
+        "text": "Why add 10 percent extra"
+      },
+      {
+        "type": "p",
+        "text": "Not every tile ends up on the floor. Tiles along the walls, around the toilet, at the door opening, and against the tub or vanity usually need to be cut to fit. Some tiles also chip or crack during shipping or installation. The calculator adds 10 percent to cover these losses, which is a common starting allowance for cuts and breakage."
+      },
+      {
+        "type": "p",
+        "text": "A diagonal layout, large-format tile, or a pattern with many cuts usually wastes more tile than a simple straight layout. If your plan is more complicated, add more than the default allowance and ask your supplier to review the layout with you."
+      },
+      {
+        "type": "h2",
+        "text": "Tile under the vanity and tub"
+      },
+      {
+        "type": "p",
+        "text": "Measure the full floor, including the area under the vanity and up to the tub, rather than only the part you can see. Tile is normally set under cabinets and up to the edge of a tub, so those areas are part of the floor you need to cover. The tiles cut to fit against the tub or vanity are the ones the 10 percent extra is meant to cover."
+      },
+      {
+        "type": "h2",
+        "text": "Keep spare tile from the same lot"
+      },
+      {
+        "type": "p",
+        "text": "Tile made in the same production run is called a lot or batch. Tiles from different lots can differ slightly in color, shade, and size, even when the boxes look the same. Buy all the tile for the room at once, and check that the lot or batch number on every box matches."
+      },
+      {
+        "type": "p",
+        "text": "Keep a few leftover tiles from the same lot after the job is done. If a tile cracks years later, a matching spare makes repairs much easier. Store the spares in a dry place and label them with the room and the lot number printed on the box."
+      },
+      {
+        "type": "h2",
+        "text": "Things that change the count"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Coverage per box: the coverage is printed on the product label and varies by brand and tile size. Use the number on your box, not the example in this post.",
+          "Tile size: larger tiles produce more cut pieces at the edges, so the extra allowance matters more.",
+          "Layout: a diagonal layout usually needs more extra tile than a straight layout.",
+          "Walls: this estimate covers the floor only. A shower wall or tub surround needs its own measurement."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Buying exactly the floor area with no extra tile, which leaves nothing for cuts or breakage.",
+          "Using the coverage number from a different tile size instead of the one printed on the box you plan to buy.",
+          "Buying the first boxes from one lot and then finding that the next boxes come from another lot.",
+          "Measuring only the visible floor and leaving out the area under the vanity or up to the tub."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you are also planning a bedroom or hallway, the [Flooring Calculator](/flooring-calculator) works the same way for laminate, hardwood, or vinyl plank."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Does the 5x8 example work for any floor with a 40 sq ft area?"
+      },
+      {
+        "type": "p",
+        "text": "The math is the same for any floor with a 40 sq ft area, but the result still depends on the coverage per box. Check the number on your product label and enter it into the calculator."
+      },
+      {
+        "type": "h3",
+        "text": "What if my box covers more than 10 sq ft?"
+      },
+      {
+        "type": "p",
+        "text": "Enter the coverage from your box label into the Tile Calculator. When each box covers more area, you need fewer boxes."
+      },
+      {
+        "type": "h3",
+        "text": "Does the calculator count grout lines?"
+      },
+      {
+        "type": "p",
+        "text": "The calculator works from the floor area, the extra percentage, and the coverage per box. It does not measure grout lines separately. If you are unsure whether the extra allowance is enough for your layout, ask your supplier to review your plan and the product specifications."
+      }
+    ],
+    "relatedTool": "tile-calculator",
+    "sources": [
+      {
+        "title": "Lowe's tile flooring calculator",
+        "url": "https://www.lowes.com/n/calculators/tile-floor-calculator"
+      },
+      {
+        "title": "Daltile tile & stone FAQs",
+        "url": "https://www.daltile.com/how-to/faqs"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 8,
+          "widthFt": 5,
+          "sqFtPerBox": 10
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 8,
+          "widthFt": 5,
+          "sqFtPerBox": 10
+        },
+        "results": [
+          {
+            "key": "boxes",
+            "label": "Boxes to buy",
+            "value": 5,
+            "unit": "boxes",
+            "digits": 0,
+            "primary": true,
+            "number": "5",
+            "display": "5 boxes"
+          },
+          {
+            "key": "neededSqFt",
+            "label": "Tile needed incl. extra",
+            "value": 44,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "44",
+            "display": "44 sq ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Floor area",
+            "value": 40,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "40",
+            "display": "40 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "tile-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Floor length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Floor width",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerBox",
+            "label": "Coverage per box",
+            "unit": "sq ft",
+            "default": 11,
+            "step": 0.1,
+            "help": "Printed on the tile box or product page."
+          },
+          {
+            "kind": "number",
+            "key": "wastePct",
+            "label": "Extra for cuts",
+            "unit": "%",
+            "default": 10,
+            "step": 1
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "5x8 욕실에 타일이 얼마나 필요할까? 필요한 박스 수",
+    "summary_ko": [
+      "5x8 욕실 바닥은 40 sq ft이며, 절단과 파손에 대비해 10%를 더해 44 sq ft의 타일이 필요합니다.",
+      "박스당 10 sq ft를 덮는다면 총 5박스를 구매해야 합니다. 정확한 수치는 계산기에 본인 치수를 입력하고 제품 라벨의 커버리지를 확인하라고 안내합니다.",
+      "계산기는 길이 8 ft, 폭 5 ft, 박스당 10 sq ft, 절단용 여분 10%를 입력값으로 사용합니다.",
+      "계산은 세 단계입니다: 면적(8×5=40 sq ft) 구하기, 여분 10% 더하기(44 sq ft), 박스 수로 나눈 뒤 올림(5박스).",
+      "바닥 치수 측정 방법, 비정형 욕실을 사각형으로 나눠 계산하는 방법, 10% 여분이 필요한 이유를 설명합니다.",
+      "같은 로트(batch) 타일을 한 번에 구매하고 나중에 수리용 여분을 보관하라고 권장합니다.",
+      "박스 커버리지, 타일 크기, 배치 방식, 벽면 여부에 따라 수량이 달라지며, 흔한 실수를 정리합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"Measure the longest wall for the length and the widest wall-to-wall distance for the width.\" 부분은 방 모양이 직사각형일 때 어떤 치수를 재야 하는지 모호합니다. 바닥 치수를 직접 재라는 취지를 더 분명하게 쓰면 좋겠습니다.",
+      "\"Always round up to whole boxes... round up rather than down when you enter your numbers.\" 계산기가 이미 올림 처리를 하므로, 입력값을 올림하라는 문장은 혼란을 줄 수 있습니다. 계산기 결과가 자동으로 올림된다고 명확히 쓰면 좋겠습니다.",
+      "\"Tile under a vanity or tub: ... measure only the visible area you plan to tile.\" 는 앞의 설명(욕조와 세면대 주변 타일은 절단이 필요하다)과 약간 어긋나 보입니다. 가려지는 부분에 타일을 깔지 여부에 따라 수량이 달라진다는 점을 더 명확히 하면 좋겠습니다."
+    ],
+    "word_count": 933
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 15,
+  "api_calls": 5,
+  "telegram_message_id": 22
+}
