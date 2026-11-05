@@ -149,3 +149,75 @@ notes = "Use the coverage per box printed on the box (example: 16 sq ft per box)
 [[topics.calculations]]
 calculator = "tile-calculator"
 input = { lengthFt = 10, widthFt = 10, sqFtPerBox = 16 }
+
+[[topics]]
+title = "How much paint do I need for a 10x12 room?"
+keyword = "how much paint for a 10x12 room"
+related_tool = "paint-calculator"
+notes = "Walk through wall area, door and window deductions and two coats, then round up to whole gallons. Mention that ceilings and trim are separate."
+[[topics.calculations]]
+calculator = "paint-calculator"
+input = { lengthFt = 10, widthFt = 12, heightFt = 8, doors = 1, windows = 1 }
+
+[[topics]]
+title = "How many bags of concrete for a 4x4 pad?"
+keyword = "how many bags of concrete for a 4x4 pad"
+related_tool = "concrete-calculator"
+notes = "A small 4 inch thick pad, for example under an outdoor unit or a trash bin. Show cubic feet, cubic yards and the 80 lb bag count, and why small pours are usually done with bags."
+[[topics.calculations]]
+calculator = "concrete-calculator"
+input = { lengthFt = 4, widthFt = 4, thicknessIn = 4, bagLb = "80" }
+
+[[topics]]
+title = "How much concrete for an 8x10 shed base?"
+keyword = "how much concrete for an 8x10 shed slab"
+related_tool = "concrete-calculator"
+notes = "Material quantity only for a 4 inch slab: cubic yards and 80 lb bags. Note that close to one cubic yard is where comparing bags with a ready-mix delivery becomes worthwhile."
+[[topics.calculations]]
+calculator = "concrete-calculator"
+input = { lengthFt = 10, widthFt = 8, thicknessIn = 4, bagLb = "80" }
+
+[[topics]]
+title = "How much mulch for a 10x20 flower bed?"
+keyword = "how much mulch for a 10x20 bed"
+related_tool = "mulch-calculator"
+notes = "Compare bulk cubic yards with 2 cu ft bags at a 3 inch depth, and explain how depth changes the amount."
+[[topics.calculations]]
+calculator = "mulch-calculator"
+input = { lengthFt = 20, widthFt = 10, depthIn = 3, bagCuFt = "2" }
+
+[[topics]]
+title = "How much gravel for a 3x20 garden path?"
+keyword = "how much gravel for a garden path"
+related_tool = "gravel-calculator"
+notes = "A 3 ft wide, 20 ft long path at 3 inches deep: cubic feet, cubic yards and tons. Explain that the weight per cubic yard depends on the stone and is printed by the supplier."
+[[topics.calculations]]
+calculator = "gravel-calculator"
+input = { lengthFt = 20, widthFt = 3, depthIn = 3 }
+
+[[topics]]
+title = "How many boxes of flooring for a 10x10 room?"
+keyword = "how much flooring for a 10x10 room"
+related_tool = "flooring-calculator"
+notes = "Straight layout with the extra for cuts, using the square feet per box printed on the box (example: 20 sq ft per box)."
+[[topics.calculations]]
+calculator = "flooring-calculator"
+input = { lengthFt = 10, widthFt = 10, sqFtPerBox = 20, layout = "straight" }
+
+[[topics]]
+title = "How many deck boards for a 10x10 deck?"
+keyword = "how many deck boards for a 10x10 deck"
+related_tool = "deck-board-calculator"
+notes = "Decking board count only: rows across the deck with 10 ft boards, board width and gap. Do not discuss framing."
+[[topics.calculations]]
+calculator = "deck-board-calculator"
+input = { deckLengthFt = 10, deckWidthFt = 10, boardLengthFt = "10" }
+
+[[topics]]
+title = "What is the square footage of a 10 foot circle?"
+keyword = "square footage of a 10 ft circle"
+related_tool = "square-footage-calculator"
+notes = "A 10 ft diameter round area such as a patio or fire pit area: radius 5 ft, area = pi x r squared, with square yards and square meters."
+[[topics.calculations]]
+calculator = "square-footage-calculator"
+input = { shape = "circle", radiusFt = 5 }
