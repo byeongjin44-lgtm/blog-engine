@@ -57,6 +57,15 @@ jobs:
         if: steps.busy.outputs.skip == 'false'
         continue-on-error: true
         run: python -m engine notify
+      # Send "[핀터레스트]" pin drafts (image + text to copy) for live posts of sites with [pinterest] enabled.
+      # Best-effort: never fails this job; a post is retried next hour until sent.
+      - name: Send Pinterest pin drafts
+        if: steps.busy.outputs.skip == 'false'
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m engine pins
       - name: Save state
         if: always() && steps.busy.outputs.skip == 'false'
         run: ./scripts/commit-state.sh "Process approvals"

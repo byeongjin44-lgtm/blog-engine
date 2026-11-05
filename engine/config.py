@@ -59,6 +59,8 @@ class Site:
     calculator: dict | None = None
     # IndexNow key; the site must serve it at <url>/<key>.txt. Empty = don't announce new posts.
     indexnow_key: str = ""
+    # Pinterest pin drafts sent to Telegram (engine/pinterest.py): enabled, boards, default_board, boards_ko.
+    pinterest: dict | None = None
 
     def tool(self, slug: str | None) -> Tool | None:
         return next((t for t in self.tools if t.slug == slug), None)
@@ -105,6 +107,7 @@ def load_site(site_id: str, sites_dir: Path = SITES_DIR) -> Site:
         banned_phrases=tuple(raw.get("banned_phrases", [])),
         calculator=raw.get("calculator"),
         indexnow_key=raw.get("indexnow_key", ""),
+        pinterest=raw.get("pinterest"),
     )
 
 

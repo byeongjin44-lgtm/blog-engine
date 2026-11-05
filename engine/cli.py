@@ -351,7 +351,17 @@ def main(argv: list[str] | None = None) -> int:
     p_check = sub.add_parser("check")
     p_check.add_argument("--require-calculator", action="store_true", help="fail if a site's calculator cannot run")
     sub.add_parser("notify")
+    sub.add_parser("pins")
     args = parser.parse_args(argv)
+
+    if args.command == "pins":
+        # Best-effort: a failure is retried on the next run and never fails the workflow.
+        from engine.pinterest import run_pins
+        try:
+            run_pins()
+        except Exception as e:  # noqa: BLE001
+            print(f"::warning title=Pinterest::{e}")
+        return 0
 
     if args.command == "notify":
         # Best-effort: never fails the workflow and never sends Telegram messages.

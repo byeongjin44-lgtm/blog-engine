@@ -123,3 +123,25 @@ name = "Insulation Calculator"
 path = "/insulation-calculator"
 description = "Insulation: thickness = target R-value / the product's R-value per inch, packages = area / coverage per package, rounded up. DOE reference R per inch: batts about 2.5-3.7, loose-fill 2.2-3.75, XPS about 5, polyiso and closed-cell foam about 6.5."
 sources = [{ title = "U.S. Department of Energy: Guide to home insulation", url = "https://www.energy.gov/sites/prod/files/guide_to_home_insulation.pdf" }]
+
+# Pinterest pin drafts (engine/pinterest.py): after a post is live, Telegram gets its tall image
+# (the site builds /pin/blog-<slug>.png) plus title, description and link for the owner to pin by hand.
+[pinterest]
+enabled = true
+default_board = "Home Project Calculators"
+[pinterest.boards]
+"paint-calculator" = "Painting & Wallpaper"
+"wallpaper-calculator" = "Painting & Wallpaper"
+"tile-calculator" = "Flooring & Tile"
+"flooring-calculator" = "Flooring & Tile"
+"concrete-calculator" = "Concrete Projects"
+"mulch-calculator" = "Garden & Landscaping"
+"gravel-calculator" = "Garden & Landscaping"
+"deck-board-calculator" = "Deck & Patio"
+[pinterest.boards_ko]
+"Home Project Calculators" = "집수리 자재 계산"
+"Painting & Wallpaper" = "페인트·벽지"
+"Flooring & Tile" = "바닥재·타일"
+"Concrete Projects" = "콘크리트"
+"Garden & Landscaping" = "정원·조경"
+"Deck & Patio" = "데크·파티오"
