@@ -1,7 +1,7 @@
 {
   "id": "ed54b51b",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-05T03:49:26Z",
   "topic": {
     "title": "How much tile do I need for a 5x8 bathroom floor?",
@@ -265,7 +265,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-05"
   },
   "review": {
     "title_ko": "5x8 욕실에 타일이 얼마나 필요할까? 필요한 박스 수",
@@ -291,5 +292,7 @@
   "recovered_from": [],
   "cost_krw": 15,
   "api_calls": 5,
-  "telegram_message_id": 22
+  "telegram_message_id": 22,
+  "decided": "2026-11-05T04:17:11Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-tile-for-5x8-bathroom.json"
 }
