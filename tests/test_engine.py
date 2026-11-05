@@ -1,6 +1,7 @@
 import json
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 
 from engine import state
@@ -333,27 +334,113 @@ class BudgetTests(unittest.TestCase):
         msg = "Owner decision 2026-11-02: max 150 KRW per post, one topic, Haiku then Sonnet. Do not change without approval."
         self.assertEqual(budget.BUDGET_KRW, 150, msg)
         self.assertEqual(cli.MAX_TOPICS_PER_POST, 1, msg)
+        grace = "Owner decision 2026-11-05: a running attempt may finish slightly over, never above 200 KRW."
+        self.assertEqual(budget.FINISH_GRACE_KRW, 50, grace)
+        self.assertEqual(budget.HARD_LIMIT_KRW, 200, grace)
 
-    def test_guard_caps_output_and_stops_at_budget(self):
-        from engine.budget import BudgetExceeded, CostGuard
-
-        seen = []
-
+    @staticmethod
+    def sonnet_api(seen, output=2500):
         def api(payload):
             seen.append(payload["max_tokens"])
-            # Sonnet writing a long post: 3,000 input + 2,500 output tokens = about 40 KRW.
-            return {"stop_reason": "end_turn", "usage": {"input_tokens": 3000, "output_tokens": 2500},
+            # Sonnet writing a long post: 3,000 input + 2,500 output tokens = about 45 KRW.
+            return {"stop_reason": "end_turn", "usage": {"input_tokens": 3000, "output_tokens": output},
                     "content": [{"type": "text", "text": "{}"}]}
+        return api
 
-        guard = CostGuard(api)
-        payload = {"model": "claude-sonnet-5-5", "max_tokens": 16000, "messages": [{"role": "user", "content": "x"}]}
+    PAYLOAD = {"model": "claude-sonnet-5-5", "max_tokens": 16000, "messages": [{"role": "user", "content": "x"}]}
+
+    def test_guard_never_passes_the_hard_limit(self):
+        from engine.budget import BudgetExceeded, CostGuard
+        seen = []
+        guard = CostGuard(self.sonnet_api(seen))
         with self.assertRaises(BudgetExceeded):
             for _ in range(10):
-                guard(payload)
-        self.assertLessEqual(guard.spent_krw, 150)
-        self.assertEqual(guard.calls, 3)                    # the 4th Sonnet call is refused before it is made
+                guard(self.PAYLOAD)
+        self.assertLessEqual(guard.spent_krw, 200)
+        self.assertGreater(guard.spent_krw, 150)            # the finishing grace was used
         self.assertTrue(all(m <= 16000 for m in seen))
-        self.assertLess(seen[-1], 16000)                    # output was capped to what the budget allows
+        self.assertLess(seen[0], 16000)                     # the first call is capped by the normal 150 KRW budget
+        self.assertLessEqual(seen[-1], 4000)                # grace calls get at most one post's worth of output
+
+    def test_optional_work_gets_no_grace(self):
+        from engine.budget import BudgetExceeded, CostGuard
+        guard = CostGuard(self.sonnet_api([]))
+        with self.assertRaises(BudgetExceeded):
+            with guard.optional_work():
+                for _ in range(10):
+                    guard(self.PAYLOAD)
+        self.assertLessEqual(guard.spent_krw, 150)
+        self.assertEqual(guard.calls, 3)                    # the 4th call is refused before it is made
+
+    def test_cut_off_last_attempt_is_finished_and_sent(self):
+        """2026-11-05: Haiku failed, Sonnet's long draft was cut off by the budget at 152 KRW and nothing was sent.
+        Now the shorter rewrite may finish slightly over 150 KRW and the post reaches Telegram."""
+        bad = make_post(words=100, link=False)
+        calls = []
+
+        def api(payload):
+            schema = payload["output_config"]["format"]["schema"]
+            name = "review" if "summary_ko" in schema["properties"] else "post"
+            calls.append((name, payload["model"], payload["max_tokens"]))
+            if name == "review":
+                return {"stop_reason": "end_turn", "usage": {"input_tokens": 3000, "output_tokens": 800},
+                        "content": [{"type": "text", "text": json.dumps(OK_REVIEW)}]}
+            if "haiku" in payload["model"]:
+                return {"stop_reason": "end_turn", "usage": {"input_tokens": 2500, "output_tokens": 2500},
+                        "content": [{"type": "text", "text": json.dumps(bad)}]}
+            if len([c for c in calls if c[1] == payload["model"]]) == 1:
+                # Runaway draft: uses every token it was allowed and gets cut off.
+                return {"stop_reason": "max_tokens", "usage": {"input_tokens": 7000, "output_tokens": payload["max_tokens"]},
+                        "content": [{"type": "text", "text": '{"slug": "cut'}]}
+            return {"stop_reason": "end_turn", "usage": {"input_tokens": 7000, "output_tokens": 3000},
+                    "content": [{"type": "text", "text": json.dumps(make_post())}]}
+
+        tmp, tg = Path(tempfile.mkdtemp()), FakeTelegram()
+        failures = run_draft(["devrivet"], state_dir=tmp, telegram=tg, llm_transport=api, github_transport=FakeGitHub())
+        self.assertEqual(failures, 0)
+        d = state.all_drafts(tmp)[0]
+        self.assertEqual(d["model"], "claude-sonnet-5-5")
+        self.assertGreater(d["cost_krw"], 150)
+        self.assertLessEqual(d["cost_krw"], 200)
+        self.assertIn("새 글 검토", tg.sent[-1]["text"])
+        self.assertIn("조금 넘었습니다", tg.sent[-1]["text"])
+        self.assertIsNotNone(d["telegram_message_id"])
+
+    def test_no_new_attempt_after_the_budget_is_used(self):
+        """Haiku alone used up 150 KRW: Sonnet is not started (the grace only finishes a running attempt)."""
+        from engine.budget import CostGuard
+        bad = make_post(words=100, link=False)
+        models = []
+
+        def api(payload):
+            models.append(payload["model"])
+            return {"stop_reason": "end_turn", "usage": {"input_tokens": 3000, "output_tokens": payload["max_tokens"]},
+                    "content": [{"type": "text", "text": json.dumps(bad)}]}
+
+        tmp, tg = Path(tempfile.mkdtemp()), FakeTelegram()
+        with unittest.mock.patch("engine.budget.PRICES", {"haiku": (2.00, 10.00), "sonnet": (2.00, 10.00)}):
+            self.assertEqual(run_draft(["devrivet"], state_dir=tmp, telegram=tg, llm_transport=api, github_transport=FakeGitHub()), 1)
+        self.assertNotIn("claude-sonnet-5-5", models)
+        self.assertIn("200원", tg.sent[-1]["text"])
+
+    def test_writer_output_is_sized_to_the_post_length(self):
+        from engine.writer import writer_max_tokens
+        self.assertEqual(writer_max_tokens(SITE), 6000)  # 1800 words max: room for the post, not for a runaway
+
+    def test_truncation_message_shows_the_real_cap(self):
+        from engine.budget import CostGuard
+        from engine.llm import TruncatedError, structured_call
+
+        def api(payload):
+            return {"stop_reason": "max_tokens", "usage": {"input_tokens": 10, "output_tokens": payload["max_tokens"]},
+                    "content": [{"type": "text", "text": "{"}]}
+        guard = CostGuard(api)
+        guard.spent = guard.limit * 0.9
+        with self.assertRaises(TruncatedError) as e:
+            structured_call(model="claude-sonnet-5-5", system="s", prompt="p", schema={"type": "object", "properties": {}},
+                            max_tokens=16000, transport=guard)
+        self.assertNotIn("16000", str(e.exception))
+        self.assertIn("budget", str(e.exception))
 
     def test_allowed_path_fits_the_budget(self):
         """Haiku fails twice, Sonnet writes, 2 review rewrite rounds: must complete under 150 KRW."""

@@ -20,7 +20,7 @@ from pathlib import Path
 
 from engine import calculator, state
 from engine.config import Site, all_site_ids, load_site
-from engine.budget import BUDGET_KRW, BudgetExceeded, CostGuard
+from engine.budget import BUDGET_KRW, HARD_LIMIT_KRW, BudgetExceeded, CostGuard
 from engine.errors import OwnerActionRequired
 from engine.llm import _default_transport as default_transport
 from engine.formats import get_format
@@ -44,7 +44,9 @@ def format_review_message(site: Site, d: dict) -> str:
         f"<b>한글 제목</b>: {esc(review.get('title_ko', ''))}",
         f"<b>키워드</b>: {esc(d['topic']['keyword'])}",
         f"<b>분량</b>: {review.get('word_count', '?')}단어",
-        f"<b>작성 비용</b>: 약 {d.get('cost_krw', '?')}원 (모델: {esc(d.get('model', '?'))})",
+        f"<b>작성 비용</b>: 약 {d.get('cost_krw', '?')}원 (모델: {esc(d.get('model', '?'))})"
+        + (f" — 마지막 시도를 끝까지 마치느라 한도 {BUDGET_KRW}원을 조금 넘었습니다 (최대 {HARD_LIMIT_KRW}원)"
+           if isinstance(d.get("cost_krw"), int) and d["cost_krw"] > BUDGET_KRW else ""),
         "",
     ]
     calc_results = post.get("_calc_results") or []
@@ -168,6 +170,10 @@ def _draft_one(site: Site, tg: Telegram, state_dir: Path, publisher, llm_transpo
                 state.record_failed_topic(site.id, topic.title, attempts[-1], state_dir)
                 continue
         for model in models:
+            if guard.over_budget:
+                # A new attempt only starts within the normal budget; a running one may finish slightly over.
+                attempts.append(f"{topic.title} / {model}: 글 1개당 한도 {BUDGET_KRW}원을 이미 써서 시도하지 않음")
+                break
             try:
                 post, review = draft(replace(site, writer_model=model), topic, existing, transport=guard, calc=calc)
             except OwnerActionRequired:
@@ -204,7 +210,7 @@ def _draft_one(site: Site, tg: Telegram, state_dir: Path, publisher, llm_transpo
     detail = "\n".join(f"• {esc(a)}" for a in attempts)
     print(f"::error title=[{site.name}] 자동 복구 실패::{' | '.join(attempts)}"[:1500].replace("\n", " "))
     tg.send(f"🚫 <b>[{esc(site.name)}]</b> 오늘 글을 만들지 못했습니다. Haiku → Sonnet 순서로 자동 재작성까지 시도했지만 실패해, "
-            f"정해진 한도(글 1개당 {BUDGET_KRW}원)에서 작업을 멈췄습니다. 이번에 쓴 비용: 약 {guard.spent_krw}원.\n"
+            f"정해진 한도(글 1개당 {BUDGET_KRW}원, 마지막 시도 마무리는 최대 {HARD_LIMIT_KRW}원)에서 작업을 멈췄습니다. 이번에 쓴 비용: 약 {guard.spent_krw}원.\n"
             f"이 주제는 2주간 건너뛰고, 다음 예약 실행 때 다른 주제로 다시 시도합니다.\n{detail}")
     return False
 

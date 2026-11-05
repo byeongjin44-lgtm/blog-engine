@@ -93,7 +93,9 @@ def structured_call(
     response = (transport or _default_transport)(payload)
     stop = response.get("stop_reason")
     if stop == "max_tokens":
-        raise TruncatedError(f"Claude response was cut off at {max_tokens} tokens")
+        cap = response.get("_max_tokens", max_tokens)  # CostGuard may have lowered it to fit the budget
+        raise TruncatedError(f"Claude response was cut off at {cap} tokens"
+                             + (" (output limited by the per-post budget)" if cap < max_tokens else ""))
     if stop == "refusal":
         raise RuntimeError("Claude declined to write this content")
     text = "".join(b.get("text", "") for b in response.get("content", []) if b.get("type") == "text")

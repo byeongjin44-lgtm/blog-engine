@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from contextlib import nullcontext
 
 from engine import calculator
 from engine.config import Site, Topic
@@ -111,6 +112,10 @@ def _writer_prompt(site: Site, topic: Topic, existing: dict[str, str], feedback:
     return "\n\n".join(parts)
 
 
+def writer_max_tokens(site: Site) -> int:
+    return max(6000, site.max_words * 3)
+
+
 def write_post(site: Site, topic: Topic, existing: dict[str, str], transport: Transport | None = None,
                feedback: list[str] | None = None, previous: dict | None = None, calc: dict | None = None) -> dict:
     fmt = get_format(site.format)
@@ -121,7 +126,9 @@ def write_post(site: Site, topic: Topic, existing: dict[str, str], transport: Tr
         system=_writer_system(site),
         prompt=_writer_prompt(site, topic, existing, feedback, previous, calc),
         schema=fmt["schema"],
-        max_tokens=16000,
+        # Sized to the longest allowed post (about 3 tokens per word incl. JSON and code is generous):
+        # a runaway draft is cut off early instead of eating the budget the shorter rewrite needs.
+        max_tokens=writer_max_tokens(site),
         transport=transport,
     )
     if site.tool(topic.related_tool):
@@ -159,6 +166,16 @@ def review_post(site: Site, post: dict, transport: Transport | None = None, calc
     )
 
 
+def _optional_work(transport):
+    work = getattr(transport, "optional_work", None)
+    return work() if work else nullcontext()
+
+
+def _final_review(transport):
+    work = getattr(transport, "final_review", None)
+    return work() if work else nullcontext()
+
+
 def draft(site: Site, topic: Topic, existing: dict[str, str], transport: Transport | None = None,
           calc: dict | None = None) -> tuple[dict, dict]:
     """Returns (post, review). Raises DraftError if no publishable draft could be produced.
@@ -182,18 +199,21 @@ def draft(site: Site, topic: Topic, existing: dict[str, str], transport: Transpo
 
     # Apply every review comment (not only serious ones) before the owner sees the post: the owner
     # cannot act on English review notes, so they must be resolved here. Up to REVIEW_ROUNDS rounds.
-    review = review_post(site, post, transport, calc=calc)
+    with _final_review(transport):  # the owner needs this Korean review: it may use the reserved budget
+        review = review_post(site, post, transport, calc=calc)
     applied: list[str] = []
     for _ in range(min(REVIEW_ROUNDS, 2)):  # hard cap, even if the constant is edited
         issues = review.get("issues", [])
-        if not issues:
+        if not issues or getattr(transport, "over_budget", False):
             break
         try:
-            revised = write_post(site, topic, existing, transport,
-                                 feedback=[i.get("en") or i["ko"] for i in issues], previous=post, calc=calc)
-            if fmt["validate"](revised, site, existing_slugs):
-                break  # the revision broke the post's structure: keep the last valid version
-            new_review = review_post(site, revised, transport, calc=calc)
+            # Rewrite rounds are extra work: they stay within the normal budget (no finishing grace).
+            with _optional_work(transport):
+                revised = write_post(site, topic, existing, transport,
+                                     feedback=[i.get("en") or i["ko"] for i in issues], previous=post, calc=calc)
+                if fmt["validate"](revised, site, existing_slugs):
+                    break  # the revision broke the post's structure: keep the last valid version
+                new_review = review_post(site, revised, transport, calc=calc)
         except BudgetExceeded:
             break  # out of budget: keep the last fully reviewed version
         post, review = revised, new_review

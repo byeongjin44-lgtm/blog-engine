@@ -41,6 +41,10 @@ The owner does not read English: the Korean summary and review are how posts get
   (`models.fallback`), on ONE topic, with up to 2 review rewrite rounds. If that fails, stop for the day —
   no next topic, no more posts. Enforced by `engine/budget.py` (`CostGuard` caps `max_tokens` and tracks real
   usage), `MAX_TOPICS_PER_POST = 1` in `cli.py`, and locked by tests. Never change without explicit approval.
+  **Finishing grace (owner decision, 2026-11-05):** a running attempt may finish slightly over 150 KRW so a nearly
+  done post is still sent — never above `HARD_LIMIT_KRW` = 200 KRW, with 20 KRW of it kept for the Korean review.
+  New work (the Sonnet attempt, review rewrite rounds via `guard.optional_work()`) only starts within 150 KRW.
+  Writer output is sized to the longest allowed post (`writer_max_tokens`), so a runaway draft cannot eat the budget.
 - **Review rewrite rounds are capped at 2 per post (owner decision, cost). Never raise the cap without the
   owner's explicit approval** — `REVIEW_ROUNDS` in `writer.py`, also hard-capped in the loop and locked by a test.
 
