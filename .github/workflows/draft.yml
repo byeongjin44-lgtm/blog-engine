@@ -54,7 +54,10 @@ jobs:
         run: ./scripts/commit-state.sh "Draft posts"
       # GitHub's schedule is best-effort (runs can be hours late), so instead of relying on the
       # hourly poll, wait here for the Approve / Reject button and handle it within seconds.
+      # Runs even when drafting failed for one site (e.g. DevRivet's draft was cut off): the other sites'
+      # drafts were still sent to Telegram and their buttons must be handled. Skipped only on cancel.
       - name: Wait for approval
+        if: ${{ !cancelled() }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
