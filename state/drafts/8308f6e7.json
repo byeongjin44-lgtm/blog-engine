@@ -1,0 +1,280 @@
+{
+  "id": "8308f6e7",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-06T03:43:30Z",
+  "topic": {
+    "title": "How many tons of gravel for a 12x50 driveway?",
+    "keyword": "how much gravel for a driveway",
+    "related_tool": "gravel-calculator",
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 50,
+          "widthFt": 12,
+          "depthIn": 4
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-gravel-for-driveway-12x50",
+    "title": "How Much Gravel for a Driveway? 12x50 Example in Tons",
+    "description": "A 12-foot by 50-foot driveway at 4 inches deep needs 7.41 cu yd of gravel, or 10.37 tons at 1.4 tons per cubic yard. Here is how the math works.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 12-foot by 50-foot driveway at 4 inches deep needs 7.41 cu yd of gravel, which comes to 10.37 tons at the calculator's default weight of 1.4 tons per cubic yard. The weight your supplier gives for your exact material matters most, so confirm that before you order."
+      },
+      {
+        "type": "p",
+        "text": "You can run your own numbers in the [Gravel & Sand Calculator](/gravel-calculator). Enter your driveway's length, width, and depth, then check the result against the weight your supplier gives you."
+      },
+      {
+        "type": "h2",
+        "text": "The worked example"
+      },
+      {
+        "type": "p",
+        "text": "This driveway is 50 feet long and 12 feet wide, which gives a surface area of 600 sq ft. The gravel will be spread 4 inches deep. Here is how the calculator gets from those measurements to a tonnage:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the area. Multiply length by width: 50 ft x 12 ft gives 600 sq ft.",
+          "Find the volume in cubic feet. Multiply the area by the depth in feet. The depth is 4 inches, so the volume comes to 200 cu ft.",
+          "Convert to cubic yards. A cubic yard holds 27 cubic feet, so 200 cu ft becomes 7.41 cu yd.",
+          "Convert to tons. Multiply cubic yards by the weight per cubic yard. At the default of 1.4 tons per cubic yard, 7.41 cu yd comes to 10.37 tons."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The calculator also uses a shortcut that gives the same answer in one step: area in square feet times depth in inches, divided by 324. The 324 comes from one cubic yard covering 324 sq ft at a depth of one inch. Either way, you end up with 7.41 cu yd and 10.37 tons."
+      },
+      {
+        "type": "h2",
+        "text": "Why cubic yards come first"
+      },
+      {
+        "type": "p",
+        "text": "Gravel is measured in two ways: volume and weight. Volume is how much space the pile fills, and it is the number you work out from your driveway's dimensions. Weight is what many suppliers charge for and what the delivery truck carries. That is why the calculator gives you cubic yards first, then converts to tons."
+      },
+      {
+        "type": "p",
+        "text": "Some suppliers sell by the cubic yard and others sell by the ton. Ask which one they use, then use the matching number from the calculator. If they quote by the ton, the 10.37 tons figure is your starting point. If they quote by the cubic yard, the 7.41 cu yd figure is the one to use."
+      },
+      {
+        "type": "h2",
+        "text": "Checking the weight for your material"
+      },
+      {
+        "type": "p",
+        "text": "The 1.4 ton default is a typical figure, not a guarantee. Supplier tables list most gravel at about 2,600 to 2,800 pounds per cubic yard, and the default of 1.4 tons equals 2,800 pounds. Crushed stone, pea gravel, and sand can each weigh differently, and moisture changes weight too."
+      },
+      {
+        "type": "p",
+        "text": "Ask your supplier for the weight per cubic yard of the exact product you are buying. Enter that number in the calculator's weight field and recalculate. Use the supplier's weight instead of the default whenever you can get it."
+      },
+      {
+        "type": "p",
+        "text": "Also check the product sheet for the material you choose. Products differ, so the figures printed on the label or sheet are the ones to trust over any general table."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes to avoid"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Entering depth in feet instead of inches. The calculator expects the depth in inches, so a 4-inch layer should be entered as 4 inches.",
+          "Measuring only the paved strip and forgetting any edge or turnaround area you plan to cover.",
+          "Using the default weight without asking the supplier. A small difference in tons per cubic yard can change the total noticeably on a large job.",
+          "Assuming the delivered weight will match the estimate exactly. Keep the supplier's delivery ticket so you can compare it with your number."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "How to use the calculator for your own driveway"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Measure the length and width of the area you plan to cover, in feet.",
+          "Choose the depth you plan to spread, in inches.",
+          "Get the weight per cubic yard from your supplier for the exact material you are buying.",
+          "Enter all three values in the Gravel & Sand Calculator and read the cubic yards and tons.",
+          "Cross-check the result against the product sheet from your supplier, and use the figures printed there for your product."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I order exactly 10.37 tons?"
+      },
+      {
+        "type": "p",
+        "text": "The calculator gives an estimate based on the measurements and weight you enter. Ask your supplier how they measure and whether they can load to a specific tonnage. Many suppliers will advise on how much to order for your project."
+      },
+      {
+        "type": "h3",
+        "text": "Does the calculator work for other driveway sizes?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Enter your own length, width, depth, and weight per cubic yard. The same steps apply to any rectangular area."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same method for sand?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. The Gravel & Sand Calculator works for sand as well. Enter the weight per cubic yard for the sand you are buying, since sand often weighs differently than gravel."
+      }
+    ],
+    "relatedTool": "gravel-calculator",
+    "sources": [
+      {
+        "title": "Mulch Pros: Material weight and coverage",
+        "url": "https://mulchpros.com/material-weight-and-coverage/"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 50,
+          "widthFt": 12,
+          "depthIn": 4
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 50,
+          "widthFt": 12,
+          "depthIn": 4
+        },
+        "results": [
+          {
+            "key": "tons",
+            "label": "Weight",
+            "value": 10.37,
+            "unit": "tons",
+            "digits": 2,
+            "primary": true,
+            "number": "10.37",
+            "display": "10.37 tons"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 7.41,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": true,
+            "number": "7.41",
+            "display": "7.41 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 200,
+            "unit": "cu ft",
+            "digits": 1,
+            "primary": false,
+            "number": "200",
+            "display": "200 cu ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Area",
+            "value": 600,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "600",
+            "display": "600 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "gravel-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 20,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "depthIn",
+            "label": "Depth",
+            "unit": "in",
+            "default": 3,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "tonsPerCuYd",
+            "label": "Weight per cubic yard",
+            "unit": "tons",
+            "default": 1.4,
+            "step": 0.05,
+            "help": "Ask your supplier for the weight of the exact material."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "드라이브웨이 자갈은 얼마나 필요할까? 12x50 예시를 톤 단위로",
+    "summary_ko": [
+      "12ft x 50ft 진입로에 깊이 4인치로 자갈을 깔면 7.41 cu yd가 필요하며, 기본 무게 1.4톤/cu yd를 적용하면 10.37톤입니다.",
+      "정확한 무게는 공급업체에서 받은 실제 제품 기준값을 쓰라고 안내합니다.",
+      "계산 과정: 면적 600 sq ft, 부피 200 cu ft, 1 cu yd = 27 cu ft 환산으로 7.41 cu yd, 여기에 1.4톤을 곱해 10.37톤을 구합니다.",
+      "부피(cu yd)와 무게(톤) 중 공급업체가 무엇으로 판매하는지 확인하라고 설명합니다.",
+      "기본값 1.4톤이 2,800파운드에 해당한다고 하며, 일반 자갈이 cu yd당 2,600~2,800파운드라는 수치를 제시합니다.",
+      "흔한 실수(깊이 단위, 가장자리 누락, 기본 무게 사용, 납품 중량 차이)와 계산기 사용 절차, FAQ를 다룹니다."
+    ],
+    "issues": [
+      {
+        "severity": "high",
+        "ko": "\"Supplier tables list most gravel at about 2,600 to 2,800 pounds per cubic yard\" 문장의 2,600~2,800파운드/cu yd 범위는 계산기 결과가 아니라 작성자가 임의로 넣은 수치입니다. 출처(Mulch Pros)에서 확인된 값인지 불분명하므로 검증된 수치로 확인하거나 삭제해야 합니다.",
+        "en": "The 2,600 to 2,800 lb per cubic yard range is not a calculator result and is presented as a supplier-table figure. Verify it against the cited source or remove it."
+      },
+      {
+        "severity": "low",
+        "ko": "\"Also check the product sheet for the material you choose\" 단락은 앞선 문단과 같은 내용을 반복합니다. 중복을 줄이면 좋겠습니다.",
+        "en": "The product-sheet paragraph repeats the point made in the preceding paragraph about asking the supplier for the exact weight. Consider merging them."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [],
+    "word_count": 808
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 11,
+  "api_calls": 4,
+  "telegram_message_id": 35
+}

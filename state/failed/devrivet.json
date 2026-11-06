@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "title": "Decoding a JWT vs verifying it: what's the difference?",
+    "at": "2026-11-06T03:42:38Z",
+    "reason": "Decoding a JWT vs verifying it: what's the difference? / claude-sonnet-5-5: TruncatedError: Claude response was cut off at 3294 tokens (output limited by the per-post budget)"
+  }
+]
