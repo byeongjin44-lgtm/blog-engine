@@ -1,7 +1,7 @@
 {
   "id": "8308f6e7",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-06T03:43:30Z",
   "topic": {
     "title": "How many tons of gravel for a 12x50 driveway?",
@@ -244,7 +244,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-06"
   },
   "review": {
     "title_ko": "드라이브웨이 자갈은 얼마나 필요할까? 12x50 예시를 톤 단위로",
@@ -276,5 +277,7 @@
   "recovered_from": [],
   "cost_krw": 11,
   "api_calls": 4,
-  "telegram_message_id": 35
+  "telegram_message_id": 35,
+  "decided": "2026-11-06T04:31:45Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-gravel-for-driveway-12x50.json"
 }
