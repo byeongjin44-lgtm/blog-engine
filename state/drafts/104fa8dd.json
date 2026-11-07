@@ -1,7 +1,7 @@
 {
   "id": "104fa8dd",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-07T03:16:17Z",
   "topic": {
     "title": "How many deck boards do I need for a 12x16 deck?",
@@ -283,7 +283,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-07"
   },
   "review": {
     "title_ko": "12x16 데크에 데크보드가 몇 장 필요한가?",
@@ -305,5 +306,7 @@
   "recovered_from": [],
   "cost_krw": 11,
   "api_calls": 3,
-  "telegram_message_id": 39
+  "telegram_message_id": 39,
+  "decided": "2026-11-07T04:53:39Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-deck-boards-12x16-deck.json"
 }
