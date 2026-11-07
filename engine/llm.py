@@ -73,6 +73,22 @@ def strict_schema(schema: dict) -> dict:
     return schema
 
 
+# Claude 5.x models think before answering by default (adaptive thinking), and thinking tokens count toward
+# max_tokens and are billed as output. Sonnet 5.5 defaults to "high" effort, Haiku 5.5 to "medium".
+# A blog post does not need deep thinking: "low" effort keeps cost down and stops posts being cut off.
+# Docs: https://platform.claude.com/docs/en/build-with-claude/effort
+DEFAULT_EFFORT = "low"
+
+
+def thinking_off(model: str) -> dict | None:
+    """The lowest thinking setting a model accepts (no up-front thinking), or None if unknown."""
+    if "sonnet" in model:
+        return {"type": "between_tools"}
+    if "haiku" in model:
+        return {"type": "disabled"}
+    return None
+
+
 def structured_call(
     *,
     model: str,
@@ -81,6 +97,8 @@ def structured_call(
     schema: dict,
     max_tokens: int = 8000,
     transport: Transport | None = None,
+    effort: str | None = DEFAULT_EFFORT,
+    no_thinking: bool = False,
 ) -> dict[str, Any]:
     """Ask Claude for a JSON object matching `schema`; returns it parsed."""
     payload = {
@@ -90,7 +108,22 @@ def structured_call(
         "messages": [{"role": "user", "content": prompt}],
         "output_config": {"format": {"type": "json_schema", "schema": strict_schema(schema)}},
     }
-    response = (transport or _default_transport)(payload)
+    if effort:
+        payload["output_config"]["effort"] = effort
+    if no_thinking and thinking_off(model):
+        payload["thinking"] = thinking_off(model)
+    send = transport or _default_transport
+    try:
+        response = send(payload)
+    except HttpError as e:
+        # Self-healing: if the API rejects the thinking/effort settings, send the plain request once.
+        body = (e.body or "").lower()
+        if e.status != 400 or not ("effort" in body or "thinking" in body):
+            raise
+        print(f"::warning title=Claude 설정 거부::{model}: effort/thinking 설정 없이 다시 보냄 ({e.body[:200]})")
+        payload.pop("thinking", None)
+        payload["output_config"].pop("effort", None)
+        response = send(payload)
     stop = response.get("stop_reason")
     if stop == "max_tokens":
         cap = response.get("_max_tokens", max_tokens)  # CostGuard may have lowered it to fit the budget

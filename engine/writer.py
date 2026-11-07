@@ -43,6 +43,9 @@ REVIEW_SCHEMA = {
 # Never raise this without the owner's explicit approval; tests fail if it changes.
 REVIEW_ROUNDS = 2
 
+# Thinking counts toward max_tokens: leave room for it (a Haiku review of this size costs a few KRW at most).
+REVIEW_MAX_TOKENS = 12000
+
 
 class DraftError(RuntimeError):
     pass
@@ -112,24 +115,30 @@ def _writer_prompt(site: Site, topic: Topic, existing: dict[str, str], feedback:
     return "\n\n".join(parts)
 
 
-def writer_max_tokens(site: Site) -> int:
-    return max(6000, site.max_words * 3)
+def writer_max_tokens(site: Site, thinking: bool = True) -> int:
+    # The longest allowed post is about 3 tokens per word incl. JSON and code. With thinking on (low effort) leave
+    # room for a little thinking; without it, a draft that runs past the post size is cut off before it eats the
+    # budget the shorter rewrite needs.
+    post = max(6000, site.max_words * 3)
+    return post + 4000 if thinking else post
 
 
 def write_post(site: Site, topic: Topic, existing: dict[str, str], transport: Transport | None = None,
-               feedback: list[str] | None = None, previous: dict | None = None, calc: dict | None = None) -> dict:
+               feedback: list[str] | None = None, previous: dict | None = None, calc: dict | None = None,
+               no_thinking: bool = False) -> dict:
     fmt = get_format(site.format)
     if previous:
         previous = {k: v for k, v in previous.items() if not k.startswith("_")}
+    # The fallback model is the expensive one: it writes without up-front thinking (its job is to finish).
+    no_thinking = no_thinking or site.writer_model == site.fallback_model
     post = structured_call(
         model=site.writer_model,
         system=_writer_system(site),
         prompt=_writer_prompt(site, topic, existing, feedback, previous, calc),
         schema=fmt["schema"],
-        # Sized to the longest allowed post (about 3 tokens per word incl. JSON and code is generous):
-        # a runaway draft is cut off early instead of eating the budget the shorter rewrite needs.
-        max_tokens=writer_max_tokens(site),
+        max_tokens=writer_max_tokens(site, thinking=not no_thinking),
         transport=transport,
+        no_thinking=no_thinking,
     )
     if site.tool(topic.related_tool):
         post["relatedTool"] = topic.related_tool
@@ -156,14 +165,14 @@ def review_post(site: Site, post: dict, transport: Transport | None = None, calc
             "(for example a figure the writer calculated or estimated itself), and any advice beyond estimating "
             "material quantities (electrical, structural, gas, roofing, hazardous materials, building codes)."
         )
-    return structured_call(
-        model=site.reviewer_model,
-        system=system,
-        prompt=prompt,
-        schema=REVIEW_SCHEMA,
-        max_tokens=4000,
-        transport=transport,
-    )
+    call = dict(model=site.reviewer_model, system=system, prompt=prompt, schema=REVIEW_SCHEMA,
+                max_tokens=REVIEW_MAX_TOKENS, transport=transport)
+    try:
+        # The reviewer checks code and facts, so it keeps the model's default thinking depth (Haiku: cheap).
+        return structured_call(**call, effort=None)
+    except TruncatedError:
+        # Thought too long: one more try without up-front thinking, so the owner still gets a Korean review.
+        return structured_call(**call, no_thinking=True)
 
 
 def _optional_work(transport):
@@ -189,7 +198,9 @@ def draft(site: Site, topic: Topic, existing: dict[str, str], transport: Transpo
         # Usually a post that tried to cover too much; one shorter attempt.
         shorter = (f"Your previous answer was too long and got cut off. Write a tighter post of at most "
                    f"{site.max_words} words: fewer, shorter code samples and only the most common cases.")
-        post = write_post(site, topic, existing, transport, feedback=[shorter], previous={"note": "cut off"}, calc=calc)
+        # Usually the model thought too long or wrote too much: retry tighter and without up-front thinking.
+        post = write_post(site, topic, existing, transport, feedback=[shorter], previous={"note": "cut off"}, calc=calc,
+                          no_thinking=True)
     errors = fmt["validate"](post, site, existing_slugs)
     if errors:
         post = write_post(site, topic, existing, transport, feedback=errors, previous=post, calc=calc)

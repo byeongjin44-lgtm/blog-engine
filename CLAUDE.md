@@ -49,6 +49,11 @@ The owner does not read English: the Korean summary and review are how posts get
   done post is still sent — never above `HARD_LIMIT_KRW` = 200 KRW, with 20 KRW of it kept for the Korean review.
   New work (the Sonnet attempt, review rewrite rounds via `guard.optional_work()`) only starts within 150 KRW.
   Writer output is sized to the longest allowed post (`writer_max_tokens`), so a runaway draft cannot eat the budget.
+- **Thinking (2026-11-07):** Claude 5.x models think by default and thinking tokens count toward `max_tokens` and
+  cost (Sonnet 5.5 defaults to high effort). Writing runs at `effort: "low"` (`DEFAULT_EFFORT` in `llm.py`); the
+  Sonnet fallback and any retry after a cut-off write without up-front thinking (`thinking_off`); the reviewer keeps
+  the default depth with room for thinking (`REVIEW_MAX_TOKENS`) and retries once without thinking if cut off.
+  If the API rejects these settings, `structured_call` resends the plain request. Locked by `ThinkingTests`.
 - **Review rewrite rounds are capped at 2 per post (owner decision, cost). Never raise the cap without the
   owner's explicit approval** — `REVIEW_ROUNDS` in `writer.py`, also hard-capped in the loop and locked by a test.
 

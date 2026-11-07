@@ -118,7 +118,7 @@ Do not repeat or closely paraphrase any of these existing topics:
         system=f"You are an SEO-minded editor planning the content calendar of {site.name}, a site about {site.niche}.",
         prompt=prompt,
         schema=schema,
-        max_tokens=4000,
+        max_tokens=8000,  # thinking counts toward max_tokens (Claude 5.x); writing runs at low effort
         transport=transport,
     )
     seen = {_norm(k) for k in known}

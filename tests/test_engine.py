@@ -425,7 +425,8 @@ class BudgetTests(unittest.TestCase):
 
     def test_writer_output_is_sized_to_the_post_length(self):
         from engine.writer import writer_max_tokens
-        self.assertEqual(writer_max_tokens(SITE), 6000)  # 1800 words max: room for the post, not for a runaway
+        self.assertEqual(writer_max_tokens(SITE, thinking=False), 6000)  # 1800 words max: the post, not a runaway
+        self.assertEqual(writer_max_tokens(SITE), 10000)                 # + room for low-effort thinking
 
     def test_truncation_message_shows_the_real_cap(self):
         from engine.budget import CostGuard
@@ -606,3 +607,84 @@ class IndexNowTests(unittest.TestCase):
         from engine import cli
         with mock.patch("engine.indexnow.run_notify", side_effect=RuntimeError("boom")):
             self.assertEqual(cli.main(["notify"]), 0)
+
+
+class ThinkingTests(unittest.TestCase):
+    """2026-11-05..07: Claude 5.x thinks by default and thinking counts toward max_tokens, so posts and reviews
+    were cut off and the Sonnet fallback burned the budget. Effort/thinking settings and retries are locked here."""
+
+    @staticmethod
+    def api(calls, review_cutoffs=0, reject_settings=False):
+        state_ = {"cut": review_cutoffs}
+
+        def api(payload):
+            from engine.http import HttpError
+            if reject_settings and ("thinking" in payload or "effort" in payload["output_config"]):
+                raise HttpError(400, '{"error": {"message": "effort is not supported with this option"}}', "x")
+            schema = payload["output_config"]["format"]["schema"]
+            is_review = "summary_ko" in schema["properties"]
+            calls.append(("review" if is_review else "post", payload["model"], payload.get("thinking"),
+                          payload["output_config"].get("effort"), payload["max_tokens"]))
+            if is_review and state_["cut"] > 0:
+                state_["cut"] -= 1
+                return {"stop_reason": "max_tokens", "usage": {"input_tokens": 3000, "output_tokens": payload["max_tokens"]},
+                        "content": [{"type": "thinking", "thinking": "..."}]}
+            data = OK_REVIEW if is_review else make_post()
+            return {"stop_reason": "end_turn", "usage": {"input_tokens": 3000, "output_tokens": 2500},
+                    "content": [{"type": "thinking", "thinking": "..."}, {"type": "text", "text": json.dumps(data)}]}
+        return api
+
+    def run_one(self, api):
+        tmp, tg = Path(tempfile.mkdtemp()), FakeTelegram()
+        failures = run_draft(["devrivet"], state_dir=tmp, telegram=tg, llm_transport=api, github_transport=FakeGitHub())
+        return failures, tg
+
+    def test_writer_uses_low_effort_and_reviewer_keeps_default(self):
+        calls = []
+        self.assertEqual(self.run_one(self.api(calls))[0], 0)
+        post = [c for c in calls if c[0] == "post"][0]
+        review = [c for c in calls if c[0] == "review"][0]
+        self.assertEqual(post[3], "low")
+        self.assertIsNone(post[2])                  # Haiku may still think a little
+        self.assertEqual(post[4], 10000)
+        self.assertIsNone(review[3])                # the reviewer checks code: default depth
+        self.assertEqual(review[4], 12000)
+
+    def test_cut_off_review_is_retried_without_thinking_and_post_is_sent(self):
+        calls = []
+        failures, tg = self.run_one(self.api(calls, review_cutoffs=1))
+        self.assertEqual(failures, 0)
+        reviews = [c for c in calls if c[0] == "review"]
+        self.assertEqual(reviews[1][2], {"type": "disabled"})
+        self.assertIn("새 글 검토", tg.sent[-1]["text"])
+
+    def test_sonnet_and_cut_off_retries_write_without_up_front_thinking(self):
+        from engine.llm import TruncatedError
+        from engine import writer
+        calls = []
+        api = self.api(calls)
+        cut = {"n": 1}
+
+        def first_cut(payload):
+            if "summary_ko" not in payload["output_config"]["format"]["schema"]["properties"] and cut["n"]:
+                cut["n"] -= 1
+                calls.append(("post", payload["model"], payload.get("thinking"), None, payload["max_tokens"]))
+                return {"stop_reason": "max_tokens", "usage": {"input_tokens": 10, "output_tokens": 10}, "content": []}
+            return api(payload)
+
+        writer.draft(SITE, SITE.topics[0], {}, transport=first_cut)
+        posts = [c for c in calls if c[0] == "post"]
+        self.assertIsNone(posts[0][2])
+        self.assertEqual(posts[1][2], {"type": "disabled"})      # retry after a cut-off: no up-front thinking
+        self.assertEqual(posts[1][4], 6000)
+        from dataclasses import replace
+        sonnet = replace(SITE, writer_model=SITE.fallback_model)
+        calls.clear()
+        writer.draft(sonnet, SITE.topics[0], {}, transport=api)
+        self.assertEqual([c for c in calls if c[0] == "post"][0][2], {"type": "between_tools"})
+
+    def test_rejected_settings_fall_back_to_a_plain_request(self):
+        calls = []
+        failures, _ = self.run_one(self.api(calls, reject_settings=True))
+        self.assertEqual(failures, 0)
+        self.assertTrue(all(c[2] is None and c[3] is None for c in calls))
