@@ -1,0 +1,379 @@
+{
+  "id": "44e04b03",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-08T02:45:44Z",
+  "topic": {
+    "title": "How to calculate the square footage of a room",
+    "keyword": "how to calculate square footage of a room",
+    "related_tool": "square-footage-calculator",
+    "calculations": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 12,
+          "widthFt": 14
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-to-calculate-square-footage-of-a-room",
+    "title": "How to Calculate Square Footage of a Room (With Example)",
+    "description": "Multiply length by width to get a room's square footage. A 12 ft x 14 ft room is 168 sq ft. Learn L-shaped rooms, inches to feet, and sq yd and m² conversions.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To calculate the square footage of a room, measure the length and width in feet and multiply them together. A room that is 12 ft by 14 ft has an area of 168 sq ft. You can check your own numbers with the [Square Footage Calculator](/square-footage-calculator), but the math is simple enough to do by hand."
+      },
+      {
+        "type": "h2",
+        "text": "The basic formula for a rectangular room"
+      },
+      {
+        "type": "p",
+        "text": "Most rooms are rectangles or close enough to treat as one. The formula is length x width, and the answer is in square feet because you multiplied feet by feet."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Measure the length of the room in feet, wall to wall.",
+          "Measure the width of the room in feet, along the adjoining wall.",
+          "Multiply the two numbers together."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "For a room that is 12 ft long and 14 ft wide, you multiply 12 by 14 and get 168 sq ft. That figure is the floor area, and it is the starting point for almost every material estimate: flooring, tile, underlayment, and more."
+      },
+      {
+        "type": "h2",
+        "text": "How to measure the room correctly"
+      },
+      {
+        "type": "p",
+        "text": "Use a tape measure and measure from wall to wall at floor level. Write the numbers down as you go instead of trusting memory."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Measure at the floor, not at the ceiling or at chair-rail height. Walls are not always perfectly straight.",
+          "If two opposite walls give slightly different numbers, measure both and use the larger one, or measure through the middle of the room.",
+          "Measure to the wall surface. Do not subtract for baseboards unless you want a very tight number.",
+          "Take every measurement twice. A one-foot slip changes the answer more than most people expect."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Converting inches to feet"
+      },
+      {
+        "type": "p",
+        "text": "Tape measures often give you feet and inches. The formula needs a single number in feet, so convert the inches first: divide the inches by 12 and add the result to the whole feet."
+      },
+      {
+        "type": "p",
+        "text": "For example, a measurement of 12 feet and 6 inches means 6 divided by 12, which is half a foot, so you add that half foot to the 12 whole feet. Do this for both the length and the width, then multiply as usual. A common mistake is to write the inches as a decimal directly after the feet, as if 6 inches were 0.6 of a foot. That is wrong because there are 12 inches in a foot, not 10."
+      },
+      {
+        "type": "p",
+        "text": "If you would rather work entirely in inches, multiply length by width in inches and divide the result by 144, since one square foot is 12 in x 12 in. Either method gives the same answer when done carefully."
+      },
+      {
+        "type": "h2",
+        "text": "What if the room is not a simple rectangle?"
+      },
+      {
+        "type": "p",
+        "text": "L-shaped rooms, rooms with a bump-out, and open floor plans are common. The trick is to split the room into rectangles, find the area of each one, and add them up."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Sketch the room on paper and draw lines that divide it into rectangles. An L-shape splits into two rectangles.",
+          "Label the length and width of each rectangle in feet.",
+          "Multiply length by width for each rectangle separately.",
+          "Add the areas together to get the total square footage."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "You can also work the other way around for rooms with a missing corner: calculate the area of the big surrounding rectangle, then subtract the area of the notch. Both approaches give the same total, so pick whichever needs fewer measurements for your layout."
+      },
+      {
+        "type": "p",
+        "text": "Be careful not to count any overlap twice. When you draw your dividing line, every part of the floor should belong to exactly one rectangle. For triangular or round areas, the [Square Footage Calculator](/square-footage-calculator) also handles those shapes."
+      },
+      {
+        "type": "h2",
+        "text": "Converting to square yards and square meters"
+      },
+      {
+        "type": "p",
+        "text": "Some materials, like carpet, are priced or sold by the square yard, and product specs outside the US often use square meters. Both conversions start from your square footage."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Square yards: divide square feet by 9, because a square yard is 3 ft x 3 ft.",
+          "Square meters: multiply square feet by 0.0929."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Our 12 ft by 14 ft room works out to 168 sq ft, which is 18.67 sq yd, or 15.61 m². If you plan to buy carpet by the yard or compare a metric product, those are the numbers to use."
+      },
+      {
+        "type": "h2",
+        "text": "Turning square footage into a materials list"
+      },
+      {
+        "type": "p",
+        "text": "Square footage is only the first step. Almost every product needs some extra on top of the raw floor area for cuts, waste, or pattern matching, and that allowance depends on the material. Once you have your area, move on to the right estimator:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Flooring: use the [Flooring Calculator](/flooring-calculator), or see [how much laminate flooring you need for a 12x14 room](/blog/how-much-laminate-flooring-12x14-room).",
+          "Tile: use the [Tile Calculator](/tile-calculator), or read [how much tile for a 5x8 bathroom](/blog/how-much-tile-for-5x8-bathroom).",
+          "Paint: the [Paint Calculator](/paint-calculator) works from wall dimensions rather than floor area, and [how much paint for a 12x12 room](/blog/how-much-paint-for-a-12x12-room) walks through an example."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Always check the coverage or yield printed on the product label before you buy, because boxes, bags, and cans differ from brand to brand. Use the calculator with your own measurements to get a number that fits your room, not someone else's."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes to avoid"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing units: multiplying feet by inches gives a meaningless number. Convert everything to feet first.",
+          "Writing feet and inches as a decimal, such as treating 6 inches as 0.6 foot instead of half a foot.",
+          "Forgetting closets, alcoves, or bump-outs that also need flooring.",
+          "Rounding too early. Keep the exact figures until the final answer.",
+          "Assuming the room is square. Measure both directions even if it looks like a perfect rectangle."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Do I include closets in a room's square footage?"
+      },
+      {
+        "type": "p",
+        "text": "For a materials estimate, yes, if the closet will get the same flooring. Measure the closet as its own rectangle and add it to the room's area. If it will not be covered, leave it out."
+      },
+      {
+        "type": "h3",
+        "text": "Should I measure to the wall or to the baseboard?"
+      },
+      {
+        "type": "p",
+        "text": "Measure wall to wall at floor level. Baseboards cover the edge of the floor material, so the wall-to-wall number is the practical figure for ordering. Your product's extra allowance covers the small differences."
+      },
+      {
+        "type": "h3",
+        "text": "How do I convert square feet to square yards?"
+      },
+      {
+        "type": "p",
+        "text": "Divide the square feet by 9. A room of 168 sq ft comes to 18.67 sq yd. For square meters, multiply square feet by 0.0929, which gives 15.61 m² for the same room."
+      },
+      {
+        "type": "h3",
+        "text": "What if my walls are not perfectly straight?"
+      },
+      {
+        "type": "p",
+        "text": "Measure in a couple of places and use the larger number for ordering, so you do not come up short. For a quick check, you can also run your numbers through the [Square Footage Calculator](/square-footage-calculator)."
+      }
+    ],
+    "relatedTool": "square-footage-calculator",
+    "sources": [
+      {
+        "title": "NIST Guide to the SI, Appendix B.8: Factors for units listed alphabetically",
+        "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 12,
+          "widthFt": 14
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 12,
+          "widthFt": 14
+        },
+        "results": [
+          {
+            "key": "sqFt",
+            "label": "Area",
+            "value": 168,
+            "unit": "sq ft",
+            "digits": 2,
+            "primary": true,
+            "number": "168",
+            "display": "168 sq ft"
+          },
+          {
+            "key": "sqYd",
+            "label": "Area",
+            "value": 18.67,
+            "unit": "sq yd",
+            "digits": 2,
+            "primary": false,
+            "number": "18.67",
+            "display": "18.67 sq yd"
+          },
+          {
+            "key": "sqM",
+            "label": "Area",
+            "value": 15.61,
+            "unit": "m²",
+            "digits": 2,
+            "primary": false,
+            "number": "15.61",
+            "display": "15.61 m²"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "square-footage-calculator",
+        "fields": [
+          {
+            "kind": "select",
+            "key": "shape",
+            "label": "Shape",
+            "default": "rectangle",
+            "options": [
+              {
+                "value": "rectangle",
+                "label": "Rectangle or square"
+              },
+              {
+                "value": "triangle",
+                "label": "Triangle"
+              },
+              {
+                "value": "circle",
+                "label": "Circle"
+              }
+            ]
+          },
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "rectangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "rectangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "baseFt",
+            "label": "Base",
+            "unit": "ft",
+            "default": 6,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "triangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "heightFt",
+            "label": "Height",
+            "unit": "ft",
+            "default": 4,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "triangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "radiusFt",
+            "label": "Radius",
+            "unit": "ft",
+            "default": 5,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "circle"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "방 평수(제곱피트) 계산하는 법 (예시 포함)",
+    "summary_ko": [
+      "직사각형 방의 면적은 길이×너비로 구하며, 12ft×14ft 방은 168 sq ft라고 설명합니다.",
+      "줄자로 바닥 높이에서 벽과 벽 사이를 측정하고, 숫자를 적어 두며 두 번씩 확인하라고 안내합니다.",
+      "인치는 12로 나눠 피트로 바꿉니다(6인치=0.5ft). 6인치를 0.6ft로 쓰는 흔한 실수를 경고합니다.",
+      "L자형 등 불규칙한 방은 직사각형으로 나눠 각각 계산한 뒤 더하거나, 큰 사각형에서 빈 부분을 빼는 방법을 소개합니다.",
+      "제곱야드(÷9, 18.67 sq yd)와 제곱미터(×0.0929, 15.61 m²)로 환산하는 방법을 설명합니다.",
+      "면적을 바닥재, 타일, 페인트 계산기와 연결하고, 구매 전 제품 라벨의 도포량을 확인하라고 권합니다.",
+      "자주 하는 실수와 FAQ(벽 기준 측정, 벽이 곧지 않을 때 큰 값 사용, 붙박이장 포함 여부)를 다룹니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"For triangular or round areas, the Square Footage Calculator also handles those shapes.\" 이 문장은 계산기가 삼각형과 원형을 지원한다고 말하지만, 제공된 계산 결과는 직사각형 입력 하나뿐입니다. 게시 전에 실제로 해당 도형을 지원하는지 확인하세요.",
+        "en": "The post says the Square Footage Calculator handles triangular and round areas, but the only verified calculation is for a rectangle. Confirm the tool supports those shapes before publishing."
+      },
+      {
+        "severity": "low",
+        "ko": "\"A one-foot slip changes the answer more than most people expect.\" 1피트 오차가 결과를 얼마나 바꾸는지 구체적인 계산 없이 쓴 문장입니다. 예를 들어 12×14 방에서 길이가 1피트 틀리면 면적이 14 sq ft 달라진다는 식으로 구체화하면 더 명확합니다.",
+        "en": "The claim that a one-foot error changes the answer 'more than most people expect' is vague and unquantified. A concrete example, such as a 14 sq ft change for a 12x14 room, would make it clearer."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [],
+    "word_count": 1101
+  },
+  "model": "claude-sonnet-5-5",
+  "recovered_from": [
+    "How to calculate the square footage of a room / claude-haiku-5-5: DraftError: draft failed validation twice: number 14.5 does not come from the calculator results — use only the numbers provided"
+  ],
+  "cost_krw": 114,
+  "api_calls": 5,
+  "telegram_message_id": 43
+}

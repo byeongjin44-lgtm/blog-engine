@@ -1,0 +1,239 @@
+{
+  "id": "1baa34fb",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-08T02:44:23Z",
+  "topic": {
+    "title": "Decoding a JWT vs verifying it: what's the difference?",
+    "keyword": "decode jwt vs verify",
+    "related_tool": "jwt-decoder"
+  },
+  "post": {
+    "slug": "decode-jwt-vs-verify-difference",
+    "title": "Decode JWT vs Verify: What's the Difference?",
+    "description": "Decoding a JWT only reads its header and payload. Verifying checks the signature and claims with a trusted key. Here is how each works, with code.",
+    "body": [
+      {
+        "type": "p",
+        "text": "Decoding a JWT reads the header and payload, which are only base64url-encoded JSON. It needs no key and proves nothing about who issued the token. Verifying a JWT checks the signature with a key you trust and then validates claims such as exp, nbf, iss and aud. Only verification tells you the token is authentic and currently valid."
+      },
+      {
+        "type": "p",
+        "text": "To look inside a token, paste it into the [JWT Decoder](/jwt-decoder). It shows the header, the payload, and the iat, nbf and exp claims as readable dates. It does not check the signature. That makes it the right tool for debugging and the wrong tool for deciding whether to trust a request. The tool runs entirely in your browser, but a live token is still a credential, so treat it that way."
+      },
+      {
+        "type": "h2",
+        "text": "What a JWT contains"
+      },
+      {
+        "type": "p",
+        "text": "A JSON Web Token has three parts separated by dots, in the form header.payload.signature."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Header: JSON describing the algorithm (alg) and token type (typ). For example: {\"alg\":\"HS256\",\"typ\":\"JWT\"}.",
+          "Payload: JSON claims such as sub, iat, exp, and any application data.",
+          "Signature: a value computed over the first two parts, using a shared secret (HMAC, such as HS256) or a private key (RSA or ECDSA, such as RS256 or ES256)."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The header and payload are base64url-encoded, not encrypted. Anyone holding the token can read them. The signature is what makes the token tamper-evident: changing the payload invalidates it."
+      },
+      {
+        "type": "h2",
+        "text": "Decoding: reading without trusting"
+      },
+      {
+        "type": "p",
+        "text": "Decoding splits the token on dots, base64url-decodes the first two segments, and parses them as JSON. No secret is involved, so anyone can do it. A decoded payload can be edited and re-encoded, and a decoder will display the edited version without complaint."
+      },
+      {
+        "type": "p",
+        "text": "Base64url differs from standard base64. It uses - and _ instead of + and /, and it usually omits = padding. Plain atob() in JavaScript or base64.b64decode() in Python often fails on it unless you convert the characters and restore the padding first."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const [headerB64, payloadB64] = token.split('.');\nconst header = JSON.parse(Buffer.from(headerB64, 'base64url').toString('utf8'));\nconst payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString('utf8'));\nconsole.log(payload.exp);"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import base64, json\n\ndef b64url_json(segment):\n    padded = segment + '=' * (-len(segment) % 4)\n    return json.loads(base64.urlsafe_b64decode(padded))\n\nheader_b64, payload_b64, _sig = token.split('.')\nheader = b64url_json(header_b64)\npayload = b64url_json(payload_b64)"
+      },
+      {
+        "type": "p",
+        "text": "Use decoding for debugging, for reading non-sensitive claims in logs, or for reading exp before you call a verifier. Never make an authorization decision from decoded claims without verifying first."
+      },
+      {
+        "type": "h2",
+        "text": "Verifying: checking the signature and the claims"
+      },
+      {
+        "type": "p",
+        "text": "Verification has two parts. First, the signature must match the header and payload under a key you already trust. Second, the claims must be valid for your application at the current time."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Pin the algorithm. Accept only the algorithms you expect, such as HS256 or RS256. Do not take alg from the token and trust it.",
+          "Verify the signature with the correct key. For HS256 this is your shared secret. For RS256 or ES256 it is the issuer's public key.",
+          "Check exp and nbf. Reject tokens that have expired or are not yet valid. Both jsonwebtoken and PyJWT enforce these by default. Allow a small clock skew if your servers disagree on the time.",
+          "Check iss and aud. Confirm the token came from the expected issuer and is meant for your service. In jsonwebtoken, iss and aud are checked only when you pass the expected values. In PyJWT, if the token contains an aud claim and you pass no audience, the call raises an error instead of skipping the check. Either way, you must pass the values your service expects."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "iat is not checked against the current time in a way that rejects ordinary tokens. In jsonwebtoken, iat is enforced only if you set a maximum token age with the maxAge option, which rejects tokens issued too long ago. PyJWT validates iat as well, and recent versions reject an iat that is in the future. So the exact behavior depends on the library and version, and you should check the documentation for the one you use."
+      },
+      {
+        "type": "p",
+        "text": "Skipping the algorithm check has caused real vulnerabilities. Some libraries have accepted alg set to none, which means no signature at all, and some have allowed an RSA public key to be used as an HMAC secret. Always pass an explicit allowlist of algorithms."
+      },
+      {
+        "type": "h2",
+        "text": "Verifying with a library"
+      },
+      {
+        "type": "p",
+        "text": "Use a maintained library rather than writing your own signature check. Here are two common calls with the algorithm pinned."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const jwt = require('jsonwebtoken');\n\nconst claims = jwt.verify(token, process.env.JWT_SECRET, {\n  algorithms: ['HS256'],\n  issuer: 'https://auth.example.com',\n  audience: 'my-api',\n});"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import jwt\n\nclaims = jwt.decode(\n    token,\n    key=PUBLIC_KEY_PEM,\n    algorithms=['RS256'],\n    audience='my-api',\n    issuer='https://auth.example.com',\n)"
+      },
+      {
+        "type": "p",
+        "text": "The Python function is a naming trap. In PyJWT, jwt.decode verifies the signature and the claims. It is not a read-only decode. To skip verification you must opt out explicitly with options={'verify_signature': False}, which you should only do for inspection. Node's jsonwebtoken splits the two: jwt.decode reads without checking, and jwt.verify checks."
+      },
+      {
+        "type": "p",
+        "text": "Both calls throw or raise if the signature is wrong, the token is expired, or the issuer or audience does not match. If you get claims back, the checks you configured passed."
+      },
+      {
+        "type": "h2",
+        "text": "Quick comparison"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Needs a key: reading no, verifying yes.",
+          "Detects tampering: reading no, verifying yes.",
+          "Checks exp and nbf: reading shows the values, verifying enforces them.",
+          "Checks iat: reading shows the value; verifying enforces it only when configured, such as jsonwebtoken's maxAge.",
+          "Good for: debugging, inspecting claims, reading the expiry date.",
+          "Good for: authenticating requests and trusting claims in your API."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Treating a decoded token as valid. If the signature was never checked, the token could be forged.",
+          "Verifying the signature but not the expiry, or disabling exp checks to fix a clock problem. A correctly signed token from last year passes the signature check unless you enforce exp.",
+          "Using the wrong key type. Passing a public key where a secret is expected, or the reverse, either fails or, in unsafe setups, gets exploited.",
+          "Forgetting audience checks. A token issued for one service may be valid for another if you do not check aud.",
+          "Sharing live tokens. A bearer token grants access to whoever holds it. Treat any production token as a credential, and do not paste one into a tool you have not vetted."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "To check the exp claim specifically, see [JWT Expiration Time: How to Check the exp Claim](/blog/jwt-expiration-time-check-exp-claim). The exp value is seconds since the Unix epoch, so you can convert it with the [Unix Timestamp Converter](/timestamp-converter) if you need a date."
+      },
+      {
+        "type": "h2",
+        "text": "When to use which"
+      },
+      {
+        "type": "p",
+        "text": "Decode when you are inspecting a token during development, reading claims for logs, or checking why a request was rejected. Verify whenever a token is used to make a decision: granting access, trusting a user ID, or accepting data from another system. If your code reads a claim before verifying, move the verification earlier."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I verify a JWT without the secret?"
+      },
+      {
+        "type": "p",
+        "text": "Not for symmetric algorithms like HS256, because the secret is the key. For asymmetric algorithms like RS256, you need the issuer's public key, often published at a JWKS endpoint. You never need the private key to verify."
+      },
+      {
+        "type": "h3",
+        "text": "Does a JWT decoder tell me if the token is valid?"
+      },
+      {
+        "type": "p",
+        "text": "No. A decoder shows the contents and can show whether exp has passed. It does not check the signature, so a token with a forged payload will still decode cleanly."
+      },
+      {
+        "type": "h3",
+        "text": "Is a JWT encrypted?"
+      },
+      {
+        "type": "p",
+        "text": "Usually not. A standard signed JWT is readable by anyone who has it. Encrypted tokens (JWE) exist, but they are a different format and need a decryption key. Do not put secrets in a plain JWT payload."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my decoder show the token but my API still rejects it?"
+      },
+      {
+        "type": "p",
+        "text": "The API is probably verifying the signature, checking exp, or checking iss and aud against its own configuration. Compare the decoded claims with what your server expects, and confirm the algorithm in the header is on your allowlist."
+      }
+    ],
+    "relatedTool": "jwt-decoder"
+  },
+  "review": {
+    "title_ko": "JWT 디코딩과 검증: 차이점은 무엇인가?",
+    "summary_ko": [
+      "JWT 디코딩은 헤더와 페이로드를 base64url에서 JSON으로 풀어 읽기만 하며, 키가 필요 없고 발급자를 증명하지 못한다고 설명합니다.",
+      "JWT 디코더 도구로 헤더, 페이로드, iat/nbf/exp 날짜를 확인할 수 있지만 서명은 검사하지 않으므로 디버깅용이고 요청 신뢰 판단에는 적합하지 않다고 안내합니다.",
+      "JWT는 header.payload.signature 세 부분으로 구성되며, 헤더와 페이로드는 암호화되지 않아 누구나 읽을 수 있고 서명이 변조를 막는다고 설명합니다.",
+      "base64url 디코딩용 JavaScript(Buffer)와 Python 코드를 예시로 보여 주며, Python에서는 패딩 복원이 필요하다고 설명합니다.",
+      "검증은 허용 알고리즘 고정, 올바른 키로 서명 확인, exp/nbf 검사, iss/aud 검사의 순서로 진행해야 하며 jsonwebtoken과 PyJWT의 기본 동작 차이를 안내합니다.",
+      "jsonwebtoken의 jwt.verify와 PyJWT의 jwt.decode 예시를 보여 주고, PyJWT의 jwt.decode는 기본적으로 검증한다는 점과 흔한 실수 및 디코딩과 검증을 언제 쓸지 정리합니다.",
+      "FAQ에서 대칭/비대칭 알고리즘의 검증 방법, 디코더가 유효성을 말해주지 않는다는 점, JWT 암호화 여부, 디코딩은 되지만 API가 거부하는 이유를 다룹니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"iat is not checked against the current time in a way that rejects ordinary tokens\"라는 문장이 모호합니다. 뒤 문단에서 PyJWT는 기본적으로 iat를 검증하고 미래의 iat를 거부한다고 설명하므로, 일반 토큰도 시계 차이로 거부될 수 있다는 점을 명확히 하는 편이 좋습니다.",
+        "en": "The opening sentence of the iat paragraph is vague and sits awkwardly with the next sentence, which says PyJWT validates iat by default and rejects future iat values. Clarify that iat handling depends on the library and version."
+      },
+      {
+        "severity": "low",
+        "ko": "비교 목록의 \"Checks iat: ... verifying enforces it only when configured, such as jsonwebtoken's maxAge\"는 PyJWT에서는 기본적으로 iat가 검증된다는 앞의 설명과 맞지 않습니다. 라이브러리별로 다르다고 명시하면 좋겠습니다.",
+        "en": "The quick comparison says verifying enforces iat only when configured, but the previous paragraph says PyJWT validates iat by default. Qualify this bullet by library."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "'Check exp, nbf and iat. Reject tokens that have expired or are not yet valid.' 에서 iat는 일반적으로 거부 조건이 아닙니다. 라이브러리도 기본적으로 iat로 토큰을 거부하지 않습니다.",
+      "Python 예제의 'jwt.decode(...)'는 PyJWT에서 실제로 서명과 클레임을 검증합니다. 글 전체가 decode는 읽기, verify는 검증으로 구분하는데 함수 이름이 이 구분과 충돌해 독자가 혼동할 수 있습니다. 'PyJWT의 decode는 검증까지 수행한다'는 설명을 추가하는 것을 권장합니다.",
+      "'The DevRivet decoder runs in your browser' 는 도구에 대한 주장입니다. 게시 전에 실제로 브라우저에서만 동작하는지 확인하세요.",
+      "\"iat is not a rejection condition by default. Libraries do not reject a token because of its issued-at time.\" 문장이 너무 포괄적입니다. 최신 PyJWT(2.6 이후)는 미래 시점의 iat를 거부하므로 \"기본적으로 과거 발급 시각으로 거부하지 않는다\" 정도로 한정하는 편이 정확합니다.",
+      "\"Libraries check these only when you pass the expected values.\" (iss/aud) 문장은 PyJWT에서 토큰에 aud가 있는데 audience를 전달하지 않으면 검증이 실패하므로 정확하지 않습니다."
+    ],
+    "word_count": 1341
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 21,
+  "api_calls": 6,
+  "telegram_message_id": 42
+}
