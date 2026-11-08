@@ -1,7 +1,7 @@
 {
   "id": "44e04b03",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-08T02:45:44Z",
   "topic": {
     "title": "How to calculate the square footage of a room",
@@ -340,7 +340,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-08"
   },
   "review": {
     "title_ko": "방 평수(제곱피트) 계산하는 법 (예시 포함)",
@@ -375,5 +376,7 @@
   ],
   "cost_krw": 114,
   "api_calls": 5,
-  "telegram_message_id": 43
+  "telegram_message_id": 43,
+  "decided": "2026-11-08T02:46:14Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-to-calculate-square-footage-of-a-room.json"
 }

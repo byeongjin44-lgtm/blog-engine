@@ -1,7 +1,7 @@
 {
   "id": "1baa34fb",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-08T02:44:23Z",
   "topic": {
     "title": "Decoding a JWT vs verifying it: what's the difference?",
@@ -196,7 +196,8 @@
         "text": "The API is probably verifying the signature, checking exp, or checking iss and aud against its own configuration. Compare the decoded claims with what your server expects, and confirm the algorithm in the header is on your allowlist."
       }
     ],
-    "relatedTool": "jwt-decoder"
+    "relatedTool": "jwt-decoder",
+    "published": "2026-11-08"
   },
   "review": {
     "title_ko": "JWT 디코딩과 검증: 차이점은 무엇인가?",
@@ -235,5 +236,7 @@
   "recovered_from": [],
   "cost_krw": 21,
   "api_calls": 6,
-  "telegram_message_id": 42
+  "telegram_message_id": 42,
+  "decided": "2026-11-08T02:46:09Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/decode-jwt-vs-verify-difference.json"
 }
