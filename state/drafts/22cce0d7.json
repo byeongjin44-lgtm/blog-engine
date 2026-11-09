@@ -1,7 +1,7 @@
 {
   "id": "22cce0d7",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-09T03:01:00Z",
   "topic": {
     "title": "How many rolls of wallpaper do I need for a 10x12 room?",
@@ -349,7 +349,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-09"
   },
   "review": {
     "title_ko": "벽지는 몇 롤이 필요할까? 10x12 방 예시",
@@ -389,5 +390,7 @@
   "recovered_from": [],
   "cost_krw": 19,
   "api_calls": 7,
-  "telegram_message_id": 47
+  "telegram_message_id": 47,
+  "decided": "2026-11-09T03:01:32Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-rolls-of-wallpaper-do-i-need.json"
 }

@@ -1,7 +1,7 @@
 {
   "id": "766c9b73",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-09T02:59:36Z",
   "topic": {
     "title": "Unix timestamp in seconds vs milliseconds: how to tell and convert",
@@ -222,7 +222,8 @@
         "text": "JavaScript's Date object is built around milliseconds since the epoch. Date.now() returns that value directly. Divide by 1000 and floor the result if you need seconds."
       }
     ],
-    "relatedTool": "timestamp-converter"
+    "relatedTool": "timestamp-converter",
+    "published": "2026-11-09"
   },
   "review": {
     "title_ko": "Unix 타임스탬프 초 단위 vs 밀리초 단위: 구분하고 변환하는 방법",
@@ -247,5 +248,7 @@
   "recovered_from": [],
   "cost_krw": 13,
   "api_calls": 4,
-  "telegram_message_id": 46
+  "telegram_message_id": 46,
+  "decided": "2026-11-09T03:01:27Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/unix-timestamp-seconds-vs-milliseconds.json"
 }
