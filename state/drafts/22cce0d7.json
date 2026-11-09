@@ -1,0 +1,393 @@
+{
+  "id": "22cce0d7",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-09T03:01:00Z",
+  "topic": {
+    "title": "How many rolls of wallpaper do I need for a 10x12 room?",
+    "keyword": "how many rolls of wallpaper do i need",
+    "related_tool": "wallpaper-calculator",
+    "calculations": [
+      {
+        "calculator": "wallpaper-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1,
+          "repeatIn": 0
+        }
+      },
+      {
+        "calculator": "wallpaper-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1,
+          "repeatIn": 21
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-many-rolls-of-wallpaper-do-i-need",
+    "title": "How Many Rolls of Wallpaper Do I Need? 10x12 Room Example",
+    "description": "A 10x12 room with 8 ft walls, one door and one window needs 7 double rolls of plain wallpaper, or 9 double rolls with a 21 in pattern repeat.",
+    "body": [
+      {
+        "type": "p",
+        "text": "For a 10x12 room with 8 ft walls, one door and one window, you need 7 double rolls of plain wallpaper with no pattern repeat. If the paper has a 21 in pattern repeat, you need 9 double rolls. The pattern repeat is the main reason the two answers differ, and it is easy to miss."
+      },
+      {
+        "type": "p",
+        "text": "You can run the numbers for your own room in the [Wallpaper Calculator](/wallpaper-calculator). Enter your own length, width, wall height, doors, windows and pattern repeat. The steps below show how the result is reached, so you can check it by hand."
+      },
+      {
+        "type": "h2",
+        "text": "Worked example: a 10x12 room"
+      },
+      {
+        "type": "p",
+        "text": "The example room is 10 ft long and 12 ft wide, with 8 ft walls, one door and one window. Here is how the calculator gets from those measurements to a roll count, using plain paper with no pattern repeat:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the wall area. Add the length and width, double that to get the distance around the room, and multiply by the wall height. Then subtract the area of the door and window openings. For this room, that leaves 312 sq ft of wall to cover.",
+          "Find the usable area of one single roll. With no pattern repeat, one single roll gives 25 sq ft of usable coverage.",
+          "Divide the wall area by the usable area per roll and round up. For this room, 312 sq ft divided by 25 sq ft means you need 13 single rolls.",
+          "Convert single rolls to double rolls. A double roll holds two single rolls' worth of paper, so 13 single rolls becomes 7 double rolls. You cannot buy part of a roll, so the count is rounded up."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "With plain paper, the answer is 7 double rolls, which is 13 single rolls."
+      },
+      {
+        "type": "h2",
+        "text": "Why the pattern repeat changes the count"
+      },
+      {
+        "type": "p",
+        "text": "A pattern repeat is the vertical distance before the design starts over. When you line up one strip with the next, the design has to match, so some paper is trimmed away at each seam. The longer the repeat, the more paper you may lose on each drop. The calculator reduces the usable area per roll to account for that loss."
+      },
+      {
+        "type": "p",
+        "text": "Using the same 10x12 room with a 21 in pattern repeat:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "The wall area is still 312 sq ft, because the room has not changed.",
+          "The usable area per single roll drops to 18 sq ft, compared with 25 sq ft for plain paper.",
+          "Divide the 312 sq ft of wall by 18 sq ft and round up. That gives 18 single rolls.",
+          "Convert 18 single rolls to double rolls. That gives 9 double rolls."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "That is 9 double rolls instead of 7, for the same walls. The room is the same size and the paper is the same. The only change is how much of each roll you can actually use. The difference between the two orders is exactly 2 double rolls (9 minus 7)."
+      },
+      {
+        "type": "h2",
+        "text": "Single rolls vs double rolls"
+      },
+      {
+        "type": "p",
+        "text": "Wallpaper is sold in single rolls, and some brands also sell double rolls. A double roll holds twice the length of paper of a single roll. The calculator gives you both numbers, so you can compare them with the product you choose."
+      },
+      {
+        "type": "p",
+        "text": "For the plain paper example, that is 13 single rolls or 7 double rolls. For the 21 in repeat example, that is 18 single rolls or 9 double rolls. If your paper is sold only in singles, use the single roll count. Sizing and naming can differ between brands, so read the product listing before you order."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes to avoid"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Skipping the pattern repeat. Look at the label or the product page. If you do not know the repeat, the roll count can change a lot, as the 10x12 example shows.",
+          "Leaving out doors and windows. Enter every door and window you have, because the calculator subtracts their area from the wall area. Leaving them out makes the wall area larger and the order bigger than you may need.",
+          "Ordering exactly the number of rolls with no spare. A spare roll helps if you make a mistake while hanging, and it helps if the dye lot changes before you need more.",
+          "Trusting the number without checking the label. Check the usable coverage printed on your product label, because products differ. If the label gives a different coverage per roll, divide the wall area by that number and round up."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you are also planning paint for the same room, the [Paint Calculator](/paint-calculator) can estimate that as well. For a broader look at room measurements, see [How to Calculate Square Footage of a Room (With Example)](/blog/how-to-calculate-square-footage-of-a-room)."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Do I need to measure each wall separately?"
+      },
+      {
+        "type": "p",
+        "text": "The calculator uses the length and width of the room and the wall height, so you do not need to measure each wall. Enter the room dimensions and count every door and window. If your room has an unusual shape, such as an alcove, measure the walls and add them up before using the calculator."
+      },
+      {
+        "type": "h3",
+        "text": "Should I buy extra wallpaper?"
+      },
+      {
+        "type": "p",
+        "text": "Many people buy a spare roll, especially with a pattern. Keep the receipt and the lot number, because a later reorder may not match exactly."
+      },
+      {
+        "type": "h3",
+        "text": "Does the calculator work for any room size?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, as long as you enter the correct length, width, wall height, doors and windows. Use your own measurements, not the example numbers in this post."
+      },
+      {
+        "type": "h3",
+        "text": "What if my wallpaper label gives a different coverage?"
+      },
+      {
+        "type": "p",
+        "text": "Use the coverage printed on your product label, because products differ. Divide the wall area by that coverage and round up. If you are unsure, ask the seller at the store for help."
+      }
+    ],
+    "relatedTool": "wallpaper-calculator",
+    "sources": [
+      {
+        "title": "Sherwin-Williams: How to estimate how much wallpaper you need",
+        "url": "https://www.sherwin-williams.com/homeowners/how-to/wallpapering-how-tos/sw-article-dir-howtoestimate"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "wallpaper-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1,
+          "repeatIn": 0
+        }
+      },
+      {
+        "calculator": "wallpaper-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1,
+          "repeatIn": 21
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "wallpaper-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1,
+          "repeatIn": 0
+        },
+        "results": [
+          {
+            "key": "doubleRolls",
+            "label": "Double rolls to buy",
+            "value": 7,
+            "unit": "double rolls",
+            "digits": 0,
+            "primary": true,
+            "number": "7",
+            "display": "7 double rolls"
+          },
+          {
+            "key": "singleRolls",
+            "label": "Single rolls",
+            "value": 13,
+            "unit": "single rolls",
+            "digits": 0,
+            "primary": false,
+            "number": "13",
+            "display": "13 single rolls"
+          },
+          {
+            "key": "netSqFt",
+            "label": "Wall area to cover",
+            "value": 312,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "312",
+            "display": "312 sq ft"
+          },
+          {
+            "key": "sqFtPerSingleRoll",
+            "label": "Usable area per single roll",
+            "value": 25,
+            "unit": "sq ft",
+            "digits": 0,
+            "primary": false,
+            "number": "25",
+            "display": "25 sq ft"
+          }
+        ]
+      },
+      {
+        "calculator": "wallpaper-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1,
+          "repeatIn": 21
+        },
+        "results": [
+          {
+            "key": "doubleRolls",
+            "label": "Double rolls to buy",
+            "value": 9,
+            "unit": "double rolls",
+            "digits": 0,
+            "primary": true,
+            "number": "9",
+            "display": "9 double rolls"
+          },
+          {
+            "key": "singleRolls",
+            "label": "Single rolls",
+            "value": 18,
+            "unit": "single rolls",
+            "digits": 0,
+            "primary": false,
+            "number": "18",
+            "display": "18 single rolls"
+          },
+          {
+            "key": "netSqFt",
+            "label": "Wall area to cover",
+            "value": 312,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "312",
+            "display": "312 sq ft"
+          },
+          {
+            "key": "sqFtPerSingleRoll",
+            "label": "Usable area per single roll",
+            "value": 18,
+            "unit": "sq ft",
+            "digits": 0,
+            "primary": false,
+            "number": "18",
+            "display": "18 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "wallpaper-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Room length",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Room width",
+            "unit": "ft",
+            "default": 15,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "heightFt",
+            "label": "Wall height",
+            "unit": "ft",
+            "default": 8,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "doors",
+            "label": "Doors",
+            "default": 1,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "windows",
+            "label": "Windows",
+            "default": 2,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "repeatIn",
+            "label": "Pattern repeat",
+            "unit": "in",
+            "default": 15,
+            "step": 1,
+            "help": "0 for no pattern. Printed on the wallpaper label."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "벽지는 몇 롤이 필요할까? 10x12 방 예시",
+    "summary_ko": [
+      "10x12피트 방(벽 높이 8피트, 문 1개, 창문 1개)에는 무늬 반복이 없는 일반 벽지 기준 더블롤 7개가 필요하다고 설명합니다.",
+      "무늬 반복이 21인치인 벽지라면 같은 방에 더블롤 9개가 필요하다고 설명합니다.",
+      "계산 순서: 벽 면적 312평방피트에서 문과 창문 면적을 뺀 값을 기준으로, 싱글롤 1개당 사용 가능 면적 25평방피트로 나누면 싱글롤 13개, 이를 더블롤로 환산하면 7개입니다.",
+      "무늬 반복 설명: 이음매에서 무늬를 맞추느라 종이가 잘려 나가므로 롤당 사용 면적이 18평방피트로 줄어들고, 싱글롤 18개, 더블롤 9개가 됩니다.",
+      "싱글롤과 더블롤 차이, 자주 하는 실수(무늬 반복 누락, 문과 창문 누락, 여분 미구매, 라벨 커버리지 확인)를 안내합니다.",
+      "계산기 링크, 페인트 계산기 링크, 평방피트 계산 글 링크, FAQ 4개(벽 개별 측정, 여분 구매, 임의 방 크기, 라벨 커버리지 차이)가 포함되어 있습니다."
+    ],
+    "issues": [
+      {
+        "severity": "high",
+        "ko": "\"The difference between the two orders is exactly 2 double rolls (9 minus 7).\" 부분의 \"2 double rolls\"는 계산기 결과가 아니라 글쓴이가 9에서 7을 빼서 직접 구한 수치입니다. 계산기 결과에 없는 수치이므로 제거하거나 계산기 결과로 표현해야 합니다.",
+        "en": "\"exactly 2 double rolls (9 minus 7)\" is a figure the writer derived, not a calculator output. Remove it or restate without a new number."
+      },
+      {
+        "severity": "low",
+        "ko": "\"Yes, as long as you enter the correct length, width, wall height, doors and windows.\" 문장은 모든 방 크기에 적용되는 것처럼 읽힙니다. 알코브 등 불규칙한 형태는 앞선 FAQ에서 따로 다루므로, 해당 제한을 여기에도 짧게 언급하는 편이 명확합니다.",
+        "en": "The FAQ answer \"Yes\" for any room size overstates coverage; it conflicts slightly with the alcove caveat in the previous answer. Consider a brief qualifier."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [
+      "\"Subtract 20 sq ft for the door and 20 sq ft for the window\" 부분의 문과 창문당 20 sq ft 차감 수치는 계산기 입력이나 결과에 없는 값이라 검증되지 않습니다. 계산기 결과인 312 sq ft는 이 값을 포함하지만, 글에서 이 수치를 근거로 제시하면 안 됩니다.",
+      "\"The calculator subtracts 20 sq ft for each door and each window\" 문장도 같은 20 sq ft 수치를 계산기 동작으로 단정합니다. 계산기 결과로 확인되지 않은 내용입니다.",
+      "\"can be off by several rolls\" 표현은 예시에서 차이가 2개(7개와 9개)라서 과장된 느낌이 있습니다. 예를 들어 \"two or more rolls\"처럼 구체적으로 쓰는 것이 좋습니다.",
+      "\"Most shops and manufacturers sell both\" 문장은 근거 없이 일반화한 주장입니다. 근거가 없으면 \"Many brands sell both\"처럼 완화하거나 출처를 넣는 것이 좋습니다.",
+      "\"In this example, the repeat adds two or more double rolls to the order.\"에서 \"two or more\"(두 롤 이상)는 계산기 결과에 없는 수치입니다. 결과의 차이(9-7=2)는 맞지만, \"이상\"이라는 표현은 작성자가 임의로 추정한 것입니다. 계산기 결과에 맞게 \"two double rolls\"로 쓰거나 정확한 차이를 명시하세요.",
+      "\"If you do not know the repeat, the roll count can be off by two or more rolls.\"에서 \"two or more rolls\"도 계산기 결과가 아닌 작성자의 추정치입니다. 이 예시에서 확인된 차이(2롤)만 언급하거나, 다른 방에서는 달라질 수 있다고만 쓰세요.",
+      "\"the [Paint Calculator] uses the same wall area idea\"는 페인트 계산기의 계산 방식을 설명하는 문장인데, 이 문서에 제공된 자료로는 확인할 수 없습니다. 실제 계산 방식과 맞는지 확인해 주세요."
+    ],
+    "word_count": 938
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 19,
+  "api_calls": 7,
+  "telegram_message_id": 47
+}

@@ -1,0 +1,251 @@
+{
+  "id": "766c9b73",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-09T02:59:36Z",
+  "topic": {
+    "title": "Unix timestamp in seconds vs milliseconds: how to tell and convert",
+    "keyword": "unix timestamp seconds vs milliseconds",
+    "related_tool": "timestamp-converter"
+  },
+  "post": {
+    "slug": "unix-timestamp-seconds-vs-milliseconds",
+    "title": "Unix Timestamp Seconds vs Milliseconds: How to Tell and Convert",
+    "description": "Seconds timestamps have 10 digits, milliseconds have 13. Learn how to tell them apart and convert either to a date in JavaScript, Python and the shell.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A Unix timestamp in seconds has 10 digits for dates between 2001 and 2286, such as 1700000000. The same instant in milliseconds has 13 digits, such as 1700000000000. Count the digits first. If you have 10 digits, treat the value as seconds. If you have 13, treat it as milliseconds. You can check any value with the [Unix Timestamp Converter](/timestamp-converter), which accepts either unit."
+      },
+      {
+        "type": "h2",
+        "text": "Why there are two units"
+      },
+      {
+        "type": "p",
+        "text": "The Unix epoch is 1970-01-01T00:00:00Z. Unix time counts the seconds since that moment, and it ignores leap seconds. Many languages and APIs need sub-second precision, so JavaScript, Java and many logging and analytics systems count milliseconds instead. Some databases and APIs use microseconds (16 digits) or nanoseconds (19 digits), but seconds and milliseconds cover most everyday cases."
+      },
+      {
+        "type": "p",
+        "text": "Both values represent the same kind of thing: a count from the same epoch. The only difference is the scale, a factor of 1000. Most bugs happen when a value in one unit is read as the other."
+      },
+      {
+        "type": "h2",
+        "text": "How to tell which unit a value uses"
+      },
+      {
+        "type": "p",
+        "text": "Use the number of digits as a quick heuristic. For values in a normal modern range, this works reliably."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "10 digits (for example 1700000000): seconds. Covers roughly 2001-09-09 through 2286-11-20.",
+          "13 digits (for example 1700000000000): milliseconds. Covers roughly 2001 through 2286 as well.",
+          "16 digits: microseconds. 19 digits: nanoseconds.",
+          "Values with fewer digits, such as 0 or 86400, are seconds near the epoch. They are rare in practice and easy to misread."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The digit count does not tell you what a value is for. Always check the source. An API field called expires_at, a JWT exp claim, and a database column named created_ms may each use a different unit. JWT numeric dates such as exp, iat and nbf are always seconds per RFC 7519, and you can see them decoded with the [JWT Decoder](/jwt-decoder). For more on that claim, see [JWT Expiration Time: How to Check the exp Claim](/blog/jwt-expiration-time-check-exp-claim)."
+      },
+      {
+        "type": "h2",
+        "text": "Convert seconds to a date"
+      },
+      {
+        "type": "p",
+        "text": "In JavaScript, the Date constructor takes milliseconds. To convert seconds, multiply by 1000 first. Forgetting this step is the most common mistake."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const seconds = 1700000000;\nconst date = new Date(seconds * 1000);\nconsole.log(date.toISOString());"
+      },
+      {
+        "type": "p",
+        "text": "Output: 2023-11-14T22:13:20.000Z"
+      },
+      {
+        "type": "p",
+        "text": "In Python, datetime.fromtimestamp takes seconds. Pass tz=timezone.utc so the result is explicit about the zone."
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "from datetime import datetime, timezone\n\nseconds = 1700000000\ndt = datetime.fromtimestamp(seconds, tz=timezone.utc)\nprint(dt.isoformat())"
+      },
+      {
+        "type": "p",
+        "text": "Output: 2023-11-14T22:13:20+00:00"
+      },
+      {
+        "type": "p",
+        "text": "On Linux with GNU date, use -d with an @ prefix. On macOS, use -r instead. Both flags below are standard for their platforms."
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "# GNU date (Linux)\ndate -u -d @1700000000\n\n# BSD date (macOS)\ndate -u -r 1700000000"
+      },
+      {
+        "type": "h2",
+        "text": "Convert milliseconds to a date"
+      },
+      {
+        "type": "p",
+        "text": "In JavaScript, pass milliseconds straight to the Date constructor. No conversion is needed."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const ms = 1700000000000;\nconst date = new Date(ms);\nconsole.log(date.toISOString());"
+      },
+      {
+        "type": "p",
+        "text": "Output: 2023-11-14T22:13:20.000Z"
+      },
+      {
+        "type": "p",
+        "text": "In Python, divide by 1000 before calling fromtimestamp. The float result keeps the sub-second part, which is useful if you need it. Use integer division if you only want whole seconds."
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "from datetime import datetime, timezone\n\nms = 1700000000000\ndt = datetime.fromtimestamp(ms / 1000, tz=timezone.utc)\nprint(dt.isoformat())"
+      },
+      {
+        "type": "p",
+        "text": "Output: 2023-11-14T22:13:20+00:00"
+      },
+      {
+        "type": "h2",
+        "text": "Convert a date back to a timestamp"
+      },
+      {
+        "type": "p",
+        "text": "To get the current time, use the function that matches the unit you need. Date.now() returns milliseconds in JavaScript. Python's time.time() returns seconds as a float."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const ms = Date.now();\nconst seconds = Math.floor(Date.now() / 1000);\nconsole.log(ms, seconds);"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import time\n\nseconds = int(time.time())\nmilliseconds = int(time.time() * 1000)\nprint(seconds, milliseconds)"
+      },
+      {
+        "type": "p",
+        "text": "To convert a specific date, parse it with a timezone. A date-time string without an offset is interpreted in local time in JavaScript, which can shift the result. Include a Z or an explicit offset to avoid that."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const s = Math.floor(new Date('2023-11-14T22:13:20Z').getTime() / 1000);\nconsole.log(s);"
+      },
+      {
+        "type": "p",
+        "text": "Output: 1700000000"
+      },
+      {
+        "type": "h2",
+        "text": "Converting between the two units"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Seconds to milliseconds: multiply by 1000. Example: 1700000000 becomes 1700000000000.",
+          "Milliseconds to seconds: divide by 1000 and drop the fraction. In JavaScript, use Math.floor(ms / 1000). In Python, use ms // 1000.",
+          "Keep the unit in the variable name, such as created_at_s or created_at_ms, so the conversion is visible in the code."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Off by a factor of 1000: a seconds value passed to new Date() lands in January 1970. For example, 1700000000 becomes 1970-01-20. A milliseconds value treated as seconds lands around the year 33,000 or later, because 13-digit values are 1e12 seconds and up. If a date looks wildly wrong, check the unit first.",
+          "Local time vs UTC: Unix timestamps are always UTC. Showing them in local time is a display choice. Log and store in UTC, and convert only when you show a value to a user.",
+          "Strings instead of numbers: values that come from query strings or CSV files are strings. Convert them with Number() or int() before doing arithmetic. In JavaScript, '1700000000' * 1000 works by coercion, but '1700000000' + 1000 concatenates to '17000000001000'.",
+          "Precision loss: JavaScript numbers are exact for integers up to 2^53. Millisecond timestamps fit easily, but nanosecond timestamps do not. Use BigInt or a string-based library for values with 19 digits.",
+          "Negative values: timestamps before 1970 are negative, and they convert correctly in most languages. Some older tools reject them.",
+          "Mixed units in one system: a service may store seconds in one table and milliseconds in another. Normalize at the boundary, and name fields with a suffix such as _s or _ms."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Quick check"
+      },
+      {
+        "type": "p",
+        "text": "Paste a value into the [Unix Timestamp Converter](/timestamp-converter) to see the date in both interpretations. If the seconds reading gives a sensible date and the milliseconds reading does not, the value is in seconds. Avoid pasting values that identify a user or session, even in a debugging tool."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Why does my timestamp show a date in 1970?"
+      },
+      {
+        "type": "p",
+        "text": "The most likely cause is that a seconds value was passed to a function that expects milliseconds, such as JavaScript's new Date(). Multiply the value by 1000 before passing it in."
+      },
+      {
+        "type": "h3",
+        "text": "Is there a way to tell seconds from milliseconds without counting digits?"
+      },
+      {
+        "type": "p",
+        "text": "For values in a normal modern range, the digit count is the practical test. Otherwise, check the API documentation or the field name. The value itself cannot tell you its unit with certainty."
+      },
+      {
+        "type": "h3",
+        "text": "Do Unix timestamps include time zones?"
+      },
+      {
+        "type": "p",
+        "text": "No. A Unix timestamp is a single count from the epoch in UTC. Time zones appear only when you format the value as a human-readable date."
+      },
+      {
+        "type": "h3",
+        "text": "Why does Date.now() return milliseconds?"
+      },
+      {
+        "type": "p",
+        "text": "JavaScript's Date object is built around milliseconds since the epoch. Date.now() returns that value directly. Divide by 1000 and floor the result if you need seconds."
+      }
+    ],
+    "relatedTool": "timestamp-converter"
+  },
+  "review": {
+    "title_ko": "Unix 타임스탬프 초 단위 vs 밀리초 단위: 구분하고 변환하는 방법",
+    "summary_ko": [
+      "Unix 타임스탬프는 1970-01-01T00:00:00Z 이후 경과한 시간이며, 초 단위는 10자리, 밀리초 단위는 13자리로 보통 구분할 수 있다는 내용입니다.",
+      "두 단위는 같은 기준점에서 세는 값이고 차이는 1000배의 척도뿐이며, 단위를 잘못 읽는 것이 가장 흔한 버그 원인이라고 설명합니다.",
+      "자릿수 기준으로 10자리는 초, 13자리는 밀리초, 16자리는 마이크로초, 19자리는 나노초로 판단하고, 자릿수는 용도를 알려주지 않으므로 API 문서나 필드 이름을 확인하라고 안내합니다. JWT의 exp, iat, nbf는 RFC 7519에 따라 항상 초 단위입니다.",
+      "JavaScript, Python, 셸(GNU date와 macOS date)에서 초와 밀리초를 날짜로 변환하는 코드와 출력 예시를 제시합니다.",
+      "현재 시각을 얻는 Date.now(), time.time()과 특정 날짜를 UTC 기준으로 타임스탬프로 바꾸는 방법을 설명합니다.",
+      "초↔밀리초 변환 규칙, 1970년대로 나오는 단위 착오, 로컬 시간 해석, 문자열 연산, 정밀도 한계, 음수 값 등 자주 생기는 실수를 정리합니다.",
+      "FAQ에서 1970년 날짜가 나오는 원인, 자릿수 외의 판별 방법, 타임존 포함 여부, Date.now()가 밀리초를 반환하는 이유를 답합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"A milliseconds value treated as seconds lands in the year 55000 or later.\" 일반적인 13자리 밀리초 값을 초로 읽으면 약 33,000년대가 되며, 55000년 이상이 되는 것은 1.7e12 같은 특정 값뿐입니다. 'or later'라는 표현도 하한이 틀렸습니다.",
+      "\"Do not use parseInt on a large number that came from a float, and do not round when you mean to truncate.\" 무엇이 문제인지와 올바른 대안이 명확하지 않습니다. 'parseInt'가 왜 문제인지, 어떤 값에 해당하는지 구체적으로 설명하거나 Math.floor 사용 맥락으로 좁히는 것이 좋습니다."
+    ],
+    "word_count": 1128
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 13,
+  "api_calls": 4,
+  "telegram_message_id": 46
+}
