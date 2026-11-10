@@ -1,0 +1,258 @@
+{
+  "id": "d33c3f33",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-10T04:48:45Z",
+  "topic": {
+    "title": "How to get the current Unix timestamp in JavaScript, Python and SQL",
+    "keyword": "get current unix timestamp",
+    "related_tool": "timestamp-converter"
+  },
+  "post": {
+    "slug": "get-current-unix-timestamp-javascript-python-sql",
+    "title": "Get Current Unix Timestamp in JavaScript, Python and SQL",
+    "description": "Get the current Unix timestamp in seconds or milliseconds in JavaScript, Python and SQL. One-line expressions for PostgreSQL, MySQL, SQLite and SQL Server.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To get the current Unix timestamp, use the number of seconds since 1970-01-01 00:00:00 UTC. In JavaScript, use Math.floor(Date.now() / 1000). In Python, use int(time.time()). In SQL, the expression depends on the database, and the sections below list the common ones."
+      },
+      {
+        "type": "p",
+        "text": "If you want to check a value you already have, paste it into the [Unix Timestamp Converter](/timestamp-converter). It shows the matching UTC and local date, and it accepts both seconds and milliseconds."
+      },
+      {
+        "type": "h2",
+        "text": "What a Unix timestamp actually counts"
+      },
+      {
+        "type": "p",
+        "text": "A Unix timestamp is a count of elapsed time since the Unix epoch, 1970-01-01 00:00:00 UTC. The value does not depend on your time zone. The same moment produces the same number everywhere, which is why timestamps are common in APIs, logs and database columns."
+      },
+      {
+        "type": "p",
+        "text": "The most important detail is the unit. Classic Unix timestamps count seconds. JavaScript's Date.now() returns milliseconds, and many APIs and logging tools also use milliseconds. A seconds value for the current date has 10 digits, such as 1718000000. A milliseconds value has 13 digits. If you mix them up, you get a date in 1970 or a date around the year 54,000. For a deeper look at the difference, see [Unix Timestamp Seconds vs Milliseconds](/blog/unix-timestamp-seconds-vs-milliseconds)."
+      },
+      {
+        "type": "h2",
+        "text": "JavaScript"
+      },
+      {
+        "type": "p",
+        "text": "Date.now() returns the current time in milliseconds since the epoch as an integer. To get seconds, divide by 1000 and round down."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const ms = Date.now();\nconst seconds = Math.floor(Date.now() / 1000);\nconsole.log(ms);\nconsole.log(seconds);"
+      },
+      {
+        "type": "p",
+        "text": "Math.floor matters. Without it, Date.now() / 1000 returns a fractional number such as 1718000000.123, and many systems reject that or store it as a float. Math.floor is the clearest choice and works for every date after 1970."
+      },
+      {
+        "type": "p",
+        "text": "You will sometimes see Math.trunc(x) or the bitwise shortcut x | 0 used for the same job. Math.trunc is fine. The | 0 form is a trap: bitwise OR converts its operand to a signed 32-bit integer, so it returns wrong values once the timestamp passes 2038-01-19 03:14:07 UTC. Avoid it for timestamps."
+      },
+      {
+        "type": "p",
+        "text": "You can also write new Date().getTime(), which returns the same milliseconds value as Date.now(). Date.now() is shorter and avoids creating a Date object, so it is the usual choice."
+      },
+      {
+        "type": "h3",
+        "text": "Getting seconds from a Date object"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const seconds = Math.floor(new Date().getTime() / 1000);"
+      },
+      {
+        "type": "p",
+        "text": "The result is the same as the Date.now() version. Use whichever reads better in your codebase."
+      },
+      {
+        "type": "h2",
+        "text": "Python"
+      },
+      {
+        "type": "p",
+        "text": "In Python, time.time() returns the current time as a float in seconds. Wrap it in int() to drop the fractional part."
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import time\n\nseconds = int(time.time())\nprint(seconds)"
+      },
+      {
+        "type": "p",
+        "text": "If you need milliseconds, use time.time_ns(), which is available from Python 3.7. Integer division by 1,000,000 converts nanoseconds to milliseconds without losing precision to floats."
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import time\n\nms = time.time_ns() // 1_000_000\nprint(ms)"
+      },
+      {
+        "type": "p",
+        "text": "If you use the datetime module, be careful with the time zone. datetime.now().timestamp() treats a naive datetime as local time, so the result is correct only if the system clock and time zone are set as you expect. To avoid that, make the datetime timezone-aware in UTC."
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "from datetime import datetime, timezone\n\nseconds = int(datetime.now(timezone.utc).timestamp())\nprint(seconds)"
+      },
+      {
+        "type": "p",
+        "text": "Both versions return the same value when the system clock is correct. The datetime version is easier to read when you already work with datetime objects."
+      },
+      {
+        "type": "h2",
+        "text": "SQL"
+      },
+      {
+        "type": "p",
+        "text": "SQL has no single standard function for the current Unix timestamp, so each database uses its own approach. The examples below return an integer number of seconds."
+      },
+      {
+        "type": "h3",
+        "text": "PostgreSQL"
+      },
+      {
+        "type": "code",
+        "lang": "sql",
+        "text": "SELECT EXTRACT(EPOCH FROM now())::bigint;"
+      },
+      {
+        "type": "p",
+        "text": "EXTRACT(EPOCH FROM ...) returns a numeric value that includes fractional seconds, so the cast to bigint truncates it. now() returns the start time of the current transaction. If you want the time when the statement runs, use clock_timestamp()."
+      },
+      {
+        "type": "h3",
+        "text": "MySQL and MariaDB"
+      },
+      {
+        "type": "code",
+        "lang": "sql",
+        "text": "SELECT UNIX_TIMESTAMP();"
+      },
+      {
+        "type": "p",
+        "text": "UNIX_TIMESTAMP() with no argument returns the current time in seconds as an integer. It is one of the simplest cases in this list."
+      },
+      {
+        "type": "h3",
+        "text": "SQLite"
+      },
+      {
+        "type": "code",
+        "lang": "sql",
+        "text": "SELECT CAST(strftime('%s', 'now') AS INTEGER);"
+      },
+      {
+        "type": "p",
+        "text": "strftime('%s', 'now') returns the seconds as text, so the cast to INTEGER is needed if you want a number. The 'now' value is UTC."
+      },
+      {
+        "type": "h3",
+        "text": "SQL Server"
+      },
+      {
+        "type": "code",
+        "lang": "sql",
+        "text": "SELECT DATEDIFF_BIG(SECOND, '1970-01-01', SYSUTCDATETIME());"
+      },
+      {
+        "type": "p",
+        "text": "SQL Server has no direct Unix timestamp function. DATEDIFF_BIG counts the seconds between the epoch and the current UTC time and returns a bigint. Use it instead of DATEDIFF, which returns int. A plain DATEDIFF(SECOND, ...) call raises an arithmetic overflow error once the result passes 2147483647, which happens at 2038-01-19 03:14:07 UTC. DATEDIFF_BIG is available in SQL Server 2016 and later."
+      },
+      {
+        "type": "p",
+        "text": "Use SYSUTCDATETIME() rather than GETDATE(). GETDATE() returns server local time, so the result is wrong on a server that is not set to UTC."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Seconds vs milliseconds. Date.now() and many logging tools return milliseconds. Check the digit count before you store or compare values.",
+          "Fractional seconds. Python's time.time() and PostgreSQL's EXTRACT(EPOCH ...) return decimals. Truncate them if your system expects an integer.",
+          "Local time instead of UTC. The timestamp itself is always UTC-based, but converting a naive local datetime to a timestamp can shift the value by your time zone offset. Use UTC-aware code where possible.",
+          "32-bit overflow in code and storage. A signed 32-bit integer holds timestamps only up to 2038-01-19 03:14:07 UTC. This affects x | 0 in JavaScript, 32-bit INT columns, and SQL Server's DATEDIFF, which returns int. Use DATEDIFF_BIG and a 64-bit column such as BIGINT for new schemas.",
+          "Using GETDATE() in SQL Server. It returns local server time. Use SYSUTCDATETIME() when you need UTC."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Checking the result"
+      },
+      {
+        "type": "p",
+        "text": "To confirm a value is correct, convert it back to a date. When the UTC date shown after conversion matches the current time in UTC within a few seconds, the value is correct. If the date is off by a few hours, look at your time zone handling. If it is off by decades, check the unit. You can run that check in the [Unix Timestamp Converter](/timestamp-converter) by pasting the number directly."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is the Unix timestamp the same in every time zone?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. The Unix timestamp counts seconds from 1970-01-01 00:00:00 UTC, so the same moment has the same value everywhere. Only the displayed date changes with the time zone."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my timestamp have 13 digits?"
+      },
+      {
+        "type": "p",
+        "text": "It is most likely in milliseconds. Date.now() and many APIs return milliseconds. Divide by 1000 to get seconds, or see [Unix Timestamp Seconds vs Milliseconds](/blog/unix-timestamp-seconds-vs-milliseconds) for how to tell which one you have."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the current timestamp to check a JWT expiry?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. The exp claim in a JWT is a Unix timestamp in seconds, so you compare it with Math.floor(Date.now() / 1000) in JavaScript. You can read the claim with the [JWT Decoder](/jwt-decoder), which shows exp as a date. For the full check, see [JWT Expiration Time: How to Check the exp Claim](/blog/jwt-expiration-time-check-exp-claim)."
+      }
+    ],
+    "relatedTool": "timestamp-converter"
+  },
+  "review": {
+    "title_ko": "JavaScript, Python, SQL에서 현재 Unix 타임스탬프 가져오기",
+    "summary_ko": [
+      "도입부: Unix 타임스탬프는 1970-01-01 00:00:00 UTC 이후 경과한 초 수이며, JavaScript는 Math.floor(Date.now() / 1000), Python은 int(time.time())을 사용하고, SQL은 데이터베이스마다 식이 다르다고 설명합니다.",
+      "Unix 타임스탬프의 의미: 시간대와 무관하게 같은 값을 가지며, 초 단위(10자리)와 밀리초 단위(13자리)의 차이를 강조하고, 단위를 혼동하면 1970년 또는 약 54,000년의 날짜가 나온다고 설명합니다.",
+      "JavaScript: Date.now()는 밀리초를 반환하므로 1000으로 나누고 Math.floor로 내림합니다. Math.trunc는 괜찮지만 x | 0은 2038-01-19 03:14:07 UTC 이후 32비트 오버플로로 잘못된 값을 준다고 경고합니다. new Date().getTime()도 같은 값을 줍니다.",
+      "Python: time.time()은 실수 초를 반환하므로 int()로 감싸고, 밀리초는 time.time_ns() // 1_000_000으로 구합니다. naive datetime은 로컬 시간으로 해석되므로 datetime.now(timezone.utc)를 쓰는 방법을 설명합니다.",
+      "SQL: PostgreSQL은 EXTRACT(EPOCH FROM now())::bigint, MySQL/MariaDB는 UNIX_TIMESTAMP(), SQLite는 CAST(strftime('%s', 'now') AS INTEGER), SQL Server는 DATEDIFF_BIG(SECOND, '1970-01-01', SYSUTCDATETIME())를 사용합니다. DATEDIFF의 int 오버플로와 GETDATE() 대신 SYSUTCDATETIME()을 써야 하는 이유를 설명합니다.",
+      "흔한 실수와 결과 확인: 초/밀리초 혼동, 소수점 초, 로컬 시간 사용, 32비트 오버플로, GETDATE() 사용을 정리하고, 변환기로 날짜를 되돌려 확인하는 방법을 안내합니다.",
+      "FAQ: 시간대별 동일성, 13자리 값의 원인, JWT exp 클레임 확인 방법을 다루며 관련 도구와 글 링크를 포함합니다."
+    ],
+    "issues": [
+      {
+        "severity": "high",
+        "ko": "'EXTRACT(EPOCH FROM now())::bigint' 설명에서 'the cast to bigint truncates it'(bigint 캐스트가 소수점을 버림)라고 했지만, PostgreSQL에서 numeric이나 double 값을 정수로 캐스트하면 버림이 아니라 반올림됩니다. 예를 들어 1718000000.7은 1718000001이 됩니다. 설명을 '반올림된다'로 고치거나, 버림이 필요하면 floor()를 쓰는 식으로 바꾸어야 합니다.",
+        "en": "The PostgreSQL section says the cast to bigint truncates the fractional seconds. Casting numeric or double precision to bigint in PostgreSQL rounds to the nearest integer, so the sentence is wrong. Either say it rounds, or use floor() if truncation is intended."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [
+      "SQL Server 예시 DATEDIFF(SECOND, '1970-01-01', SYSUTCDATETIME())는 DATEDIFF가 int를 반환하므로 2038년 1월 19일 이후에는 산술 오버플로 오류가 납니다. 현재는 동작하지만 글의 '32비트 오버플로' 주의사항에 이 한계를 언급하지 않았습니다.",
+      "'Math.trunc or | 0 instead' 문장에서 | 0은 32비트 정수로 잘려서 2038년 이후 값이 깨진다는 경고 없이 대안처럼 소개되어 있습니다.",
+      "\"잘못 섞으면 1970년이나 연도 50,000년이 나온다\"는 표현은 대략적인 값이다. 밀리초 값 1718000000000을 초로 해석하면 약 54,000년이 된다.",
+      "\"A seconds value should land within a few seconds of the current time in UTC\"의 \"in UTC\"는 어색하다. 타임스탬프 자체는 UTC 기준이고, 변환된 UTC 날짜가 현재 시각과 몇 초 안에 맞아야 한다는 뜻으로 더 명확히 쓸 수 있다."
+    ],
+    "word_count": 1168
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 19,
+  "api_calls": 6,
+  "telegram_message_id": 50
+}

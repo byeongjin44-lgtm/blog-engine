@@ -1,0 +1,290 @@
+{
+  "id": "2239b543",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-10T04:49:31Z",
+  "topic": {
+    "title": "How much topsoil do I need for a 4x8 raised garden bed?",
+    "keyword": "how much soil for a 4x8 raised bed",
+    "related_tool": "mulch-calculator",
+    "calculations": [
+      {
+        "calculator": "mulch-calculator",
+        "input": {
+          "lengthFt": 8,
+          "widthFt": 4,
+          "depthIn": 12,
+          "bagCuFt": "1.5"
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-soil-for-4x8-raised-bed",
+    "title": "How Much Soil for a 4x8 Raised Bed? Cubic Yards and Bags",
+    "description": "A 4x8 raised bed filled 12 inches deep needs 1.19 cu yd of soil in bulk, or 22 bags of 1.5 cu ft each. Here is how to work out the number for your own bed.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 4x8 raised bed filled 12 inches deep needs 1.19 cu yd of soil in bulk, or 22 bags if you buy 1.5 cu ft bags. Those figures come from the same volume math used for topsoil, compost and mulch."
+      },
+      {
+        "type": "p",
+        "text": "To run your own numbers, enter your bed's length, width, depth and bag size into the [Mulch & Soil Calculator](/mulch-calculator). The steps below show what the calculator does with those measurements, so you can check the result yourself."
+      },
+      {
+        "type": "h2",
+        "text": "The worked example: an 8 ft by 4 ft bed, 12 inches deep"
+      },
+      {
+        "type": "p",
+        "text": "The bed in this example is 8 feet long, 4 feet wide and 12 inches deep, and the bags are 1.5 cu ft each. The calculator works through it in four steps."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the bed area. Multiply the length by the width. For an 8 ft by 4 ft bed, the area is 32 sq ft.",
+          "Find the volume. Multiply the area by the depth. Because the depth is 12 inches, which is 1 foot, the volume is 32 cu ft.",
+          "Convert to cubic yards. Divide the volume in cubic feet by 27, since one cubic yard equals 27 cubic feet. That gives 1.19 cu yd of bulk soil.",
+          "Convert to bags. Multiply the cubic yards by 27, then divide by the bag size of 1.5 cu ft. With 1.5 cu ft bags, the calculator gives 22 bags."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The calculator's formula for bulk material is area in square feet times depth in inches, divided by 324. The 324 comes from the fact that one cubic yard covers 324 sq ft at a depth of one inch. You can use either method and reach the same answer."
+      },
+      {
+        "type": "h2",
+        "text": "Bulk or bags: which to choose"
+      },
+      {
+        "type": "p",
+        "text": "Bulk soil is delivered loose, usually by the cubic yard. It suits larger beds, or several beds at once, if you have a place for a delivery and a way to move the soil to the beds. Bags suit a single small bed or a site where a truck cannot reach."
+      },
+      {
+        "type": "p",
+        "text": "Bags come in several sizes. The calculator supports 1.5 cu ft, 2 cu ft and 3 cu ft bags. The bag count changes with the size you pick, so run the calculator again if you switch sizes."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes with raised bed soil"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Using feet instead of inches for depth. A depth of 12 inches is 1 foot, but entering 12 as feet would give a bed far deeper than you planned.",
+          "Measuring the outside of the bed instead of the inside. Measure the space the soil will fill.",
+          "Assuming every bag holds the same amount. Bag sizes differ between brands, so check the cubic feet printed on the bag.",
+          "Forgetting that soil settles. Plan for the level to drop a little after watering and the first season, and check the bed after it settles.",
+          "Buying only the exact amount. If a bag count is close to a whole number, it is often wise to have a few extra bags on hand for uneven spots."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Check the label before you buy"
+      },
+      {
+        "type": "p",
+        "text": "Always check the coverage or yield printed on the product label, because products differ. The calculator uses standard volume formulas, but the actual amount in a bag or the coverage of a product can vary by brand and by how it is packed. If the label gives a different yield, use that number for your purchase."
+      },
+      {
+        "type": "h2",
+        "text": "Related estimates"
+      },
+      {
+        "type": "p",
+        "text": "The same method works for mulch around the bed. If you are covering a larger area, see [How Much Mulch for 100 Square Feet?](/blog/how-much-mulch-for-100-square-feet) for a bulk and bag example. To find the area of an odd-shaped space, the [Square Footage Calculator](/square-footage-calculator) handles rectangles, triangles and circles. For a room-sized measurement, see [How to Calculate Square Footage of a Room](/blog/how-to-calculate-square-footage-of-a-room)."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same calculation for mulch or compost?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Topsoil, compost and mulch all use the same volume formula in the Mulch & Soil Calculator. Enter your measurements, then check the label on the product you choose, since coverage varies by product."
+      },
+      {
+        "type": "h3",
+        "text": "What if my raised bed is a different size or depth?"
+      },
+      {
+        "type": "p",
+        "text": "Measure the inside length, the inside width and the depth you plan to fill. Enter those values into the [Mulch & Soil Calculator](/mulch-calculator) and it will give you the bulk and bag amounts for your bed."
+      },
+      {
+        "type": "h3",
+        "text": "Why should I keep a few extra bags?"
+      },
+      {
+        "type": "p",
+        "text": "Soil settles, spills happen and uneven corners can need a little more. A small extra amount is a common way to avoid a second trip, but the exact extra depends on your bed and your habits."
+      },
+      {
+        "type": "h3",
+        "text": "Does the calculator tell me how many bags to buy for mulch too?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. The calculator uses the same steps for mulch, topsoil and compost. Choose the bag size that matches what you can buy, then check the label on the bag for its actual volume."
+      }
+    ],
+    "relatedTool": "mulch-calculator",
+    "sources": [
+      {
+        "title": "Mississippi State University Extension: Calculate mulch, soil needs for plant beds",
+        "url": "https://extension.msstate.edu/news/southern-gardening/1997/calculate-mulch-soil-needs-for-plant-beds"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "mulch-calculator",
+        "input": {
+          "lengthFt": 8,
+          "widthFt": 4,
+          "depthIn": 12,
+          "bagCuFt": "1.5"
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "mulch-calculator",
+        "input": {
+          "lengthFt": 8,
+          "widthFt": 4,
+          "depthIn": 12,
+          "bagCuFt": "1.5"
+        },
+        "results": [
+          {
+            "key": "cuYd",
+            "label": "Bulk amount",
+            "value": 1.19,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": true,
+            "number": "1.19",
+            "display": "1.19 cu yd"
+          },
+          {
+            "key": "bags",
+            "label": "Or bags",
+            "value": 22,
+            "unit": "bags",
+            "digits": 0,
+            "primary": true,
+            "number": "22",
+            "display": "22 bags"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 32,
+            "unit": "cu ft",
+            "digits": 1,
+            "primary": false,
+            "number": "32",
+            "display": "32 cu ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Bed area",
+            "value": 32,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "32",
+            "display": "32 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "mulch-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Bed length",
+            "unit": "ft",
+            "default": 20,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Bed width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "depthIn",
+            "label": "Depth",
+            "unit": "in",
+            "default": 3,
+            "step": 0.5
+          },
+          {
+            "kind": "select",
+            "key": "bagCuFt",
+            "label": "Bag size",
+            "default": "2",
+            "options": [
+              {
+                "value": "1.5",
+                "label": "1.5 cu ft"
+              },
+              {
+                "value": "2",
+                "label": "2 cu ft"
+              },
+              {
+                "value": "3",
+                "label": "3 cu ft"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "4x8 레이즈드 베드에 흙이 얼마나 필요한가? 立方야드와 포대 수량",
+    "summary_ko": [
+      "제목과 설명: 4x8 레이즈드 베드를 12인치 깊이로 채우려면 벌크 기준 1.19 cu yd 또는 1.5 cu ft 포대 22개가 필요하다고 소개합니다.",
+      "도입: 이 수치는 흙, 퇴비, 멀치에 같은 부피 계산을 적용한 결과이며, Mulch & Soil Calculator에 본인 치수를 입력해 직접 계산할 수 있다고 안내합니다.",
+      "계산 예시: 8ft x 4ft 베드, 깊이 12인치, 포대 1.5 cu ft 조건에서 면적 32 sq ft, 부피 32 cu ft, 1.19 cu yd, 22포대를 4단계로 설명합니다.",
+      "벌크와 포대 선택: 벌크는 큰 베드나 여러 베드에, 포대는 작은 베드나 트럭이 못 들어가는 곳에 적합하다고 설명하며, 2 cu ft와 3 cu ft 포대도 지원된다고 씁니다.",
+      "흔한 실수: 깊이를 인치 대신 피트로 입력하는 것, 베드 바깥이 아닌 안쪽을 재는 것, 포대 용량이 브랜드마다 다른 점, 흙이 가라앉는 점, 여분 포대 구매를 다룹니다.",
+      "구매 전 확인: 제품 라벨의 커버리지나 수율이 계산기 값과 다르면 라벨 값을 사용하라고 권고하며, FAQ 4개와 관련 링크(멀치, 면적 계산기)가 이어집니다.",
+      "전체적으로 계산 방식과 결과 수치는 정확하며, 주요 문제는 포대 수량 계산의 반올림 설명과 2 cu ft, 3 cu ft 포대 언급에 있습니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"Multiply the cubic yards by 27, then divide by the bag size of 1.5 cu ft... the calculator gives 22 bags\"에서 단계대로 계산하면 약 21.3이 나오므로, 22가 올림 결과라는 점을 명시해야 합니다.",
+        "en": "Dividing 32 cu ft by 1.5 gives 21.33, so 22 is a rounded-up count. The steps as written do not show that rounding, and a reader checking by hand will get 21.3."
+      },
+      {
+        "severity": "high",
+        "ko": "\"The calculator supports 1.5 cu ft, 2 cu ft and 3 cu ft bags.\"의 2 cu ft, 3 cu ft는 제공된 계산 입력이나 결과에 없는 수치라 검증할 수 없습니다.",
+        "en": "The 2 cu ft and 3 cu ft bag sizes are not among the calculator inputs or results provided, so they cannot be verified from the supplied data."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [],
+    "word_count": 809
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 9,
+  "api_calls": 3,
+  "telegram_message_id": 51
+}
