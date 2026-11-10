@@ -1,7 +1,7 @@
 {
   "id": "d33c3f33",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-10T04:48:45Z",
   "topic": {
     "title": "How to get the current Unix timestamp in JavaScript, Python and SQL",
@@ -221,7 +221,8 @@
         "text": "Yes. The exp claim in a JWT is a Unix timestamp in seconds, so you compare it with Math.floor(Date.now() / 1000) in JavaScript. You can read the claim with the [JWT Decoder](/jwt-decoder), which shows exp as a date. For the full check, see [JWT Expiration Time: How to Check the exp Claim](/blog/jwt-expiration-time-check-exp-claim)."
       }
     ],
-    "relatedTool": "timestamp-converter"
+    "relatedTool": "timestamp-converter",
+    "published": "2026-11-10"
   },
   "review": {
     "title_ko": "JavaScript, Python, SQL에서 현재 Unix 타임스탬프 가져오기",
@@ -254,5 +255,7 @@
   "recovered_from": [],
   "cost_krw": 19,
   "api_calls": 6,
-  "telegram_message_id": 50
+  "telegram_message_id": 50,
+  "decided": "2026-11-10T06:07:21Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/get-current-unix-timestamp-javascript-python-sql.json"
 }

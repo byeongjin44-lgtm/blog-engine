@@ -1,7 +1,7 @@
 {
   "id": "2239b543",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-10T04:49:31Z",
   "topic": {
     "title": "How much topsoil do I need for a 4x8 raised garden bed?",
@@ -253,7 +253,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-10"
   },
   "review": {
     "title_ko": "4x8 레이즈드 베드에 흙이 얼마나 필요한가? 立方야드와 포대 수량",
@@ -286,5 +287,7 @@
   "recovered_from": [],
   "cost_krw": 9,
   "api_calls": 3,
-  "telegram_message_id": 51
+  "telegram_message_id": 51,
+  "decided": "2026-11-10T06:07:27Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-soil-for-4x8-raised-bed.json"
 }
