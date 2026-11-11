@@ -1,7 +1,7 @@
 {
   "id": "bf876889",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-11T03:03:52Z",
   "topic": {
     "title": "How many cubic yards of concrete for a 20x20 patio?",
@@ -283,7 +283,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-11"
   },
   "review": {
     "title_ko": "20x20 파티오에 필요한 콘크리트 야드 수: 입방야드와 포대 수",
@@ -304,5 +305,7 @@
   "recovered_from": [],
   "cost_krw": 5,
   "api_calls": 2,
-  "telegram_message_id": 55
+  "telegram_message_id": 55,
+  "decided": "2026-11-11T03:22:55Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-yards-of-concrete-for-20x20-patio.json"
 }

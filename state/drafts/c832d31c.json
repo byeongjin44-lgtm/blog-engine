@@ -1,7 +1,7 @@
 {
   "id": "c832d31c",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-11T03:03:21Z",
   "topic": {
     "title": "UUID v4 vs UUID v7: which should you use?",
@@ -237,7 +237,8 @@
         "text": "No. Authentication tokens should come from a cryptographically secure random source with enough entropy and should be treated as secrets. A v7 UUID exposes its creation time and has a structured prefix, so it is not appropriate as a secret. Use a dedicated token generator instead."
       }
     ],
-    "relatedTool": "uuid-generator"
+    "relatedTool": "uuid-generator",
+    "published": "2026-11-11"
   },
   "review": {
     "title_ko": "UUID v4 vs v7: 어떤 것을 써야 할까?",
@@ -270,5 +271,7 @@
   "recovered_from": [],
   "cost_krw": 23,
   "api_calls": 6,
-  "telegram_message_id": 54
+  "telegram_message_id": 54,
+  "decided": "2026-11-11T03:22:52Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/uuid-v4-vs-v7-which-to-use.json"
 }
