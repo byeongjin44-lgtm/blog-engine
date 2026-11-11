@@ -1,0 +1,308 @@
+{
+  "id": "bf876889",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-11T03:03:52Z",
+  "topic": {
+    "title": "How many cubic yards of concrete for a 20x20 patio?",
+    "keyword": "how many yards of concrete for a 20x20 patio",
+    "related_tool": "concrete-calculator",
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-many-yards-of-concrete-for-20x20-patio",
+    "title": "How Many Yards of Concrete for a 20x20 Patio? Cubic Yards and Bags",
+    "description": "A 20x20 patio 4 inches thick needs 4.94 cubic yards of concrete, or 223 bags of 80 lb mix. Here is the math and what to check before ordering.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 20x20 patio 4 inches thick needs 4.94 cubic yards of concrete. If you are buying bagged mix instead of ready-mix, that works out to 223 bags of 80 lb concrete."
+      },
+      {
+        "type": "p",
+        "text": "You can run your own measurements in the [Concrete Calculator](/concrete-calculator) by entering length, width and thickness. The rest of this page shows how the result is worked out, so you can check it by hand."
+      },
+      {
+        "type": "h2",
+        "text": "How the calculation works"
+      },
+      {
+        "type": "p",
+        "text": "The calculator uses four steps. Each one takes the output of the step before it."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Multiply length by width, then by thickness in inches, and divide by 12. This gives the volume in cubic feet. For this 20 ft by 20 ft patio at 4 inches thick, the result is 133.33 cu ft.",
+          "Divide the cubic feet by 27 to convert to cubic yards. That gives 4.94 cu yd, which is the number to give a ready-mix supplier.",
+          "Divide the cubic feet by the bag yield. An 80 lb bag yields 0.6 cu ft, so the exact count is 222.2 bags.",
+          "Round the bag count up to the next whole bag. The calculator shows 223 bags to buy."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Rounding up matters. A partial bag is still a bag you have to buy, so the calculator never rounds down."
+      },
+      {
+        "type": "h2",
+        "text": "Ready-mix or bags"
+      },
+      {
+        "type": "p",
+        "text": "Ready-mix is sold by the cubic yard, so the 4.94 cu yd figure is what you need for a truck order. Ask your supplier how they handle partial yards and whether they have a minimum load."
+      },
+      {
+        "type": "p",
+        "text": "Bagged mix is sold by the bag, so for an 80 lb product you would buy 223 bags. Bags are easier to handle in small batches and fit places a truck cannot reach, but 223 bags is a lot of lifting and mixing. Plan for delivery, stacking and how long the work will take before the mix sets."
+      },
+      {
+        "type": "p",
+        "text": "If you want a smaller example to compare, see [how many bags of concrete for a 10x10 slab](/blog/how-many-bags-of-concrete-for-10x10-slab)."
+      },
+      {
+        "type": "h2",
+        "text": "Check the yield on your bag"
+      },
+      {
+        "type": "p",
+        "text": "The 0.6 cu ft yield for an 80 lb bag is the figure the calculator uses. Yields differ between products and brands, so read the coverage or yield printed on the label of the bag you plan to buy. If the label shows a different yield, divide your cubic feet by that number instead and round up."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls that lead to short orders"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing units. The calculator expects length and width in feet and thickness in inches. Entering thickness in feet, or length in inches, gives a wrong answer.",
+          "Skipping spillage. The calculator uses 0 % extra by default. If you expect waste or an uneven pour, enter an allowance in the Extra for spillage field and compare the result with your supplier's ordering increments.",
+          "Assuming one thickness everywhere. If parts of the patio are a different thickness, measure each section separately and add the volumes together.",
+          "Forgetting that bags round up. The bag count is always a whole number, so check whether the last bag leaves you short for the final section."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Before you order"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Measure the length and width in feet and the thickness in inches.",
+          "Enter the measurements in the [Concrete Calculator](/concrete-calculator) and note the cubic yards and bag count.",
+          "Check the yield printed on the product label and recalculate if it differs from the calculator's figure.",
+          "Add an allowance for spillage if you want a margin, and round to what your supplier sells.",
+          "Confirm the thickness with your project plans. If you are unsure which thickness applies, ask a qualified professional before buying."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The calculator estimates quantity only. It does not cover what goes underneath the slab or how the slab should be reinforced."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Do I need extra concrete for spillage?"
+      },
+      {
+        "type": "p",
+        "text": "Many people add a margin for spills, uneven edges and small mistakes. Enter an allowance in the Extra for spillage field of the [Concrete Calculator](/concrete-calculator) to see how it changes the result, then check it against your supplier's minimum load."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the calculator for a patio that is not a rectangle?"
+      },
+      {
+        "type": "p",
+        "text": "The calculator works with a rectangle. For an irregular shape, split the area into rectangles and triangles, measure each one, and add the volumes. The [Square Footage Calculator](/square-footage-calculator) can help with the area of each piece."
+      },
+      {
+        "type": "h3",
+        "text": "Is it cheaper to mix my own bags than to order ready-mix?"
+      },
+      {
+        "type": "p",
+        "text": "This page does not compare prices. Bags and ready-mix are sold in different ways, so get quotes for the quantity you need from local suppliers and compare them."
+      },
+      {
+        "type": "h3",
+        "text": "Does the bag count change if I use a different bag size?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. The calculator divides the cubic feet by the yield of the bag you choose. A bag with a different yield gives a different count, so select the size you plan to buy and check its label."
+      }
+    ],
+    "relatedTool": "concrete-calculator",
+    "sources": [
+      {
+        "title": "Quikrete Concrete Mix No. 1101 data sheet",
+        "url": "https://www.quikrete.com/pdfs/data_sheet-concrete%20mix%201101.pdf"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        },
+        "results": [
+          {
+            "key": "bags",
+            "label": "Bags to buy",
+            "value": 223,
+            "unit": "bags",
+            "digits": 0,
+            "primary": true,
+            "number": "223",
+            "display": "223 bags"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 4.94,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": false,
+            "number": "4.94",
+            "display": "4.94 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 133.33,
+            "unit": "cu ft",
+            "digits": 2,
+            "primary": false,
+            "number": "133.33",
+            "display": "133.33 cu ft"
+          },
+          {
+            "key": "bagsExact",
+            "label": "Exact bag count",
+            "value": 222.2,
+            "unit": "bags",
+            "digits": 1,
+            "primary": false,
+            "number": "222.2",
+            "display": "222.2 bags"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "concrete-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "thicknessIn",
+            "label": "Thickness",
+            "unit": "in",
+            "default": 4,
+            "step": 0.5
+          },
+          {
+            "kind": "select",
+            "key": "bagLb",
+            "label": "Bag size",
+            "default": "80",
+            "options": [
+              {
+                "value": "40",
+                "label": "40 lb (0.3 cu ft)"
+              },
+              {
+                "value": "50",
+                "label": "50 lb (0.375 cu ft)"
+              },
+              {
+                "value": "60",
+                "label": "60 lb (0.45 cu ft)"
+              },
+              {
+                "value": "80",
+                "label": "80 lb (0.6 cu ft)"
+              },
+              {
+                "value": "90",
+                "label": "90 lb (0.675 cu ft)"
+              }
+            ]
+          },
+          {
+            "kind": "number",
+            "key": "wastePct",
+            "label": "Extra for spillage",
+            "unit": "%",
+            "default": 0,
+            "step": 1,
+            "help": "Optional. Adds a safety margin to the bag count."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "20x20 파티오에 필요한 콘크리트 야드 수: 입방야드와 포대 수",
+    "summary_ko": [
+      "4인치 두께 20x20 파티오에는 콘크리트 4.94 입방야드가 필요하며, 80 lb 포대 기준으로는 223포대가 필요하다고 설명합니다.",
+      "콘크리트 계산기에서 길이, 너비, 두께를 입력해 직접 계산해 볼 수 있다고 안내합니다.",
+      "계산 과정은 4단계입니다. 면적에 두께(인치)를 곱하고 12로 나눠 133.33 cu ft를 구한 뒤, 27로 나눠 4.94 cu yd를 얻고, 0.6 cu ft 수율로 나눠 222.2포대를 구하고, 올림해 223포대로 맞춥니다.",
+      "레미콘은 입방야드 단위로 주문하고, 포대 제품은 포대 단위로 구매하며 운반, 적재, 혼합 작업을 미리 계획하라고 설명합니다.",
+      "포대 라벨의 수율을 확인하고 다르면 다시 계산하며, 단위 혼동, 손실 여유분, 두께가 다른 구역, 올림 처리를 주문 실수의 원인으로 제시합니다.",
+      "FAQ에서 여유분, 비직사각형 면적, 가격 비교, 포대 크기 변경에 대해 답하며, 계산기는 수량만 추정하고 슬래브 하부나 보강은 다루지 않는다고 밝힙니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [],
+    "word_count": 799
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 5,
+  "api_calls": 2,
+  "telegram_message_id": 55
+}

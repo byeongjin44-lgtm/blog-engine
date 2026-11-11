@@ -1,0 +1,274 @@
+{
+  "id": "c832d31c",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-11T03:03:21Z",
+  "topic": {
+    "title": "UUID v4 vs UUID v7: which should you use?",
+    "keyword": "uuid v4 vs v7",
+    "related_tool": "uuid-generator"
+  },
+  "post": {
+    "slug": "uuid-v4-vs-v7-which-to-use",
+    "title": "UUID v4 vs v7: Which Should You Use?",
+    "description": "UUID v4 is random and reveals no timing. UUID v7 starts with a millisecond timestamp and sorts by creation time. Use v7 for primary keys, v4 for public IDs.",
+    "body": [
+      {
+        "type": "p",
+        "text": "Use UUID v4 when you need an ID that reveals nothing about when it was created. Use UUID v7 when you want IDs that sort roughly by creation time, which usually means database primary keys and indexes. Both are 128-bit values in the same 8-4-4-4-12 text format, so you can often switch between them without changing your schema."
+      },
+      {
+        "type": "p",
+        "text": "If you just need a value right now, the [UUID Generator](/uuid-generator) can produce v4 and v7 UUIDs and bulk-generate them. The rest of this post explains what differs and where each version causes problems."
+      },
+      {
+        "type": "h2",
+        "text": "What UUID v4 is"
+      },
+      {
+        "type": "p",
+        "text": "A v4 UUID is built from 122 random bits. The other 6 bits are fixed: 4 bits store the version number 4, and 2 bits store the variant (RFC 9562 variant, which starts with 10 in binary). The 13th hex digit is always 4, and the first hex digit of the fourth group is always 8, 9, a, or b."
+      },
+      {
+        "type": "p",
+        "text": "Example: 3b241101-e2bb-4255-8caf-4136c566a962. The 4 in the third group marks it as v4."
+      },
+      {
+        "type": "p",
+        "text": "In most languages you get a v4 UUID from the standard library. In Node.js:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const { randomUUID } = require('node:crypto');\nconsole.log(randomUUID());"
+      },
+      {
+        "type": "p",
+        "text": "In Python:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import uuid\nprint(uuid.uuid4())"
+      },
+      {
+        "type": "h2",
+        "text": "What UUID v7 is"
+      },
+      {
+        "type": "p",
+        "text": "A v7 UUID, defined in RFC 9562, puts a Unix timestamp in the first 48 bits. That timestamp is in milliseconds since the Unix epoch. The version field is 7, and the rest of the value is random, with an optional counter in some implementations to keep IDs ordered within the same millisecond."
+      },
+      {
+        "type": "p",
+        "text": "Example: 018f3c2e-7a10-7d4e-9b3a-2f6c1e8d9a50. The first 12 hex digits, 018f3c2e7a10, encode the creation time in milliseconds. The 7 in the third group marks it as v7."
+      },
+      {
+        "type": "p",
+        "text": "Because the timestamp is the most significant part, sorting v7 UUIDs as strings sorts them by creation time, at millisecond granularity."
+      },
+      {
+        "type": "h2",
+        "text": "UUID v4 vs v7 at a glance"
+      },
+      {
+        "type": "p",
+        "text": "The list below covers the differences that matter in practice."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Randomness: v4 uses 122 random bits. v7 uses fewer random bits, since part of the value is timestamp and version/variant bits, but still enough that collisions are not a practical concern for normal use.",
+          "Time information: v4 reveals nothing about creation time. v7 reveals the creation time to the millisecond to anyone who sees the ID.",
+          "Sortability: v4 values are effectively random order. v7 values sort by creation time.",
+          "Index behavior: random v4 keys scatter inserts across a B-tree index. v7 keys append near the end, which keeps index pages hot and reduces page splits.",
+          "Guessability: v4 is not guessable from other IDs. v7 IDs created close together share a prefix, so an attacker who knows one ID can narrow down the range of others.",
+          "Library support: v4 is available almost everywhere. v7 needs a library or a recent standard library in many languages, so check yours before you commit."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "When to use v4"
+      },
+      {
+        "type": "p",
+        "text": "Choose v4 when the ID is exposed to users or third parties and creation time is information you do not want to leak. Common cases:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Public links to non-sensitive resources, such as a shared document ID where anyone who guesses it gains nothing beyond what the link already shows.",
+          "Resource IDs in public APIs where you do not want to reveal how many records exist or when they were created.",
+          "Idempotency keys or correlation IDs that only need to be unique.",
+          "Systems that already use v4 and have no index performance problems."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Do not use a UUID of either version as an invite link, password reset link, or other access token. Those tokens grant access, so they need to be unguessable by design. Generate them with a token generator built on a cryptographically secure random source, such as crypto.randomBytes in Node.js or the secrets module in Python, and make them long enough to carry at least 128 bits of randomness. A UUID is an identifier, not an access credential, and v4 is only fine for links where a guessed value would not matter."
+      },
+      {
+        "type": "h2",
+        "text": "When to use v7"
+      },
+      {
+        "type": "p",
+        "text": "Choose v7 when the ID is a database primary key or a key in a large, insert-heavy table. Common cases:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Primary keys in PostgreSQL, MySQL, SQL Server or SQLite tables that grow into millions of rows.",
+          "Event logs, audit tables and message IDs where you often sort or range-scan by time.",
+          "Distributed systems that want time-ordered IDs without a central sequence.",
+          "Cases where you would otherwise use an auto-increment integer but need globally unique IDs."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The index argument is the main reason. A B-tree index on random v4 values inserts each new key somewhere in the middle of the index, which spreads writes across many pages and increases page splits and cache misses. Time-ordered v7 values insert at or near the right edge, which behaves much more like an auto-increment integer."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls readers hit"
+      },
+      {
+        "type": "h3",
+        "text": "v7 leaks creation time"
+      },
+      {
+        "type": "p",
+        "text": "Anyone with a v7 UUID can read its creation time. If that matters, do not expose v7 IDs externally. Keep them internal, or expose a separate v4 ID to the public."
+      },
+      {
+        "type": "p",
+        "text": "To check the timestamp in JavaScript:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "function uuidV7Date(uuid) {\n  const hex = uuid.replace(/-/g, '').slice(0, 12);\n  return new Date(parseInt(hex, 16));\n}\n\nconsole.log(uuidV7Date('018f3c2e-7a10-7d4e-9b3a-2f6c1e8d9a50').toISOString());"
+      },
+      {
+        "type": "p",
+        "text": "The parsed value is in milliseconds, so pass it straight to the Date constructor. If you want to convert a plain Unix timestamp instead, see [Unix Timestamp Seconds vs Milliseconds](/blog/unix-timestamp-seconds-vs-milliseconds)."
+      },
+      {
+        "type": "h3",
+        "text": "Do not assume all UUIDs are v4"
+      },
+      {
+        "type": "p",
+        "text": "Code that validates UUIDs often hard-codes the version digit. A pattern that only accepts 4 in the version position will reject valid v7 IDs. If you need to accept both, allow 4 or 7 in that position:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const uuidV4orV7 = /^[0-9a-f]{8}-[0-9a-f]{4}-[47][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;\n\nconsole.log(uuidV4orV7.test('3b241101-e2bb-4255-8caf-4136c566a962')); // true\nconsole.log(uuidV4orV7.test('018f3c2e-7a10-7d4e-9b3a-2f6c1e8d9a50')); // true"
+      },
+      {
+        "type": "h3",
+        "text": "Same-millisecond ordering is not guaranteed"
+      },
+      {
+        "type": "p",
+        "text": "Two v7 UUIDs generated in the same millisecond may not sort in generation order unless the generator uses a counter or sub-millisecond bits. RFC 9562 describes monotonic options. If your code depends on strict ordering, confirm your library does this, or use a database sequence alongside the UUID."
+      },
+      {
+        "type": "h3",
+        "text": "Storage format matters"
+      },
+      {
+        "type": "p",
+        "text": "A UUID is 16 bytes in binary but 36 characters as text. Where your database has a native UUID type (for example, PostgreSQL uuid), use it. Native binary storage is smaller and faster to compare than varchar(36), which means smaller indexes and fewer bytes read. Keep the text form consistent, too. Mixing uppercase and lowercase strings breaks string equality checks and ordering."
+      },
+      {
+        "type": "h3",
+        "text": "Case and braces"
+      },
+      {
+        "type": "p",
+        "text": "The canonical form is lowercase hex with hyphens. Some systems output uppercase or wrap values in braces, such as {3B241101-...}. Normalize before comparing strings, or compare parsed binary values."
+      },
+      {
+        "type": "h2",
+        "text": "Decision checklist"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Is the ID shown to users or third parties, and is creation time sensitive? If yes, use v4.",
+          "Is the ID a primary key in a large, insert-heavy table? If yes, use v7.",
+          "Do you sort or range-query by ID? If yes, use v7.",
+          "Do you need the simplest, most widely supported option with no timing info? Use v4.",
+          "Is the value a secret, access token, invite link or authentication credential? Use a cryptographically secure token generator with an explicit length, not a UUID of either version."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Need test values? The [UUID Generator](/uuid-generator) can create v4 and v7 UUIDs in bulk. These are identifiers, not secrets, so do not use them as passwords or API keys. Before you paste a real token or secret into any online tool, check how that tool handles the data."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I switch an existing table from v4 to v7?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, because both are valid UUIDs in the same format. Existing v4 rows keep their values, and new rows can use v7. Mixed-version columns work fine, but the index benefit only applies to new inserts and will not reorder old data."
+      },
+      {
+        "type": "h3",
+        "text": "Is UUID v7 more unique than v4?"
+      },
+      {
+        "type": "p",
+        "text": "Not in any practical sense. Both have enough randomness that collisions are not a concern for normal application use. v7 has fewer random bits than v4 because some bits carry the timestamp and version, so v4 is the more conservative choice if you want the maximum amount of randomness."
+      },
+      {
+        "type": "h3",
+        "text": "Should I use v7 for API tokens?"
+      },
+      {
+        "type": "p",
+        "text": "No. Authentication tokens should come from a cryptographically secure random source with enough entropy and should be treated as secrets. A v7 UUID exposes its creation time and has a structured prefix, so it is not appropriate as a secret. Use a dedicated token generator instead."
+      }
+    ],
+    "relatedTool": "uuid-generator"
+  },
+  "review": {
+    "title_ko": "UUID v4 vs v7: 어떤 것을 써야 할까?",
+    "summary_ko": [
+      "v4는 생성 시각 정보가 없는 완全 무작위 ID이므로 외부에 노출되는 ID에 적합하다고 설명합니다.",
+      "v7은 밀리초 단위 Unix 타임스탬프를 앞 48비트에 담아 생성 시각순으로 정렬되며, 데이터베이스 기본 키와 인덱스에 유리하다고 설명합니다.",
+      "두 버전 모두 128비트이고 8-4-4-4-12 형식을 사용하므로 스키마 변경 없이 전환할 수 있다고 설명합니다.",
+      "v4와 v7의 차이를 무작위성, 시각 정보 노출, 정렬성, 인덱스 동작, 추측 가능성, 라이브러리 지원 측면에서 비교합니다.",
+      "v7은 생성 시각을 누구나 읽을 수 있으므로 외부 노출 ID에는 주의해야 하며, 인증 토큰이나 비밀값에는 어떤 UUID도 쓰면 안 된다고 경고합니다.",
+      "Node.js, Python, JavaScript 예제 코드로 v4 생성, v7 시각 파싱, v4/v7 겸용 정규식 검증 방법을 보여줍니다.",
+      "마지막으로 결정 체크리스트와 FAQ를 제공합니다."
+    ],
+    "issues": [
+      {
+        "severity": "high",
+        "ko": "\"Primary keys in PostgreSQL, MySQL, SQL Server or SQLite tables\" 항목에서 SQL Server도 v7의 시간순 인덱스 이점을 얻는 것처럼 안내하고 있습니다. SQL Server의 uniqueidentifier는 바이트 순서가 일반 문자열 정렬과 달라서(마지막 6바이트를 먼저 비교), v7 값을 그대로 기본 키로 쓰면 새 행이 인덱스 오른쪽 끝에 쌓이지 않습니다. 이 목록과 인덱스 설명은 SQL Server 사용자에게 잘못된 기대를 줄 수 있습니다.",
+        "en": "The use-case list says v7 primary keys help SQL Server tables the same way as other databases. SQL Server's uniqueidentifier compares the last 6 bytes first, so time-ordered v7 values do not append at the right edge of the clustered index unless you byte-swap or use a sequential-GUID approach. Either remove SQL Server from the list or add a note explaining this."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [
+      "\"if it is predictable; v4 is random\"이라는 표현이 모순되어 보인다. 본문이 v4는 무작위라고 하면서 예측 가능하면 안 된다고 말한다.",
+      "\"Index performance benefits from v7 only if the column is indexed in its binary or native form.\"는 과도한 주장이다. varchar(36)로 저장해도 소문자 16진수 문자열의 정렬 순서는 같아서 시간순 삽입 이점이 어느 정도 유지된다. 이점이 사라진다고 단정하기보다 저장 형식에 따라 크기와 비교 성능이 달라진다고 쓰는 편이 정확하다.",
+      "\"The UUID Generator runs in your browser, so nothing you create is sent to a server.\"는 사이트 동작에 대한 주장이다. 게시 전에 실제로 서버 전송이 없는지 확인하라.",
+      "\"Public share links or invite tokens, where the ID is effectively a capability\"라고 하면서 바로 아래에서 v4는 암호학적 비밀이 아니므로 인증 비밀에는 전용 토큰 생성기를 쓰라고 합니다. 공유 링크와 초대 토큰도 사실상 접근 권한이므로, 독자가 이를 v4로 충분하다고 오해하지 않도록 문구를 보완하면 좋겠습니다."
+    ],
+    "word_count": 1408
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 23,
+  "api_calls": 6,
+  "telegram_message_id": 54
+}
