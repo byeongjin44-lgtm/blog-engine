@@ -1,7 +1,7 @@
 {
   "id": "a05c7b9a",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-12T04:17:00Z",
   "topic": {
     "title": "Are UUIDs really unique? Collision probability explained",
@@ -226,7 +226,8 @@
         "text": "For random v4 values, the 50% threshold is about 2.7 × 10^18. Well before that, the more relevant concerns are generator quality, state duplication and how you store and index the values."
       }
     ],
-    "relatedTool": "uuid-generator"
+    "relatedTool": "uuid-generator",
+    "published": "2026-11-12"
   },
   "review": {
     "title_ko": "UUID는 정말 고유한가? UUID 충돌 확률 설명",
@@ -250,5 +251,7 @@
   "recovered_from": [],
   "cost_krw": 14,
   "api_calls": 4,
-  "telegram_message_id": 58
+  "telegram_message_id": 58,
+  "decided": "2026-11-12T04:46:43Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/uuid-collision-probability-explained.json"
 }

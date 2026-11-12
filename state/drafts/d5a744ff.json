@@ -1,7 +1,7 @@
 {
   "id": "d5a744ff",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-12T04:18:08Z",
   "topic": {
     "title": "How much paint do I need for one coat vs two coats?",
@@ -390,7 +390,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-12"
   },
   "review": {
     "title_ko": "붙여 칠하기 페인트 양은? 1회 vs 2회 도장 추정",
@@ -423,5 +424,7 @@
   "recovered_from": [],
   "cost_krw": 15,
   "api_calls": 6,
-  "telegram_message_id": 59
+  "telegram_message_id": 59,
+  "decided": "2026-11-12T04:46:46Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-paint-for-two-coats.json"
 }
