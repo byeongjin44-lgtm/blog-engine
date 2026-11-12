@@ -1,0 +1,427 @@
+{
+  "id": "d5a744ff",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-12T04:18:08Z",
+  "topic": {
+    "title": "How much paint do I need for one coat vs two coats?",
+    "keyword": "how much paint for two coats",
+    "related_tool": "paint-calculator",
+    "calculations": [
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 15,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 2,
+          "coats": 1
+        }
+      },
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 15,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 2,
+          "coats": 2
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-paint-for-two-coats",
+    "title": "How Much Paint for Two Coats? One vs Two Coat Estimate",
+    "description": "A 12x15 room with one door and two windows needs 2 gallons for one coat and 3 gallons for two coats at 350 sq ft per gallon. Check your label.",
+    "body": [
+      {
+        "type": "p",
+        "text": "For a 12 foot by 15 foot room with one door and two windows, one coat needs 2 gallons and two coats need 3 gallons, based on the default coverage of 350 sq ft per gallon. Plan for the second coat before you shop, because it changes how many cans you buy."
+      },
+      {
+        "type": "p",
+        "text": "You can run these numbers for your own room with the [Paint Calculator](/paint-calculator). Enter your room length, width, wall height, doors, windows, coverage, and number of coats, and it returns the gallons to buy."
+      },
+      {
+        "type": "h2",
+        "text": "The worked example: a 12 x 15 room with one or two coats"
+      },
+      {
+        "type": "p",
+        "text": "This example uses a 12 foot by 15 foot room with 8 foot walls, one door, and two windows. The same room gives two different answers depending on the number of coats, so the steps below show where the numbers split."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the total wall area. The calculator uses the room's length, width, and wall height to get the total wall area, which comes to 432 sq ft in this room.",
+          "Subtract the openings. The door and two windows are not paintable, so the calculator takes 60 sq ft off the total. That leaves 372 sq ft of paintable wall.",
+          "Multiply by the number of coats. With one coat, the calculator uses the 372 sq ft once. With two coats, it counts the paintable area twice.",
+          "Divide by the coverage per gallon. At the default 350 sq ft per gallon, one coat comes to 1.06 gallons and two coats come to 2.13 gallons.",
+          "Round up to whole cans. One coat needs 2 gallons to buy, and two coats need 3 gallons to buy."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The gap between the exact amount and the purchase amount matters. One coat needs 1.06 gallons, which is just over one gallon, so you buy 2 gallons. Two coats need 2.13 gallons, so you buy 3 gallons. Rounding up keeps you from running out partway through the second coat."
+      },
+      {
+        "type": "p",
+        "text": "If you want to buy only the exact amount, you can, but you will likely need to open another can for the last few feet. Most people find it simpler to round up to whole gallons."
+      },
+      {
+        "type": "h2",
+        "text": "When is a second coat needed?"
+      },
+      {
+        "type": "p",
+        "text": "One coat is often enough when the new paint covers the old color evenly and the surface looks uniform. This is common when you repaint a wall in a similar color with a good-quality paint and the wall was in good shape to begin with."
+      },
+      {
+        "type": "p",
+        "text": "Plan for two coats in these common situations:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "You are switching to a much darker color, or going from a dark color to a light one.",
+          "The old paint is faded, chalky, or has flat spots where the new paint soaks in unevenly.",
+          "You are painting bare drywall, patched areas, or a surface that has been sanded down.",
+          "You want a rich, even finish with no lap marks or thin patches in daylight.",
+          "The product label or the manufacturer says the paint needs two coats for full coverage."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you are unsure, do a small test patch on a hidden part of the wall. Paint one coat, let it dry fully, and look at it in daylight and lamplight. If you can still see the old color or the wall looks blotchy, plan for the second coat."
+      },
+      {
+        "type": "h2",
+        "text": "Follow the label, not just the calculator"
+      },
+      {
+        "type": "p",
+        "text": "Always check the coverage printed on the product label before you buy. The 350 sq ft per gallon figure is the calculator's default, not a promise for every can. Coverage varies by product, and it also changes with the texture of the wall and how you apply the paint."
+      },
+      {
+        "type": "p",
+        "text": "The label usually also states how many coats are recommended and how long to wait between coats. Use those instructions, since they reflect the specific product you are buying."
+      },
+      {
+        "type": "p",
+        "text": "If your label gives a different coverage number, enter it into the Coverage per gallon field and run the calculator again. Your result will match the product you are actually using."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Forgetting the second coat in the budget. A plan for one coat that turns into two can leave you short partway through the room.",
+          "Skipping the openings. Doors and windows are not paintable wall, so the calculator subtracts them. Enter the count of each so the deduction is correct.",
+          "Mixing batches. Paint from different cans can look slightly different in color. Buy all the gallons you need at once, or mix them together in a larger container before you start.",
+          "Rounding down. Rounding up is what keeps you from making a second trip to the store in the middle of a coat."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you are working out a different room, the [how much paint for a 12x12 room](/blog/how-much-paint-for-a-12x12-room) post walks through the same method with a different size. Our [square footage guide](/blog/how-to-calculate-square-footage-of-a-room) explains how to measure a room's walls before you start."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Do I need to buy paint for both coats at once?"
+      },
+      {
+        "type": "p",
+        "text": "It is usually best to buy all the paint at the start. Paint from different batches can vary slightly in color, and a second trip can leave a visible line where the batches meet. If you buy the full amount, you can mix the cans together in a bucket before you begin."
+      },
+      {
+        "type": "h3",
+        "text": "Does primer count as a coat of paint?"
+      },
+      {
+        "type": "p",
+        "text": "Primer is a separate product with its own coverage on the label. If you plan to prime, check the primer's coverage and calculate it on its own. Do not assume the paint coverage applies to primer."
+      },
+      {
+        "type": "h3",
+        "text": "Will the calculator tell me how many coats I need?"
+      },
+      {
+        "type": "p",
+        "text": "No. The calculator multiplies the area by the number of coats you enter, but it cannot tell you how many coats your surface needs. Use the test patch method above and the label instructions to decide."
+      },
+      {
+        "type": "h3",
+        "text": "What if my room has different wall heights or more doors?"
+      },
+      {
+        "type": "p",
+        "text": "Enter your own measurements in the [Paint Calculator](/paint-calculator). Measure your room's length, width, and wall height, count every door and window, and enter the values for your room. The result will reflect your room, not this example."
+      }
+    ],
+    "relatedTool": "paint-calculator",
+    "sources": [
+      {
+        "title": "Sherwin-Williams paint calculator",
+        "url": "https://www.sherwin-williams.com/en-us/color/color-tools/paint-calculator"
+      },
+      {
+        "title": "Sherwin-Williams: How to estimate how much wallpaper you need",
+        "url": "https://www.sherwin-williams.com/homeowners/how-to/wallpapering-how-tos/sw-article-dir-howtoestimate"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 15,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 2,
+          "coats": 1
+        }
+      },
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 15,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 2,
+          "coats": 2
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 15,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 2,
+          "coats": 1
+        },
+        "results": [
+          {
+            "key": "gallons",
+            "label": "Paint to buy",
+            "value": 2,
+            "unit": "gallons",
+            "digits": 0,
+            "primary": true,
+            "number": "2",
+            "display": "2 gallons"
+          },
+          {
+            "key": "gallonsExact",
+            "label": "Exact amount",
+            "value": 1.06,
+            "unit": "gallons",
+            "digits": 2,
+            "primary": false,
+            "number": "1.06",
+            "display": "1.06 gallons"
+          },
+          {
+            "key": "paintableSqFt",
+            "label": "Paintable wall area",
+            "value": 372,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "372",
+            "display": "372 sq ft"
+          },
+          {
+            "key": "wallSqFt",
+            "label": "Total wall area",
+            "value": 432,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "432",
+            "display": "432 sq ft"
+          },
+          {
+            "key": "openingsSqFt",
+            "label": "Doors and windows deducted",
+            "value": 60,
+            "unit": "sq ft",
+            "digits": 0,
+            "primary": false,
+            "number": "60",
+            "display": "60 sq ft"
+          }
+        ]
+      },
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 15,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 2,
+          "coats": 2
+        },
+        "results": [
+          {
+            "key": "gallons",
+            "label": "Paint to buy",
+            "value": 3,
+            "unit": "gallons",
+            "digits": 0,
+            "primary": true,
+            "number": "3",
+            "display": "3 gallons"
+          },
+          {
+            "key": "gallonsExact",
+            "label": "Exact amount",
+            "value": 2.13,
+            "unit": "gallons",
+            "digits": 2,
+            "primary": false,
+            "number": "2.13",
+            "display": "2.13 gallons"
+          },
+          {
+            "key": "paintableSqFt",
+            "label": "Paintable wall area",
+            "value": 372,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "372",
+            "display": "372 sq ft"
+          },
+          {
+            "key": "wallSqFt",
+            "label": "Total wall area",
+            "value": 432,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "432",
+            "display": "432 sq ft"
+          },
+          {
+            "key": "openingsSqFt",
+            "label": "Doors and windows deducted",
+            "value": 60,
+            "unit": "sq ft",
+            "digits": 0,
+            "primary": false,
+            "number": "60",
+            "display": "60 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "paint-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Room length",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Room width",
+            "unit": "ft",
+            "default": 15,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "heightFt",
+            "label": "Wall height",
+            "unit": "ft",
+            "default": 8,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "doors",
+            "label": "Doors",
+            "default": 1,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "windows",
+            "label": "Windows",
+            "default": 2,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "coats",
+            "label": "Coats",
+            "default": 2,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerGallon",
+            "label": "Coverage per gallon",
+            "unit": "sq ft",
+            "default": 350,
+            "step": 25,
+            "help": "Use the coverage printed on your paint can if it differs."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "붙여 칠하기 페인트 양은? 1회 vs 2회 도장 추정",
+    "summary_ko": [
+      "12피트 x 15피트 방, 벽 높이 8피트, 문 1개, 창문 2개를 기준으로 합니다.",
+      "계산기 기본 도포율은 갤런당 350 sq ft입니다.",
+      "총 벽 면적은 432 sq ft이고, 문과 창문을 뺀 칠할 면적은 372 sq ft입니다.",
+      "1회 도장은 정확히 1.06갤런이라 2갤런을 구입하고, 2회 도장은 2.13갤런이라 3갤런을 구입합니다.",
+      "2회 도장이 필요한 경우(진한 색으로 바꿀 때, 오래된 페인트가 바랬거나 얼룩질 때, 석고보드나 보수한 면 등)를 설명합니다.",
+      "시험 도장으로 판단하고, 실제 제품 라벨의 도포율과 권장 도장 횟수를 확인하라고 안내합니다.",
+      "자주 하는 실수(2회차 누락, 문과 창문 빼기 누락, 배치 혼합, 반올림 내림)와 관련 글 및 계산기 링크를 소개합니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "출처 중 \"Sherwin-Williams: How to estimate how much wallpaper you need\"(벽지 산출 문서)가 페인트 산출 근거로 인용되어 있어 주제가 맞지 않습니다. 본문에서 직접 사용되지는 않았지만 출처 목록에서 정리하는 것이 좋습니다.",
+        "en": "The sources list cites a wallpaper estimating article for a paint estimate. It is not used in the body, but it is off-topic and should be replaced with a paint-specific source or removed."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "본문의 \"The calculator takes away 20 sq ft for each door and each window\"에서 문/창문 1개당 20 sq ft를 뺀다는 수치는 제공된 계산 결과에 없습니다. 결과의 60 sq ft(개구부 3개)에서 역산한 값이지만, 글에서는 계산기의 내부 규칙처럼 단정하고 있습니다. 실제 계산기 규칙인지 확인하거나, 결과값인 60 sq ft만 언급하세요.",
+      "\"Buying exactly the exact amount.\" 표현이 중복되고 어색합니다.",
+      "출처 목록의 두 번째 링크 제목이 \"How to estimate how much wallpaper you need\"(벽지 견적)인데, 페인트 계산 근거로 인용되어 있습니다. 제목과 내용이 맞는지 확인하세요.",
+      "출처 목록의 두 번째 링크 제목이 \"How to estimate how much wallpaper you need\"(벽지 양 산정)인데, 페인트 계산 관련 근거로 제시되어 있어 출처가 주제와 맞지 않습니다."
+    ],
+    "word_count": 1011
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 15,
+  "api_calls": 6,
+  "telegram_message_id": 59
+}

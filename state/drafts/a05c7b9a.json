@@ -1,0 +1,254 @@
+{
+  "id": "a05c7b9a",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-12T04:17:00Z",
+  "topic": {
+    "title": "Are UUIDs really unique? Collision probability explained",
+    "keyword": "uuid collision probability",
+    "related_tool": "uuid-generator"
+  },
+  "post": {
+    "slug": "uuid-collision-probability-explained",
+    "title": "Are UUIDs Really Unique? UUID Collision Probability Explained",
+    "description": "A random UUID v4 has 122 random bits, so a collision is practically impossible at normal scale. Here is the math, the real risks, and how to avoid them.",
+    "body": [
+      {
+        "type": "p",
+        "text": "For random UUIDs (version 4), the collision probability is so small that you can treat them as unique in practice. A UUID v4 has 122 random bits, so there are about 5.3 × 10^36 possible values. You would need to generate roughly 2.7 × 10^18 of them before the chance of any duplicate reaches 50%. The real risks in production come from bad random number generators, copied state, and truncation, not from the math itself."
+      },
+      {
+        "type": "p",
+        "text": "If you need a value now, the [UUID Generator](/uuid-generator) creates v4 and v7 UUIDs in bulk. The rest of this post explains where the numbers come from and what can actually go wrong."
+      },
+      {
+        "type": "h2",
+        "text": "How many random bits a UUID has"
+      },
+      {
+        "type": "p",
+        "text": "A UUID is 128 bits, written as 32 hex digits in the form 8-4-4-4-12. Some of those bits are fixed by the specification:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "4 bits hold the version number. For v4, this is always 4.",
+          "2 bits hold the variant. For RFC 4122 UUIDs, the variant bits are always 10 in binary.",
+          "122 bits are random in a v4 UUID."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "So the space of v4 UUIDs is 2^122, which is about 5.3 × 10^36. The 4 version bits and 2 variant bits are not random, so they do not count toward the space."
+      },
+      {
+        "type": "h2",
+        "text": "The birthday problem and the formula"
+      },
+      {
+        "type": "p",
+        "text": "The question is not whether a new UUID matches one specific existing value. It is whether any two values in a set collide. That is the birthday problem. For n randomly generated values drawn from N possible values, the probability of at least one collision is approximately:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "p ≈ 1 - exp(-n^2 / (2N))"
+      },
+      {
+        "type": "p",
+        "text": "For small probabilities, this is close to n^2 / (2N). With N = 2^122, the numbers look like this:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "1 million UUIDs (10^6): about 1 in 10^25 chance of any collision.",
+          "1 billion UUIDs (10^9): about 1 in 10^19 chance.",
+          "1 trillion UUIDs (10^12): about 1 in 10^13 chance, or roughly 1 in 10 trillion.",
+          "About 2.7 × 10^18 UUIDs: 50% chance of at least one collision."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "To put the 1 trillion case in context, a system generating a billion UUIDs per second would need about 17 minutes to reach 10^12 values, and the collision odds would still be tiny. The bottleneck is almost never the number of UUIDs. It is the quality of the generator and how the system uses the values."
+      },
+      {
+        "type": "h2",
+        "text": "Quick check with the formula"
+      },
+      {
+        "type": "p",
+        "text": "You can verify the approximation yourself. In JavaScript:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const N = 2 ** 122;\nconst n = 1e9;\nconst p = n * n / (2 * N);\nconsole.log(p.toExponential(2)); // 9.40e-20"
+      },
+      {
+        "type": "p",
+        "text": "In Python, use math.expm1 rather than 1 - math.exp(...). For tiny values, math.exp(-x) rounds to exactly 1.0 in double precision, so subtracting it from 1 gives 0.0:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import math\nN = 2 ** 122\nn = 10 ** 9\np = -math.expm1(-n * n / (2 * N))\nprint(f\"{p:.2e}\")  # 9.40e-20"
+      },
+      {
+        "type": "p",
+        "text": "Both produce the same result, about 9.4 × 10^-20 for one billion v4 UUIDs."
+      },
+      {
+        "type": "h2",
+        "text": "Where UUIDs actually collide in practice"
+      },
+      {
+        "type": "p",
+        "text": "The math assumes each UUID comes from an independent, uniformly random 122-bit value. Real systems break that assumption in several ways."
+      },
+      {
+        "type": "h3",
+        "text": "Weak random number generators"
+      },
+      {
+        "type": "p",
+        "text": "A UUID is only as random as its source. Using a non-cryptographic generator such as Math.random() in JavaScript or a seeded PRNG in another language can produce far fewer effective bits, and duplicates appear much sooner. Use a cryptographically secure source:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "// Browsers (secure contexts) and Node.js 14.17+\nconst id = crypto.randomUUID();"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import uuid\nid = uuid.uuid4()  # uses os.urandom under the hood"
+      },
+      {
+        "type": "h3",
+        "text": "Duplicated state after forking or snapshotting"
+      },
+      {
+        "type": "p",
+        "text": "If a process forks after its random generator has been seeded, or a virtual machine is cloned from a snapshot with the same RNG state, both copies can produce the same sequence of UUIDs. This is a real failure mode, and it does not depend on the size of the space. Modern OS-level sources such as /dev/urandom and getrandom() are much less exposed, but custom PRNGs and some embedded or container setups can still reuse state. If you run replicas from one image, make sure each one seeds from the OS, not from a fixed or copied value."
+      },
+      {
+        "type": "h3",
+        "text": "Truncation and custom formats"
+      },
+      {
+        "type": "p",
+        "text": "Shortening a UUID to fit a field, such as keeping only the first 8 hex digits, reduces the space to 32 bits. At that size, the birthday threshold drops to about 77,000 values for a 50% chance of collision. Keep the full 36-character form, or at least the full 128 bits, when uniqueness matters."
+      },
+      {
+        "type": "h3",
+        "text": "Deterministic UUIDs"
+      },
+      {
+        "type": "p",
+        "text": "Version 5 (SHA-1 with a namespace) and version 3 (MD5 with a namespace) are deterministic by design. The same name and namespace always produce the same UUID. That repeatability is intended, and it is not a random collision. It does mean you should not use v3 or v5 when each record needs its own identity, because identical inputs will always map to the same ID. Also, v3 and v5 hash outputs are not designed for secrecy."
+      },
+      {
+        "type": "h3",
+        "text": "Version 1 and MAC addresses"
+      },
+      {
+        "type": "p",
+        "text": "Version 1 UUIDs combine a timestamp, a clock sequence and a node identifier, which was historically a MAC address. Collisions are avoided if the clock sequence is handled correctly, but v1 leaks timing and host information. If you do not need that ordering or the time component, use v4."
+      },
+      {
+        "type": "h3",
+        "text": "Copy and paste errors and bad joins"
+      },
+      {
+        "type": "p",
+        "text": "Most real duplicate-key bugs are not UUID collisions. They come from a value being generated once and reused, from a seed record inserted twice, or from an ID being assigned in application code and retried without idempotency. If you see a duplicate key error, check the write path before blaming the generator."
+      },
+      {
+        "type": "h2",
+        "text": "v7 UUIDs and time-ordered values"
+      },
+      {
+        "type": "p",
+        "text": "Version 7 UUIDs put a 48-bit Unix millisecond timestamp in the high bits, then use random bits for the rest. That leaves 74 random bits per millisecond, which is still far more than enough to avoid collisions for normal workloads. The main advantage is ordering: v7 values sort roughly by creation time, which helps database indexes. The tradeoff is that the timestamp is visible and the random space is smaller than v4 within the same millisecond. For a detailed comparison, see [UUID v4 vs v7: Which Should You Use?](/blog/uuid-v4-vs-v7-which-to-use)."
+      },
+      {
+        "type": "h2",
+        "text": "How to protect against duplicates in your system"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Generate IDs with a cryptographically secure source, such as crypto.randomUUID() or uuid.uuid4().",
+          "Store UUIDs in a column with a UNIQUE or PRIMARY KEY constraint, so the database enforces uniqueness.",
+          "Keep the full 128-bit value. Do not truncate, and store it as a native UUID type where your database supports one.",
+          "Make inserts idempotent when retries are possible, for example by using a client-generated ID that is reused on retry.",
+          "Ensure forked processes and cloned VMs reseed their random source before generating IDs."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "With these in place, the remaining risk is far smaller than many other failures in a typical stack."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can two UUID v4 values ever be the same?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, in theory. The chance is so small that for ordinary applications you can treat v4 UUIDs as unique. Even at a billion values, the probability of any collision is around 10^-19."
+      },
+      {
+        "type": "h3",
+        "text": "Is UUID collision a real concern for databases?"
+      },
+      {
+        "type": "p",
+        "text": "Rarely. A duplicate key error is far more likely to come from a bug that reuses an ID, a retry that inserts twice, or an ID that was truncated or generated with a weak source. A UNIQUE constraint will catch any true duplicate."
+      },
+      {
+        "type": "h3",
+        "text": "Is a UUID safe to use as a secret or token?"
+      },
+      {
+        "type": "p",
+        "text": "Not by itself. Uniqueness is not the same as unpredictability in every context, and UUIDs were not designed as authentication secrets. Use a dedicated token generator with enough entropy and a proper authentication scheme. Tools like the [JWT Decoder](/jwt-decoder) show what a signed token contains, but they do not replace secure token design. DevRivet tools run in your browser, but you should still avoid pasting live secrets into any web tool."
+      },
+      {
+        "type": "h3",
+        "text": "How many UUIDs before I should worry?"
+      },
+      {
+        "type": "p",
+        "text": "For random v4 values, the 50% threshold is about 2.7 × 10^18. Well before that, the more relevant concerns are generator quality, state duplication and how you store and index the values."
+      }
+    ],
+    "relatedTool": "uuid-generator"
+  },
+  "review": {
+    "title_ko": "UUID는 정말 고유한가? UUID 충돌 확률 설명",
+    "summary_ko": [
+      "무작위 UUID v4는 122비트의 무작위 값을 가지므로 실제 운영 환경에서는 충돌을 사실상 무시할 수 있다는 것이 결론이다.",
+      "UUID는 128비트이며 버전 4비트와 variant 2비트는 고정값이므로 v4의 무작위 공간은 2^122(약 5.3×10^36)이다.",
+      "생일 문제 근사식 p ≈ 1 - exp(-n²/(2N))을 사용해 10억 개 생성 시 충돌 확률은 약 10^-19, 약 2.7×10^18개에서 50%에 도달한다고 설명한다.",
+      "JavaScript와 Python으로 확률을 계산하는 예제를 제시하며, Python에서는 expm1을 써야 작은 값에서 정밀도가 유지된다고 설명한다.",
+      "실제 충돌 위험은 약한 난수 생성기, 포크나 VM 복제로 인한 상태 중복, 잘린 UUID, v3/v5의 결정성, v1의 MAC 주소 노출, 그리고 쓰기 경로 버그에 있다고 정리한다.",
+      "v7은 48비트 타임스탬프와 74비트 무작위 비트로 구성되어 정렬성이 장점이며, 중복 방지를 위해 안전한 난수원, UNIQUE 제약, 전체 128비트 보존, 멱등 삽입 등을 권장한다. UUID를 비밀값이나 토큰으로 쓰면 안 된다는 점도 강조한다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "Python 예제의 주석 「# 9.40e-20」은 틀렸습니다. 「p = 1 - math.exp(-n * n / (2 * N))」은 배정밀도에서 지수값이 1.0으로 반올림되어 실제로는 0.00e+00이 출력됩니다. math.expm1(-x)를 쓰거나 n*n/(2*N)을 직접 계산해야 합니다.",
+      "「Two different inputs that map to the same name string will collide every time」 문장은 모호합니다. 같은 이름과 네임스페이스는 항상 같은 UUID를 만든다는 뜻이므로, 이것은 충돌이 아니라 의도된 결정적 결과임을 분명히 쓰는 편이 좋습니다."
+    ],
+    "word_count": 1374
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 14,
+  "api_calls": 4,
+  "telegram_message_id": 58
+}
