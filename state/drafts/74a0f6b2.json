@@ -1,7 +1,7 @@
 {
   "id": "74a0f6b2",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-13T03:38:44Z",
   "topic": {
     "title": "How much attic insulation do I need to reach R-38?",
@@ -258,7 +258,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-13"
   },
   "review": {
     "title_ko": "R-38을 달성하려면 단열재가 얼마나 필요한가? 두께와 포장 수량",
@@ -281,5 +282,7 @@
   "recovered_from": [],
   "cost_krw": 12,
   "api_calls": 5,
-  "telegram_message_id": 63
+  "telegram_message_id": 63,
+  "decided": "2026-11-13T06:04:06Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-insulation-to-reach-r38.json"
 }
