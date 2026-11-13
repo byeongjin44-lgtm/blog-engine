@@ -1,0 +1,285 @@
+{
+  "id": "74a0f6b2",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-13T03:38:44Z",
+  "topic": {
+    "title": "How much attic insulation do I need to reach R-38?",
+    "keyword": "how much insulation to reach r38",
+    "related_tool": "insulation-calculator",
+    "calculations": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 1000,
+          "targetR": 38,
+          "rPerInch": 2.5,
+          "sqFtPerPackage": 40
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-insulation-to-reach-r38",
+    "title": "How Much Insulation to Reach R-38? Thickness and Packages",
+    "description": "To reach R-38, divide 38 by your product's R-value per inch for thickness, then divide the area by package coverage for the count. Worked example included.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To reach R-38, divide 38 by the R-value per inch of your insulation to get the thickness you need. Then divide the area you are insulating by the coverage printed on one package to get the number of packages. For 1,000 square feet of attic floor using a product rated R-2.5 per inch and packages covering 40 sq ft each, you need 15.2 in of material and 25 packages."
+      },
+      {
+        "type": "p",
+        "text": "You can run the numbers with your own measurements in the [Insulation Calculator](/insulation-calculator). Enter your attic area, your target R-value, your product's R-value per inch, and the coverage on the bag or box, and it returns the thickness and the package count."
+      },
+      {
+        "type": "h2",
+        "text": "What R-38 means"
+      },
+      {
+        "type": "p",
+        "text": "R-value measures how well a material resists heat flow. A higher number means more resistance. R-38 is a common target for attic floors, but this page is only about the material math. It does not decide which R-value is right for your home."
+      },
+      {
+        "type": "p",
+        "text": "The key point for estimating is that R-value is not the same as thickness. Each product has its own R-value per inch, and that number is what converts a target R-value into inches of material."
+      },
+      {
+        "type": "h2",
+        "text": "Step 1: Find the thickness"
+      },
+      {
+        "type": "p",
+        "text": "Thickness is the target R-value divided by the product's R-value per inch. Here are the steps:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find your target R-value. In this example it is R-38.",
+          "Find the R-value per inch on the product label or the manufacturer's data sheet. In this example it is 2.5 per inch.",
+          "Divide the target by the per-inch value. The result is the thickness in inches. In this example that gives 15.2 in."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Use the R-value per inch that matches your exact product. Loose-fill, batts, and rigid boards all have different values, and two products with similar names can differ. Do not use a number from a different product."
+      },
+      {
+        "type": "h2",
+        "text": "Step 2: Count the packages"
+      },
+      {
+        "type": "p",
+        "text": "Once you know the thickness, the package count depends on how much area each package covers at that depth. Packages of loose-fill and batts list coverage at a stated R-value or thickness, so read the label carefully. A package that covers 40 sq ft at one depth may cover less at a greater depth."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Measure the area you are insulating in square feet. In this example it is 1,000 square feet.",
+          "Find the coverage per package printed on the label at your required thickness. In this example it is 40 sq ft per package.",
+          "Divide the area by the coverage per package and round up to the next whole package. In this example the result is exactly 25 packages, so no rounding is needed."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Always check the coverage or yield printed on the product label, because products differ. The 40 sq ft used here is only an example. Your package may cover more or less."
+      },
+      {
+        "type": "h2",
+        "text": "Worked example"
+      },
+      {
+        "type": "p",
+        "text": "Suppose you want to add insulation over 1,000 square feet of attic floor to reach R-38. Your product is rated R-2.5 per inch, and each package covers 40 sq ft."
+      },
+      {
+        "type": "p",
+        "text": "The calculator gives a thickness of 15.2 in. That is the depth the material must reach to hit R-38 with this product. It also gives 25 packages to buy, which is the total for the full 1,000 square feet."
+      },
+      {
+        "type": "p",
+        "text": "If your attic is a different size, or your product has a different R-value per inch or coverage, enter those values in the [Insulation Calculator](/insulation-calculator) rather than adjusting the result by hand. Small measurement errors can change the package count, so measure the floor carefully."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls readers run into"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing up R-value and thickness. R-38 is not 38 inches. Divide by the per-inch value to get inches.",
+          "Using the wrong per-inch value. Look up the number for the exact product, not a similar one.",
+          "Measuring the wrong area. For an attic floor, measure the floor you are covering, not the roof area. If you need help with that measurement, see [how to calculate square footage of a room](/blog/how-to-calculate-square-footage-of-a-room).",
+          "Forgetting that coverage changes with depth. The coverage on the label applies at the depth stated there.",
+          "Assuming the exact count is enough. The calculator's count assumes the coverage on the label is accurate for your depth. Check with your supplier how they handle partial packages and returns."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "What this calculator does not cover"
+      },
+      {
+        "type": "p",
+        "text": "This page is about quantities only. It does not cover installation methods, and it does not tell you which R-value to pick. For those questions, ask a qualified professional."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Do I divide by the R-value per inch or multiply?"
+      },
+      {
+        "type": "p",
+        "text": "Divide. The target R-value divided by the R-value per inch gives the thickness in inches. Multiplying would give the wrong answer."
+      },
+      {
+        "type": "h3",
+        "text": "Where do I find the R-value per inch?"
+      },
+      {
+        "type": "p",
+        "text": "Check the product label or the manufacturer's data sheet. If the label lists only a total R-value for a given thickness, you can work out the per-inch value from that, but the manufacturer's listed number is the safest source."
+      },
+      {
+        "type": "h3",
+        "text": "Should I round the package count up?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. If the division leaves a remainder, buy one more package than the whole number. In the worked example the count is exactly 25 packages, so no extra package is needed."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same numbers for a different R-value target?"
+      },
+      {
+        "type": "p",
+        "text": "Not without recalculating. Change the target R-value in the [Insulation Calculator](/insulation-calculator) and the thickness and package count will update to match."
+      }
+    ],
+    "relatedTool": "insulation-calculator",
+    "sources": [
+      {
+        "title": "U.S. Department of Energy: Guide to home insulation",
+        "url": "https://www.energy.gov/sites/prod/files/guide_to_home_insulation.pdf"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 1000,
+          "targetR": 38,
+          "rPerInch": 2.5,
+          "sqFtPerPackage": 40
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 1000,
+          "targetR": 38,
+          "rPerInch": 2.5,
+          "sqFtPerPackage": 40
+        },
+        "results": [
+          {
+            "key": "thicknessIn",
+            "label": "Thickness needed",
+            "value": 15.2,
+            "unit": "in",
+            "digits": 2,
+            "primary": true,
+            "number": "15.2",
+            "display": "15.2 in"
+          },
+          {
+            "key": "packages",
+            "label": "Packages to buy",
+            "value": 25,
+            "unit": "packages",
+            "digits": 0,
+            "primary": true,
+            "number": "25",
+            "display": "25 packages"
+          },
+          {
+            "key": "packagesExact",
+            "label": "Exact package count",
+            "value": 25,
+            "unit": "packages",
+            "digits": 2,
+            "primary": false,
+            "number": "25",
+            "display": "25 packages"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "insulation-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "areaSqFt",
+            "label": "Area to insulate",
+            "unit": "sq ft",
+            "default": 500,
+            "step": 10
+          },
+          {
+            "kind": "number",
+            "key": "targetR",
+            "label": "Target R-value",
+            "default": 15,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "rPerInch",
+            "label": "R-value per inch of your product",
+            "default": 5,
+            "step": 0.1,
+            "help": "Printed on the product label. See the reference table below."
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerPackage",
+            "label": "Coverage per package",
+            "unit": "sq ft",
+            "default": 40,
+            "step": 1,
+            "help": "Printed on the package for the thickness you need."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "R-38을 달성하려면 단열재가 얼마나 필요한가? 두께와 포장 수량",
+    "summary_ko": [
+      "R-38에 도달하려면 목표 R-value(38)를 제품의 인치당 R-value로 나눠 필요한 두께를 구합니다.",
+      "그다음 시공 면적을 포장 1개당 시공 면적(coverage)으로 나눠 구매할 포장 수를 구합니다. 나머지가 있으면 올림합니다.",
+      "계산 예시: 다락방 바닥 1,000 sq ft, 제품 R-2.5/in, 포장당 40 sq ft인 경우 두께 15.2 in, 포장 25개가 필요합니다.",
+      "실제 치수와 제품 값은 Insulation Calculator에 입력하면 두께와 포장 수를 바로 계산할 수 있습니다.",
+      "제품별 인치당 R-value와 포장 표기 coverage는 반드시 해당 제품 라벨이나 데이터시트에서 확인해야 하며, 다른 제품의 값을 쓰면 안 됩니다.",
+      "흔한 실수(R-value와 두께 혼동, 잘못된 면적 측정, 깊이에 따른 coverage 변화 무시 등)를 짚고, 이 글은 물량 산정만 다루며 시공 방법이나 적정 R-value 선택은 전문가에게 문의하라고 안내합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"If you are unsure which target fits your home, ask a qualified professional before you buy.\" 문구는 목표 R값 선택에 대한 조언으로, 수량 산정 범위를 살짝 벗어납니다. 다만 건축 법규나 안전 조언은 아니므로 치명적이지는 않습니다."
+    ],
+    "word_count": 893
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 12,
+  "api_calls": 5,
+  "telegram_message_id": 63
+}

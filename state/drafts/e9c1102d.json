@@ -1,0 +1,235 @@
+{
+  "id": "e9c1102d",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-13T03:37:49Z",
+  "topic": {
+    "title": "Base64 encoding explained: why it makes data about 33% bigger",
+    "keyword": "base64 size increase",
+    "related_tool": "base64"
+  },
+  "post": {
+    "slug": "base64-size-increase-why-33-percent",
+    "title": "Base64 Size Increase: Why Base64 Makes Data About 33% Bigger",
+    "description": "Base64 turns every 3 bytes into 4 ASCII characters, so the output is about 33% larger. Learn the size formula, plus how padding and line breaks add overhead.",
+    "body": [
+      {
+        "type": "p",
+        "text": "Base64 makes data about 33% bigger because it represents every 3 bytes of input as 4 ASCII characters. Four characters is one-third more than three bytes, so the output is roughly 4/3 the size of the input. Padding and line breaks can add a little more on top of that."
+      },
+      {
+        "type": "p",
+        "text": "To check a specific value, paste it into the [Base64 Encoder / Decoder](/base64) and compare the lengths. The size math below lets you predict the result before you run anything."
+      },
+      {
+        "type": "h2",
+        "text": "Why 3 bytes become 4 characters"
+      },
+      {
+        "type": "p",
+        "text": "Each byte is 8 bits, so 3 bytes is 24 bits. Base64 splits those 24 bits into four 6-bit groups. A 6-bit value can be 0 to 63, which maps to one of 64 characters: A-Z, a-z, 0-9, +, and /."
+      },
+      {
+        "type": "p",
+        "text": "Take the ASCII text Man. In hex, the bytes are 4D 61 6E. In binary:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "01001101 01100001 01101110\n010011 010110 000101 101110\n   19     22     5     46\n   T      W      F     u"
+      },
+      {
+        "type": "p",
+        "text": "So Man encodes to TWFu. Three input bytes produced four output characters, with no loss of information."
+      },
+      {
+        "type": "h2",
+        "text": "The size math"
+      },
+      {
+        "type": "p",
+        "text": "The padded output length is:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "encoded_length = ceil(input_bytes / 3) * 4"
+      },
+      {
+        "type": "p",
+        "text": "Without padding, the length is ceil(input_bytes * 4 / 3). Some examples:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "3 bytes becomes 4 characters (ratio 1.33).",
+          "1,000 bytes becomes 1,336 characters (ratio 1.336).",
+          "1 MB (1,048,576 bytes) becomes 1,398,104 characters, about 1.33 times larger.",
+          "1 byte becomes 4 characters, a 300% increase. Small inputs look much worse in percentage terms."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "For large payloads the ratio settles at about 1.33. That is where the common 33% figure comes from."
+      },
+      {
+        "type": "h2",
+        "text": "Padding adds up to 2 extra characters"
+      },
+      {
+        "type": "p",
+        "text": "Base64 works in groups of 4 characters. If the last group of input has only 1 or 2 bytes, the encoder fills the missing bits with zeros and appends = signs so the output length is a multiple of 4."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "1 leftover byte: two = signs are added.",
+          "2 leftover bytes: one = sign is added.",
+          "0 leftover bytes: no padding."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Hello is 5 bytes, so it becomes SGVsbG8= with one padding character. The first 3 bytes (Hel) give SGVs, and the last 2 bytes (6C 6F) give bG8 plus one =."
+      },
+      {
+        "type": "p",
+        "text": "Padding is usually a few characters, so it rarely matters. It does matter for very small values and for systems that expect unpadded output. Some URL-safe variants drop the = entirely."
+      },
+      {
+        "type": "h2",
+        "text": "Line breaks add more overhead"
+      },
+      {
+        "type": "p",
+        "text": "The MIME standard (used in email attachments) wraps Base64 output into lines of 76 characters, and each line ends with a CRLF pair. That adds 2 bytes per 76 characters, about 2.6% extra. PEM certificates also use Base64, but they wrap lines at 64 characters, so the overhead there is higher. Many default encoders, including Node.js Buffer and Python base64.b64encode, do not add line breaks, so check the output when you compare sizes."
+      },
+      {
+        "type": "p",
+        "text": "If you see unexpected newlines in a Base64 string, that is probably line wrapping. Most decoders ignore whitespace, but some strict parsers and JSON strings do not."
+      },
+      {
+        "type": "h2",
+        "text": "Base64 vs Base64URL"
+      },
+      {
+        "type": "p",
+        "text": "Standard Base64 uses + and /, which have special meaning in URLs and file paths. Base64URL replaces them with - and _, and often omits the = padding. Swapping the alphabet does not change the length, so the size math is the same."
+      },
+      {
+        "type": "p",
+        "text": "The extra length in a JWT comes from two other sources. Each of the three segments is Base64URL-encoded JSON, so it carries the usual 4/3 expansion, and the segments are joined by dot characters, which add one byte each. The alphabet itself is not the cause. For more on how JWTs are structured, see [Decode JWT vs Verify: What's the Difference?](/blog/decode-jwt-vs-verify-difference)."
+      },
+      {
+        "type": "h2",
+        "text": "Code examples"
+      },
+      {
+        "type": "p",
+        "text": "These examples encode the string Hello and show the output length. Browsers' btoa only accepts Latin-1 characters and throws on anything above code point 255, so the browser example converts the text to UTF-8 bytes with TextEncoder first."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "// Node.js\nconst encoded = Buffer.from(\"Hello\", \"utf8\").toString(\"base64\");\nconsole.log(encoded); // SGVsbG8=\n\n// Browser, UTF-8 safe\nconst bytes = new TextEncoder().encode(\"Hello\");\nlet binary = \"\";\nfor (const b of bytes) binary += String.fromCharCode(b);\nconsole.log(btoa(binary)); // SGVsbG8="
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import base64\n\nencoded = base64.b64encode(b\"Hello\").decode(\"ascii\")\nprint(encoded)       # SGVsbG8=\nprint(len(encoded))  # 8"
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Assuming Base64 is encryption or compression. It is only an encoding, and anyone can decode it.",
+          "Storing large binary files as Base64 in JSON or databases without accounting for the 33% increase.",
+          "Calling btoa on raw text with non-Latin-1 characters, which throws an error in browsers. Encode to UTF-8 bytes first.",
+          "Forgetting that a Base64 string in a URL needs URL encoding, or using Base64URL when the receiver expects standard Base64.",
+          "Mixing up the two alphabets when decoding. Strict decoders may reject + or / when they expect Base64URL, and may reject - or _ when they expect standard Base64."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "How to reduce the overhead"
+      },
+      {
+        "type": "p",
+        "text": "Base64 is the right choice when you must send binary data through a text-only channel, such as JSON, an HTML data URI, or an email body. When you control the transport, consider sending raw bytes instead. In HTTP, multipart form uploads and binary responses avoid the overhead entirely."
+      },
+      {
+        "type": "p",
+        "text": "If the payload is text and you only need to shrink it, compress it first, then encode. Base64 of compressed data is still about 33% larger than the compressed bytes, but the compressed bytes are often much smaller than the original."
+      },
+      {
+        "type": "p",
+        "text": "Be careful with secrets, tokens, and private files. Avoid pasting production secrets into any online tool when you can run the encoding yourself with the commands above."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is Base64 always exactly 33% bigger?"
+      },
+      {
+        "type": "p",
+        "text": "No. The ratio is 4/3 for large inputs, about 33.3% larger. Small inputs can look much worse because padding and the 4-character minimum add proportionally more. Line breaks add a further small amount when used."
+      },
+      {
+        "type": "h3",
+        "text": "Does Base64 compress data?"
+      },
+      {
+        "type": "p",
+        "text": "No. Base64 always makes the output larger. If you need smaller output, compress the data with gzip or another algorithm before encoding."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my Base64 string end with = or ==?"
+      },
+      {
+        "type": "p",
+        "text": "The = characters are padding. They make the length a multiple of 4. One = means the last group had 2 bytes, and two == means it had 1 byte."
+      },
+      {
+        "type": "h3",
+        "text": "Can I calculate the decoded size from a Base64 string?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Take the string length, subtract the number of trailing = characters, then multiply by 3 and divide by 4, rounding down. For example, SGVsbG8= has length 8 and one =, so (8 - 1) * 3 / 4 = 5.25, which rounds down to 5 bytes, matching Hello."
+      }
+    ],
+    "relatedTool": "base64"
+  },
+  "review": {
+    "title_ko": "Base64 크기 증가: 왜 Base64는 데이터를 약 33% 크게 만드는가",
+    "summary_ko": [
+      "Base64는 입력 3바이트를 ASCII 문자 4개로 바꾸므로 출력이 약 4/3배(약 33%) 커진다.",
+      "3바이트가 4문자가 되는 원리를 'Man'을 TWFu로 인코딩하는 2진수 예시로 보여준다.",
+      "출력 길이 공식 ceil(입력바이트/3)*4를 제시하고, 1,000바이트(1,336문자)와 1MB(1,398,104문자) 예시를 든다. 작은 입력일수록 비율이 크게 나빠진다.",
+      "패딩은 마지막 그룹의 남은 바이트 수에 따라 = 기호를 0~2개 붙이며, 'Hello'가 SGVsbG8=이 되는 과정을 설명한다.",
+      "MIME(76자 줄바꿈, 약 2.6%)와 PEM(64자 줄바꿈)의 줄바꿈 오버헤드를 설명하고, Node.js와 Python 기본 인코더는 줄바꿈을 넣지 않는다고 안내한다.",
+      "Base64와 Base64URL은 길이가 같고, JWT가 커지는 이유는 세그먼트 인코딩과 점(.) 구분자 때문이라고 설명한다.",
+      "Node.js, 브라우저(TextEncoder + btoa), Python 코드 예시와 흔한 실수, 오버헤드 줄이는 방법, FAQ를 다룬다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "'PEM certificates'를 76자 줄바꿈 예시로 든 부분이 틀렸습니다. 원문 \"The MIME standard (used in email attachments and PEM certificates) wraps Base64 output into lines of 76 characters\"에서 PEM은 줄당 64자이며, 76자는 MIME 기준입니다.",
+      "JWT가 원본 JSON보다 긴 이유를 Base64URL 때문이라고 한 설명이 부정확합니다. 원문 \"JWTs use Base64URL for each segment, which is why a JWT is longer than its raw JSON\"에서 길이 증가의 원인은 Base64 자체의 약 33% 증가와 점(.) 구분자이며, Base64URL은 크기를 바꾸지 않습니다.",
+      "\"DevRivet tools run entirely in the browser, so the input is not sent to a server.\" 문장은 사이트 동작에 관한 사실 주장이므로 게시 전에 실제 구현과 일치하는지 확인하세요. 같은 맥락으로 \"It handles full UTF-8 text\"도 도구 기능과 맞는지 확인이 필요합니다."
+    ],
+    "word_count": 1077
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 24,
+  "api_calls": 7,
+  "telegram_message_id": 62
+}
