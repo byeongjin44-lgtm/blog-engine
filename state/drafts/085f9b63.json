@@ -1,0 +1,302 @@
+{
+  "id": "085f9b63",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-14T03:36:52Z",
+  "topic": {
+    "title": "How much pea gravel for a 10x10 patio?",
+    "keyword": "how much pea gravel for a 10x10 area",
+    "related_tool": "gravel-calculator",
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 10,
+          "depthIn": 2
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-pea-gravel-for-10x10-area",
+    "title": "How Much Pea Gravel for a 10x10 Area? Tons and Cubic Yards",
+    "description": "A 10 by 10 foot area covered 2 inches deep needs 0.62 cubic yards of pea gravel, about 0.86 tons at the default weight. Here is how the numbers work.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 10 by 10 foot area covered 2 inches deep needs 0.62 cubic yards of pea gravel, which weighs about 0.86 tons at the calculator's default weight of 1.4 tons per cubic yard. Bulk pea gravel is usually ordered by the cubic yard or by the ton, so those are the two numbers to take with you when you call a supplier."
+      },
+      {
+        "type": "p",
+        "text": "You can run your own measurements through the [Gravel & Sand Calculator](/gravel-calculator) for any length, width and depth. The example below uses 10 feet by 10 feet at 2 inches deep."
+      },
+      {
+        "type": "h2",
+        "text": "The short answer for a 10x10 area at 2 inches"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Area: 100 sq ft",
+          "Volume: 0.62 cu yd (16.7 cu ft)",
+          "Weight: 0.86 tons, using the default of 1.4 tons per cubic yard"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Volume is the space the gravel fills. Weight is what the pile will weigh once it is delivered. Bulk orders are usually priced by the cubic yard or by the ton, so you may need one or both numbers depending on how your supplier quotes the load."
+      },
+      {
+        "type": "h2",
+        "text": "How the calculator gets these numbers"
+      },
+      {
+        "type": "p",
+        "text": "You can follow the same steps by hand to check the result."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the area. Multiply length by width. A 10 foot by 10 foot area is 100 sq ft.",
+          "Convert the depth to feet and multiply by the area. The volume in cubic feet is the area times the depth in feet, which gives 16.7 cu ft.",
+          "Convert cubic feet to cubic yards. There are 27 cubic feet in a cubic yard, so divide the cubic feet by 27. That gives 0.62 cu yd.",
+          "Convert volume to weight. Multiply the cubic yards by the weight of one cubic yard of your gravel. At the default of 1.4 tons per cubic yard, the result is 0.86 tons."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The calculator also uses a fixed conversion factor for bulk gravel: area in square feet times depth in inches, divided by 324. One cubic yard covers 324 sq ft at 1 inch deep, so dividing by 324 converts square feet and inches into cubic yards. The 27 and 324 figures are fixed unit conversion factors, not results that change with your project."
+      },
+      {
+        "type": "p",
+        "text": "One note for hand checks: the calculator carries more decimal places than the 0.62 it displays. If you multiply the displayed 0.62 by 1.4 yourself, you may get a slightly different tonnage than the 0.86 shown. Use the calculator's figure when you compare results."
+      },
+      {
+        "type": "h2",
+        "text": "Why the weight can change"
+      },
+      {
+        "type": "p",
+        "text": "The 1.4 ton default is a starting point, not a guarantee. Pea gravel comes from different quarries, and stone density varies, so the weight per cubic yard can differ from one supplier to the next. Confirm the weight with your supplier before you order."
+      },
+      {
+        "type": "p",
+        "text": "If your supplier gives you a different weight per cubic yard, enter that number in the calculator. The weight result will update. The volume result will not change, because volume depends only on area and depth."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes with pea gravel estimates"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing up cubic feet and cubic yards. The same pile is 16.7 cu ft and 0.62 cu yd. Ask your supplier which unit they quote in before you compare prices.",
+          "Using the wrong depth. The 2 inch example is a single layer. Enter the depth you plan to spread, not the height of the pile when it is dumped.",
+          "Assuming the weight is fixed. Two suppliers can quote different tons for the same cubic yards, so ask which weight per cubic yard they use.",
+          "Assuming every bag is the same. Bagged pea gravel lists a coverage on the label, and products differ. Use the coverage printed on the bag you plan to buy, not a general figure."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Using the calculator with your own measurements"
+      },
+      {
+        "type": "p",
+        "text": "Measure the length and width of the area in feet, and decide how deep you want the layer in inches. Enter those into the [Gravel & Sand Calculator](/gravel-calculator), along with your supplier's weight per cubic yard if it differs from the default."
+      },
+      {
+        "type": "p",
+        "text": "If the area is not a rectangle, measure it in sections and add the results together. The [Square Footage Calculator](/square-footage-calculator) can help with triangles and circles. The estimate assumes a level, even layer, so uneven ground will change how much you need. Measure twice before you order."
+      },
+      {
+        "type": "p",
+        "text": "For a longer project, the same method applies. The [driveway gravel example](/blog/how-much-gravel-for-driveway-12x50) shows how the tonnage works out for a longer area."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is pea gravel sold by the ton or by the cubic yard?"
+      },
+      {
+        "type": "p",
+        "text": "Both are common for bulk orders. Bagged pea gravel is sold by the bag. Ask your supplier which unit they quote in before you order, and convert your calculator result to match."
+      },
+      {
+        "type": "h3",
+        "text": "Does the weight change how much gravel I need?"
+      },
+      {
+        "type": "p",
+        "text": "The weight does not change how much space the gravel fills. It changes how many tons the order weighs. If the supplier's weight per cubic yard is different from the default, enter it in the calculator so the tonnage matches what you will be billed for."
+      },
+      {
+        "type": "h3",
+        "text": "How many bags do I need instead of bulk?"
+      },
+      {
+        "type": "p",
+        "text": "Start with the volume you need in cubic yards or cubic feet. Then check the coverage or yield printed on the bag label, because products differ. Divide your required volume by that figure and round up so you do not come up short."
+      },
+      {
+        "type": "h3",
+        "text": "Who should I ask about the ground under the gravel?"
+      },
+      {
+        "type": "p",
+        "text": "This page only estimates how much material to buy. For questions about what goes under the gravel or how the ground should be prepared, ask a qualified professional."
+      }
+    ],
+    "relatedTool": "gravel-calculator",
+    "sources": [
+      {
+        "title": "Mulch Pros: Material weight and coverage",
+        "url": "https://mulchpros.com/material-weight-and-coverage/"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 10,
+          "depthIn": 2
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 10,
+          "depthIn": 2
+        },
+        "results": [
+          {
+            "key": "tons",
+            "label": "Weight",
+            "value": 0.86,
+            "unit": "tons",
+            "digits": 2,
+            "primary": true,
+            "number": "0.86",
+            "display": "0.86 tons"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 0.62,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": true,
+            "number": "0.62",
+            "display": "0.62 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 16.7,
+            "unit": "cu ft",
+            "digits": 1,
+            "primary": false,
+            "number": "16.7",
+            "display": "16.7 cu ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Area",
+            "value": 100,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "100",
+            "display": "100 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "gravel-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 20,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "depthIn",
+            "label": "Depth",
+            "unit": "in",
+            "default": 3,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "tonsPerCuYd",
+            "label": "Weight per cubic yard",
+            "unit": "tons",
+            "default": 1.4,
+            "step": 0.05,
+            "help": "Ask your supplier for the weight of the exact material."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "10x10 면적에 필요한 pea gravel 양은? 톤과 立方야드 계산",
+    "summary_ko": [
+      "10x10피트 면적에 2인치 깊이로 깔려면 pea gravel 0.62 입방야드가 필요하며, 기본 단위무게 1.4톤/입방야드 기준으로 약 0.86톤입니다.",
+      "벌크 주문은 보통 입방야드 또는 톤 단위로 하므로, 공급업체에 연락할 때 이 두 수치를 가지고 가라고 안내합니다.",
+      "계산기 링크로 길이, 너비, 깊이를 바꿔 직접 계산해 볼 수 있으며, 예시는 10피트 x 10피트, 깊이 2인치입니다.",
+      "면적 100 sq ft, 부피 0.62 cu yd (16.7 cu ft)를 제시하고, 부피는 공간을 채우는 양, 무게는 배송 후 더미의 무게라고 설명합니다.",
+      "손계산 단계를 설명합니다. 면적 계산, 깊이를 피트로 환산해 부피 계산, 27로 나눠 입방야드 환산, 단위무게를 곱해 톤 환산 순서입니다. 또한 단위 환산 상수 27과 324를 소개합니다.",
+      "무게는 채석장과 공급업체에 따라 달라질 수 있으니 주문 전에 입방야드당 무게를 확인하라고 합니다. 계산기의 소수점 처리 때문에 손계산 톤수가 약간 다를 수 있다고 덧붙입니다.",
+      "자주 하는 실수(단위 혼동, 깊이 잘못 입력, 무게 가정, 봉지 포장 커버리지 차이)와 FAQ(톤/입방야드 단위, 봉지 수량 계산, 지반 관련 질문은 전문가에게 문의)를 다룹니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "손계산 단계에서 \"27\"과 \"324\"는 단위 환산 상수로 명시되어 있어 계산 결과가 아니지만, 게시물에서 사용된 숫자입니다. 상수라는 설명이 있으므로 문제는 아니나, 검토 기준상 계산기 결과 목록에 없는 숫자임을 참고하세요.",
+        "en": "The constants 27 and 324 appear in the post but are not calculator results. They are explicitly described as fixed unit conversion factors, so this is acceptable; flagged only for awareness."
+      },
+      {
+        "severity": "low",
+        "ko": "\"If you multiply the displayed 0.62 by 1.4 yourself, you may get a slightly different tonnage than the 0.86 shown\"에서 0.62 x 1.4는 약 0.87로 계산되는 차이가 있습니다. 게시물이 이 차이를 이미 설명하고 있어 정확성 문제는 아닙니다.",
+        "en": "0.62 x 1.4 = 0.868, which rounds to 0.87 rather than 0.86. The post already discloses this rounding difference, so it is not an error."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "\"Supplier tables list most gravel at about 2,600 to 2,800 pounds per cubic yard, which is 1.3 to 1.4 tons.\" 계산기 결과에 없는 2,600~2,800파운드 및 1.3~1.4톤 수치가 작성자가 임의로 제시한 값입니다. 출처(mulchpros)로 확인되지 않는 한 삭제하거나 출처를 명확히 표시해야 합니다.",
+      "\"At the default of 1.4 tons, 0.62 cubic yards comes to 0.86 tons.\" 독자가 표시된 0.62에 1.4를 곱하면 0.868로 0.87이 나와 계산기 결과인 0.86과 맞지 않습니다. 실제 계산은 0.617입방야드를 사용한 값이므로 설명을 보완하는 것이 좋습니다.",
+      "\"A supplier quoting by the yard will not accept cubic feet.\" 공급업체가 입방피트를 절대 받지 않는다는 단정적 표현은 과장일 수 있습니다. \"may not accept\" 등으로 완화하는 것이 좋습니다.",
+      "설명(description)의 \"A 10x10 area\"에 단위(피트)가 빠져 있습니다. 본문과 맞추기 위해 10 by 10 foot으로 쓰는 것이 좋습니다.",
+      "\"One cubic yard covers 324 sq ft at 1 inch deep\"의 324와 \"There are 27 cubic feet in a cubic yard\"의 27은 단위 환산 상수입니다. 계산기 결과 목록에는 없지만 계산된 추정치가 아니라 상수이므로 문제가 되지는 않습니다. 참고용으로만 알려드립니다.",
+      "\"Many suppliers prefer cubic yards, and some may not take a cubic foot figure\"라는 주장에 출처가 없습니다. 일반론으로 보이지만 확인되지 않은 주장입니다."
+    ],
+    "word_count": 934
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 16,
+  "api_calls": 6,
+  "telegram_message_id": 68
+}

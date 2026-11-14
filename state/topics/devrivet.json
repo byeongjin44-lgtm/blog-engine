@@ -1,0 +1,90 @@
+[
+  {
+    "title": "Cron Expression for Every 5 Minutes (and Other Minute Intervals)",
+    "keyword": "cron every 5 minutes",
+    "related_tool": "cron-generator",
+    "notes": "Show */5 * * * * and how the step syntax works in 5-field cron. Cover every N minutes, every 15 minutes with 0,15,30,45 vs */15, and the common mistake of putting the step in the hour field. Explain that cron runs at minute boundaries, not from the moment you started the job. Link to the generator to preview next run times.",
+    "title_ko": "5분마다 실행되는 Cron 표현식 (및 기타 분 단위 간격)",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "Cron Expression for Every Hour and Every N Hours",
+    "keyword": "cron every 2 hours",
+    "related_tool": "cron-generator",
+    "notes": "Cover 0 * * * * for hourly, 0 */2 * * * for every two hours, and business-hours ranges like 9-17. Explain why */2 in the hour field does not roll over cleanly at midnight the way people expect (0,2,...,22 then next day starts at 0). Mention the difference between minute 0 and minute 30 for hourly jobs. Keep it to the 5-field format.",
+    "title_ko": "매시간 및 N시간마다 실행되는 Cron 표현식",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "Cron Expression for First Day of the Month",
+    "keyword": "cron first day of month",
+    "related_tool": "cron-generator",
+    "notes": "Standard 5-field cron has no 'last day' or 'first weekday' syntax. Show 0 0 1 * * for the first of each month, and explain that day-of-month and day-of-week are OR-ed when both are set, a frequent source of surprise. Give a workaround for last day of month (run daily and check date in the script). Avoid claiming behavior for specific cron implementations beyond standard Vixie-style semantics.",
+    "title_ko": "매월 첫째 날 실행되는 Cron 표현식",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "Cron Expression for Weekdays Only (Monday to Friday)",
+    "keyword": "cron weekdays only",
+    "related_tool": "cron-generator",
+    "notes": "Show 1-5 in the day-of-week field versus MON-FRI and explain both are usually accepted. Explain Sunday is 0 and also 7 in many implementations, so it is safer to avoid 7. Include a time example like 30 8 * * 1-5. Common mistake: expecting timezone handling, which cron itself does not provide.",
+    "title_ko": "평일(월~금)에만 실행되는 Cron 표현식",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "Why Does My Cron Job Not Run? Common Causes and Fixes",
+    "keyword": "cron job not running",
+    "related_tool": "cron-generator",
+    "notes": "Cover checklist items: missing PATH variables, relative paths, no trailing newline in crontab, percent sign needing escape as \\%, server timezone differing from expected, and day-of-month/day-of-week OR behavior. Use the generator to verify the expression and next run times. Avoid tying to specific OS versions.",
+    "title_ko": "Cron 작업이 실행되지 않는 이유와 해결 방법",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "How to Read a Cron Expression: Field-by-Field Explanation",
+    "keyword": "how to read cron expression",
+    "related_tool": "cron-generator",
+    "notes": "Walk through minute, hour, day of month, month, day of week with allowed ranges. Show how to decode an unfamiliar expression like 15,45 14 * 1-6 1-5. Explain the meaning of * versus ? if relevant (note ? is not in standard 5-field cron). Use the explainer to demonstrate. Different from existing daily/weekly posts since it is a general reading guide.",
+    "title_ko": "Cron 표현식 읽는 법: 필드별 설명",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "Base64 Encode Emoji and Non-ASCII Text in JavaScript",
+    "keyword": "base64 encode unicode javascript",
+    "related_tool": "base64",
+    "notes": "Explain that btoa() throws on characters above Latin-1 and show the fix using TextEncoder to UTF-8 bytes then base64. Show decoding back with TextDecoder. Include an emoji example. Mention Node's Buffer.from(str, 'utf8').toString('base64') briefly. Do not overlap with the existing Base64 size or Base64URL posts.",
+    "title_ko": "JavaScript에서 이모지 및 비ASCII 텍스트를 Base64로 인코딩하는 방법",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "Fix Invalid Character Error When Using btoa() in JavaScript",
+    "keyword": "btoa invalid character error",
+    "related_tool": "base64",
+    "notes": "Quote the DOMException message 'Failed to execute btoa: Invalid character' and explain it happens for non-Latin1 input. Give the UTF-8 encode-then-base64 workaround and a note that atob returns binary strings, not text. Keep it focused on this one error and its fix.",
+    "title_ko": "JavaScript btoa() 'Invalid character' 오류 해결 방법",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "Generate UUIDs in Bash, Python and Node.js Without Libraries",
+    "keyword": "generate uuid command line",
+    "related_tool": "uuid-generator",
+    "notes": "Show uuidgen on macOS and Linux, Python's uuid.uuid4(), and Node's crypto.randomUUID(). Note that crypto.randomUUID needs a secure context in browsers. Mention that the browser generator on DevRivet can produce bulk UUIDs when you need many at once. Do not state version-specific runtime claims.",
+    "title_ko": "라이브러리 없이 Bash, Python, Node.js에서 UUID 생성하기",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "How to Validate a UUID String with a Regex",
+    "keyword": "validate uuid regex",
+    "related_tool": "uuid-generator",
+    "notes": "Provide a regex matching the 8-4-4-4-12 hex format, optionally checking the version nibble and variant bits. Show a test string that matches the shape but has an invalid version. Explain the difference between format validation and checking that the UUID was truly generated. Link to the generator's validate feature. Avoid repeating the collision probability content.",
+    "title_ko": "정규식으로 UUID 문자열 검증하는 방법",
+    "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "URL Encode a Query Parameter with Special Characters: Step-by-Step",
+    "keyword": "url encode query parameter",
+    "related_tool": "url-encoder",
+    "notes": "Practical how-to: encode a value containing &, =, #, +, and non-ASCII characters before appending it to a query string. Show the encoded output and why & and = break parsing. Use encodeURIComponent as the reference and link to the URL encoder for testing. Avoid re-explaining encodeURI vs encodeURIComponent or the space-to-%20 vs + topic.",
+    "title_ko": "특수문자가 포함된 쿼리 파라미터 URL 인코딩 단계별 가이드",
+    "added": "2026-11-14T03:33:50Z"
+  }
+]

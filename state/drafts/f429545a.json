@@ -1,0 +1,241 @@
+{
+  "id": "f429545a",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-14T03:35:34Z",
+  "topic": {
+    "title": "Base64 vs Base64URL: the differences and when to use each",
+    "keyword": "base64 vs base64url",
+    "related_tool": "base64"
+  },
+  "post": {
+    "slug": "base64-vs-base64url-differences-when-to-use",
+    "title": "Base64 vs Base64URL: Differences and When to Use Each",
+    "description": "Base64URL swaps + and / for - and _ and often drops = padding. Learn the differences, when each one fits, and how to convert between them.",
+    "body": [
+      {
+        "type": "p",
+        "text": "Standard Base64 uses the characters + and / and pads output with =. Base64URL replaces + with - and / with _, and it is often written without = padding. Use standard Base64 for email attachments, data URIs and many APIs. Use Base64URL when the encoded value goes into a URL, a filename or a JWT."
+      },
+      {
+        "type": "p",
+        "text": "You can test either variant with the [Base64 Encoder / Decoder](/base64). Paste a value, encode or decode it, and compare the output. The rest of this post covers the exact differences, the conversion code, and the mistakes developers hit most often."
+      },
+      {
+        "type": "h2",
+        "text": "The alphabets side by side"
+      },
+      {
+        "type": "p",
+        "text": "Both variants are defined in RFC 4648. The first 62 characters are identical: A–Z, a–z and 0–9. They differ only in the last two symbols and in padding."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Standard Base64 (RFC 4648, section 4): index 62 is +, index 63 is /, and = is used for padding.",
+          "Base64URL (RFC 4648, section 5): index 62 is -, index 63 is _, and padding is optional. Many implementations omit it."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Each Base64 character carries 6 bits. The + and / characters are special in URLs: + can be read as a space in a query string, and / is a path separator. The URL-safe variant avoids both problems without needing percent-encoding."
+      },
+      {
+        "type": "h2",
+        "text": "Examples with the same bytes"
+      },
+      {
+        "type": "p",
+        "text": "Hello encodes the same way in both variants because it contains none of the affected characters:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Input bytes: Hello (48 65 6c 6c 6f)",
+          "Standard Base64: SGVsbG8=",
+          "Base64URL without padding: SGVsbG8"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Bytes that produce index 62 or 63 show the difference. The two bytes 0xFB 0xFF give these outputs:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Standard Base64: +/8=",
+          "Base64URL without padding: -_8"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "A single byte 0xFF gives /w== in standard Base64 and _w in Base64URL. The padding is dropped in the URL-safe version."
+      },
+      {
+        "type": "h2",
+        "text": "Quick comparison"
+      },
+      {
+        "type": "p",
+        "text": "Use this table when you need to pick a variant or check which one a value uses."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Characters 62 and 63: standard uses + and /; URL-safe uses - and _.",
+          "Padding: standard requires = to make the length a multiple of 4; URL-safe usually omits it.",
+          "Safe in a URL path or query without encoding: standard is not fully safe (+, / and = need encoding); URL-safe is safe.",
+          "Typical uses: standard for MIME email, PEM certificates, data: URIs and HTTP Basic auth headers; URL-safe for JWT segments, URL tokens, and IDs or filenames that appear in links."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "When to use standard Base64"
+      },
+      {
+        "type": "p",
+        "text": "Use standard Base64 when the receiving system expects it. MIME, PEM and the Basic auth header in HTTP all use the standard alphabet with padding. Changing the alphabet breaks those consumers, even if the value looks fine to you."
+      },
+      {
+        "type": "p",
+        "text": "Data URIs such as data:image/png;base64,... are a common exception to watch. The payload is standard Base64. If it contains + or /, and you place it in a query string, percent-encode it first with a tool such as the [URL Encoder / Decoder](/url-encoder)."
+      },
+      {
+        "type": "h2",
+        "text": "When to use Base64URL"
+      },
+      {
+        "type": "p",
+        "text": "Use Base64URL when the value must survive a URL, a cookie-like token, or a filename. JSON Web Tokens are the most common case. A JWT is three dot-separated parts, and each part is Base64URL encoded without padding. The dot is the separator, so the encoding must avoid dots. Base64URL does not introduce any dots, because it does not use . at all."
+      },
+      {
+        "type": "p",
+        "text": "To see how this works in practice, paste a token into the [JWT Decoder](/jwt-decoder). The header and payload are Base64URL segments, and the decoder shows them as readable JSON. Decoding a token does not check its signature, so a readable payload is not proof that the token is valid. For the difference between decoding a token and verifying its signature, see [Decode JWT vs Verify: What's the Difference?](/blog/decode-jwt-vs-verify-difference)."
+      },
+      {
+        "type": "h2",
+        "text": "Converting between the two in JavaScript"
+      },
+      {
+        "type": "p",
+        "text": "Node.js and modern browsers handle these conversions differently. In Node.js, Buffer supports a base64url encoding name directly. In the browser, btoa and atob only work with the standard alphabet, so you need to convert the characters yourself."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const bytes = Buffer.from([0xfb, 0xff]);\nconsole.log(bytes.toString('base64'));    // +/8=\nconsole.log(bytes.toString('base64url')); // -_8\n\nconst std = '+/8=';\nconst url = std.replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, '');\nconsole.log(url); // -_8\n\nconst back = url.replace(/-/g, '+').replace(/_/g, '/');\nconst padded = back + '='.repeat((4 - (back.length % 4)) % 4);\nconsole.log(padded); // +/8="
+      },
+      {
+        "type": "p",
+        "text": "The padding step works when the length mod 4 is 0, 2 or 3. A length mod 4 of 1 is not valid Base64 in either variant. Such input is corrupt, usually because it was truncated or altered in transit, and adding = characters cannot repair it."
+      },
+      {
+        "type": "p",
+        "text": "In the browser, atob('-_8=') throws an InvalidCharacterError, because - and _ are not in the standard alphabet. Convert the characters first, then call atob."
+      },
+      {
+        "type": "h2",
+        "text": "Converting between the two in Python"
+      },
+      {
+        "type": "p",
+        "text": "Python's base64 module has separate functions for each alphabet. The URL-safe encoder always pads, so strip the padding yourself if your format requires it."
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import base64\n\ndata = b'\\xfb\\xff'\nprint(base64.b64encode(data))         # b'+/8='\nprint(base64.urlsafe_b64encode(data)) # b'-_8='\nprint(base64.urlsafe_b64encode(data).rstrip(b'='))  # b'-_8'\n\n# Decoding unpadded input: add the padding back first\ns = b'-_8'\ns += b'=' * (-len(s) % 4)\nprint(base64.urlsafe_b64decode(s))    # b'\\xfb\\xff'"
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing alphabets: a value with - or _ fed to a standard decoder fails. A value with + or / fed to a URL-safe decoder can decode to the wrong bytes or fail. Check which alphabet the source uses.",
+          "Padding mismatch: some decoders require padding and others do not. If decoding fails on a length that is not a multiple of 4, add = characters before decoding. A length with mod 4 equal to 1 is different: no amount of padding makes it valid, so the input is corrupt and needs to be fetched or generated again.",
+          "Unencoded + in query strings: a + in a URL is often decoded as a space. Use Base64URL, or percent-encode the value.",
+          "Assuming Base64 is encryption: both variants are reversible encodings. Anyone can decode them, so do not treat them as secrets. The size overhead is also about 33 percent. See [Base64 Size Increase: Why Base64 Makes Data About 33% Bigger](/blog/base64-size-increase-why-33-percent) for the math.",
+          "Pasting live secrets into online tools: a JWT or any token can contain live credentials. Before pasting a production value into any online tool, check how that tool handles your input, or use a local script instead. The DevRivet Base64 and JWT tools run in your browser, but you should still confirm that for any tool you use with secrets."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Which one should you choose?"
+      },
+      {
+        "type": "p",
+        "text": "If the specification or library you are calling names the alphabet, use that one. If you are designing a new token or identifier that will appear in a URL, choose Base64URL and omit padding. If you are working with email, certificates, data URIs or HTTP headers, use standard Base64 with padding."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is Base64URL the same as Base64 with the characters swapped?"
+      },
+      {
+        "type": "p",
+        "text": "Mostly, yes. The swap of + to - and / to _ is the core change. Padding is the other difference: Base64URL is often written without trailing = characters, but padding is optional in many decoders."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my JWT not decode with a standard Base64 decoder?"
+      },
+      {
+        "type": "p",
+        "text": "JWT segments use Base64URL without padding. A standard decoder rejects - and _, and it may need padding added back. Convert the alphabet and restore the padding, or use a JWT-aware decoder."
+      },
+      {
+        "type": "h3",
+        "text": "Do I need to add padding before decoding Base64URL?"
+      },
+      {
+        "type": "p",
+        "text": "It depends on the decoder. Some libraries accept unpadded input and others do not. If you control the code, add = characters until the length is a multiple of 4 before calling a decoder that requires padding. If the length mod 4 is 1, the value is corrupt and padding will not help."
+      },
+      {
+        "type": "h3",
+        "text": "Is Base64URL more secure than Base64?"
+      },
+      {
+        "type": "p",
+        "text": "No. Both are encodings, not encryption or hashing. Their only practical difference is which characters appear in the output. Security comes from the signature, encryption, or access control around the value."
+      }
+    ],
+    "relatedTool": "base64"
+  },
+  "review": {
+    "title_ko": "Base64 vs Base64URL: 차이점과 각각을 언제 쓰는지",
+    "summary_ko": [
+      "표준 Base64는 + 와 /를 쓰고 출력 끝을 =로 패딩하며, Base64URL은 이를 - 와 _로 바꾸고 보통 패딩을 생략합니다.",
+      "두 방식은 RFC 4648에 정의되어 있으며, 앞의 62개 문자(A–Z, a–z, 0–9)는 같고 마지막 두 기호와 패딩만 다릅니다.",
+      "같은 바이트를 예로 듭니다: 'Hello'는 두 방식에서 같고, 0xFB 0xFF는 +/8= (표준)과 -_8 (URL 안전형)이 됩니다. 0xFF 한 바이트는 /w== 와 _w가 됩니다.",
+      "표준 Base64는 MIME, PEM, data URI, HTTP Basic 인증처럼 수신 측이 요구하는 곳에, Base64URL은 JWT 세그먼트, URL 토큰, 링크에 들어가는 ID나 파일명에 쓰라고 설명합니다.",
+      "JavaScript(Node.js Buffer, 브라우저 btoa/atob)와 Python(b64encode, urlsafe_b64encode)에서 변환하는 코드를 보여주고, 패딩을 다시 붙이는 방법과 길이 mod 4가 1인 입력은 복구할 수 없다는 점을 설명합니다.",
+      "흔한 실수로 알파벳 혼용, 패딩 불일치, 쿼리 문자열의 +, Base64를 암호화로 오해하는 것, 운영 중인 비밀값을 온라인 도구에 붙여넣는 위험을 다룹니다.",
+      "결론은 명세나 라이브러리가 지정한 알파벳을 따르고, 새로 설계하는 URL용 식별자는 Base64URL과 패딩 생략을 쓰라는 것입니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"The DevRivet Base64 and JWT tools run in your browser\"라는 문장은 사이트 도구가 브라우저에서만 동작한다는 제품 주장인데, 이 글만으로는 검증할 수 없습니다. 실제와 맞는지 확인하거나, 맞지 않으면 문장을 수정하세요.",
+        "en": "The claim that the DevRivet Base64 and JWT tools run entirely in the browser is a product statement I cannot verify from the post. Confirm it is accurate before publishing, or reword it."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "\"DevRivet's tools run entirely in your browser, so the value is not sent to a server\"라는 문장은 사이트 동작에 대한 주장인데, 실제로 모든 도구가 클라이언트에서만 실행되는지 게시 전에 확인해야 합니다.",
+      "\"Most implementations omit it.\"(\"Base64URL ... usually written without = padding. Most implementations omit it.\")는 과장된 일반화일 수 있습니다. 패딩 생략은 RFC에서 허용되는 선택이며, 구현마다 다르므로 \"many\" 또는 \"often\" 같은 표현이 더 정확합니다.",
+      "\"A length mod 4 of 1 is not valid Base64\"라고 해 두고, 뒤쪽 Pitfalls에서는 \"decoding fails on a length that is not a multiple of 4, add = characters\"라고 적었습니다. 길이를 4의 배수로 맞추기 위해 =를 추가한다는 말은 길이 mod 4가 1인 경우에는 도움이 되지 않으므로 두 문장이 서로 맞지 않습니다."
+    ],
+    "word_count": 1294
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 22,
+  "api_calls": 6,
+  "telegram_message_id": 67
+}
