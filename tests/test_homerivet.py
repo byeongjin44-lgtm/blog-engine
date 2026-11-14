@@ -153,6 +153,14 @@ class FlowTests(unittest.TestCase):
         calculator.runner = self._old
 
     def test_numbers_are_computed_before_writing_and_published_with_sources(self):
+        from dataclasses import replace
+        import engine.cli as cli
+
+        # Put the 12x12 paint topic first: the real topics.toml order changes (priority block).
+        paint = next(t for t in SITE.topics if t.title == "How much paint do I need for a 12x12 bedroom?")
+        old = cli.load_site
+        cli.load_site = lambda site_id: replace(SITE, topics=(paint,) + tuple(t for t in SITE.topics if t is not paint))
+        self.addCleanup(setattr, cli, "load_site", old)
         llm = FakeLLM([make_post()], [OK_REVIEW])
         tg, gh = FakeTelegram(), FakeGitHub()
         self.assertEqual(run_draft(["homerivet"], state_dir=self.tmp, telegram=tg, llm_transport=llm, github_transport=gh), 0)

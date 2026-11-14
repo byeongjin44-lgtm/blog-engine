@@ -1,7 +1,104 @@
-# Topic queue for HomeRivet, used top to bottom. Add new topics at the end.
+# Topic queue for HomeRivet, used top to bottom (published titles are skipped).
+# PRIORITY block first (2026-11-14, owner request): chosen from Search Console queries where the site
+# already gets impressions — narrow "dimension" questions rank far better than broad calculator terms.
+# Put future priority topics inside this block; ordinary new topics go at the end.
 # Every topic needs at least one [[topics.calculations]]: the engine runs the site's calculator code
 # with these inputs and the post may only use those numbers. Inputs not listed keep the calculator's
 # defaults. `python -m engine check --require-calculator` verifies every input against the real code.
+
+# ---- PRIORITY (Search Console 2026-11-14) ----
+
+[[topics]]
+title = "How many square feet is 12x60?"
+keyword = "how many square feet is 12x60"
+related_tool = "square-footage-calculator"
+notes = "Direct answer first: 12 ft x 60 ft in square feet, then square yards and square meters. Common for single-wide homes, long sheds or a strip of yard; remind that measurements in inches must be converted to feet first."
+[[topics.calculations]]
+calculator = "square-footage-calculator"
+input = { shape = "rectangle", lengthFt = 60, widthFt = 12 }
+
+[[topics]]
+title = "How many tons is a cubic yard of gravel?"
+keyword = "cubic yards to tons gravel"
+related_tool = "gravel-calculator"
+notes = "Explain converting cubic yards to tons with the weight per cubic yard, using a 10x20 ft area 4 in deep as the worked example. Stress that weight depends on the stone and the supplier's figure is the one to use."
+[[topics.calculations]]
+calculator = "gravel-calculator"
+input = { lengthFt = 20, widthFt = 10, depthIn = 4 }
+
+[[topics]]
+title = "How much extra tile should I buy for cuts and waste?"
+keyword = "how much overage for tile"
+related_tool = "tile-calculator"
+notes = "Compare 10% and 15% extra for the same 10x12 floor and box coverage. When the larger allowance makes sense (diagonal layouts, large tiles, many cuts) and why to keep spare tiles from the same lot."
+[[topics.calculations]]
+calculator = "tile-calculator"
+input = { lengthFt = 12, widthFt = 10, sqFtPerBox = 11, wastePct = 10 }
+[[topics.calculations]]
+calculator = "tile-calculator"
+input = { lengthFt = 12, widthFt = 10, sqFtPerBox = 11, wastePct = 15 }
+
+[[topics]]
+title = "How many yards of gravel for a 20x20 area?"
+keyword = "how many yards of gravel for 20x20"
+related_tool = "gravel-calculator"
+notes = "A 20x20 ft area at 3 in and at 4 in deep: cubic yards and tons for each, showing how depth changes the order. Confirm the weight with the supplier."
+[[topics.calculations]]
+calculator = "gravel-calculator"
+input = { lengthFt = 20, widthFt = 20, depthIn = 3 }
+[[topics.calculations]]
+calculator = "gravel-calculator"
+input = { lengthFt = 20, widthFt = 20, depthIn = 4 }
+
+[[topics]]
+title = "How much insulation do I need for my walls?"
+keyword = "how much insulation do i need for walls"
+related_tool = "insulation-calculator"
+notes = "Worked example: 400 sq ft of exterior wall to R-13 with a product of 3.7 R per inch and 40 sq ft per package. Measure wall area minus windows and doors; required R-values depend on climate zone and local code, so do not give a zone table. Read R-value and coverage from the package label."
+[[topics.calculations]]
+calculator = "insulation-calculator"
+input = { areaSqFt = 400, targetR = 13, rPerInch = 3.7, sqFtPerPackage = 40 }
+
+[[topics]]
+title = "How many square feet is a 24x24 garage?"
+keyword = "how many square feet is 24x24"
+related_tool = "square-footage-calculator"
+notes = "Direct answer first, then square yards and square meters, and how the number is used to estimate floor coatings, mats or flooring. Area only, nothing about structure."
+[[topics.calculations]]
+calculator = "square-footage-calculator"
+input = { shape = "rectangle", lengthFt = 24, widthFt = 24 }
+
+[[topics]]
+title = "How much gravel for a 12x12 shed base?"
+keyword = "how much gravel for a shed base"
+related_tool = "gravel-calculator"
+notes = "Material quantity only for a 12x12 ft pad 4 in deep: cubic feet, cubic yards and tons. No foundation or load advice; confirm the weight with the supplier."
+[[topics.calculations]]
+calculator = "gravel-calculator"
+input = { lengthFt = 12, widthFt = 12, depthIn = 4 }
+
+[[topics]]
+title = "How much blown-in insulation for a 1,000 sq ft attic?"
+keyword = "how much blown in insulation do i need"
+related_tool = "insulation-calculator"
+notes = "Depth from the target R-value and the product's R per inch (example 2.5 for loose fill, R-49), then bags from the coverage chart on the bag. Coverage per bag changes with the R-value, so readers must use the chart line for their target."
+[[topics.calculations]]
+calculator = "insulation-calculator"
+input = { areaSqFt = 1000, targetR = 49, rPerInch = 2.5, sqFtPerPackage = 40 }
+
+[[topics]]
+title = "How many bags of concrete for a 12x12 slab?"
+keyword = "how many bags of concrete for a 12x12 slab"
+related_tool = "concrete-calculator"
+notes = "4 in thick slab: cubic yards and the bag count for 80 lb and 60 lb bags, and when ordering ready-mix is worth comparing. Quantity only."
+[[topics.calculations]]
+calculator = "concrete-calculator"
+input = { lengthFt = 12, widthFt = 12, thicknessIn = 4, bagLb = "80" }
+[[topics.calculations]]
+calculator = "concrete-calculator"
+input = { lengthFt = 12, widthFt = 12, thicknessIn = 4, bagLb = "60" }
+
+# ---- end of PRIORITY ----
 
 [[topics]]
 title = "How much paint do I need for a 12x12 bedroom?"
