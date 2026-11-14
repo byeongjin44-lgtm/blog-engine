@@ -1,7 +1,7 @@
 {
   "id": "f429545a",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-14T03:35:34Z",
   "topic": {
     "title": "Base64 vs Base64URL: the differences and when to use each",
@@ -205,7 +205,8 @@
         "text": "No. Both are encodings, not encryption or hashing. Their only practical difference is which characters appear in the output. Security comes from the signature, encryption, or access control around the value."
       }
     ],
-    "relatedTool": "base64"
+    "relatedTool": "base64",
+    "published": "2026-11-14"
   },
   "review": {
     "title_ko": "Base64 vs Base64URL: 차이점과 각각을 언제 쓰는지",
@@ -237,5 +238,7 @@
   "recovered_from": [],
   "cost_krw": 22,
   "api_calls": 6,
-  "telegram_message_id": 67
+  "telegram_message_id": 67,
+  "decided": "2026-11-14T05:34:52Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/base64-vs-base64url-differences-when-to-use.json"
 }

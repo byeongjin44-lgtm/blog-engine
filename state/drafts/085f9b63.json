@@ -1,7 +1,7 @@
 {
   "id": "085f9b63",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-14T03:36:52Z",
   "topic": {
     "title": "How much pea gravel for a 10x10 patio?",
@@ -258,7 +258,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-14"
   },
   "review": {
     "title_ko": "10x10 면적에 필요한 pea gravel 양은? 톤과 立方야드 계산",
@@ -298,5 +299,7 @@
   "recovered_from": [],
   "cost_krw": 16,
   "api_calls": 6,
-  "telegram_message_id": 68
+  "telegram_message_id": 68,
+  "decided": "2026-11-14T05:35:05Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-pea-gravel-for-10x10-area.json"
 }
