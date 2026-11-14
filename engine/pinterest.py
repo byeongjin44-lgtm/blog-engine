@@ -6,6 +6,9 @@ For sites with `[pinterest] enabled = true`, once a published post's page and it
 and the suggested board. Each post is sent once. Text is built from the post itself and the
 calculator results the engine computed, so every number matches the post.
 
+Messages go out only during the site's `send_hours_kst` window (Korean time, default 7–12 = morning),
+so a post approved in the afternoon is sent the next morning.
+
 Best-effort only, like IndexNow: a failure is retried on the next hourly run, never stops drafting,
 approval or publishing, and posts not sent within GIVE_UP_DAYS are left alone. It has no buttons,
 so it cannot be mistaken for a post approval message.
@@ -26,6 +29,19 @@ GIVE_UP_DAYS = 7
 MAX_TITLE = 100        # Pinterest pin title limit
 MAX_DESCRIPTION = 500  # Pinterest pin description limit
 TAG = "📌 [핀터레스트]"
+KST = timezone(timedelta(hours=9))
+DEFAULT_SEND_HOURS = (7, 12)  # send from 07:00 up to 11:59 Korean time
+
+
+def send_hours(site: Site) -> tuple[int, int]:
+    """[start, end) hours in Korean time when pin messages may be sent."""
+    start, end = (site.pinterest or {}).get("send_hours_kst", DEFAULT_SEND_HOURS)
+    return int(start), int(end)
+
+
+def in_send_window(site: Site, now: datetime) -> bool:
+    start, end = send_hours(site)
+    return start <= now.astimezone(KST).hour < end
 
 
 def _differing_inputs(calcs: list[dict]) -> set[str]:
@@ -129,6 +145,8 @@ def run_pins(*, state_dir: Path = state.STATE_DIR, http=_http, telegram: Telegra
             site = sites[d["site"]]
             if not site:
                 continue
+            if not in_send_window(site, now):
+                continue  # waits for the morning window; GIVE_UP_DAYS still applies
             pin = pin_text(site, d["post"])
             if http("GET", pin["link"])[0] != 200 or http("GET", pin["image"])[0] != 200:
                 print(f"Pinterest: {pin['link']} or its image not live yet, will retry")

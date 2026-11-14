@@ -128,6 +128,9 @@ sources = [{ title = "U.S. Department of Energy: Guide to home insulation", url 
 # (the site builds /pin/blog-<slug>.png) plus title, description and link for the owner to pin by hand.
 [pinterest]
 enabled = true
+# Korean-time hours [start, end) when pin messages are sent (owner's choice: mornings).
+# A post approved outside this window is sent in the next window.
+send_hours_kst = [7, 12]
 default_board = "Home Project Calculators"
 [pinterest.boards]
 "paint-calculator" = "Painting & Wallpaper"

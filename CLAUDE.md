@@ -20,7 +20,8 @@ The owner does not read English: the Korean summary and review are how posts get
     `poll.yml`); best-effort, never fails a workflow. The site serves the key at `/<indexnow_key>.txt`
   - `pinterest.py` sends "[핀터레스트]" pin drafts to Telegram (image + title/description/link to copy, Korean
     meaning, board) for live posts of sites with `[pinterest] enabled = true` (`python -m engine pins`, hourly in
-    `poll.yml`). No Pinterest API, no AI call, no buttons; best-effort and sent once per post. The site builds the
+    `poll.yml`). No Pinterest API, no AI call, no buttons; best-effort and sent once per post, only within
+    `send_hours_kst` (Korean time, HomeRivet: 7–12, owner's choice). The site builds the
     image at `/pin/blog-<slug>.png`.
   - `telegram.py`, `state.py`, `cli.py` (`python -m engine draft|poll|check|notify|pins`)
 - `sites/<id>/` — one folder per site. Adding a site = adding a folder; no engine change unless it

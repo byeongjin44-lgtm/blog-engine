@@ -2,13 +2,13 @@
 
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest import mock
 
 from engine import state
 from engine.config import load_site
-from engine.pinterest import TAG, answer_lines, pin_text, run_pins
+from engine.pinterest import TAG, answer_lines, in_send_window, pin_text, run_pins, send_hours
 from engine.telegram import Telegram
 
 CONCRETE_FIELDS = [{"calculator": "concrete-calculator", "fields": [
@@ -67,7 +67,7 @@ class AnswerTests(unittest.TestCase):
 
 
 class RunPinsTests(unittest.TestCase):
-    NOW = datetime(2026, 11, 5, tzinfo=timezone.utc)
+    NOW = datetime(2026, 11, 5, tzinfo=timezone.utc)  # 09:00 Korean time: inside the morning window
 
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp())
@@ -81,12 +81,12 @@ class RunPinsTests(unittest.TestCase):
             state.save_draft({"id": id_, "site": site, "status": status, "decided": decided, "created": decided,
                               "review": {"title_ko": "10x10 콘크리트"}, "post": post(slug=f"post-{id_}")}, self.tmp)
 
-    def run_pins(self, tg, page=200, image=200, raises=False):
+    def run_pins(self, tg, page=200, image=200, raises=False, now=None):
         def http(method, url, body=None):
             if raises:
                 raise OSError("network down")
             return (image if url.endswith(".png") else page), ""
-        return run_pins(state_dir=self.tmp, http=http, telegram=tg, now=self.NOW)
+        return run_pins(state_dir=self.tmp, http=http, telegram=tg, now=now or self.NOW)
 
     def test_sends_once_for_recent_live_enabled_post(self):
         tg = FakeTelegram()
@@ -112,6 +112,18 @@ class RunPinsTests(unittest.TestCase):
             self.assertEqual(tg.calls, [], kwargs)
             self.assertNotIn("pin_sent", state.load_draft("h0", self.tmp), kwargs)
 
+    def test_only_sends_in_the_korean_morning_window(self):
+        kst = timezone(timedelta(hours=9))
+        for hour in (0, 6, 12, 15, 23):  # outside 07:00-11:59 Korean time
+            tg = FakeTelegram()
+            self.assertEqual(self.run_pins(tg, now=datetime(2026, 11, 5, hour, 30, tzinfo=kst)), 0, hour)
+            self.assertEqual(tg.calls, [], hour)
+        self.assertNotIn("pin_sent", state.load_draft("h0", self.tmp))
+        for hour in (7, 11):
+            self.assertTrue(in_send_window(load_site("homerivet"), datetime(2026, 11, 5, hour, 59, tzinfo=kst)), hour)
+        # The next morning it goes out (still within GIVE_UP_DAYS).
+        self.assertEqual(self.run_pins(FakeTelegram(), now=datetime(2026, 11, 6, 7, 23, tzinfo=kst)), 1)
+
     def test_failures_never_raise_and_are_retried(self):
         self.assertEqual(self.run_pins(FakeTelegram(), raises=True), 0)
         self.assertEqual(self.run_pins(FakeTelegram(fail=True)), 0)
@@ -128,6 +140,11 @@ class SiteConfigTests(unittest.TestCase):
     def test_only_homerivet_has_pinterest(self):
         self.assertTrue(load_site("homerivet").pinterest["enabled"])
         self.assertIsNone(load_site("devrivet").pinterest)
+
+    def test_homerivet_sends_in_the_morning(self):
+        start, end = send_hours(load_site("homerivet"))
+        self.assertEqual((start, end), (7, 12))
+        self.assertTrue(0 <= start < end <= 24)
 
     def test_every_board_has_a_korean_name(self):
         p = load_site("homerivet").pinterest
