@@ -1,0 +1,356 @@
+{
+  "id": "de1a3a56",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-15T03:08:00Z",
+  "topic": {
+    "title": "How many square feet is 12x60?",
+    "keyword": "how many square feet is 12x60",
+    "related_tool": "square-footage-calculator",
+    "calculations": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 60,
+          "widthFt": 12
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-many-square-feet-is-12x60",
+    "title": "How Many Square Feet Is 12x60? Sq Ft, Sq Yd and Meters",
+    "description": "A 12x60 area is 720 sq ft, which is 80 sq yd or 66.89 m². Here is how the math works and how to use it for sheds, homes and yard strips.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 12x60 area is 720 sq ft. That is also 80 sq yd, or 66.89 m² in metric. The numbers come from multiplying the two sides together, and you can check any other size with the [Square Footage Calculator](/square-footage-calculator)."
+      },
+      {
+        "type": "h2",
+        "text": "The math behind 12x60"
+      },
+      {
+        "type": "p",
+        "text": "For any rectangle, area is length times width. In this case that means 60 ft long by 12 ft wide. Here are the steps in order:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Take the length: 60 ft.",
+          "Take the width: 12 ft.",
+          "Multiply them: 60 x 12 = 720 sq ft.",
+          "Divide square feet by 9 to get square yards, since one square yard holds 9 square feet. That gives 80 sq yd.",
+          "Multiply square feet by 0.0929 to get square meters. That gives 66.89 m²."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "It does not matter which side you call the length and which the width. A 12x60 rectangle and a 60x12 rectangle are the same size."
+      },
+      {
+        "type": "h2",
+        "text": "Where a 12x60 footprint shows up"
+      },
+      {
+        "type": "p",
+        "text": "This size is more common than you might expect. A few places you will run into it:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Single-wide manufactured homes, which are often described by their width and length in feet.",
+          "Long, narrow sheds, workshops or storage buildings.",
+          "A strip of yard along a fence line, side of a house or property edge.",
+          "A long garden bed, walkway or gravel path.",
+          "A narrow garage bay, carport or equipment pad."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Once you know the area is 720 sq ft, you have the starting point for estimating almost any material, whether it is flooring, paint, mulch, gravel or concrete."
+      },
+      {
+        "type": "h2",
+        "text": "Measuring in inches? Convert to feet first"
+      },
+      {
+        "type": "p",
+        "text": "The most common mistake is mixing units. If one side is in inches and the other in feet, the answer will be wrong by a large factor. Divide any inch measurement by 12 to get feet before you multiply."
+      },
+      {
+        "type": "p",
+        "text": "For example, a width of 144 inches is 12 ft once you divide by 12. Do the same for the length. Only multiply once both sides are in feet, and your answer will come out in square feet."
+      },
+      {
+        "type": "h2",
+        "text": "Square feet is not the same as linear feet"
+      },
+      {
+        "type": "p",
+        "text": "A 12x60 area is 720 square feet, but its edges are a different measurement. Walking the full outline of the rectangle is a distance, not an area. If you are buying edging, fence or trim, you need the length of the sides. If you are buying anything that covers the surface, you need square feet."
+      },
+      {
+        "type": "p",
+        "text": "Mixing these up is a classic way to order too little or too much."
+      },
+      {
+        "type": "h2",
+        "text": "Turning 720 sq ft into a material order"
+      },
+      {
+        "type": "p",
+        "text": "Area is the starting point for nearly every estimate. From here, each material adds its own step, like depth for mulch and gravel, coats and coverage per gallon for paint, coverage per box for flooring, or waste for cuts. Always check the coverage or yield printed on the product label, because products differ even within the same category."
+      },
+      {
+        "type": "p",
+        "text": "These guides show how area feeds into a real purchase:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Flooring: see [how much laminate flooring you need for a 12x14 room](/blog/how-much-laminate-flooring-12x14-room) for how waste and box coverage work.",
+          "Mulch or soil: [how much mulch for 100 square feet](/blog/how-much-mulch-for-100-square-feet) explains depth and cubic yards.",
+          "Gravel: [how much gravel for a driveway](/blog/how-much-gravel-for-driveway-12x50) shows the area-to-tons step for a long, narrow strip.",
+          "General measuring: [how to calculate square footage of a room](/blog/how-to-calculate-square-footage-of-a-room) covers odd shapes and room layouts."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "For your own project, enter your actual length and width into the [Square Footage Calculator](/square-footage-calculator). It returns square feet, square yards and square meters at once, so you can match whatever unit a supplier uses."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls with long, narrow areas"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Rounding the sides. If your yard strip is a bit over 12 ft wide in places, measure the real width at a few points and use the average or the largest value, depending on how careful you need to be.",
+          "Forgetting obstacles. A tree, step or slab inside the rectangle is still counted in the 720 sq ft unless you subtract it separately.",
+          "Assuming a perfect rectangle. Sheds and homes often have bump-outs or porches. Break the shape into rectangles, find each area, and add them together.",
+          "Ordering to the exact number. Most materials need extra for cuts, overlap or spillage, so read the label guidance before you buy."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "How many square feet is a 12x60 mobile home?"
+      },
+      {
+        "type": "p",
+        "text": "If the 12x60 figures are the outside footprint, the area is 720 sq ft. Living space can differ slightly depending on how the home was measured, so check the listing or documents for the stated interior square footage."
+      },
+      {
+        "type": "h3",
+        "text": "How many square yards is 12x60?"
+      },
+      {
+        "type": "p",
+        "text": "It is 80 sq yd. You get that by dividing the 720 sq ft by 9, because one square yard equals 9 square feet. Carpet and sod are often sold by the square yard."
+      },
+      {
+        "type": "h3",
+        "text": "How many square meters is 12x60 feet?"
+      },
+      {
+        "type": "p",
+        "text": "It is 66.89 m². The calculator uses the standard factor of 0.0929 to convert square feet to square meters."
+      },
+      {
+        "type": "h3",
+        "text": "Is 12x60 the same as 60x12?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Multiplication gives the same result in either order, so both are 720 sq ft. Which side you call length or width only matters when you plan how boards, rolls or rows will run."
+      }
+    ],
+    "relatedTool": "square-footage-calculator",
+    "sources": [
+      {
+        "title": "NIST Guide to the SI, Appendix B.8: Factors for units listed alphabetically",
+        "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 60,
+          "widthFt": 12
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 60,
+          "widthFt": 12
+        },
+        "results": [
+          {
+            "key": "sqFt",
+            "label": "Area",
+            "value": 720,
+            "unit": "sq ft",
+            "digits": 2,
+            "primary": true,
+            "number": "720",
+            "display": "720 sq ft"
+          },
+          {
+            "key": "sqYd",
+            "label": "Area",
+            "value": 80,
+            "unit": "sq yd",
+            "digits": 2,
+            "primary": false,
+            "number": "80",
+            "display": "80 sq yd"
+          },
+          {
+            "key": "sqM",
+            "label": "Area",
+            "value": 66.89,
+            "unit": "m²",
+            "digits": 2,
+            "primary": false,
+            "number": "66.89",
+            "display": "66.89 m²"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "square-footage-calculator",
+        "fields": [
+          {
+            "kind": "select",
+            "key": "shape",
+            "label": "Shape",
+            "default": "rectangle",
+            "options": [
+              {
+                "value": "rectangle",
+                "label": "Rectangle or square"
+              },
+              {
+                "value": "triangle",
+                "label": "Triangle"
+              },
+              {
+                "value": "circle",
+                "label": "Circle"
+              }
+            ]
+          },
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "rectangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "rectangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "baseFt",
+            "label": "Base",
+            "unit": "ft",
+            "default": 6,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "triangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "heightFt",
+            "label": "Height",
+            "unit": "ft",
+            "default": 4,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "triangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "radiusFt",
+            "label": "Radius",
+            "unit": "ft",
+            "default": 5,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "circle"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "12x60은 몇 평방피트인가? 제곱피트, 제곱야드, 제곱미터",
+    "summary_ko": [
+      "12x60 면적은 720 sq ft이며, 이는 80 sq yd 또는 66.89 m²에 해당한다고 설명합니다.",
+      "면적은 길이와 너비를 곱해 구하며, 720 ÷ 9 = 80 sq yd, 720 × 0.0929 = 66.89 m² 변환 과정을 단계별로 보여줍니다.",
+      "12x60 면적이 나타나는 경우로 단독형 조립식 주택, 길고 좁은 창고나 작업실, 울타리를 따라 있는 마당 띠, 긴 정원 화단, 좁은 차고 공간을 듭니다.",
+      "인치와 피트를 섞어 쓰면 답이 크게 틀리므로 인치는 12로 나눠 피트로 바꾼 뒤 곱하라고 안내합니다.",
+      "제곱피트(면적)와 선형피트(둘레 길이)는 다르므로, 가장자리재는 길이를, 표면을 덮는 자재는 면적을 기준으로 주문해야 한다고 설명합니다.",
+      "면적을 바탕으로 바닥재, 멀칭, 자갈 등 자재별 주문량을 계산하는 관련 가이드와 계산기 링크를 안내합니다.",
+      "좁고 긴 면적에서 흔한 실수(너비 반올림, 장애물 미차감, 불규칙한 모양, 여유분 없이 주문)를 정리합니다."
+    ],
+    "issues": [
+      {
+        "severity": "high",
+        "ko": "\"Take the width: 12 ft\" 다음 본문의 \"a width of 144 inches is 12 ft once you divide by 12\"에서 144인치라는 수치는 계산기 결과나 입력값이 아니라 작성자가 임의로 든 예시입니다. 허용되지 않은 수치이므로 제거하거나 계산기 결과로 검증된 값으로 바꿔야 합니다.",
+        "en": "The example \"a width of 144 inches\" is a figure the writer introduced, not one of the calculator's inputs or results. Remove it or replace it with an input the calculator actually verified."
+      },
+      {
+        "severity": "low",
+        "ko": "관련 가이드 링크 문구의 \"12x14 room\", \"100 square feet\", \"12x50 driveway\"는 다른 글의 제목을 가리키는 표현으로, 이 글의 계산 결과가 아닙니다. 제목 자체가 링크 대상이므로 큰 문제는 아니지만 본문 수치로 오해되지 않도록 문구를 확인하세요.",
+        "en": "The sizes in the related-guide link labels (12x14 room, 100 square feet, 12x50 driveway) are titles of other posts, not results from this calculation. They are acceptable as link text, but make sure they cannot be read as figures in this post."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [
+      "\"Flooring, paint, mulch, gravel and concrete are all priced or sold against that number.\" 페인트, 멀칭, 자갈은 면적이 아니라 coverage per gallon, 부피(cubic yard), 무게 단위로 판매되므로 \"면적에 맞춰 가격이 정해지거나 판매된다\"는 표현은 과장입니다."
+    ],
+    "word_count": 863
+  },
+  "model": "claude-sonnet-5-5",
+  "recovered_from": [
+    "How many square feet is 12x60? / claude-haiku-5-5: DraftError: draft failed validation twice: number 12.5 does not come from the calculator results — use only the numbers provided; number 12.6 does not come from the calculator results — use only the n"
+  ],
+  "cost_krw": 152,
+  "api_calls": 7,
+  "telegram_message_id": 72
+}

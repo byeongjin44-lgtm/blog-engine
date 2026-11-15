@@ -1,0 +1,238 @@
+{
+  "id": "2ce31f40",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-15T03:06:33Z",
+  "topic": {
+    "title": "encodeURIComponent vs encodeURI in JavaScript",
+    "keyword": "encodeuricomponent vs encodeuri",
+    "related_tool": "url-encoder"
+  },
+  "post": {
+    "slug": "encodeuricomponent-vs-encodeuri-javascript",
+    "title": "encodeURIComponent vs encodeURI in JavaScript: Which to Use",
+    "description": "Use encodeURIComponent for query values and path segments. encodeURI leaves reserved characters like & and / alone, so use it only on a complete URL.",
+    "body": [
+      {
+        "type": "p",
+        "text": "Use encodeURIComponent for any single piece of a URL, such as a query parameter value or a path segment. Use encodeURI only when you have a complete URL and want to escape spaces and non-ASCII characters without breaking its structure. The practical difference is that encodeURI leaves characters like &, =, /, ? and # unencoded, because those characters have meaning in a URL."
+      },
+      {
+        "type": "p",
+        "text": "If you want to see the output for a specific string before you write any code, paste it into the [URL Encoder / Decoder](/url-encoder). It runs in your browser and shows the percent-encoded result immediately."
+      },
+      {
+        "type": "h2",
+        "text": "What each function encodes"
+      },
+      {
+        "type": "p",
+        "text": "Both functions convert characters to UTF-8 bytes and write each byte as %XX. They differ in which characters they skip. Characters in the \"unreserved\" set are never encoded by either function: letters, digits, and the marks - _ . ! ~ * ' ( )."
+      },
+      {
+        "type": "p",
+        "text": "encodeURI also skips these reserved characters, so they pass through unchanged:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "; , / ? : @ & = + $ #"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "encodeURIComponent encodes all of those reserved characters. The only things it leaves alone are the unreserved set above."
+      },
+      {
+        "type": "p",
+        "text": "Here is the difference on a few inputs:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "encodeURI('a b&c=d/e')           // 'a%20b&c=d/e'\nencodeURIComponent('a b&c=d/e')  // 'a%20b%26c%3Dd%2Fe'\n\nencodeURI('https://example.com/search?q=a b&lang=en')\n// 'https://example.com/search?q=a%20b&lang=en'\n\nencodeURIComponent('café')\n// 'caf%C3%A9'\n\nencodeURI('100%')\n// '100%25'"
+      },
+      {
+        "type": "p",
+        "text": "Notice that encodeURI does encode the % sign in '100%' as %25, but it does not encode the reserved characters. That is the part that causes bugs when you pass a value through it."
+      },
+      {
+        "type": "h2",
+        "text": "Which one to use"
+      },
+      {
+        "type": "p",
+        "text": "The rule is simple. Ask whether the string you are encoding is a whole URL or a piece of one."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Query parameter value: use encodeURIComponent. A value containing & or = would otherwise start a new parameter.",
+          "Path segment, such as a file name or ID: use encodeURIComponent. A value containing / would otherwise add a path level.",
+          "Complete URL built from a trusted template with no pre-encoded parts: encodeURI can escape spaces and non-ASCII characters without touching the URL structure. Do not run it over text that is already percent-encoded, because it encodes every % as %25. A value of a%20b becomes a%2520b."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "In practice, most code should call encodeURIComponent on each dynamic value and then join the pieces with literal separators:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const term = 'fish & chips';\nconst page = 2;\n\nconst url = `https://api.example.com/search?q=${encodeURIComponent(term)}&page=${encodeURIComponent(page)}`;\n// 'https://api.example.com/search?q=fish%20%26%20chips&page=2'"
+      },
+      {
+        "type": "h2",
+        "text": "The bug that encodeURI causes"
+      },
+      {
+        "type": "p",
+        "text": "The most common mistake is using encodeURI on a query value. Here the search term contains an ampersand:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const term = 'salt & pepper';\n\nconst bad = `https://example.com/search?q=${encodeURI(term)}`;\n// 'https://example.com/search?q=salt%20&%20pepper'\n// The server reads q='salt ' and a separate parameter ' pepper' with no value.\n\nconst good = `https://example.com/search?q=${encodeURIComponent(term)}`;\n// 'https://example.com/search?q=salt%20%26%20pepper'"
+      },
+      {
+        "type": "p",
+        "text": "The bad URL is still valid percent-encoding, so nothing throws. The server just receives the wrong data, which makes this bug easy to miss in testing."
+      },
+      {
+        "type": "h2",
+        "text": "Decoding"
+      },
+      {
+        "type": "p",
+        "text": "The decoding functions mirror the encoders. decodeURIComponent reverses encodeURIComponent for any input it produced. decodeURI reverses encodeURI, but it does not decode escapes for reserved characters, so it can leave %26 in place."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "decodeURIComponent('fish%20%26%20chips')  // 'fish & chips'\ndecodeURI('fish%20%26%20chips')            // 'fish %26 chips'"
+      },
+      {
+        "type": "p",
+        "text": "For query values, use decodeURIComponent. Using decodeURI on a value that contains an escaped & or = gives you a string that still looks encoded."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "h3",
+        "text": "Plus signs and spaces"
+      },
+      {
+        "type": "p",
+        "text": "encodeURIComponent encodes a space as %20 and a plus sign as %2B. HTML form submissions and URLSearchParams use a different convention: they write a space as +. Both are valid in query strings, but they are not interchangeable in every decoder. If your server expects form encoding, use URLSearchParams:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const params = new URLSearchParams({ q: 'a b+c' });\nparams.toString()  // 'q=a+b%2Bc'"
+      },
+      {
+        "type": "h3",
+        "text": "Lone surrogates throw"
+      },
+      {
+        "type": "p",
+        "text": "encodeURI and encodeURIComponent throw a URIError when the input contains an unpaired UTF-16 surrogate, such as '\\uD800'. This usually comes from slicing a string in the middle of an emoji. Normalization does not fix this, because normalization works on valid characters and leaves lone surrogates in place. You have to replace them explicitly. Where it is available, String.prototype.toWellFormed() replaces each lone surrogate with U+FFFD (the replacement character), and you can encode the result safely:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "try {\n  encodeURIComponent('\\uD800');\n} catch (e) {\n  console.log(e.name, e.message); // URIError URI malformed\n}\n\nconst clean = 'emoji \\uD83D'.toWellFormed(); // 'emoji \\uFFFD'\nencodeURIComponent(clean);               // 'emoji%20%EF%BF%BD'"
+      },
+      {
+        "type": "p",
+        "text": "Check MDN for toWellFormed() support in the runtimes you target. If it is not available, you need to write your own replacement for unpaired surrogates before encoding. Also fix the source of the problem where you can, such as slicing by code point instead of by UTF-16 code unit."
+      },
+      {
+        "type": "h3",
+        "text": "Double encoding"
+      },
+      {
+        "type": "p",
+        "text": "If a value is already encoded and you encode it again, every % becomes %25. A value of a%20b turns into a%2520b. Encode raw values once, at the point where you build the URL, and keep the encoded string out of your data model."
+      },
+      {
+        "type": "h3",
+        "text": "Encoding path segments"
+      },
+      {
+        "type": "p",
+        "text": "Use encodeURIComponent on each segment, not on the full path. A file name like report 2024/final.pdf should become report%202024%2Ffinal.pdf when it is a single segment. Encoding the full path with encodeURI would leave the slash in place, and the server would treat it as a directory separator."
+      },
+      {
+        "type": "h2",
+        "text": "Python note"
+      },
+      {
+        "type": "p",
+        "text": "Python's standard library has the same split. urllib.parse.quote encodes by default and keeps / unencoded, which is closer to encodeURI for paths. Pass safe='' to encode the slash too, which matches encodeURIComponent for a single segment. Check the documentation for the exact default set before relying on it."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is encodeURIComponent safe to use on an entire URL?"
+      },
+      {
+        "type": "p",
+        "text": "No. It will encode the :// after the scheme and the slashes in the path, which breaks the URL. Build the URL from parts instead, and encode only the dynamic values."
+      },
+      {
+        "type": "h3",
+        "text": "Why does encodeURI leave a plus sign alone?"
+      },
+      {
+        "type": "p",
+        "text": "Plus is a reserved character in the URL spec, so encodeURI treats it as meaningful. In query strings, a plus is commonly read as a space, which is why encodeURIComponent encodes it as %2B."
+      },
+      {
+        "type": "h3",
+        "text": "Do these functions encode the apostrophe?"
+      },
+      {
+        "type": "p",
+        "text": "No. Both functions leave ' unencoded, along with ( ) * ! ~. These characters are allowed in URLs, so encoding them is optional for most servers."
+      },
+      {
+        "type": "h3",
+        "text": "Should I use escape() instead?"
+      },
+      {
+        "type": "p",
+        "text": "No. escape() is deprecated and encodes characters differently, including non-ASCII characters that are not UTF-8. Use encodeURIComponent for query values and encodeURI for complete URLs."
+      }
+    ],
+    "relatedTool": "url-encoder"
+  },
+  "review": {
+    "title_ko": "encodeURIComponent vs encodeURI (자바스크립트): 어떤 것을 써야 할까",
+    "summary_ko": [
+      "URL의 한 조각(쿼리 값, 경로 세그먼트)에는 encodeURIComponent를, 완성된 URL 전체에는 encodeURI를 쓰라고 설명합니다.",
+      "encodeURI는 & = / ? # 같은 예약 문자를 그대로 두고, encodeURIComponent는 이들도 모두 인코딩합니다. 두 함수 모두 unreserved 문자(영문, 숫자, - _ . ! ~ * ' ( ))는 건드리지 않습니다.",
+      "예시 코드로 두 함수의 차이를 보여주고, 'salt & pepper' 같은 검색어를 encodeURI로 넣으면 서버가 값을 잘못 읽는 버그를 설명합니다.",
+      "디코딩에서는 query 값에 decodeURIComponent를 써야 함을 설명하고, decodeURI는 %26을 남긴다는 점을 예로 듭니다.",
+      "흔한 함정으로 공백과 +의 차이(URLSearchParams 사용), 단독 서로게이트에서 URIError가 발생하는 문제와 toWellFormed() 처리, 이중 인코딩, 경로 세그먼트 인코딩을 다룹니다.",
+      "Python의 urllib.parse.quote와 safe='' 옵션을 간단히 비교하고, FAQ에서 전체 URL에 encodeURIComponent를 쓰면 안 되는 이유, +와 ', escape() 사용 금지를 설명합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "「Complete URL that you assembled from a trusted template: encodeURI is acceptable, but only if the parts were already encoded.」 부분이 틀렸습니다. 이미 인코딩된 부분에 encodeURI를 적용하면 모든 %가 %25로 바뀌어 이중 인코딩이 됩니다. 독자가 실제로 이렇게 따라 하면 URL이 깨집니다.",
+      "「or normalize it with a library that handles surrogates」 부분은 모호합니다. 정규화로는 고립된 서로게이트가 사라지지 않고, 라이브러리가 대체 문자로 바꾸는 방식이라 독자에게 혼란을 줄 수 있습니다."
+    ],
+    "word_count": 1100
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 13,
+  "api_calls": 4,
+  "telegram_message_id": 71
+}
