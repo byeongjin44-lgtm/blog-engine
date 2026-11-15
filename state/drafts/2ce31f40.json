@@ -1,7 +1,7 @@
 {
   "id": "2ce31f40",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-15T03:06:33Z",
   "topic": {
     "title": "encodeURIComponent vs encodeURI in JavaScript",
@@ -210,7 +210,8 @@
         "text": "No. escape() is deprecated and encodes characters differently, including non-ASCII characters that are not UTF-8. Use encodeURIComponent for query values and encodeURI for complete URLs."
       }
     ],
-    "relatedTool": "url-encoder"
+    "relatedTool": "url-encoder",
+    "published": "2026-11-15"
   },
   "review": {
     "title_ko": "encodeURIComponent vs encodeURI (자바스크립트): 어떤 것을 써야 할까",
@@ -234,5 +235,7 @@
   "recovered_from": [],
   "cost_krw": 13,
   "api_calls": 4,
-  "telegram_message_id": 71
+  "telegram_message_id": 71,
+  "decided": "2026-11-15T04:17:22Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/encodeuricomponent-vs-encodeuri-javascript.json"
 }

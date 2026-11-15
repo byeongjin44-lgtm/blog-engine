@@ -1,7 +1,7 @@
 {
   "id": "de1a3a56",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-15T03:08:00Z",
   "topic": {
     "title": "How many square feet is 12x60?",
@@ -315,7 +315,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-15"
   },
   "review": {
     "title_ko": "12x60은 몇 평방피트인가? 제곱피트, 제곱야드, 제곱미터",
@@ -352,5 +353,7 @@
   ],
   "cost_krw": 152,
   "api_calls": 7,
-  "telegram_message_id": 72
+  "telegram_message_id": 72,
+  "decided": "2026-11-15T04:17:27Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-square-feet-is-12x60.json"
 }
