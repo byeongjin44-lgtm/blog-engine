@@ -1,0 +1,217 @@
+{
+  "id": "48d2db3d",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-16T03:08:52Z",
+  "topic": {
+    "title": "Why spaces become %20 or + in URLs",
+    "keyword": "url encode space %20 or +",
+    "related_tool": "url-encoder"
+  },
+  "post": {
+    "slug": "url-encode-space-20-or-plus",
+    "title": "URL Encode Space: Why %20 or + Shows Up in URLs",
+    "description": "A space becomes %20 or + in a URL depending on where it appears and which encoder made it. Here is how each works, with JavaScript and Python examples.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A space is encoded as %20 in most URL contexts. The + sign means a space only in form-encoded query strings (application/x-www-form-urlencoded), which is what HTML forms and URLSearchParams produce. If you are encoding a path or using encodeURIComponent, use %20. If you are reading or writing a query string from a form or a library that uses form encoding, + may mean a space."
+      },
+      {
+        "type": "p",
+        "text": "If you want to see the output for a specific string, the [URL Encoder / Decoder](/url-encoder) shows the percent-encoded result and decodes it back. The rest of this post explains why the two forms exist and where they cause bugs."
+      },
+      {
+        "type": "h2",
+        "text": "Why a space can't appear in a URL"
+      },
+      {
+        "type": "p",
+        "text": "URLs are defined to contain only a limited set of ASCII characters. The space character (0x20) is not one of them, so it has to be written in some other form. Percent-encoding, defined in RFC 3986, does this by writing a byte as a percent sign followed by two hexadecimal digits. The space byte is 0x20, so it becomes %20."
+      },
+      {
+        "type": "p",
+        "text": "Any byte can be percent-encoded, but encoders only do it for characters that are unsafe in the part of the URL they are writing. Letters, digits and a few symbols like - _ . ~ stay as they are."
+      },
+      {
+        "type": "h2",
+        "text": "Where + comes from"
+      },
+      {
+        "type": "p",
+        "text": "The + sign has a second meaning that comes from HTML forms. When a browser submits a form using the default GET or POST encoding, it serializes the fields as key=value pairs joined by &. Spaces in values are written as +, and literal plus signs are written as %2B. This convention is defined in the WHATWG URL Standard and in the older HTML spec for application/x-www-form-urlencoded."
+      },
+      {
+        "type": "p",
+        "text": "So the same space can be written two ways, and both are valid in the right context:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "%20: the general percent-encoding of a space, valid in paths, query strings, fragments and anywhere else.",
+          "+: a space only inside a form-encoded query string or form body. Outside that context, + is a literal plus sign."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Which encoder produces which"
+      },
+      {
+        "type": "p",
+        "text": "The output depends on the function you call, not on the URL itself. This table covers the common ones:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "JavaScript encodeURIComponent(\"a b\") gives a%20b. It never produces +.",
+          "JavaScript encodeURI(\"https://example.com/a b\") gives https://example.com/a%20b. It does not encode reserved characters like & or =, so it is not safe for values.",
+          "JavaScript new URLSearchParams({ q: \"a b\" }).toString() gives q=a+b. It uses form encoding.",
+          "Python urllib.parse.quote(\"a b\") gives a%20b. It is the path-style encoder.",
+          "Python urllib.parse.quote_plus(\"a b\") gives a+b. It is form-style.",
+          "Python urllib.parse.urlencode({\"q\": \"a b\"}) gives q=a+b, because it uses quote_plus by default."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Examples in JavaScript"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "encodeURIComponent(\"hello world\");\n// \"hello%20world\"\n\nnew URLSearchParams({ q: \"hello world\" }).toString();\n// \"q=hello+world\"\n\nnew URLSearchParams({ q: \"a+b\" }).toString();\n// \"q=a%2Bb\"\n\nencodeURIComponent(\"a+b\");\n// \"a%2Bb\""
+      },
+      {
+        "type": "p",
+        "text": "Notice that encodeURIComponent also encodes the plus sign, so a literal + becomes %2B. That matters because a bare + in a query string will be read back as a space by most servers."
+      },
+      {
+        "type": "h2",
+        "text": "Examples in Python"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "from urllib.parse import quote, quote_plus, urlencode\n\nquote(\"hello world\")       # 'hello%20world'\nquote_plus(\"hello world\")  # 'hello+world'\nurlencode({\"q\": \"a b\"})    # 'q=a+b'\nurlencode({\"q\": \"a+b\"})    # 'q=a%2Bb'"
+      },
+      {
+        "type": "h2",
+        "text": "Decoding: where + is read as a space"
+      },
+      {
+        "type": "p",
+        "text": "Decoders follow the same split. Most bugs happen when a decoder for one context is used on data from the other."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "JavaScript decodeURIComponent(\"a+b\") returns \"a+b\". It does not turn + into a space.",
+          "JavaScript decodeURIComponent(\"a%20b\") returns \"a b\".",
+          "JavaScript new URLSearchParams(\"q=a+b\").get(\"q\") returns \"a b\".",
+          "Python unquote(\"a+b\") returns \"a+b\".",
+          "Python unquote_plus(\"a+b\") returns \"a b\"."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The rule to remember: decodeURIComponent and unquote handle %20 but leave + alone. URLSearchParams and unquote_plus treat + as a space. If your decoded value has stray plus signs where you expected spaces, you are probably using a percent-decoder on form-encoded data."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Path segments use %20 only. Writing /files/my+file.txt means a file named \"my+file.txt\" to most servers, not \"my file.txt\".",
+          "Double encoding. If you encode a value that is already encoded, %20 becomes %2520. The percent sign itself is encoded as %25. Check whether a string is already encoded before encoding it again.",
+          "Mixing encoders in one string. Using URLSearchParams for one parameter and encodeURIComponent for another gives inconsistent output that some servers read differently.",
+          "Plus in tokens or base64. A literal + in a value read from a query string may have been a space in the original or a plus that was never encoded. Always encode + as %2B in values you build yourself.",
+          "Server frameworks differ. Most frameworks decode + as a space in query strings, but some do not decode form bodies or path segments the same way. Test with a real request when behavior matters."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Which one should you use?"
+      },
+      {
+        "type": "p",
+        "text": "Use the encoder that matches the place in the URL where the value goes:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Path segments, fragments, and general URL building: encodeURIComponent in JavaScript or quote in Python, which produce %20.",
+          "Query string values where you want form-style output: URLSearchParams in JavaScript or urlencode in Python, which produce +.",
+          "Decoding a query string from a request or a form: use a form-aware parser (URLSearchParams or parse_qs) so + becomes a space.",
+          "Decoding a single component you already extracted: use decodeURIComponent or unquote, which keep + as a plus sign."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "For a deeper look at the JavaScript functions, see [encodeURIComponent vs encodeURI in JavaScript: Which to Use](/blog/encodeuricomponent-vs-encodeuri-javascript). The [Base64 Encoder / Decoder](/base64) is a separate tool, but note that Base64URL uses - and _ instead of + and /, which is a related source of confusion when tokens end up in URLs. The [Base64 vs Base64URL](/blog/base64-vs-base64url-differences-when-to-use) post covers that."
+      },
+      {
+        "type": "p",
+        "text": "DevRivet's URL Encoder runs entirely in your browser, so you can paste query strings that contain tokens or other sensitive values without sending them to a server."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is %20 always correct for a space in a URL?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, %20 is the correct percent-encoding for a space in any part of a URL. It is the safe choice when you are unsure which context you are in, because no parser treats %20 as anything other than a space."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my server show + instead of a space?"
+      },
+      {
+        "type": "p",
+        "text": "The value was probably decoded with a percent-decoder instead of a form-aware parser, or the sender used form encoding and the receiver is not decoding + as a space. Check which function is reading the value and whether the source used URLSearchParams or encodeURIComponent."
+      },
+      {
+        "type": "h3",
+        "text": "How do I write a literal plus sign in a query string?"
+      },
+      {
+        "type": "p",
+        "text": "Encode it as %2B. For example, the value a+b should appear as a%2Bb in the query string. This works with both form-style and percent-style decoders."
+      },
+      {
+        "type": "h3",
+        "text": "Does the + sign mean a space in a URL path?"
+      },
+      {
+        "type": "p",
+        "text": "No. Outside form-encoded query strings and bodies, + is a literal plus sign. Use %20 for spaces in paths."
+      }
+    ],
+    "relatedTool": "url-encoder"
+  },
+  "review": {
+    "title_ko": "URL 공백 인코딩: URL에서 %20 또는 +가 나타나는 이유",
+    "summary_ko": [
+      "공백은 대부분의 URL 맥락에서 %20으로 인코딩되며, +는 form 인코딩된 쿼리 문자열(application/x-www-form-urlencoded)에서만 공백을 뜻한다.",
+      "URL에는 공백(0x20)을 직접 쓸 수 없으므로 RFC 3986의 퍼센트 인코딩으로 %20이 된다.",
+      "+가 공백이 되는 규칙은 HTML 폼 제출 방식에서 왔으며, WHATWG URL 표준에 정의되어 있다.",
+      "인코더 함수에 따라 결과가 다르다. encodeURIComponent와 Python quote는 %20을, URLSearchParams와 Python urlencode/quote_plus는 +를 만든다.",
+      "JavaScript와 Python의 인코딩/디코딩 예시가 함께 나오며, 디코더도 %20만 처리하는지 +까지 공백으로 처리하는지 구분한다.",
+      "자주 생기는 문제로 경로에서 +를 쓰는 실수, 이중 인코딩(%20이 %2520이 됨), 인코더 혼용, base64/토큰의 +, 서버 프레임워크 차이가 있다.",
+      "용도별 선택 가이드와 FAQ를 제시하며, Base64URL과의 차이와 관련 글 및 도구 링크를 안내한다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [],
+    "word_count": 1159
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 5,
+  "api_calls": 2,
+  "telegram_message_id": 75
+}
