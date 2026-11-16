@@ -1,7 +1,7 @@
 {
   "id": "48d2db3d",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-16T03:08:52Z",
   "topic": {
     "title": "Why spaces become %20 or + in URLs",
@@ -191,7 +191,8 @@
         "text": "No. Outside form-encoded query strings and bodies, + is a literal plus sign. Use %20 for spaces in paths."
       }
     ],
-    "relatedTool": "url-encoder"
+    "relatedTool": "url-encoder",
+    "published": "2026-11-16"
   },
   "review": {
     "title_ko": "URL 공백 인코딩: URL에서 %20 또는 +가 나타나는 이유",
@@ -213,5 +214,7 @@
   "recovered_from": [],
   "cost_krw": 5,
   "api_calls": 2,
-  "telegram_message_id": 75
+  "telegram_message_id": 75,
+  "decided": "2026-11-16T04:38:05Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/url-encode-space-20-or-plus.json"
 }

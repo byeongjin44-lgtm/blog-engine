@@ -1,7 +1,7 @@
 {
   "id": "8b2789b1",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-16T03:10:08Z",
   "topic": {
     "title": "How many tons is a cubic yard of gravel?",
@@ -254,7 +254,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-16"
   },
   "review": {
     "title_ko": "입방야드를 톤으로: 자갈 1입방야드의 무게",
@@ -285,5 +286,7 @@
   "recovered_from": [],
   "cost_krw": 16,
   "api_calls": 6,
-  "telegram_message_id": 76
+  "telegram_message_id": 76,
+  "decided": "2026-11-16T04:38:08Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/cubic-yards-to-tons-gravel.json"
 }
