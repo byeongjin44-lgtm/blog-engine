@@ -1,7 +1,7 @@
 {
   "id": "c7b6da64",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-17T05:16:09Z",
   "topic": {
     "title": "SHA-256 vs SHA-1: why SHA-1 is no longer considered secure",
@@ -159,7 +159,8 @@
         "text": "If the SHA-1 values protect against tampering, yes: plan a migration and recompute with SHA-256 where you control both sides. If they only detect accidental changes or serve as internal cache keys, the urgency is lower."
       }
     ],
-    "relatedTool": "hash-generator"
+    "relatedTool": "hash-generator",
+    "published": "2026-11-17"
   },
   "review": {
     "title_ko": "SHA-256 vs SHA-1: SHA-1이 더 이상 안전하지 않은 이유",
@@ -183,5 +184,7 @@
   "recovered_from": [],
   "cost_krw": 13,
   "api_calls": 4,
-  "telegram_message_id": 79
+  "telegram_message_id": 79,
+  "decided": "2026-11-17T06:15:40Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/sha256-vs-sha1-why-sha1-is-insecure.json"
 }

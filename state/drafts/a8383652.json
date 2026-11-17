@@ -1,7 +1,7 @@
 {
   "id": "a8383652",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-17T05:16:47Z",
   "topic": {
     "title": "How much extra tile should I buy for cuts and waste?",
@@ -329,7 +329,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-17"
   },
   "review": {
     "title_ko": "타일 여유분은 얼마나 필요할까? 절단용 10% vs 15% 추가",
@@ -351,5 +352,7 @@
   "recovered_from": [],
   "cost_krw": 8,
   "api_calls": 3,
-  "telegram_message_id": 80
+  "telegram_message_id": 80,
+  "decided": "2026-11-17T06:15:44Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-overage-for-tile-cuts-and-waste.json"
 }
