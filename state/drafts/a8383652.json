@@ -1,0 +1,355 @@
+{
+  "id": "a8383652",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-17T05:16:47Z",
+  "topic": {
+    "title": "How much extra tile should I buy for cuts and waste?",
+    "keyword": "how much overage for tile",
+    "related_tool": "tile-calculator",
+    "calculations": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 10,
+          "sqFtPerBox": 11,
+          "wastePct": 10
+        }
+      },
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 10,
+          "sqFtPerBox": 11,
+          "wastePct": 15
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-overage-for-tile-cuts-and-waste",
+    "title": "How Much Overage for Tile? 10% vs 15% Extra for Cuts",
+    "description": "Most floor tile jobs need 10 to 15 percent extra for cuts and breakage. See how the allowance changes the box count with a 10x12 floor example.",
+    "body": [
+      {
+        "type": "p",
+        "text": "For most straight-laid floors, buy 10 percent extra tile for cuts and breakage. For diagonal layouts, large tiles, or rooms with many corners and cutouts, buy 15 percent extra. Both are common starting points, and the right one depends on your layout."
+      },
+      {
+        "type": "p",
+        "text": "You can run both numbers yourself in the [Tile Calculator](/tile-calculator). Enter your floor length, floor width, the coverage per box printed on the label, and the extra percentage you want. The tool shows the boxes to buy and the total square footage including the extra."
+      },
+      {
+        "type": "h2",
+        "text": "How the overage is calculated"
+      },
+      {
+        "type": "p",
+        "text": "The calculator works in four steps:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Multiply the floor length by the floor width to get the floor area in square feet.",
+          "Add the extra percentage to that area. For 10 percent extra, the total is the floor area plus 10 percent of it. For 15 percent extra, the total is the floor area plus 15 percent of it.",
+          "Divide the total by the coverage per box, which is the square footage one box covers according to the product label.",
+          "Round up to the next whole box, because you cannot buy part of a box."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Rounding up matters. If the division leaves even a small fraction, you still need the whole next box. Always use the coverage figure on the box you are buying, since tile sizes and box coverage vary by manufacturer and product line."
+      },
+      {
+        "type": "h2",
+        "text": "Worked example: 10 percent vs 15 percent extra"
+      },
+      {
+        "type": "p",
+        "text": "Take a floor that measures 12 ft long by 10 ft wide. That gives a floor area of 120 sq ft. The product in this example covers 11 sq ft per box."
+      },
+      {
+        "type": "p",
+        "text": "With 10 percent extra, the total tile needed comes to 132 sq ft, so you would buy 12 boxes."
+      },
+      {
+        "type": "p",
+        "text": "With 15 percent extra, the total tile needed rises to 138 sq ft, so you would buy 13 boxes."
+      },
+      {
+        "type": "p",
+        "text": "The same floor gives a different shopping list depending on that one percentage. The 15 percent option adds a box of cushion, which is often the difference between finishing with spare pieces and running short halfway through the last row."
+      },
+      {
+        "type": "p",
+        "text": "Your own room will have its own measurements and box coverage. Use the calculator with your numbers rather than these, and check the coverage printed on your product label before you buy, because products differ."
+      },
+      {
+        "type": "h2",
+        "text": "When the larger allowance makes sense"
+      },
+      {
+        "type": "p",
+        "text": "Plan on the 15 percent end, or more, in these situations:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Diagonal layouts, where tiles are cut at an angle along the walls and many pieces are partial.",
+          "Large-format tiles, since each cut wastes a bigger share of a single piece and there are fewer full tiles to work with.",
+          "Rooms with many corners, closets, doorways, or angled walls that require lots of small cuts.",
+          "Patterned tile, where you need to match the pattern across boxes and may discard pieces.",
+          "First-time installs, where mistakes and breakage are more likely."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "A straight-laid floor in a plain rectangle with small, regular tiles usually does fine with 10 percent. If your room has many complications, the extra box at 15 percent is cheap insurance compared with a trip back to the store for a single tile that may no longer be in stock."
+      },
+      {
+        "type": "h2",
+        "text": "Keep spare tiles from the same lot"
+      },
+      {
+        "type": "p",
+        "text": "Tile color and finish can vary from one production run to the next, even within the same product name. Keep leftover boxes and unused pieces from the same lot number, which is usually printed on the carton. If you need a replacement tile years later for a chipped piece, a matching lot is much easier to blend in."
+      },
+      {
+        "type": "p",
+        "text": "Store spares flat and dry, away from freezing temperatures, and label the box with the room and the date you installed it. This takes a minute and can save a lot of frustration later."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Measuring only the open floor and forgetting alcoves or closets. Measure each section and add them together.",
+          "Using the wrong coverage figure. Check the square footage printed on the box you are buying, not a number remembered from a different product.",
+          "Ordering only the base amount with no extra. The overage is there for cuts and breakage, so buying only the base amount often leaves you short.",
+          "Applying the percentage to the number of boxes instead of the total area. Run the full calculation again each time you change a measurement.",
+          "Mixing lots when you buy. If you buy more tile later, the new lot may not match the first batch, so buy everything in one order when possible."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you are planning a smaller bathroom, compare how these estimates work in our [bathroom tile example](/blog/how-much-tile-for-5x8-bathroom). For laminate, hardwood, or vinyl plank, use the [Flooring Calculator](/flooring-calculator), which uses its own waste allowance."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is 10 percent extra enough for most tile floors?"
+      },
+      {
+        "type": "p",
+        "text": "For a simple, straight-laid rectangle with regular tile sizes, 10 percent is a common starting point. Plan for more if your layout has diagonal lines, large tiles, or many cuts."
+      },
+      {
+        "type": "h3",
+        "text": "Should I buy extra tile if I can return unopened boxes?"
+      },
+      {
+        "type": "p",
+        "text": "Return policies differ by store and product, and a box may not be resellable once opened. Ask the retailer about its policy before relying on returns to cover your waste, and still plan the overage up front."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my result change when I switch from 10 to 15 percent?"
+      },
+      {
+        "type": "p",
+        "text": "The extra percentage increases the total square footage you need, so the number of boxes can go up by one or more after rounding up. The change depends on your floor area and the coverage per box."
+      },
+      {
+        "type": "h3",
+        "text": "What if the coverage on my box is different from the number I entered?"
+      },
+      {
+        "type": "p",
+        "text": "Always use the coverage printed on the box you are buying. If it differs from what you planned, rerun the Tile Calculator with the correct figure so your box count matches the product you actually purchase."
+      }
+    ],
+    "relatedTool": "tile-calculator",
+    "sources": [
+      {
+        "title": "Lowe's tile flooring calculator",
+        "url": "https://www.lowes.com/n/calculators/tile-floor-calculator"
+      },
+      {
+        "title": "Daltile tile & stone FAQs",
+        "url": "https://www.daltile.com/how-to/faqs"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 10,
+          "sqFtPerBox": 11,
+          "wastePct": 10
+        }
+      },
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 10,
+          "sqFtPerBox": 11,
+          "wastePct": 15
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 10,
+          "sqFtPerBox": 11,
+          "wastePct": 10
+        },
+        "results": [
+          {
+            "key": "boxes",
+            "label": "Boxes to buy",
+            "value": 12,
+            "unit": "boxes",
+            "digits": 0,
+            "primary": true,
+            "number": "12",
+            "display": "12 boxes"
+          },
+          {
+            "key": "neededSqFt",
+            "label": "Tile needed incl. extra",
+            "value": 132,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "132",
+            "display": "132 sq ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Floor area",
+            "value": 120,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "120",
+            "display": "120 sq ft"
+          }
+        ]
+      },
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 10,
+          "sqFtPerBox": 11,
+          "wastePct": 15
+        },
+        "results": [
+          {
+            "key": "boxes",
+            "label": "Boxes to buy",
+            "value": 13,
+            "unit": "boxes",
+            "digits": 0,
+            "primary": true,
+            "number": "13",
+            "display": "13 boxes"
+          },
+          {
+            "key": "neededSqFt",
+            "label": "Tile needed incl. extra",
+            "value": 138,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "138",
+            "display": "138 sq ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Floor area",
+            "value": 120,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "120",
+            "display": "120 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "tile-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Floor length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Floor width",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerBox",
+            "label": "Coverage per box",
+            "unit": "sq ft",
+            "default": 11,
+            "step": 0.1,
+            "help": "Printed on the tile box or product page."
+          },
+          {
+            "kind": "number",
+            "key": "wastePct",
+            "label": "Extra for cuts",
+            "unit": "%",
+            "default": 10,
+            "step": 1
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "타일 여유분은 얼마나 필요할까? 절단용 10% vs 15% 추가",
+    "summary_ko": [
+      "대부분의 직선 배치 바닥은 절단과 파손을 위해 타일을 10% 여분으로 구매하고, 대각선 배치, 큰 타일, 모서리나 개구부가 많은 방은 15%를 권장한다.",
+      "타일 계산기에 바닥 길이, 너비, 상자당 커버리지, 추가 비율을 입력하면 구매할 상자 수와 여분을 포함한 총 면적을 확인할 수 있다.",
+      "계산 방식은 4단계다: 바닥 면적 계산, 추가 비율 적용, 상자당 커버리지로 나누기, 올림 처리.",
+      "예시: 12ft x 10ft 바닥(120 sq ft), 상자당 11 sq ft. 10% 추가 시 132 sq ft로 12상자, 15% 추가 시 138 sq ft로 13상자가 필요하다.",
+      "15%가 유리한 경우로 대각선 배치, 큰 타일, 많은 절단, 패턴 맞춤, 첫 시공을 든다. 단순한 직사각형 방은 10%로 충분하다고 설명한다.",
+      "같은 로트 번호의 여분 타일 보관, 구매 전 라벨 커버리지 확인, 추가 물량을 기준 면적에 더해 다시 계산하는 등의 주의사항을 안내한다.",
+      "FAQ에서 반품 정책, 비율 변경 시 상자 수가 달라지는 이유, 라벨 커버리지가 다를 때의 대처를 다룬다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [],
+    "word_count": 968
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 8,
+  "api_calls": 3,
+  "telegram_message_id": 80
+}

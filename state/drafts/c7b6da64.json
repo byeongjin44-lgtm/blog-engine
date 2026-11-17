@@ -1,0 +1,187 @@
+{
+  "id": "c7b6da64",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-17T05:16:09Z",
+  "topic": {
+    "title": "SHA-256 vs SHA-1: why SHA-1 is no longer considered secure",
+    "keyword": "sha256 vs sha1",
+    "related_tool": "hash-generator"
+  },
+  "post": {
+    "slug": "sha256-vs-sha1-why-sha1-is-insecure",
+    "title": "SHA-256 vs SHA-1: Why SHA-1 Is No Longer Secure",
+    "description": "SHA-256 is the safer choice: SHA-1 has practical collision attacks, letting two different files share one hash. Here is how they differ, with code.",
+    "body": [
+      {
+        "type": "p",
+        "text": "SHA-256 is the better choice for anything new. It produces a 256-bit digest, and no practical collision attacks are publicly known against it. SHA-1 produces a 160-bit digest, and researchers have built two different files that share the same SHA-1 hash, so it should not be used where an attacker could influence the input."
+      },
+      {
+        "type": "p",
+        "text": "You can generate SHA-1 and SHA-256 hashes for any text in the [Hash Generator](/hash-generator) and compare the output directly. The tool runs in your browser, which matters if you are hashing tokens or other secrets."
+      },
+      {
+        "type": "h2",
+        "text": "SHA-256 vs SHA-1 at a glance"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Output size: SHA-1 is 160 bits, shown as 40 hex characters. SHA-256 is 256 bits, shown as 64 hex characters.",
+          "Collision resistance: SHA-1 collisions are practical to produce. No practical SHA-256 collision is publicly known.",
+          "Standards status: NIST has deprecated SHA-1 for digital signatures. SHA-256 is widely recommended for new designs.",
+          "Speed: SHA-1 is somewhat faster, but the difference rarely matters in real workloads, so it is not a good reason to choose it.",
+          "Encoding: both are usually printed as hex, but base64 output is shorter. See [Base64 vs Base64URL](/blog/base64-vs-base64url-differences-when-to-use) if you need to pick one."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Why SHA-1 is considered broken"
+      },
+      {
+        "type": "p",
+        "text": "A hash function is supposed to make it infeasible to find two different inputs with the same digest. This is called collision resistance. For a 160-bit hash, a generic birthday attack needs roughly 2^80 work, which is far too much for practical use."
+      },
+      {
+        "type": "p",
+        "text": "In 2017, Google and CWI Amsterdam published the SHAttered attack. It found a SHA-1 collision using about 2^63 operations, far below the generic bound. The researchers released two different PDF files with identical SHA-1 hashes."
+      },
+      {
+        "type": "p",
+        "text": "The practical risk comes from who controls the input. If an attacker can supply one of the two files, they can craft a malicious file that carries the same hash as a trusted one. That affects code signing, certificate signing, download verification and any system that uses a hash as proof that content has not changed."
+      },
+      {
+        "type": "p",
+        "text": "Some version control systems and protocols still rely on SHA-1 by default, and their maintainers have been working on SHA-256 support. If you run into SHA-1 in a file format or protocol you do not control, you may need to match it, but that is an interoperability decision, not a reason to pick SHA-1 for new code."
+      },
+      {
+        "type": "h2",
+        "text": "Generate both hashes in code"
+      },
+      {
+        "type": "p",
+        "text": "In Node.js, the built-in crypto module supports both algorithms. The input below is the ASCII string hello, with no trailing newline."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const crypto = require('crypto');\nconst input = 'hello';\nconsole.log(crypto.createHash('sha1').update(input).digest('hex'));\nconsole.log(crypto.createHash('sha256').update(input).digest('hex'));"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d\n2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+      },
+      {
+        "type": "p",
+        "text": "In Python, hashlib does the same job:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import hashlib\n\ndata = b'hello'\nprint(hashlib.sha1(data).hexdigest())\nprint(hashlib.sha256(data).hexdigest())"
+      },
+      {
+        "type": "p",
+        "text": "On Linux, you can hash a string from the shell with printf. Avoid echo here, because it adds a newline and changes the hash:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "printf 'hello' | sha256sum"
+      },
+      {
+        "type": "p",
+        "text": "On macOS, use shasum -a 256 instead of sha256sum."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls that cause wrong hashes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "A trailing newline changes the result. echo 'hello' hashes hello plus a newline. Use printf or strip the newline before hashing.",
+          "Hash bytes, not characters. UTF-8 is the usual choice. The same string encoded as UTF-16 produces a different digest.",
+          "Compare like with like. A hex digest and a base64 digest of the same bytes look different but match when decoded.",
+          "The empty string has a fixed SHA-256 digest, e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855. If you see this value, your code is probably hashing an empty input by mistake."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Choosing the right hash"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Verifying a download: do not rely on a checksum published on the same page as the file. An attacker who can replace the download can often replace the checksum too, and the same is true for SHA-256. Instead, get the checksum or a signature through a separate trusted channel, such as a signed release announcement or a package manager's signed metadata. Better still, verify a cryptographic signature (for example GPG or a code-signing signature) made with a key you already trust.",
+          "New digital signatures or fingerprints: use SHA-256 or a longer SHA-2 variant such as SHA-384 or SHA-512.",
+          "Message authentication: use HMAC, not a bare hash of a key concatenated with a message. In Node.js: crypto.createHmac('sha256', key).update(message).digest('hex').",
+          "Password storage: do not use any plain hash, SHA-256 included, because it is too fast to resist guessing. Use a password hashing function such as Argon2, scrypt or bcrypt from a well-tested library.",
+          "Matching an existing system: use the algorithm the other side requires, and document the risk if that algorithm is SHA-1."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is SHA-1 still safe for checksums?"
+      },
+      {
+        "type": "p",
+        "text": "For catching accidental corruption, SHA-1 still detects most random errors. The problem is tampering: if someone can alter the file and the checksum, SHA-1 no longer gives you a reliable guarantee. Use SHA-256 for checksums you publish or rely on, and deliver the checksum through a channel the attacker cannot change."
+      },
+      {
+        "type": "h3",
+        "text": "Is SHA-256 the same as SHA-2?"
+      },
+      {
+        "type": "p",
+        "text": "SHA-256 is one member of the SHA-2 family, which also includes SHA-224, SHA-384 and SHA-512. SHA-3 is a separate design, not a successor that replaces SHA-2."
+      },
+      {
+        "type": "h3",
+        "text": "Why is a SHA-256 hash 64 characters long?"
+      },
+      {
+        "type": "p",
+        "text": "A SHA-256 digest is 256 bits. Each hex character represents 4 bits, so 256 divided by 4 gives 64 characters."
+      },
+      {
+        "type": "h3",
+        "text": "Should I switch existing SHA-1 data to SHA-256?"
+      },
+      {
+        "type": "p",
+        "text": "If the SHA-1 values protect against tampering, yes: plan a migration and recompute with SHA-256 where you control both sides. If they only detect accidental changes or serve as internal cache keys, the urgency is lower."
+      }
+    ],
+    "relatedTool": "hash-generator"
+  },
+  "review": {
+    "title_ko": "SHA-256 vs SHA-1: SHA-1이 더 이상 안전하지 않은 이유",
+    "summary_ko": [
+      "SHA-256이 새로운 용도에 더 나은 선택이며, 공개적으로 알려진 실용적 충돌 공격이 없다고 설명합니다.",
+      "SHA-1은 160비트(16진수 40자), SHA-256은 256비트(16진수 64자) 다이제스트를 만듭니다.",
+      "SHA-1은 2017년 SHAttered 공격으로 같은 해시를 가진 서로 다른 두 PDF 파일을 만들 수 있음이 입증되었으며, 공격자가 입력을 통제할 수 있을 때 코드 서명, 인증서, 다운로드 검증 등에 위험합니다.",
+      "Node.js(crypto), Python(hashlib), Linux/macOS 셸에서 SHA-1과 SHA-256 해시를 생성하는 코드와 명령을 제공하며, 'hello'의 해시 값도 포함합니다.",
+      "흔한 실수로 끝의 줄바꿈 포함(echo 대신 printf 사용), 문자 인코딩 차이, 16진수와 base64 비교, 빈 문자열의 SHA-256 값을 들고 있습니다.",
+      "용도별 선택 가이드로 다운로드 검증(별도 신뢰 채널 또는 서명 사용), HMAC, 비밀번호 저장(Argon2/scrypt/bcrypt), 기존 시스템 호환성을 다룹니다.",
+      "FAQ에서 SHA-1 체크섬의 한계, SHA-2 계열 관계, SHA-256 길이 계산, 기존 데이터 마이그레이션 판단을 설명합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"Verifying a download: use the SHA-256 published by the vendor. Do not trust a SHA-1 checksum from the same page as the file, since an attacker who can alter the download may alter the checksum too.\" 이 문장은 SHA-256 체크섬이 같은 페이지에 있으면 안전하다는 잘못된 인상을 준다. 공격자가 다운로드를 바꿀 수 있다면 같은 페이지의 SHA-256 값도 바꿀 수 있으므로, 알고리즘과 무관하게 같은 채널의 체크섬은 신뢰할 수 없다."
+    ],
+    "word_count": 933
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 13,
+  "api_calls": 4,
+  "telegram_message_id": 79
+}
