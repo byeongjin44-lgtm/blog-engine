@@ -1,7 +1,7 @@
 {
   "id": "5b3458b3",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-18T04:44:41Z",
   "topic": {
     "title": "How many yards of gravel for a 20x20 area?",
@@ -340,7 +340,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-18"
   },
   "review": {
     "title_ko": "20x20 면적에 자갈이 몇 야드 필요한가?",
@@ -378,5 +379,7 @@
   "recovered_from": [],
   "cost_krw": 10,
   "api_calls": 3,
-  "telegram_message_id": 84
+  "telegram_message_id": 84,
+  "decided": "2026-11-18T06:53:55Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-yards-of-gravel-for-20x20.json"
 }

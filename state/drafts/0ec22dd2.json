@@ -1,7 +1,7 @@
 {
   "id": "0ec22dd2",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-18T04:43:55Z",
   "topic": {
     "title": "Why you should not use SHA-256 alone to hash passwords",
@@ -182,7 +182,8 @@
         "text": "Not directly, but it doesn't need to be. Attackers test candidate passwords and compare hashes. For weak or common passwords, this takes very little time, which is why a slow password hashing function is needed."
       }
     ],
-    "relatedTool": "hash-generator"
+    "relatedTool": "hash-generator",
+    "published": "2026-11-18"
   },
   "review": {
     "title_ko": "SHA-256만으로 비밀번호를 해시하면 안 되는 이유",
@@ -207,5 +208,7 @@
   "recovered_from": [],
   "cost_krw": 12,
   "api_calls": 4,
-  "telegram_message_id": 83
+  "telegram_message_id": 83,
+  "decided": "2026-11-18T06:53:52Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/why-not-sha256-alone-for-password-hashing.json"
 }
