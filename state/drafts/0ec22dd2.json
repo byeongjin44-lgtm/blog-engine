@@ -1,0 +1,211 @@
+{
+  "id": "0ec22dd2",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-18T04:43:55Z",
+  "topic": {
+    "title": "Why you should not use SHA-256 alone to hash passwords",
+    "keyword": "sha256 password hashing",
+    "related_tool": "hash-generator"
+  },
+  "post": {
+    "slug": "why-not-sha256-alone-for-password-hashing",
+    "title": "Why You Should Not Use SHA-256 Alone to Hash Passwords",
+    "description": "SHA-256 is built for speed, which is the wrong property for passwords. Use a slow, salted password hash such as bcrypt, scrypt or Argon2 instead. Here's why.",
+    "body": [
+      {
+        "type": "p",
+        "text": "Don't store passwords as plain SHA-256 digests. SHA-256 is designed to be fast, and that speed is exactly what makes it a poor choice for passwords. Use a password hashing function such as bcrypt, scrypt or Argon2, which are built to be slow, salted and tunable."
+      },
+      {
+        "type": "p",
+        "text": "You can look at SHA-256 output yourself with the [Hash Generator](/hash-generator), which produces SHA-256, SHA-384, SHA-512 and SHA-1 digests of text. It's useful for checksums and for seeing what a digest looks like. It's the wrong tool for choosing how to store user passwords, and the rest of this post explains why."
+      },
+      {
+        "type": "h2",
+        "text": "What SHA-256 is designed for"
+      },
+      {
+        "type": "p",
+        "text": "SHA-256 is a cryptographic hash function from the SHA-2 family. It takes any input and produces a fixed 256-bit (32-byte) output. Good hash functions are deterministic, hard to invert, and resistant to finding two inputs with the same output."
+      },
+      {
+        "type": "p",
+        "text": "It is designed to be fast. Hardware that is built for this kind of work, especially GPUs, can compute SHA-256 at rates in the billions per second. Even a general-purpose CPU computes it quickly. That speed is a feature when you're verifying a file download or signing data, and it's a liability when the input is a low-entropy secret like a password."
+      },
+      {
+        "type": "h2",
+        "text": "Why speed is the problem for passwords"
+      },
+      {
+        "type": "p",
+        "text": "If an attacker steals a database of SHA-256 password hashes, they don't need to break the hash. They guess. For each guess, they compute the hash and compare it to the stored value. The faster each guess, the more guesses they can test in a given time."
+      },
+      {
+        "type": "p",
+        "text": "Most passwords are short, predictable, or reused from breached lists. Dictionary words, common patterns like Summer2024!, and passwords from previous leaks are all cheap to test. With fast hashes and GPUs, an attacker can run through large candidate lists quickly. Speed works in the attacker's favor."
+      },
+      {
+        "type": "p",
+        "text": "Password hashing functions change this math. They are intentionally expensive, so each guess costs real time and, in the case of scrypt and Argon2, real memory. You pick the cost so that a legitimate login still feels fast, while an attacker testing millions of guesses faces a much bigger bill."
+      },
+      {
+        "type": "h2",
+        "text": "Salt is required, not optional"
+      },
+      {
+        "type": "p",
+        "text": "A salt is a random value unique to each password. It's stored alongside the hash and mixed in before hashing. Without a salt, two users with the same password get the same stored hash, and an attacker can precompute hashes for common passwords once and match them across the whole database. Those precomputed tables are called rainbow tables."
+      },
+      {
+        "type": "p",
+        "text": "Plain SHA-256 has no salt built in. You have to add one yourself, and it's easy to get wrong. Concatenating a fixed application-wide string onto the password is not a per-user salt. You need a per-user, random salt. Password hashing libraries generate and store the salt for you, which is one more reason to use them."
+      },
+      {
+        "type": "h2",
+        "text": "What the password hashing functions do"
+      },
+      {
+        "type": "p",
+        "text": "These are the three you'll see most often. Each has tunable parameters that set how much work a single hash costs."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "bcrypt: Based on the Blowfish cipher. Has a cost factor where each increment doubles the work. Widely supported. It only uses the first 72 bytes of input, so very long passwords need care.",
+          "scrypt: A memory-hard function. Its parameters (CPU/memory cost, block size, parallelization) make it expensive to run on specialized hardware that doesn't have much memory per core.",
+          "Argon2: Won the Password Hashing Competition in 2015. Argon2id is the variant recommended for password hashing in RFC 9106. Parameters control memory, iterations and parallelism."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The parameter values you should choose change over time as hardware improves. Use the current recommendations from your library or the OWASP Password Storage Cheat Sheet rather than copying numbers from an old tutorial."
+      },
+      {
+        "type": "h2",
+        "text": "Examples: hashing a password correctly"
+      },
+      {
+        "type": "p",
+        "text": "Here is bcrypt in Node.js using the bcrypt package. The library generates the salt and stores it in the output string, so you only save one value."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const bcrypt = require('bcrypt');\n\nconst saltRounds = 12;\n\nasync function hashPassword(plain) {\n  return bcrypt.hash(plain, saltRounds);\n}\n\nasync function checkPassword(plain, stored) {\n  return bcrypt.compare(plain, stored);\n}"
+      },
+      {
+        "type": "p",
+        "text": "The same idea in Python with the bcrypt package:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import bcrypt\n\ndef hash_password(plain: str) -> bytes:\n    return bcrypt.hashpw(plain.encode('utf-8'), bcrypt.gensalt(rounds=12))\n\ndef check_password(plain: str, stored: bytes) -> bool:\n    return bcrypt.checkpw(plain.encode('utf-8'), stored)"
+      },
+      {
+        "type": "p",
+        "text": "Notice what is missing: no manual salt, no custom loop, no homemade key stretching. Use the library's verify function to compare a login attempt against the stored hash rather than comparing hash strings yourself."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes with SHA-256 for passwords"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Hashing once with SHA-256 and storing the result. This is fast, and without a salt it's easy to attack in bulk.",
+          "Adding a global salt or pepper and assuming that's enough. A secret pepper can be an extra layer, but it does not replace per-user salts and a slow hash.",
+          "Looping SHA-256 thousands of times and calling it key stretching. The idea is similar in spirit, but it's not a vetted construction. Use PBKDF2, scrypt, bcrypt or Argon2 instead.",
+          "Picking a hash from a general-purpose library without checking whether it's a password function. Many libraries offer MD5, SHA-1 and SHA-256 but not the slow variants.",
+          "Hashing the password on the client and treating that digest as the credential. The server still needs to protect whatever gets stored, so the stored value is what matters."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "When SHA-256 is the right choice"
+      },
+      {
+        "type": "p",
+        "text": "SHA-256 is fine for many jobs: checking the integrity of a file, computing content addresses, generating ETags, or building HMAC-based message authentication when combined with a secret key. The problem is when the input is a human-chosen password that needs to resist guessing."
+      },
+      {
+        "type": "p",
+        "text": "Be careful with sensitive input in any online tool. Don't paste real production passwords into a website to test hashes. Use test values when you experiment, and do the real hashing in your own code with a password hashing library."
+      },
+      {
+        "type": "p",
+        "text": "If you're also working with the older algorithm, our post on [SHA-256 vs SHA-1](/blog/sha256-vs-sha1-why-sha1-is-insecure) covers why SHA-1 is no longer considered secure for collision resistance."
+      },
+      {
+        "type": "h2",
+        "text": "Tokens are a different problem"
+      },
+      {
+        "type": "p",
+        "text": "Don't confuse password storage with other secrets. Session tokens, API keys and one-time codes have different threat models. If you decode a JWT to check its claims, the [JWT Decoder](/jwt-decoder) only reads the header and payload without verifying the signature. Verification is a separate step, covered in [Decode JWT vs Verify](/blog/decode-jwt-vs-verify-difference)."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is SHA-256 with a salt good enough for passwords?"
+      },
+      {
+        "type": "p",
+        "text": "Usually not. A salt stops precomputed attacks, but SHA-256 is still fast, so an attacker with a stolen database can test a very large number of guesses. Use bcrypt, scrypt or Argon2 with tuned parameters."
+      },
+      {
+        "type": "h3",
+        "text": "Which should I choose: bcrypt, scrypt or Argon2?"
+      },
+      {
+        "type": "p",
+        "text": "Argon2id is the modern recommendation, and it's the one current guidance points to most often. bcrypt is widely deployed and well understood, so it's a reasonable choice if your platform supports it well. scrypt is also a sound option. Pick the one your language's maintained library supports well."
+      },
+      {
+        "type": "h3",
+        "text": "Do I need to rehash existing SHA-256 passwords?"
+      },
+      {
+        "type": "p",
+        "text": "If you have stored unsalted SHA-256 hashes, plan a migration. A common approach is to verify the old hash at login, and if it matches, store a new Argon2 or bcrypt hash and discard the old one. Users who never log in will keep the weaker hash, so consider forcing a password reset for dormant accounts."
+      },
+      {
+        "type": "h3",
+        "text": "Is a SHA-256 hash of a password reversible?"
+      },
+      {
+        "type": "p",
+        "text": "Not directly, but it doesn't need to be. Attackers test candidate passwords and compare hashes. For weak or common passwords, this takes very little time, which is why a slow password hashing function is needed."
+      }
+    ],
+    "relatedTool": "hash-generator"
+  },
+  "review": {
+    "title_ko": "SHA-256만으로 비밀번호를 해시하면 안 되는 이유",
+    "summary_ko": [
+      "도입부: 비밀번호를 SHA-256 다이제스트로 평문 저장하지 말고, bcrypt·scrypt·Argon2 같은 느리고 솔트를 쓰며 조정 가능한 비밀번호 해시 함수를 사용하라고 권고한다.",
+      "Hash Generator 도구로 SHA-256 등 다이제스트를 확인할 수 있지만, 비밀번호 저장 방식을 고르는 용도로는 맞지 않다고 설명한다.",
+      "SHA-256의 설계 목적과 속도: 256비트 출력을 내는 빠른 해시로, 파일 검증이나 서명에는 유리하지만 저엔트로피 비밀번호에는 약점이 된다.",
+      "속도가 문제인 이유: 유출된 해시를 공격자가 대입 추측으로 깨는데, 빠를수록 시도 횟수가 많아지며 GPU가 이를 가속한다.",
+      "솔트는 선택이 아니라 필수: 사용자별 무작위 솔트가 있어야 레인보우 테이블을 막을 수 있으며, 전역 문자열은 솔트가 아니다.",
+      "bcrypt(72바이트 제한), scrypt(메모리 집약), Argon2id(RFC 9106 권장) 특징을 소개하고, 매개변수는 최신 가이드를 따르라고 한다.",
+      "bcrypt의 Node.js·Python 예제 코드, 흔한 실수 5가지, SHA-256이 적합한 용도, 토큰(JWT)과의 차이, FAQ와 기존 SHA-256 해시 마이그레이션 방법을 다룬다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"A modern CPU or GPU can compute billions of SHA-256 hashes per second.\" 문장에서 CPU도 초당 수십억 번을 계산할 수 있다는 뜻으로 읽힙니다. 수십억 해시/초는 주로 고성능 GPU에 해당하므로 CPU와 GPU를 구분하거나 GPU 쪽으로 표현을 좁히는 것이 더 정확합니다.",
+      "\"the Hash Generator runs entirely in your browser, so nothing you type is sent to a server.\" 이 주장은 도구의 실제 동작에 따라 달라지므로, 사이트 소유자가 실제로 클라이언트 측에서만 처리되는지 확인해야 합니다. 확인되지 않았다면 이 문장을 수정하는 것이 좋습니다."
+    ],
+    "word_count": 1272
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 12,
+  "api_calls": 4,
+  "telegram_message_id": 83
+}

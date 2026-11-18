@@ -1,0 +1,382 @@
+{
+  "id": "5b3458b3",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-18T04:44:41Z",
+  "topic": {
+    "title": "How many yards of gravel for a 20x20 area?",
+    "keyword": "how many yards of gravel for 20x20",
+    "related_tool": "gravel-calculator",
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "depthIn": 3
+        }
+      },
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "depthIn": 4
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-many-yards-of-gravel-for-20x20",
+    "title": "How Many Yards of Gravel for a 20x20 Area?",
+    "description": "A 20x20 ft area at 3 inches deep needs 3.7 cu yd of gravel, or 5.19 tons. At 4 inches deep it needs 4.94 cu yd, or 6.91 tons. Here is how to work it out.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 20x20 foot area needs 3.7 cubic yards of gravel at 3 inches deep, or 4.94 cubic yards at 4 inches deep. At the default weight of 1.4 tons per cubic yard, that is 5.19 tons at 3 inches and 6.91 tons at 4 inches. Gravel is usually sold by the ton or the cubic yard, so check which unit your supplier uses before you order."
+      },
+      {
+        "type": "p",
+        "text": "You can run your own numbers in the [Gravel & Sand Calculator](/gravel-calculator). Enter your length, width, depth and the weight per cubic yard, and it returns the volume and tonnage. The example below uses a 20x20 foot area, but the same steps work for any rectangle."
+      },
+      {
+        "type": "h2",
+        "text": "The short answer for a 20x20 area"
+      },
+      {
+        "type": "p",
+        "text": "The depth is the number that changes the order most. Here are the two common depths for this area:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "3 inches deep: 400 sq ft, 100 cu ft, 3.7 cu yd, which is 5.19 tons",
+          "4 inches deep: 400 sq ft, 133.3 cu ft, 4.94 cu yd, which is 6.91 tons"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The area is the same in both rows. Only the depth changes, and the extra inch adds about a ton and a half to the order."
+      },
+      {
+        "type": "h2",
+        "text": "How the calculation works"
+      },
+      {
+        "type": "p",
+        "text": "Gravel is measured by volume first, then converted to weight. The steps are the same for any area:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the area. A 20 ft length times a 20 ft width gives 400 sq ft.",
+          "Convert depth to feet or use the inch formula. Depth in inches is divided by 12 to get feet. At 3 inches, the volume is 400 sq ft times 3 in, divided by 12, which gives 100 cu ft.",
+          "Convert cubic feet to cubic yards. Divide by 27, since one cubic yard is 27 cubic feet. That gives 3.7 cu yd at 3 inches.",
+          "Convert cubic yards to tons. Multiply by the weight per cubic yard. The calculator default is 1.4 tons per cubic yard, which gives 5.19 tons at 3 inches.",
+          "Repeat with 4 inches. The volume becomes 133.3 cu ft, or 4.94 cu yd, and the weight becomes 6.91 tons."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "A shortcut for cubic yards is area in square feet times depth in inches, divided by 324. For 400 sq ft at 3 inches, that is 400 x 3 / 324, which equals the 3.7 cu yd shown above. The calculator uses this same formula, so you get the same answer either way."
+      },
+      {
+        "type": "h2",
+        "text": "Why depth changes the order more than area"
+      },
+      {
+        "type": "p",
+        "text": "Gravel depth is easy to underestimate. Going from 3 inches to 4 inches looks like a small change, but it adds about a third more material. Here is what that means in practice:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "At 3 inches, you order 3.7 cu yd, or 5.19 tons.",
+          "At 4 inches, you order 4.94 cu yd, or 6.91 tons.",
+          "The 20x20 area stays at 400 sq ft in both cases, so the extra material comes entirely from depth."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Before you choose a depth, confirm what the surface is meant to do. A thin decorative layer often uses less depth than a path or drive that carries foot or vehicle traffic. The calculator only estimates quantity. It does not tell you what depth your project needs, so pick a depth based on how the area will be used."
+      },
+      {
+        "type": "h2",
+        "text": "Cubic yards or tons: which should you order?"
+      },
+      {
+        "type": "p",
+        "text": "Many landscape and gravel suppliers sell by the ton, while bagged or small-quantity gravel is sold by weight or volume. Some bulk yards quote by the cubic yard. Ask which unit the quote uses before you compare prices."
+      },
+      {
+        "type": "p",
+        "text": "The weight per cubic yard matters. The calculator default is 1.4 tons, or 2,800 lb, per cubic yard. Supplier tables list most gravel at about 2,600 to 2,800 lb per cubic yard, so the tonnage can shift depending on the stone. Ask your supplier for the weight of the specific product, then enter it in the calculator. If the supplier's weight is lower than 1.4 tons per cubic yard, the tonnage will go down for the same volume."
+      },
+      {
+        "type": "p",
+        "text": "For a more detailed look at the conversion, see [Cubic Yards to Tons: How Much Gravel Weighs Per Cubic Yard](/blog/cubic-yards-to-tons-gravel)."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes when ordering gravel"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing up inches and feet. Depth must be in inches for the formula above. A 3-inch layer is not 3 feet.",
+          "Forgetting that cubic yards and tons are different units. A tonnage order will not match a cubic yard order without the right weight per cubic yard.",
+          "Ordering exactly the calculated amount. Gravel compacts and spreads unevenly, and ground is rarely perfectly flat. Many people order a little extra, then decide how much to add based on the area after the first load.",
+          "Using an unverified weight. The default weight is a starting point. Confirm it with the supplier before you order."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Also check the product label or the supplier's spec sheet for weight and coverage information. Products differ, and the figures on the label are the ones to trust for your order."
+      },
+      {
+        "type": "p",
+        "text": "If you are planning a longer surface, the example in [How Much Gravel for a Driveway? 12x50 Example in Tons](/blog/how-much-gravel-for-driveway-12x50) shows the same steps for a larger area. For a smaller surface with a different material, see [How Much Pea Gravel for a 10x10 Area? Tons and Cubic Yards](/blog/how-much-pea-gravel-for-10x10-area)."
+      },
+      {
+        "type": "h2",
+        "text": "Use the calculator for your own measurements"
+      },
+      {
+        "type": "p",
+        "text": "Measure your length and width in feet, choose a depth in inches, and enter the weight per cubic yard from your supplier. The [Gravel & Sand Calculator](/gravel-calculator) will show the volume in cubic yards and the weight in tons. Measure twice, because a small error in length or width changes the result."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is 3.7 cubic yards enough for a 20x20 area at 3 inches?"
+      },
+      {
+        "type": "p",
+        "text": "The calculator gives 3.7 cu yd for a 20x20 ft area at 3 inches deep. That is the volume for a level, even layer. Irregular ground or compaction can change how much you need, so compare this figure with your own site before ordering."
+      },
+      {
+        "type": "h3",
+        "text": "Why does 4 inches need so much more gravel than 3 inches?"
+      },
+      {
+        "type": "p",
+        "text": "The area stays the same, but the volume grows with depth. At 4 inches, the calculator gives 4.94 cu yd instead of 3.7 cu yd, and 6.91 tons instead of 5.19 tons."
+      },
+      {
+        "type": "h3",
+        "text": "What if my gravel weighs less than 1.4 tons per cubic yard?"
+      },
+      {
+        "type": "p",
+        "text": "Enter the weight from your supplier's spec sheet in the calculator. Supplier tables list most gravel at about 2,600 to 2,800 lb per cubic yard, so the tonnage may be lower than the default. Always confirm the weight with the supplier before you place the order."
+      }
+    ],
+    "relatedTool": "gravel-calculator",
+    "sources": [
+      {
+        "title": "Mulch Pros: Material weight and coverage",
+        "url": "https://mulchpros.com/material-weight-and-coverage/"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "depthIn": 3
+        }
+      },
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "depthIn": 4
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "depthIn": 3
+        },
+        "results": [
+          {
+            "key": "tons",
+            "label": "Weight",
+            "value": 5.19,
+            "unit": "tons",
+            "digits": 2,
+            "primary": true,
+            "number": "5.19",
+            "display": "5.19 tons"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 3.7,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": true,
+            "number": "3.7",
+            "display": "3.7 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 100,
+            "unit": "cu ft",
+            "digits": 1,
+            "primary": false,
+            "number": "100",
+            "display": "100 cu ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Area",
+            "value": 400,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "400",
+            "display": "400 sq ft"
+          }
+        ]
+      },
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 20,
+          "depthIn": 4
+        },
+        "results": [
+          {
+            "key": "tons",
+            "label": "Weight",
+            "value": 6.91,
+            "unit": "tons",
+            "digits": 2,
+            "primary": true,
+            "number": "6.91",
+            "display": "6.91 tons"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 4.94,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": true,
+            "number": "4.94",
+            "display": "4.94 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 133.3,
+            "unit": "cu ft",
+            "digits": 1,
+            "primary": false,
+            "number": "133.3",
+            "display": "133.3 cu ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Area",
+            "value": 400,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "400",
+            "display": "400 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "gravel-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 20,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "depthIn",
+            "label": "Depth",
+            "unit": "in",
+            "default": 3,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "tonsPerCuYd",
+            "label": "Weight per cubic yard",
+            "unit": "tons",
+            "default": 1.4,
+            "step": 0.05,
+            "help": "Ask your supplier for the weight of the exact material."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "20x20 면적에 자갈이 몇 야드 필요한가?",
+    "summary_ko": [
+      "20x20 피트(400 sq ft) 면적에 3인치 깊이면 3.7 cu yd, 약 5.19톤이 필요하다.",
+      "4인치 깊이면 4.94 cu yd, 약 6.91톤이 필요하다. 기본 무게는 1.4톤/cu yd이다.",
+      "주문 전에 공급업체가 입방야드 기준인지 톤 기준인지 확인하라고 안내한다.",
+      "계산 방법은 면적에 깊이를 곱해 부피를 구하고, 입방피트를 27로 나눠 입방야드로 바꾼 뒤, 무게를 곱해 톤으로 바꾸는 순서다.",
+      "깊이가 면적보다 주문량에 더 큰 영향을 준다고 설명한다. 깊이는 용도에 맞게 정하라고 한다.",
+      "자갈 무게는 공급업체의 사양표를 확인해 계산기에 입력하라고 권한다. 흔한 실수(인치와 피트 혼동, 단위 차이, 여유분 없이 정확히 주문)도 정리한다.",
+      "계산기를 직접 사용하라고 안내하며, 관련 글 두 편을 링크한다."
+    ],
+    "issues": [
+      {
+        "severity": "high",
+        "ko": "\"adds about a ton and a half to the order\"(\"추가 주문량이 약 1.5톤\")는 틀렸다. 계산기 결과로 6.91 - 5.19 = 1.72톤이므로 약 1.7톤이다. 계산기 결과가 아닌 작성자 계산값이기도 하다.",
+        "en": "\"adds about a ton and a half\" is inaccurate. The calculator results give 6.91 - 5.19 = 1.72 tons, so it should read about 1.7 tons. This is also a writer-derived figure not in the calculator output."
+      },
+      {
+        "severity": "high",
+        "ko": "\"Supplier tables list most gravel at about 2,600 to 2,800 lb per cubic yard\"(본문과 FAQ에 있는 \"2,600~2,800 lb/cu yd\")의 2,600 lb 하한은 계산기 입력이나 결과가 아니라 외부 출처에서 가져온 수치다. 출처(mulchpros.com)가 이 범위를 실제로 뒷받침하는지 확인이 필요하고, 출처 없이 새로운 수치를 넣은 것이다.",
+        "en": "The range \"about 2,600 to 2,800 lb per cubic yard\" appears in the body and FAQ. The 2,600 lb lower bound is not a calculator input or result. It is an external figure that needs to be verified against the cited source, or removed or sourced properly."
+      },
+      {
+        "severity": "low",
+        "ko": "제목 \"How Many Yards of Gravel\"에서 \"yards\"는 입방야드(cubic yards)를 뜻하지만 모호하다. 제목에 \"cubic yards\"를 쓰면 더 명확하다.",
+        "en": "The title says \"How Many Yards of Gravel\", which is ambiguous. \"Cubic Yards\" would be clearer, since the post's answer is in cubic yards and tons."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [],
+    "word_count": 1121
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 10,
+  "api_calls": 3,
+  "telegram_message_id": 84
+}
