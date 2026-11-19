@@ -1,0 +1,293 @@
+{
+  "id": "c93fac77",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-19T04:33:48Z",
+  "topic": {
+    "title": "How much insulation do I need for my walls?",
+    "keyword": "how much insulation do i need for walls",
+    "related_tool": "insulation-calculator",
+    "calculations": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 400,
+          "targetR": 13,
+          "rPerInch": 3.7,
+          "sqFtPerPackage": 40
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-insulation-do-i-need-for-walls",
+    "title": "How Much Insulation Do I Need for Walls? R-Value and Packages",
+    "description": "Divide your target R-value by the product's R-value per inch for thickness, then divide wall area by coverage per package for the count. Worked example inside.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To find how much wall insulation you need, divide your target R-value by the product's R-value per inch to get the thickness. Then divide the wall area by the coverage printed on each package to get the number of packages. The [Insulation Calculator](/insulation-calculator) does both steps for you, but it helps to understand the math so you can check the result."
+      },
+      {
+        "type": "h2",
+        "text": "Measure the wall area you are insulating"
+      },
+      {
+        "type": "p",
+        "text": "Start with the square footage of the walls you plan to fill. For a rectangular wall, multiply the length by the height. Add up each wall section, then subtract the windows and doors, since those openings are not filled with the same product."
+      },
+      {
+        "type": "p",
+        "text": "Measure in feet and round your final square footage up, not down. Measure the full wall first and subtract openings afterward so you can see how much each one changes the total."
+      },
+      {
+        "type": "h2",
+        "text": "Choose your target R-value"
+      },
+      {
+        "type": "p",
+        "text": "R-value measures how well a material resists heat flow. Higher numbers mean more resistance. The R-value you need depends on your climate and on the requirements that apply to your home, so ask a qualified professional before you pick a target. This page only covers the quantity math once you know your number."
+      },
+      {
+        "type": "p",
+        "text": "You also need the R-value per inch of the product you plan to buy. That number is printed on the product label, and it is the one to use. Typical ranges for different insulation types are useful for a rough comparison, but they are not a substitute for the rating on your package."
+      },
+      {
+        "type": "h2",
+        "text": "Calculate the thickness"
+      },
+      {
+        "type": "p",
+        "text": "The thickness is your target R-value divided by the product's R-value per inch. This tells you how deep the insulation must be to reach your target with that product."
+      },
+      {
+        "type": "p",
+        "text": "Here is the worked example from the calculator. Say you are insulating 400 sq ft of exterior wall to a target of R-13, using a product rated at 3.7 R per inch."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Divide the target R-value, 13, by the product's R-value per inch, 3.7.",
+          "The result is 3.51 in of insulation thickness needed to reach R-13."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Thickness is only one part of the answer. A product rated at 3.7 R per inch needs 3.51 in of material to reach R-13 on its own. Compare that figure with the depth of your wall cavity before you buy. If the product is thinner than the depth you need, a single layer will not reach your target."
+      },
+      {
+        "type": "h2",
+        "text": "Calculate the number of packages"
+      },
+      {
+        "type": "p",
+        "text": "Packages are counted by area, so the count depends on the square footage you need to cover. The coverage printed on the label already reflects the product's thickness, so you do not adjust it yourself. Divide the wall area by the coverage per package, then round up to a whole package."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Divide the wall area, 400 sq ft, by the coverage per package, 40 sq ft.",
+          "Round the result up to the next whole package."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "In this example, 400 sq ft divided by 40 sq ft per package gives exactly 10 packages. The 40 sq ft figure applies to the 3.51 in thickness from the previous step. Coverage must match the installed thickness, so if your product's label lists a different coverage for a different thickness, use the figure for the thickness you actually install. You would buy 10 packages for that wall area."
+      },
+      {
+        "type": "p",
+        "text": "Always check the coverage printed on your product label before you order. Products differ, so do not assume the coverage from one brand applies to another. Enter your own numbers into the calculator rather than relying on the example values above."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls when estimating wall insulation"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Forgetting to subtract windows and doors. Large openings can change the package count noticeably.",
+          "Using an R-value that does not match your thickness. Check whether the label lists the rating for the thickness you plan to install.",
+          "Mixing up thickness with package count. You need both numbers: thickness tells you whether one layer can reach your target, and package count tells you how much to buy.",
+          "Buying exactly the calculated amount. Odd shapes, small sections, and cutting around fixtures can use extra material, so review your plan against the result before you order."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Enter your own wall area, target R-value, product R-value per inch, and coverage per package into the [Insulation Calculator](/insulation-calculator) to get your numbers. Use your own measurements rather than the example values above."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I use an R-value per inch from a website instead of the label?"
+      },
+      {
+        "type": "p",
+        "text": "Use the label on the product you plan to buy. General ranges for each insulation type are useful for comparing options, but the exact rating for your product is what matters for the thickness calculation."
+      },
+      {
+        "type": "h3",
+        "text": "Why does thickness matter if I am buying by the package?"
+      },
+      {
+        "type": "p",
+        "text": "Thickness tells you whether a single layer can reach your target R-value and whether it will fit in the depth of your wall. Package count tells you how much to buy. You need both to make sure the job works."
+      },
+      {
+        "type": "h3",
+        "text": "Should I add extra packages to the count?"
+      },
+      {
+        "type": "p",
+        "text": "The calculator rounds up to whole packages, which already gives you some margin. If your walls have many small sections or awkward shapes, you may want to add a package, but check your own layout first and confirm the coverage on the label."
+      },
+      {
+        "type": "h3",
+        "text": "Who should I ask about the right R-value for my home?"
+      },
+      {
+        "type": "p",
+        "text": "A qualified professional who knows your climate and your home is the right person to ask. This site only helps you estimate quantities once you have chosen a target."
+      }
+    ],
+    "relatedTool": "insulation-calculator",
+    "sources": [
+      {
+        "title": "U.S. Department of Energy: Guide to home insulation",
+        "url": "https://www.energy.gov/sites/prod/files/guide_to_home_insulation.pdf"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 400,
+          "targetR": 13,
+          "rPerInch": 3.7,
+          "sqFtPerPackage": 40
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 400,
+          "targetR": 13,
+          "rPerInch": 3.7,
+          "sqFtPerPackage": 40
+        },
+        "results": [
+          {
+            "key": "thicknessIn",
+            "label": "Thickness needed",
+            "value": 3.51,
+            "unit": "in",
+            "digits": 2,
+            "primary": true,
+            "number": "3.51",
+            "display": "3.51 in"
+          },
+          {
+            "key": "packages",
+            "label": "Packages to buy",
+            "value": 10,
+            "unit": "packages",
+            "digits": 0,
+            "primary": true,
+            "number": "10",
+            "display": "10 packages"
+          },
+          {
+            "key": "packagesExact",
+            "label": "Exact package count",
+            "value": 10,
+            "unit": "packages",
+            "digits": 2,
+            "primary": false,
+            "number": "10",
+            "display": "10 packages"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "insulation-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "areaSqFt",
+            "label": "Area to insulate",
+            "unit": "sq ft",
+            "default": 500,
+            "step": 10
+          },
+          {
+            "kind": "number",
+            "key": "targetR",
+            "label": "Target R-value",
+            "default": 15,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "rPerInch",
+            "label": "R-value per inch of your product",
+            "default": 5,
+            "step": 0.1,
+            "help": "Printed on the product label. See the reference table below."
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerPackage",
+            "label": "Coverage per package",
+            "unit": "sq ft",
+            "default": 40,
+            "step": 1,
+            "help": "Printed on the package for the thickness you need."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "벽 단열재는 얼마나 필요한가? R값과 패키지 수량",
+    "summary_ko": [
+      "목표 R값을 제품의 인치당 R값으로 나누어 두께를 구하고, 벽 면적을 패키지당 시공 면적으로 나누어 패키지 수를 구한다는 내용의 도입부입니다.",
+      "벽 면적은 길이×높이로 구하고, 창문과 문을 뺀 뒤 최종 제곱피트는 올림하라고 안내합니다.",
+      "목표 R값은 기후와 주택 요건에 따라 전문가에게 확인하고, 인치당 R값은 제품 라벨의 수치를 사용하라고 합니다.",
+      "예시: 400 sq ft 외벽, 목표 R-13, 인치당 R-3.7 제품이면 두께는 3.51 in입니다.",
+      "패키지 수는 400 sq ft ÷ 40 sq ft = 10개로 계산하며, 라벨의 시공 면적과 두께를 맞추라고 합니다.",
+      "흔한 실수(창문·문 미차감, 두께와 수량 혼동, 여유분 부족)를 정리하고, 계산기 입력과 FAQ로 마무리합니다.",
+      "전반적으로 계산기 결과인 3.51 in와 10 패키지와 일치하며, 고위험 문제는 없습니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "FAQ의 \"The calculator rounds up to whole packages, which already gives you some margin\"(계산기는 올림하므로 이미 여유가 있다)은 과장입니다. 이번 예시처럼 나누어 떨어지면 올림분이 0이라 여유가 없습니다.",
+        "en": "The FAQ says rounding up gives 'some margin,' but rounding only adds the fractional remainder. When the division is exact (400 / 40 = 10), there is no extra margin."
+      },
+      {
+        "severity": "low",
+        "ko": "\"The 40 sq ft figure applies to the 3.51 in thickness from the previous step\"는 계산기 입력에 없는 가정입니다. 패키지 시공 면적과 두께의 연결은 제품 라벨에서 확인해야 하는 내용이므로, 예시임을 분명히 하는 것이 좋습니다.",
+        "en": "The claim that the 40 sq ft coverage 'applies to the 3.51 in thickness' is an assumption not in the calculator inputs. Present it as an example, or state that the label must be checked."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "\"Batts are about 2.5 to 3.7 per inch, loose-fill is about 2.2 to 3.75 per inch, extruded polystyrene (XPS) is about 5 per inch, and polyiso and closed-cell spray foam are about 6.5 per inch\" 문장의 수치는 계산기 입력이나 결과에 없는 값입니다. 인용한 DOE 자료의 실제 범위와 일치하는지 확인하기 전에는 발행하지 마세요.",
+      "\"attic insulation guide\" 링크 URL에 포함된 \"r38\"(R-38)은 계산기 입력이 아닌 목표값입니다. 링크 대상 글이 실제로 R-38을 다루는지 확인하세요.",
+      "\"Packages are counted by area, not by thickness.\" 문장이 \"Coverage can depend on the thickness of the product\"와 충돌합니다. 포장 수량은 면적 기준이지만 시공 면적 자체가 두께에 따라 달라질 수 있다는 점을 한 문장으로 정리하는 것이 좋습니다.",
+      "예시에서 40제곱피트라는 시공 면적이 3.51인치 두께 기준인지 확인하지 않습니다. \"Confirm the coverage on the label\"이라는 안내가 있으므로 예시에서도 라벨의 두께와 맞는지 한 번 언급하면 더 명확합니다."
+    ],
+    "word_count": 919
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 15,
+  "api_calls": 6,
+  "telegram_message_id": 88
+}

@@ -1,0 +1,239 @@
+{
+  "id": "b34403d8",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-19T04:32:37Z",
+  "topic": {
+    "title": "SQL formatting conventions: a readable style guide",
+    "keyword": "sql formatting best practices",
+    "related_tool": "sql-formatter"
+  },
+  "post": {
+    "slug": "sql-formatting-best-practices-style-guide",
+    "title": "SQL Formatting Best Practices: A Readable Style Guide",
+    "description": "SQL formatting best practices: uppercase keywords, one clause per line, explicit JOINs, qualified columns and steady indentation, with examples.",
+    "body": [
+      {
+        "type": "p",
+        "text": "The best SQL formatting is the one your team applies the same way every time. Put each major clause on its own line, uppercase the keywords, qualify column names when more than one table is involved, and use explicit JOIN syntax with short aliases. Those few habits make most queries easy to scan, review and debug."
+      },
+      {
+        "type": "p",
+        "text": "If you have a messy query to clean up, paste it into the [SQL Formatter](/sql-formatter). It supports Standard SQL, MySQL, PostgreSQL, SQL Server and SQLite, so you can apply the rules below to the dialect you actually run."
+      },
+      {
+        "type": "h2",
+        "text": "Why formatting matters for SQL"
+      },
+      {
+        "type": "p",
+        "text": "SQL is read far more often than it is written. Queries get copied into tickets, reviewed in pull requests, and tuned months later by someone who was not there when they were written. A consistent layout lets the reader find the source tables, filters and output columns in seconds."
+      },
+      {
+        "type": "p",
+        "text": "Formatting also helps you catch logic errors. A missing join condition or a filter applied to the wrong table is much easier to spot when every clause starts on its own line."
+      },
+      {
+        "type": "h2",
+        "text": "Core layout rules"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Start each major clause on a new line: SELECT, FROM, JOIN, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT or FETCH.",
+          "Indent the items under SELECT and the conditions under WHERE and ON by a consistent amount, usually two or four spaces.",
+          "Put one column per line in the SELECT list. A long single line is hard to diff and hard to comment out.",
+          "Keep one condition per line in WHERE and ON. Start continuation lines with AND or OR so the boolean operator is easy to see.",
+          "End statements with a semicolon, even when a single statement runs alone. It prevents surprises when you later add a second statement to the same script."
+        ]
+      },
+      {
+        "type": "code",
+        "lang": "sql",
+        "text": "SELECT\n  o.id,\n  o.order_date,\n  o.total_amount,\n  c.name AS customer_name\nFROM orders AS o\nJOIN customers AS c\n  ON c.id = o.customer_id\nWHERE o.order_date >= '2024-01-01'\n  AND o.status = 'shipped'\nORDER BY o.order_date DESC;"
+      },
+      {
+        "type": "h2",
+        "text": "Keywords, identifiers and case"
+      },
+      {
+        "type": "p",
+        "text": "Write SQL keywords in uppercase (SELECT, FROM, WHERE) and identifiers in one consistent case. Many teams use lowercase snake_case for table and column names, which matches how most schemas are designed. The exact choice matters less than being consistent within a project."
+      },
+      {
+        "type": "p",
+        "text": "Be careful with quoting. In PostgreSQL, unquoted identifiers are folded to lowercase, so a column created as \"OrderDate\" with double quotes must always be referenced with the same quotes. In MySQL, whether table and database names are case-sensitive depends on the operating system and the lower_case_table_names setting. Column names are always case-insensitive in MySQL. Avoid mixed-case names that need quoting, and you avoid most of these problems."
+      },
+      {
+        "type": "h2",
+        "text": "Use explicit JOIN syntax and aliases"
+      },
+      {
+        "type": "p",
+        "text": "Write JOIN ... ON rather than listing tables separated by commas and putting the join condition in WHERE. The explicit form keeps each join condition next to the table it belongs to, and it is much harder to accidentally create a cross join."
+      },
+      {
+        "type": "p",
+        "text": "Give tables short aliases that are meaningful, such as o for orders and c for customers. In PostgreSQL, MySQL, SQL Server and SQLite, you can write AS before both table and column aliases, which makes the alias visible. Oracle does not accept AS for table aliases, so there you write FROM orders o and use AS only for column aliases. Avoid single letters that do not match the table, such as using c for orders, because readers will stop trusting the names."
+      },
+      {
+        "type": "p",
+        "text": "When a query uses more than one table, qualify every column with its alias. Unqualified names such as id or created_at become ambiguous quickly, and PostgreSQL, MySQL, SQL Server and SQLite reject them with an ambiguous column error when the name exists in more than one table."
+      },
+      {
+        "type": "code",
+        "lang": "sql",
+        "text": "-- Hard to review: implicit join, unqualified columns\nSELECT id, name, created_at\nFROM users, orders\nWHERE users.id = orders.user_id AND status = 'paid';\n\n-- Easier to review: explicit join, qualified columns\nSELECT\n  u.id,\n  u.name,\n  o.created_at\nFROM users AS u\nJOIN orders AS o\n  ON o.user_id = u.id\nWHERE o.status = 'paid';"
+      },
+      {
+        "type": "p",
+        "text": "The first query is ambiguous only if both tables share column names such as id, created_at or status. Whether it fails depends on the schema. When a name exists in both tables, the database rejects the unqualified reference rather than picking one, so the first query may run today and break after someone adds a matching column. The second version removes that risk and shows the reader exactly where each column comes from."
+      },
+      {
+        "type": "h2",
+        "text": "Avoid SELECT * in saved queries"
+      },
+      {
+        "type": "p",
+        "text": "SELECT * is fine for a quick look at a table in a console. In queries that live in application code, reports or views, list the columns you need. Explicit columns make the output shape visible, avoid pulling large unused columns, and keep working when someone adds a column to the table later."
+      },
+      {
+        "type": "h2",
+        "text": "Structure complex queries with CTEs"
+      },
+      {
+        "type": "p",
+        "text": "Common table expressions (WITH clauses) let you name intermediate steps instead of nesting subqueries several levels deep. Each CTE reads top to bottom, and the final SELECT becomes short. Use one CTE per logical step, and name it after what it contains."
+      },
+      {
+        "type": "code",
+        "lang": "sql",
+        "text": "WITH paid_orders AS (\n  SELECT\n    o.user_id,\n    o.total_amount\n  FROM orders AS o\n  WHERE o.status = 'paid'\n),\nspend_per_user AS (\n  SELECT\n    p.user_id,\n    SUM(p.total_amount) AS total_spend\n  FROM paid_orders AS p\n  GROUP BY p.user_id\n)\nSELECT\n  u.name,\n  s.total_spend\nFROM spend_per_user AS s\nJOIN users AS u\n  ON u.id = s.user_id\nORDER BY s.total_spend DESC;"
+      },
+      {
+        "type": "p",
+        "text": "Keep in mind that a CTE is a readability tool, not a performance guarantee. Depending on the database and version, the optimizer may treat CTEs differently from subqueries, so check the execution plan if performance matters."
+      },
+      {
+        "type": "h2",
+        "text": "Comments and formatting of expressions"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Use -- for single-line comments and /* ... */ for longer notes. Explain why a filter exists, not what the SQL obviously does.",
+          "Put CASE expressions on multiple lines, with each WHEN on its own line.",
+          "Keep function calls readable. Break long arguments across lines rather than wrapping an entire expression onto one line.",
+          "Be explicit about NULL handling with IS NULL and IS NOT NULL. Comparing to NULL with = never returns true."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls that hurt readability and correctness"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing comma-first and comma-last styles in the same file. Pick one. Comma-last is the most common, and comma-first makes adding and removing lines easier in some teams.",
+          "Hiding a filter in a JOIN when it belongs in WHERE, or the reverse. For a LEFT JOIN, a condition on the right-hand table placed in WHERE removes the unmatched rows, which often turns the join into an inner join without anyone noticing.",
+          "Letting a formatter rewrite a query you wrote for a specific dialect. Check the output against the dialect your database uses, since syntax such as date literals, LIMIT and quoting differs.",
+          "Leaving aliases that differ only by a number, such as t1 and t2, in large queries. Descriptive aliases cost a few keystrokes and save time in review."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "A short checklist"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Keywords in uppercase, identifiers in one consistent case.",
+          "Each major clause starts on its own line, with consistent indentation.",
+          "One column per line in SELECT, one condition per line in WHERE and ON.",
+          "Explicit JOIN ... ON with aliases, and every column qualified when multiple tables are involved.",
+          "No SELECT * in saved queries.",
+          "CTEs named after each logical step instead of deep nesting.",
+          "A semicolon at the end of each statement."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Once a team agrees on these rules, put them in a shared document or a linter config so the decisions do not have to be made again in every review. Then run existing queries through the [SQL Formatter](/sql-formatter) to bring older code in line."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Should SQL keywords always be uppercase?"
+      },
+      {
+        "type": "p",
+        "text": "Uppercase keywords are the most common convention and make the structure of a query easier to see. SQL itself is case-insensitive for keywords in most dialects, so this is a readability choice, not a requirement. Whatever you choose, apply it everywhere in the project."
+      },
+      {
+        "type": "h3",
+        "text": "Are leading commas or trailing commas better?"
+      },
+      {
+        "type": "p",
+        "text": "Neither is objectively better. Trailing commas are more common and read naturally. Leading commas make it easy to comment out the last column without editing the line above it. The important part is picking one style and keeping it."
+      },
+      {
+        "type": "h3",
+        "text": "Does formatting SQL change how it runs?"
+      },
+      {
+        "type": "p",
+        "text": "Whitespace and line breaks do not change the meaning of a query, except inside string literals and quoted identifiers, which a formatter should leave untouched. Always review the output of an automatic formatter before deploying it, especially for dialect-specific syntax."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same style for every SQL dialect?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, the layout rules above apply to Standard SQL, MySQL, PostgreSQL, SQL Server and SQLite alike. Only the syntax details differ, such as how identifiers are quoted, how LIMIT or TOP is written, which aliases may use AS, and which date and string functions exist."
+      }
+    ],
+    "relatedTool": "sql-formatter"
+  },
+  "review": {
+    "title_ko": "SQL 포맷팅 모범 사례: 가독성 있는 스타일 가이드",
+    "summary_ko": [
+      "글의 핵심: 팀이 항상 같은 방식으로 적용하는 포맷이 가장 좋으며, 주요 절은 줄을 나누고, 키워드는 대문자로 쓰고, 여러 테이블이 있으면 컬럼을 한정하고, 명시적 JOIN과 짧은 별칭을 사용한다.",
+      "사이트 내 SQL Formatter 도구 링크를 소개하며, Standard SQL, MySQL, PostgreSQL, SQL Server, SQLite를 지원한다고 안내한다.",
+      "SQL은 작성보다 읽는 횟수가 많으므로 일관된 레이아웃이 검토와 디버깅에 도움이 된다는 이유를 설명한다.",
+      "핵심 레이아웃 규칙: 절마다 새 줄 시작, 들여쓰기 일관성, SELECT 목록은 한 줄에 한 컬럼, WHERE와 ON은 한 줄에 한 조건, AND/OR로 줄 시작, 세미콜론 종료. 예제 쿼리를 함께 제시한다.",
+      "키워드와 대소문자: 키워드는 대문자, 식별자는 일관된 케이스를 쓰며, PostgreSQL의 큰따옴표 식별자와 MySQL의 대소문자 구분 설정(lower_case_table_names)을 주의하도록 한다.",
+      "명시적 JOIN과 별칭: 쉼표 조인 대신 JOIN ... ON을 쓰고, AS 사용 가능 DB와 Oracle의 차이를 설명하며, 여러 테이블일 때 컬럼을 별칭으로 한정하라고 권장한다. 모호한 컬럼 오류 예제를 비교한다.",
+      "SELECT *는 콘솔에서는 괜찮지만 저장된 쿼리에서는 피하고, CTE(WITH)로 중간 단계를 이름 붙여 중첩을 줄이되 성능 보장은 아니라고 명시한다. 주석, CASE, NULL 처리, 흔한 실수, 체크리스트와 FAQ로 마무리한다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"Comparing to NULL with = never returns true.\" 부분은 결과가 참이 아니라 NULL(알 수 없음)이 된다는 뜻이므로 표현을 더 정확히 하는 것이 좋습니다.",
+        "en": "\"Comparing to NULL with = never returns true\" is correct in effect but more precisely it returns NULL (unknown). Consider saying so."
+      },
+      {
+        "severity": "low",
+        "ko": "\"SELECT id, name, created_at FROM users, orders ...\" 예제에서 id는 대부분의 스키마에서 두 테이블 모두에 존재하므로 지금도 모호성 오류가 날 가능성이 높습니다. \"내일 깨질 수 있다\"는 설명과 살짝 맞지 않습니다.",
+        "en": "In the first unqualified example, id very likely exists in both tables, so that query probably already fails with an ambiguous column error. The prose says it may run today and break later, which is slightly inconsistent with the example."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "「the database will either reject it or pick one depending on the dialect」 부분은 사실과 다릅니다. 모호한 컬럼 참조(id, created_at이 두 테이블에 모두 있는 경우)는 주요 데이터베이스가 조용히 하나를 골라 쓰지 않고 오류로 거부합니다. 'pick one'을 삭제하고 'reject it'으로 고쳐야 합니다.",
+      "「Use AS when you alias a table or column」는 Oracle처럼 테이블 별칭에 AS를 허용하지 않는 방언에서는 오류가 납니다. 글에서 지원하는 5개 방언에는 문제가 없으므로, 'in the dialects covered here' 같은 한정을 덧붙이면 좋습니다.",
+      "「In MySQL, identifier case sensitivity depends on the operating system and server settings」는 테이블 이름에만 해당하며, 컬럼 이름은 대소문자를 구분하지 않습니다. '테이블 이름'으로 범위를 좁히면 정확해집니다.",
+      "\"The first query above is also ambiguous.\"라는 문장은 과장되어 있다. 두 테이블에 id, created_at, status 같은 컬럼이 중복으로 있어야 모호해지므로 스키마에 따라 다르다."
+    ],
+    "word_count": 1501
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 21,
+  "api_calls": 6,
+  "telegram_message_id": 87
+}
