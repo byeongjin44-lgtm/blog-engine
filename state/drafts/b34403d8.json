@@ -1,7 +1,7 @@
 {
   "id": "b34403d8",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-19T04:32:37Z",
   "topic": {
     "title": "SQL formatting conventions: a readable style guide",
@@ -197,7 +197,8 @@
         "text": "Yes, the layout rules above apply to Standard SQL, MySQL, PostgreSQL, SQL Server and SQLite alike. Only the syntax details differ, such as how identifiers are quoted, how LIMIT or TOP is written, which aliases may use AS, and which date and string functions exist."
       }
     ],
-    "relatedTool": "sql-formatter"
+    "relatedTool": "sql-formatter",
+    "published": "2026-11-19"
   },
   "review": {
     "title_ko": "SQL 포맷팅 모범 사례: 가독성 있는 스타일 가이드",
@@ -235,5 +236,7 @@
   "recovered_from": [],
   "cost_krw": 21,
   "api_calls": 6,
-  "telegram_message_id": 87
+  "telegram_message_id": 87,
+  "decided": "2026-11-19T04:33:52Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/sql-formatting-best-practices-style-guide.json"
 }

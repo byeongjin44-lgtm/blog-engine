@@ -1,7 +1,7 @@
 {
   "id": "c93fac77",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-19T04:33:48Z",
   "topic": {
     "title": "How much insulation do I need for my walls?",
@@ -251,7 +251,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-19"
   },
   "review": {
     "title_ko": "벽 단열재는 얼마나 필요한가? R값과 패키지 수량",
@@ -289,5 +290,7 @@
   "recovered_from": [],
   "cost_krw": 15,
   "api_calls": 6,
-  "telegram_message_id": 88
+  "telegram_message_id": 88,
+  "decided": "2026-11-19T04:34:23Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-insulation-do-i-need-for-walls.json"
 }
