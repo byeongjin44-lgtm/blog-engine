@@ -1,0 +1,327 @@
+{
+  "id": "dd5a530b",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-20T04:20:00Z",
+  "topic": {
+    "title": "How many square feet is a 24x24 garage?",
+    "keyword": "how many square feet is 24x24",
+    "related_tool": "square-footage-calculator",
+    "calculations": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 24,
+          "widthFt": 24
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-many-square-feet-is-24x24",
+    "title": "How Many Square Feet Is 24x24? 576 sq ft Explained",
+    "description": "A 24x24 area is 576 sq ft, or 64 sq yd and 53.51 m². Here is how the math works and how to use the area for floor coatings, mats and flooring.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 24x24 area is 576 sq ft. Multiply the length, 24 feet, by the width, 24 feet, and you get 576 sq ft. That same space is 64 sq yd or 53.51 m²."
+      },
+      {
+        "type": "p",
+        "text": "To check this with your own measurements, use the [Square Footage Calculator](/square-footage-calculator). Choose Rectangle or square as the shape, enter the length and width in feet, and it returns the area in square feet, square yards and square meters. The 24x24 example is a starting point, so replace it with the size of your own floor."
+      },
+      {
+        "type": "h2",
+        "text": "How the calculation works"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Measure the length in feet. For a 24x24 space, the length is 24 feet.",
+          "Measure the width in feet. Here the width is also 24 feet.",
+          "Multiply length by width: 24 feet x 24 feet = 576 sq ft."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Because both sides are equal, a 24x24 space is a square. The same formula works for any rectangle. Always measure in feet before you multiply. If you measure in inches, convert to feet first, or the result will be far off."
+      },
+      {
+        "type": "p",
+        "text": "Measure the inside of the room, not the outside of the walls. The floor you are covering is the open area between the walls, minus any space that will never be covered, such as a permanent built-in cabinet base that sits on the floor."
+      },
+      {
+        "type": "h2",
+        "text": "Square yards and square meters"
+      },
+      {
+        "type": "p",
+        "text": "Some products are sold by the square yard, and some European or metric listings use square meters. The same floor can be written three ways. For this 24x24 area:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Square feet: 576 sq ft",
+          "Square yards: 64 sq yd",
+          "Square meters: 53.51 m²"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "To convert square feet to square yards, divide by 9, because a square yard is 3 feet by 3 feet, or 9 square feet. To convert square feet to square meters, multiply by 0.0929. For this space, that gives 53.51 m²."
+      },
+      {
+        "type": "p",
+        "text": "Keep the unit that matches the product listing. A coating priced per square yard and a mat rated per square foot need different numbers, even though they describe the same floor."
+      },
+      {
+        "type": "h2",
+        "text": "Using the area for coatings, mats and flooring"
+      },
+      {
+        "type": "p",
+        "text": "Most floor products list coverage in square feet, so the area is the starting point for nearly every floor job. Start with the 576 sq ft figure, then compare it with the coverage on the product label."
+      },
+      {
+        "type": "p",
+        "text": "For a floor coating kit, divide the total area by the square feet one kit covers at the coat thickness the label describes. Round up to the next whole kit. If you plan to apply two coats, check whether the label coverage already assumes one coat or two."
+      },
+      {
+        "type": "p",
+        "text": "For floor mats and rubber tiles, you can either divide the total area by the area one mat or tile covers, or count the tiles along the length and width. Counting is useful when the pattern or edge pieces matter."
+      },
+      {
+        "type": "p",
+        "text": "For flooring such as vinyl plank or laminate, add extra for cuts and waste before you divide by the box coverage. The [Flooring Calculator](/flooring-calculator) applies the waste allowance for the layout you choose and rounds up to whole boxes, so you do not have to do that math by hand."
+      },
+      {
+        "type": "p",
+        "text": "Always check the coverage printed on the product label, because products differ. A coating or mat rated for one size may not match another brand, and box coverage can vary by product line."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls to avoid"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing units. Square feet and square yards differ by a factor of 9. Make sure the product uses the same unit you measured.",
+          "Measuring the outside of the walls instead of the usable floor. Measure the open floor area.",
+          "Forgetting waste on flooring. Plank and tile products need extra for cuts, especially around corners and doorways.",
+          "Rounding too early. Keep the full area until you have the final coverage math, then round up to whole containers or boxes."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If your room is not a clean rectangle, split it into simple shapes, find the area of each, and add them together. The [How to Calculate Square Footage of a Room](/blog/how-to-calculate-square-footage-of-a-room) guide walks through that process."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is 24x24 the same as 24 by 24 feet?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, when the measurements are in feet. Confirm the units before you measure, because a plan or listing may use inches. A 24x24 space in feet has an area of 576 sq ft."
+      },
+      {
+        "type": "h3",
+        "text": "How many square yards is 576 square feet?"
+      },
+      {
+        "type": "p",
+        "text": "It is 64 sq yd. Divide the square feet by 9 to convert to square yards."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same area for a coating and a flooring product?"
+      },
+      {
+        "type": "p",
+        "text": "You can start with the same 576 sq ft, but each product uses its own coverage and waste allowance. Check the label for the coverage of the exact product you plan to buy, and add extra for flooring cuts."
+      },
+      {
+        "type": "h3",
+        "text": "How do I convert square feet to square meters?"
+      },
+      {
+        "type": "p",
+        "text": "Multiply the square feet by 0.0929. For this 24x24 space, the result is 53.51 m²."
+      }
+    ],
+    "relatedTool": "square-footage-calculator",
+    "sources": [
+      {
+        "title": "NIST Guide to the SI, Appendix B.8: Factors for units listed alphabetically",
+        "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 24,
+          "widthFt": 24
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "rectangle",
+          "lengthFt": 24,
+          "widthFt": 24
+        },
+        "results": [
+          {
+            "key": "sqFt",
+            "label": "Area",
+            "value": 576,
+            "unit": "sq ft",
+            "digits": 2,
+            "primary": true,
+            "number": "576",
+            "display": "576 sq ft"
+          },
+          {
+            "key": "sqYd",
+            "label": "Area",
+            "value": 64,
+            "unit": "sq yd",
+            "digits": 2,
+            "primary": false,
+            "number": "64",
+            "display": "64 sq yd"
+          },
+          {
+            "key": "sqM",
+            "label": "Area",
+            "value": 53.51,
+            "unit": "m²",
+            "digits": 2,
+            "primary": false,
+            "number": "53.51",
+            "display": "53.51 m²"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "square-footage-calculator",
+        "fields": [
+          {
+            "kind": "select",
+            "key": "shape",
+            "label": "Shape",
+            "default": "rectangle",
+            "options": [
+              {
+                "value": "rectangle",
+                "label": "Rectangle or square"
+              },
+              {
+                "value": "triangle",
+                "label": "Triangle"
+              },
+              {
+                "value": "circle",
+                "label": "Circle"
+              }
+            ]
+          },
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "rectangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "rectangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "baseFt",
+            "label": "Base",
+            "unit": "ft",
+            "default": 6,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "triangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "heightFt",
+            "label": "Height",
+            "unit": "ft",
+            "default": 4,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "triangle"
+            }
+          },
+          {
+            "kind": "number",
+            "key": "radiusFt",
+            "label": "Radius",
+            "unit": "ft",
+            "default": 5,
+            "step": 0.5,
+            "showWhen": {
+              "key": "shape",
+              "equals": "circle"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "24x24는 몇 제곱피트? 576 sq ft 설명",
+    "summary_ko": [
+      "24x24 공간의 면적은 576 sq ft이며, 이는 64 sq yd 또는 53.51 m²와 같습니다.",
+      "[Square Footage Calculator]로 길이와 너비(피트)를 입력하면 제곱피트, 제곱야드, 제곱미터 면적을 확인할 수 있습니다.",
+      "계산 방법은 길이 24피트 × 너비 24피트 = 576 sq ft입니다. 치수는 반드시 피트 단위로 맞춘 뒤 곱해야 합니다.",
+      "벽의 바깥쪽이 아니라 방 안쪽의 실제 바닥 면적을 측정하고, 영구 설치 캐비닛 아래처럼 덮지 않는 부분은 제외합니다.",
+      "제곱야드는 제곱피트를 9로 나누고, 제곱미터는 0.0929를 곱해 구합니다. 제품 표기 단위에 맞춰 사용해야 합니다.",
+      "코팅, 매트, 바닥재의 소요량을 구할 때 제품 라벨의 커버리지를 확인하고, 코팅은 올림 처리, 바닥재는 절단 손실을 더해 계산합니다. 바닥재 계산은 [Flooring Calculator]를 이용할 수 있습니다.",
+      "흔한 실수로 단위 혼동, 벽 바깥 측정, 바닥재 손실 누락, 중간 반올림 등을 제시하고, 불규칙한 방은 나누어 계산하는 가이드를 안내합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"The [Flooring Calculator](/flooring-calculator) adds 7% for a straight layout or 15% for a diagonal layout\" 부분의 7%와 15%는 계산기 결과에 없는 수치입니다. 글쓴이가 임의로 적은 값이므로 근거를 확인하거나 삭제해야 합니다.",
+      "제목의 \"576 Sq Ft\"는 계산기 결과 표기인 \"576 sq ft\"와 대소문자가 다릅니다."
+    ],
+    "word_count": 818
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 10,
+  "api_calls": 4,
+  "telegram_message_id": 92
+}

@@ -1,0 +1,233 @@
+{
+  "id": "5dadcd42",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-20T04:19:10Z",
+  "topic": {
+    "title": "Cron Expression for Every 5 Minutes (and Other Minute Intervals)",
+    "keyword": "cron every 5 minutes",
+    "related_tool": "cron-generator"
+  },
+  "post": {
+    "slug": "cron-every-5-minutes-and-other-minute-intervals",
+    "title": "Cron Every 5 Minutes: */5 * * * * and Other Minute Intervals",
+    "description": "Use */5 * * * * to run cron every 5 minutes. Covers the step syntax, 15 and 10 minute intervals, and the hour-field mistake that runs jobs every 5 hours.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To run a cron job every 5 minutes, use the expression `*/5 * * * *`. The first field is the minute, and `*/5` means every minute value that is a multiple of 5, so the job fires at :00, :05, :10 and so on, every hour of every day."
+      },
+      {
+        "type": "p",
+        "text": "To check the schedule before you deploy it, paste the expression into the [Cron Expression Generator](/cron-generator). It explains each field and previews the next run times, which is the fastest way to catch a value in the wrong field."
+      },
+      {
+        "type": "h2",
+        "text": "How the 5 fields work"
+      },
+      {
+        "type": "p",
+        "text": "A standard cron expression has five fields, separated by spaces, in this order:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "┌───────── minute (0-59)\n│ ┌─────── hour (0-23)\n│ │ ┌───── day of month (1-31)\n│ │ │ ┌─── month (1-12)\n│ │ │ │ ┌─ day of week (0-6, Sunday is 0; 7 is also accepted as Sunday on many systems)\n│ │ │ │ │\n* * * * *"
+      },
+      {
+        "type": "p",
+        "text": "Each field accepts a value, a range, a list, a step, or `*` for every allowed value. The minute field is the one that matters for interval schedules because it is the smallest unit. Some schedulers, such as Quartz, use extra fields, including seconds at the front. If your scheduler expects six or seven fields, the expression changes, so check which format your tool uses."
+      },
+      {
+        "type": "h2",
+        "text": "The step syntax: */N"
+      },
+      {
+        "type": "p",
+        "text": "A step is written as `range/step`. The `*` stands for the full range of the field, so `*/5` in the minute field matches 0, 5, 10, up to 55. You can write the same thing with an explicit range, `0-59/5`, and it means exactly the same."
+      },
+      {
+        "type": "p",
+        "text": "The step divides the range into regular intervals starting from the beginning of the range. Use `*/N` or an explicit `0-59/N` when you want that behavior. The shorter form `N/step` (for example `5/15`) is covered in its own section below, because it is not portable."
+      },
+      {
+        "type": "h2",
+        "text": "Common minute intervals"
+      },
+      {
+        "type": "p",
+        "text": "These expressions cover the intervals people search for most. Each one runs in every hour of every day unless you restrict the hour or day fields."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Every minute: `* * * * *`",
+          "Every 2 minutes: `*/2 * * * *`",
+          "Every 5 minutes: `*/5 * * * *`",
+          "Every 10 minutes: `*/10 * * * *`",
+          "Every 15 minutes: `*/15 * * * *` or `0,15,30,45 * * * *`",
+          "Every 30 minutes: `*/30 * * * *` or `0,30 * * * *`",
+          "Once an hour, at minute 0: `0 * * * *`"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Every 15 minutes: */15 or 0,15,30,45?"
+      },
+      {
+        "type": "p",
+        "text": "Both expressions produce the same run times: :00, :15, :30 and :45. `*/15` is shorter and easier to change later. The list form `0,15,30,45` is more explicit, and it is easier to edit if you want to skip a slot. For example, `0,15,45` skips :30."
+      },
+      {
+        "type": "p",
+        "text": "Both forms work in every standard cron implementation. Pick the one your team reads faster."
+      },
+      {
+        "type": "h2",
+        "text": "Portability: avoid N/step without a range"
+      },
+      {
+        "type": "p",
+        "text": "Some cron implementations accept a start value with a step and no explicit range, such as `5/15` or `0/15`. Cronie accepts these, but other implementations, including classic Vixie cron, may reject them or read them differently. An expression that works on your laptop can fail on a server."
+      },
+      {
+        "type": "p",
+        "text": "Use `*/N` or `0-59/N` in the minute field instead. Both are accepted everywhere that supports step syntax. If you need a run at an offset, write the range explicitly, such as `2-59/5`, which runs at minutes 2, 7, 12 and so on."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "*/15 * * * *      portable: :00, :15, :30, :45\n0-59/15 * * * *   portable: same run times, explicit range\n0/15 * * * *      avoid: not accepted by every cron\n2-59/5 * * * *    portable: :02, :07, :12, ..."
+      },
+      {
+        "type": "h2",
+        "text": "The common mistake: putting the step in the hour field"
+      },
+      {
+        "type": "p",
+        "text": "The most frequent error is putting the step in the wrong field. Compare these two expressions:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "*/5 * * * *    every 5 minutes, every hour\n0 */5 * * *    at minute 0, every 5th hour (00:00, 05:00, 10:00, 15:00, 20:00)"
+      },
+      {
+        "type": "p",
+        "text": "The second expression does not run every 5 minutes. It runs once every 5 hours. If your job should run every few minutes, the step belongs in the minute field, and the hour field should be `*`."
+      },
+      {
+        "type": "p",
+        "text": "The same mistake happens with the day and month fields. A step in the day-of-month field, such as `*/2`, runs on every other day, not every other hour. Read each field from left to right, and ask what it counts."
+      },
+      {
+        "type": "h2",
+        "text": "Intervals that do not divide 60"
+      },
+      {
+        "type": "p",
+        "text": "Cron resets the minute field at the start of every hour. An interval that does not divide evenly into 60 leaves an uneven gap at the hour boundary. For example, `*/7 * * * *` runs at minutes 0, 7, 14, 21, 28, 35, 42, 49 and 56. The next run is at minute 0 of the next hour, so the gap from 56 to 60 is only 4 minutes."
+      },
+      {
+        "type": "p",
+        "text": "If you need a steady interval that carries across hours, cron's minute field is not the right tool. Use a scheduler that supports fixed delays, or run a loop that sleeps between runs."
+      },
+      {
+        "type": "h2",
+        "text": "Cron runs at minute boundaries, not from the start time"
+      },
+      {
+        "type": "p",
+        "text": "Cron does not count five minutes from the moment you save the crontab or start the process. It fires at clock boundaries. If you add `*/5 * * * *` at 10:03:20, the first run is at 10:05:00, then 10:10:00, 10:15:00, and so on."
+      },
+      {
+        "type": "p",
+        "text": "This matters when you test. If you expect a job to run right after you add it, it will not. Wait for the next boundary, or run the command by hand to confirm it works. It also means every server with the same schedule fires at the same moment, which can cause load spikes if many jobs use `*/5`. Plain cron syntax cannot spread start times across a fleet, so offset the job explicitly if you need to."
+      },
+      {
+        "type": "h2",
+        "text": "Check the next run times before you deploy"
+      },
+      {
+        "type": "p",
+        "text": "Before you put an expression in production, preview the next runs. The [Cron Expression Generator](/cron-generator) shows upcoming run times and explains each field in plain language. If the preview shows :00 and :05 when you wanted :05 and :10, the field values are off, and you can fix them before the job runs on a server."
+      },
+      {
+        "type": "p",
+        "text": "For daily or weekly schedules, the same approach works. See [Cron Every Day at Midnight](/blog/cron-every-day-at-midnight) for daily examples and [Cron Every Monday](/blog/cron-every-monday-weekly-schedule) for weekly ones."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls to check"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "A 5-minute job that takes longer than 5 minutes will overlap with the next run unless your scheduler or script prevents it. Use a lock file or check for a running process before starting.",
+          "Check the time zone your scheduler uses. Cron times usually follow the server's configured zone unless your platform says otherwise.",
+          "Confirm the field count. A six-field expression with seconds will be misread by a five-field parser, and the reverse is also true.",
+          "Cron jobs run with a minimal environment. Use absolute paths in the command, and set any environment variables the job needs."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "How do I run a cron job every 5 minutes only during certain hours?"
+      },
+      {
+        "type": "p",
+        "text": "Restrict the hour field. For example, `*/5 9-17 * * *` runs every 5 minutes from 09:00 through 17:55. The minute step stays in the minute field, and the hour range goes in the hour field."
+      },
+      {
+        "type": "h3",
+        "text": "Is */5 the same as 0-59/5?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Both match minutes 0, 5, 10 through 55. `*/5` is the shorter form, and the explicit range is clearer if your team is new to step syntax."
+      },
+      {
+        "type": "h3",
+        "text": "Why did my every-5-minutes job not run right away?"
+      },
+      {
+        "type": "p",
+        "text": "Cron waits for the next clock boundary, such as 10:05:00 or 10:10:00. It does not start counting from the time you added the job. Wait for the next boundary, or run the command manually to test it."
+      },
+      {
+        "type": "h3",
+        "text": "Can I run a job every 90 seconds with cron?"
+      },
+      {
+        "type": "p",
+        "text": "Not with standard five-field cron, because its smallest unit is a minute. Use a scheduler with second-level support, or run a loop with a sleep between runs."
+      }
+    ],
+    "relatedTool": "cron-generator"
+  },
+  "review": {
+    "title_ko": "5분마다 실행하는 Cron: */5 * * * * 및 기타 분 단위 간격",
+    "summary_ko": [
+      "5분마다 cron을 실행하려면 `*/5 * * * *`를 사용하며, 첫 번째 필드인 분에서 5의 배수마다 실행된다(:00, :05, :10...).",
+      "예약 식을 배포 전에 Cron Expression Generator에 붙여 넣어 각 필드 설명과 다음 실행 시각을 미리 확인할 수 있다고 안내한다.",
+      "5개 필드(분, 시, 일, 월, 요일)의 순서와 허용 범위를 설명하고, Quartz처럼 초 필드가 추가되는 스케줄러가 있으니 형식을 확인하라고 한다.",
+      "step 문법 `*/N`은 `0-59/N`과 같고, `N/step` 형식(예: `5/15`)은 구현체에 따라 지원이 다를 수 있어 피하라고 한다. `2-59/5`처럼 범위를 명시하는 방법도 제시한다.",
+      "흔한 실수로 step을 시 필드에 넣는 예(`0 */5 * * *`는 5시간마다 실행)를 들고, 60으로 나누어떨어지지 않는 간격(`*/7`)의 시간 경계 문제와 cron이 시작 시점이 아닌 시계 경계에서 실행된다는 점을 설명한다.",
+      "마지막으로 중복 실행 방지, 시간대, 필드 개수 확인, 절대 경로 사용 등 주의 사항과 FAQ(시간대 제한, 90초 간격 불가 등)를 다룬다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"`5/15` in the minute field means start at minute 5...\" 및 \"use `*/N` or `0/N`\" 부분: 시작값/스텝 형식(예: 5/15, 0/N)은 cronie 등 일부 구현에서는 허용되지만, 원래 Vixie cron 계열에서는 범위(range) 없이 쓰면 오류가 날 수 있어 이식성이 떨어집니다."
+    ],
+    "word_count": 1289
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 12,
+  "api_calls": 4,
+  "telegram_message_id": 91
+}
