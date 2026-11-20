@@ -29,7 +29,9 @@ The owner does not read English: the Korean summary and review are how posts get
 - `state/drafts/<id>.json` — one file per draft (`pending | published | rejected`), committed by the workflows.
 - `.github/workflows/` — `draft.yml` (daily; after drafting it runs `engine listen` for up to 4 h so
   button presses are handled within seconds — GitHub's cron is best-effort and can be hours late),
-  `poll.yml` (hourly fallback), `test.yml`. Don't turn `listen` into a 24/7 loop: Actions is not a server.
+  `poll.yml` (hourly fallback — in practice GitHub runs it only ~3 times a day — plus an evening wait at 18:37 KST
+  that listens up to 340 min while drafts are pending, taking over after a still-listening draft run), `test.yml`.
+  Don't turn `listen` into a 24/7 loop: Actions is not a server.
 
 ## Recovery (no human or AI fix needed for ordinary failures)
 

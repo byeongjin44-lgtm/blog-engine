@@ -4,6 +4,10 @@ on:
   schedule:
     # Fallback for buttons pressed after the draft run stopped waiting (best-effort schedule).
     - cron: "23 * * * *"
+    # Evening wait (18:37 KST): GitHub runs the hourly schedule only a few times a day, so buttons pressed in the
+    # evening waited until the next morning (2026-11-20). This run listens for up to 340 minutes and stops as soon
+    # as no draft is pending. Owner's choice over an external scheduler.
+    - cron: "37 9 * * *"
   workflow_dispatch:
     inputs:
       minutes:
@@ -24,16 +28,33 @@ concurrency:
 jobs:
   poll:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 355
     steps:
       - name: Skip while a draft run is active
         id: busy
         env:
           GH_TOKEN: ${{ github.token }}
+          EVENING: ${{ github.event.schedule == '37 9 * * *' }}
         run: |
-          active=$(gh run list -R "$GITHUB_REPOSITORY" --workflow draft.yml --limit 20 --json status \
-            --jq '[.[] | select(.status != "completed")] | length')
+          active_drafts() {
+            gh run list -R "$GITHUB_REPOSITORY" --workflow draft.yml --limit 20 --json status \
+              --jq '[.[] | select(.status != "completed")] | length'
+          }
+          active=$(active_drafts)
           echo "active draft runs: $active"
+          # The evening wait takes over from a draft run that is still listening: wait for it (up to 2 h)
+          # instead of skipping, so the evening is covered. Two listeners at once would clash on Telegram.
+          waited=0
+          if [ "$EVENING" = "true" ]; then
+            for _ in $(seq 1 24); do
+              [ "$active" = "0" ] && break
+              sleep 300
+              waited=$((waited + 5))
+              active=$(active_drafts)
+              echo "still active draft runs: $active"
+            done
+          fi
+          echo "waited=$waited" >> "$GITHUB_OUTPUT"
           # A running draft job already handles button presses; a queued one will start soon.
           if [ "$active" != "0" ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; else echo "skip=false" >> "$GITHUB_OUTPUT"; fi
       - if: steps.busy.outputs.skip == 'false'
@@ -48,8 +69,11 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TARGET_GITHUB_TOKEN: ${{ secrets.TARGET_GITHUB_TOKEN }}
-          MINUTES: ${{ inputs.minutes || '0' }}
+          MINUTES: ${{ inputs.minutes || (github.event.schedule == '37 9 * * *' && '340') || '0' }}
+          WAITED: ${{ steps.busy.outputs.waited }}
         run: |
+          # The job may run 355 minutes in total: listen only for what is left after waiting for a draft run.
+          if [ "$MINUTES" != "0" ] && [ -n "$WAITED" ]; then MINUTES=$((MINUTES - WAITED)); fi
           if [ "$MINUTES" != "0" ]; then python -m engine listen --minutes "$MINUTES"; else python -m engine poll; fi
       # Tell Bing & co. (IndexNow) about posts published since the last run, once their pages are live.
       # Best-effort: never fails this job and sends no Telegram message.
