@@ -1,0 +1,243 @@
+{
+  "id": "82627f51",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-21T04:18:58Z",
+  "topic": {
+    "title": "How much gravel for a 12x12 shed base?",
+    "keyword": "how much gravel for a shed base",
+    "related_tool": "gravel-calculator",
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "depthIn": 4
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-gravel-for-shed-base-12x12",
+    "title": "How Much Gravel for a Shed Base? 12x12 Example in Tons",
+    "description": "A 12 ft by 12 ft gravel pad 4 in deep needs 1.78 cu yd, or 2.49 tons at 1.4 tons per cubic yard. Here is how the math works and what to check.",
+    "body": [
+      {
+        "type": "p",
+        "text": "For a 12 ft by 12 ft shed base 4 in deep, you need 1.78 cu yd of gravel, which weighs 2.49 tons at the calculator's default of 1.4 tons per cubic yard. Confirm the weight per cubic yard with your supplier before you order."
+      },
+      {
+        "type": "p",
+        "text": "You can run the same numbers for your own site with the [Gravel & Sand Calculator](/gravel-calculator). Enter your length, width and depth in feet and inches, and it returns cubic yards and tons. The steps below show how the 12x12 example works, so you can check the result by hand."
+      },
+      {
+        "type": "h2",
+        "text": "How the 12x12 gravel estimate works"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the area. The pad is 12 ft long and 12 ft wide, so the area is 144 sq ft. For a rectangle, area is length times width.",
+          "Find the volume in cubic feet. Multiply the area by the depth in feet. The depth is 4 in, which is one-third of a foot, so the volume is 48 cu ft.",
+          "Convert cubic feet to cubic yards. Divide by 27, because there are 27 cubic feet in a cubic yard. That gives 1.78 cu yd.",
+          "Convert cubic yards to tons. Multiply the cubic yards by the weight per cubic yard. With 1.78 cu yd at 1.4 tons per cubic yard, the pad weighs 2.49 tons."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The calculator uses a shortcut that gives the same answer: area in square feet times depth in inches, divided by 324. One cubic yard covers 324 sq ft at one inch deep, so 144 sq ft at 4 in deep is the same 1.78 cu yd. The constants 27 and 324 are standard conversions, not product data, so they do not change from one project to the next."
+      },
+      {
+        "type": "p",
+        "text": "Cubic feet and cubic yards describe the same volume in different units. Suppliers that sell by volume usually quote cubic yards, while many suppliers that sell by weight quote tons."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls to avoid when ordering"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing up inches and feet. A 4 in depth is not 4 ft. Enter the depth in inches in the calculator, and make sure it matches the depth you actually plan to spread.",
+          "Assuming every gravel weighs the same. The calculator default is 1.4 tons per cubic yard. Weight varies with the stone, so ask your supplier for the weight per cubic yard of the specific product you are buying, and use that number in place of the default.",
+          "Using the wrong unit at checkout. If you estimated in cubic yards but the supplier sells by the ton, convert using the weight per cubic yard that your supplier gives you.",
+          "Ignoring the product label. Check the coverage or yield printed on the label or data sheet of the product you buy, because products differ. If a printed figure conflicts with a general number, use the printed one."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Using these numbers for a shed base"
+      },
+      {
+        "type": "p",
+        "text": "This page only estimates how much material to buy. It does not cover how a base should be designed, how deep it needs to be for your shed, or how the ground should be prepared. For those decisions, ask a qualified professional."
+      },
+      {
+        "type": "p",
+        "text": "Measure your own pad rather than relying on the 12x12 example. Once you have your length, width and depth, the [Gravel & Sand Calculator](/gravel-calculator) gives the volume and weight for that exact area. If your project is a long strip rather than a square pad, see [How Much Gravel for a Driveway? 12x50 Example in Tons](/blog/how-much-gravel-for-driveway-12x50) for a different layout."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Should I order extra gravel beyond the calculated amount?"
+      },
+      {
+        "type": "p",
+        "text": "The calculator gives the amount for the area you enter and does not add extra for spillage or uneven spreading. Ask your supplier how they handle partial loads and small overages, and decide based on your own site."
+      },
+      {
+        "type": "h3",
+        "text": "Is gravel sold by the cubic yard or by the ton?"
+      },
+      {
+        "type": "p",
+        "text": "It depends on the supplier and the material. Some sell by the cubic yard and others by the ton. The calculator returns both, so you can match the unit the supplier uses. See [Cubic Yards to Tons: How Much Gravel Weighs Per Cubic Yard](/blog/cubic-yards-to-tons-gravel) for how the conversion works."
+      },
+      {
+        "type": "h3",
+        "text": "What if my depth is not 4 in?"
+      },
+      {
+        "type": "p",
+        "text": "Enter your actual depth in inches into the calculator. Cubic yards and tons change in step with depth, so a deeper or shallower pad needs more or less material. You can check the result with the same steps shown above."
+      }
+    ],
+    "relatedTool": "gravel-calculator",
+    "sources": [
+      {
+        "title": "Mulch Pros: Material weight and coverage",
+        "url": "https://mulchpros.com/material-weight-and-coverage/"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "depthIn": 4
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "depthIn": 4
+        },
+        "results": [
+          {
+            "key": "tons",
+            "label": "Weight",
+            "value": 2.49,
+            "unit": "tons",
+            "digits": 2,
+            "primary": true,
+            "number": "2.49",
+            "display": "2.49 tons"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 1.78,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": true,
+            "number": "1.78",
+            "display": "1.78 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 48,
+            "unit": "cu ft",
+            "digits": 1,
+            "primary": false,
+            "number": "48",
+            "display": "48 cu ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Area",
+            "value": 144,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "144",
+            "display": "144 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "gravel-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 20,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "depthIn",
+            "label": "Depth",
+            "unit": "in",
+            "default": 3,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "tonsPerCuYd",
+            "label": "Weight per cubic yard",
+            "unit": "tons",
+            "default": 1.4,
+            "step": 0.05,
+            "help": "Ask your supplier for the weight of the exact material."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "쉐드 기초용 자갈은 얼마나 필요한가? 12x12 예시(톤 단위)",
+    "summary_ko": [
+      "12ft x 12ft, 깊이 4인치 자갈 기초는 1.78 cu yd이며, 계산기 기본값 cu yd당 1.4톤 기준으로 2.49톤입니다.",
+      "주문 전 공급업체에 cu yd당 무게를 확인하라고 안내합니다.",
+      "[Gravel & Sand Calculator]로 자신의 치수를 넣어 같은 방식으로 계산할 수 있다고 소개합니다.",
+      "면적 144 sq ft, 깊이 4인치(1/3ft), 부피 48 cu ft, 27로 나눠 1.78 cu yd, 1.4를 곱해 2.49톤이 되는 단계별 계산을 설명합니다.",
+      "계산기의 축약식(sq ft x 인치 깊이 / 324)도 같은 결과가 나온다고 설명합니다.",
+      "주문 시 흔한 실수(인치와 피트 혼동, 자갈 무게 가정, 단위 변환, 제품 라벨 확인)를 정리합니다.",
+      "이 페이지는 자재 수량 추정만 다루며, 기초 설계나 지반 준비는 전문가에게 문의하라고 안내하고 FAQ로 마무리합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"Supplier tables list most gravel at about 2,600 to 2,800 lb per cubic yard\"의 2,600~2,800 lb/입방야드 범위는 계산기 결과가 아닌 작성자가 추정한 수치입니다. 출처 확인이 없으면 삭제하거나 출처를 명시해야 합니다.",
+      "\"There are 27 cubic feet in a cubic yard\"의 27과 \"divide by 324\"의 324는 표준 환산 상수입니다. 계산은 올바르지만 계산기 결과가 아니므로 참고용 상수임을 명확히 해 두면 좋습니다."
+    ],
+    "word_count": 737
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 9,
+  "api_calls": 4,
+  "telegram_message_id": 94
+}

@@ -1,0 +1,247 @@
+{
+  "id": "029cce4c",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-21T04:18:14Z",
+  "topic": {
+    "title": "Cron Expression for Every Hour and Every N Hours",
+    "keyword": "cron every 2 hours",
+    "related_tool": "cron-generator"
+  },
+  "post": {
+    "slug": "cron-every-2-hours-expression",
+    "title": "Cron Every 2 Hours: 0 */2 * * * and Other Hourly Schedules",
+    "description": "Use 0 */2 * * * to run a cron job every 2 hours. Learn the hourly expression 0 * * * *, business-hours ranges, and how */2 behaves at midnight.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To run a cron job every 2 hours, use 0 */2 * * *. It fires at minute 0 of hours 0, 2, 4, and so on up to 22, every day. For hourly jobs, use 0 * * * *. You can build and preview these with the [Cron Expression Generator](/cron-generator), which shows upcoming run times so you can confirm the schedule before deploying it."
+      },
+      {
+        "type": "p",
+        "text": "This post covers the 5-field format used by standard crontab, the most common every-N-hours patterns, business-hours ranges, and a few pitfalls that catch people out."
+      },
+      {
+        "type": "h2",
+        "text": "The 5 fields in order"
+      },
+      {
+        "type": "p",
+        "text": "A standard cron expression has five fields separated by spaces:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "minute hour day-of-month month day-of-week"
+      },
+      {
+        "type": "p",
+        "text": "Valid values are 0-59 for minute, 0-23 for hour, 1-31 for day of month, 1-12 for month, and 0-7 for day of week, where both 0 and 7 mean Sunday. For hour-based schedules, only the first two fields matter. Set the other three to * to mean every value."
+      },
+      {
+        "type": "h2",
+        "text": "Hourly: every hour on the hour"
+      },
+      {
+        "type": "p",
+        "text": "The expression for once per hour is:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 * * * *"
+      },
+      {
+        "type": "p",
+        "text": "The minute field is 0, so the job runs at :00 of every hour. The hour field is *, so it runs in every hour. That gives 24 runs per day."
+      },
+      {
+        "type": "h3",
+        "text": "Minute 0 versus minute 30"
+      },
+      {
+        "type": "p",
+        "text": "The minute field sets where in the hour the job runs. These two expressions both run hourly, but at different times:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 * * * *\n30 * * * *"
+      },
+      {
+        "type": "p",
+        "text": "The first runs at 1:00, 2:00, 3:00 and so on. The second runs at 1:30, 2:30, 3:30. If many jobs on a host or in a queue are scheduled at :00, they all compete at the same moment. Offsetting a job to a less crowded minute, such as 17 or 30, can reduce that contention. Pick the minute based on what else runs on the same system."
+      },
+      {
+        "type": "h2",
+        "text": "Every 2 hours and every N hours"
+      },
+      {
+        "type": "p",
+        "text": "Use a step value after the asterisk in the hour field. The step */N means every Nth value, counting from the start of the range (0 for hours)."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 */2 * * *\n0 */3 * * *\n0 */4 * * *\n0 */6 * * *\n0 */12 * * *"
+      },
+      {
+        "type": "p",
+        "text": "Here is what each one runs:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "0 */2 * * *: 00:00, 02:00, 04:00, ..., 22:00 (12 runs per day)",
+          "0 */3 * * *: 00:00, 03:00, 06:00, ..., 21:00 (8 runs per day)",
+          "0 */4 * * *: 00:00, 04:00, 08:00, 12:00, 16:00, 20:00 (6 runs per day)",
+          "0 */6 * * *: 00:00, 06:00, 12:00, 18:00 (4 runs per day)",
+          "0 */12 * * *: 00:00 and 12:00 (2 runs per day)"
+        ]
+      },
+      {
+        "type": "h3",
+        "text": "Why */2 does not run at 23:00"
+      },
+      {
+        "type": "p",
+        "text": "The hour field counts from 0 at midnight. Since 23 is not a multiple of 2, the job skips it. The last run of the day is 22:00, and the next is 00:00 the following day. The gap across midnight is 2 hours, the same as every other gap."
+      },
+      {
+        "type": "p",
+        "text": "This works cleanly only because 24 divides evenly by 2. The schedule restarts at 0 every day, so it repeats the same way each day. It does not carry over an offset from the previous day."
+      },
+      {
+        "type": "p",
+        "text": "The problem shows up when the step does not divide 24. Compare these:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 */5 * * *   # runs 0, 5, 10, 15, 20, then 0 again: 4-hour gap at night\n0 */7 * * *   # runs 0, 7, 14, 21, then 0 again: 3-hour gap at night"
+      },
+      {
+        "type": "p",
+        "text": "With */5, you get 00:00, 05:00, 10:00, 15:00, 20:00, and then 00:00 again. The gap from 20:00 to 00:00 is 4 hours, not 5. With */7, the gap from 21:00 to 00:00 is 3 hours. When N does not divide 24, the gap that wraps past midnight is always shorter than N. The other gaps are exactly N. So the job runs a little more often than every N hours around midnight, and the pattern repeats the same way each day."
+      },
+      {
+        "type": "p",
+        "text": "If you need strictly even spacing across days, use a scheduler that supports interval-based timers, or run the job from a loop or a system that tracks the last run time."
+      },
+      {
+        "type": "h2",
+        "text": "Business-hours ranges"
+      },
+      {
+        "type": "p",
+        "text": "Use a range like 9-17 in the hour field to run only during specific hours. Ranges are inclusive, so 9-17 includes both 9:00 and 17:00, giving 9 runs."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 9-17 * * *        # top of every hour from 09:00 to 17:00\n0 9-17/2 * * *      # every 2 hours from 09:00 to 17:00: 9, 11, 13, 15, 17\n0 9-17 * * 1-5     # hourly 09:00-17:00, Monday to Friday\n0 9-17/2 * * 1-5   # every 2 hours, 09:00-17:00, Monday to Friday"
+      },
+      {
+        "type": "p",
+        "text": "In the day-of-week field, 1-5 means Monday through Friday, with 0 or 7 as Sunday. If you want the job to run on weekends too, leave that field as *."
+      },
+      {
+        "type": "p",
+        "text": "Ranges with steps, such as 9-17/2, are supported by most standard cron implementations. Some schedulers built into languages or frameworks use a different syntax, often with a seconds field at the start. Check your scheduler's documentation before copying an expression across systems."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Using */2 in the minute field instead of the hour field. */2 in minutes means every 2 minutes, which is far more often than most people intend. Use 0 */2 * * * for every 2 hours.",
+          "Forgetting the minute field. Writing */2 * * * * runs every 2 minutes. Always put a fixed minute value, usually 0, in front of an hour step.",
+          "Assuming the server timezone is your local time. Cron uses the system timezone of the machine running it, which is often UTC on servers. Confirm this before you schedule a job for a specific local hour.",
+          "Expecting clean behavior across daylight saving time changes. On days when clocks change, local-time schedules can skip or repeat an hour, depending on the implementation. For jobs where this matters, schedule in UTC.",
+          "Testing by waiting. Preview the next several run times before deploying. The [Cron Expression Generator](/cron-generator) shows upcoming runs for an expression, which is faster than checking logs the next day."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If your job runs once a day rather than hourly, see [Cron Every Day at Midnight](/blog/cron-every-day-at-midnight). For minute-based intervals, see [Cron Every 5 Minutes](/blog/cron-every-5-minutes-and-other-minute-intervals). For weekday-specific schedules, see [Cron Every Monday](/blog/cron-every-monday-weekly-schedule)."
+      },
+      {
+        "type": "h2",
+        "text": "Quick reference"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Every hour on the hour: 0 * * * *",
+          "Every hour at half past: 30 * * * *",
+          "Every 2 hours: 0 */2 * * *",
+          "Every 3 hours: 0 */3 * * *",
+          "Every 6 hours: 0 */6 * * *",
+          "Hourly during business hours: 0 9-17 * * 1-5",
+          "Every 2 hours during business hours: 0 9-17/2 * * 1-5"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Does 0 */2 * * * run at midnight?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. The hour field starts at 0, so the first run each day is 00:00. The runs continue at 02:00, 04:00, and so on until 22:00."
+      },
+      {
+        "type": "h3",
+        "text": "How do I run a job every 90 minutes with cron?"
+      },
+      {
+        "type": "p",
+        "text": "Standard cron has no way to express 90-minute intervals directly, because 90 minutes does not divide evenly into an hour or a day. Use a loop in your script, a systemd timer, or a scheduler that supports interval triggers."
+      },
+      {
+        "type": "h3",
+        "text": "Can I run a job every 2 hours but only at odd hours?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Use 0 1-23/2 * * *, which runs at 01:00, 03:00, 05:00, and so on until 23:00. Starting the range at 1 makes the schedule odd-hour instead of even-hour."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my cron job run at the wrong hour?"
+      },
+      {
+        "type": "p",
+        "text": "The most common cause is timezone. Cron uses the server's system timezone, which is often UTC. Check the timezone setting on the machine, and compare the next run times you expect with what the scheduler actually does."
+      }
+    ],
+    "relatedTool": "cron-generator"
+  },
+  "review": {
+    "title_ko": "2시간마다 cron 실행: 0 */2 * * * 및 기타 시간 단위 일정",
+    "summary_ko": [
+      "2시간마다 실행하려면 0 */2 * * *을 쓰고, 매시간 정각은 0 * * * *을 씁니다. Cron Expression Generator로 실행 시각을 미리 확인할 수 있다고 안내합니다.",
+      "5개 필드(분 시 일 월 요일)의 순서와 허용 범위(분 0-59, 시 0-23, 일 1-31, 월 1-12, 요일 0-7, 0과 7은 일요일)를 설명합니다.",
+      "매시간 실행에서 분 값이 0인지 30인지에 따라 실행 시각이 달라지며, 여러 작업이 :00에 몰리면 경합이 생기므로 분을 바꿔 분산할 수 있다고 설명합니다.",
+      "*/N 단계 값으로 2, 3, 4, 6, 12시간 간격의 실행 시각과 하루 실행 횟수를 제시합니다. */2가 자정을 넘어 23시에 실행되지 않는 이유와, 24를 나누어 떨어지지 않는 간격(*/5, */7)에서는 자정을 넘는 구간이 N시간보다 짧아진다고 설명합니다.",
+      "업무 시간 범위(9-17, 9-17/2)와 월-금(1-5) 조합의 예시를 제시하고, 스케줄러마다 문법이 다를 수 있음을 알립니다.",
+      "흔한 실수(분 필드에 */2 사용, 분 필드 누락, 서버 시간대, 일광 절약 시간, 기다려서 테스트하기)와 관련 글 링크, 빠른 참조 목록 및 FAQ(자정 실행, 90분 간격, 홀수 시간, 잘못된 시각 실행)를 정리합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"Every-N-hour intervals that do not divide 24 will have one shorter or longer gap per day\"는 부정확합니다. */N에서 N이 24를 나누지 않으면 마지막 실행부터 자정까지의 간격이 항상 N보다 짧아지므로 \"longer\"가 생기지 않습니다. 예시(*/5의 4시간, */7의 3시간 간격)는 맞습니다."
+    ],
+    "word_count": 1249
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 13,
+  "api_calls": 4,
+  "telegram_message_id": 93
+}
