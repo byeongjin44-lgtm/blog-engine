@@ -1,7 +1,7 @@
 {
   "id": "82627f51",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-21T04:18:58Z",
   "topic": {
     "title": "How much gravel for a 12x12 shed base?",
@@ -214,7 +214,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-21"
   },
   "review": {
     "title_ko": "쉐드 기초용 자갈은 얼마나 필요한가? 12x12 예시(톤 단위)",
@@ -239,5 +240,7 @@
   "recovered_from": [],
   "cost_krw": 9,
   "api_calls": 4,
-  "telegram_message_id": 94
+  "telegram_message_id": 94,
+  "decided": "2026-11-21T04:36:09Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-gravel-for-shed-base-12x12.json"
 }

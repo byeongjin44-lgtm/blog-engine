@@ -1,7 +1,7 @@
 {
   "id": "029cce4c",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-21T04:18:14Z",
   "topic": {
     "title": "Cron Expression for Every Hour and Every N Hours",
@@ -220,7 +220,8 @@
         "text": "The most common cause is timezone. Cron uses the server's system timezone, which is often UTC. Check the timezone setting on the machine, and compare the next run times you expect with what the scheduler actually does."
       }
     ],
-    "relatedTool": "cron-generator"
+    "relatedTool": "cron-generator",
+    "published": "2026-11-21"
   },
   "review": {
     "title_ko": "2시간마다 cron 실행: 0 */2 * * * 및 기타 시간 단위 일정",
@@ -243,5 +244,7 @@
   "recovered_from": [],
   "cost_krw": 13,
   "api_calls": 4,
-  "telegram_message_id": 93
+  "telegram_message_id": 93,
+  "decided": "2026-11-21T04:37:10Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/cron-every-2-hours-expression.json"
 }

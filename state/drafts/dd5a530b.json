@@ -1,7 +1,7 @@
 {
   "id": "dd5a530b",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-20T04:20:00Z",
   "topic": {
     "title": "How many square feet is a 24x24 garage?",
@@ -298,7 +298,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-21"
   },
   "review": {
     "title_ko": "24x24는 몇 제곱피트? 576 sq ft 설명",
@@ -323,5 +324,7 @@
   "recovered_from": [],
   "cost_krw": 10,
   "api_calls": 4,
-  "telegram_message_id": 92
+  "telegram_message_id": 92,
+  "decided": "2026-11-21T04:36:38Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-square-feet-is-24x24.json"
 }

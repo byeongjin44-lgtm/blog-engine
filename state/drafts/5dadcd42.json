@@ -1,7 +1,7 @@
 {
   "id": "5dadcd42",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-20T04:19:10Z",
   "topic": {
     "title": "Cron Expression for Every 5 Minutes (and Other Minute Intervals)",
@@ -206,7 +206,8 @@
         "text": "Not with standard five-field cron, because its smallest unit is a minute. Use a scheduler with second-level support, or run a loop with a sleep between runs."
       }
     ],
-    "relatedTool": "cron-generator"
+    "relatedTool": "cron-generator",
+    "published": "2026-11-21"
   },
   "review": {
     "title_ko": "5분마다 실행하는 Cron: */5 * * * * 및 기타 분 단위 간격",
@@ -229,5 +230,7 @@
   "recovered_from": [],
   "cost_krw": 12,
   "api_calls": 4,
-  "telegram_message_id": 91
+  "telegram_message_id": 91,
+  "decided": "2026-11-21T04:36:44Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/cron-every-5-minutes-and-other-minute-intervals.json"
 }
