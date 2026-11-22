@@ -1,7 +1,7 @@
 {
   "id": "9483a100",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-22T03:32:58Z",
   "topic": {
     "title": "How much blown-in insulation for a 1,000 sq ft attic?",
@@ -264,7 +264,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-22"
   },
   "review": {
     "title_ko": "1,000 sq ft 다락방에 필요한 블로운인(blown-in) 단열재 양은? ",
@@ -291,5 +292,7 @@
   "recovered_from": [],
   "cost_krw": 16,
   "api_calls": 6,
-  "telegram_message_id": 102
+  "telegram_message_id": 102,
+  "decided": "2026-11-22T03:39:17Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-blown-in-insulation-attic.json"
 }

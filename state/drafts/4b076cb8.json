@@ -1,7 +1,7 @@
 {
   "id": "4b076cb8",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-22T03:31:41Z",
   "topic": {
     "title": "Cron Expression for First Day of the Month",
@@ -220,7 +220,8 @@
         "text": "Most likely the day-of-week field is not `*`. When both day-of-month and day-of-week are restricted, standard cron runs on days matching either one. Set day-of-week to `*` to run only on the 1st."
       }
     ],
-    "relatedTool": "cron-generator"
+    "relatedTool": "cron-generator",
+    "published": "2026-11-22"
   },
   "review": {
     "title_ko": "첫 날 실행을 위한 Cron 표현식: 0 0 1 * *",
@@ -246,5 +247,7 @@
   "recovered_from": [],
   "cost_krw": 18,
   "api_calls": 6,
-  "telegram_message_id": 101
+  "telegram_message_id": 101,
+  "decided": "2026-11-22T03:39:10Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/cron-expression-first-day-of-month.json"
 }
