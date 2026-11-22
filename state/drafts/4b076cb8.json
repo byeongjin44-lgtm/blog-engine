@@ -1,0 +1,250 @@
+{
+  "id": "4b076cb8",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-22T03:31:41Z",
+  "topic": {
+    "title": "Cron Expression for First Day of the Month",
+    "keyword": "cron first day of month",
+    "related_tool": "cron-generator"
+  },
+  "post": {
+    "slug": "cron-expression-first-day-of-month",
+    "title": "Cron Expression for First Day of the Month: 0 0 1 * *",
+    "description": "Use 0 0 1 * * to run a cron job at midnight on the 1st of every month. Covers the day-of-week OR gotcha and workarounds for last day and first weekday.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To run a job at midnight on the first day of every month, use the cron expression `0 0 1 * *`. It means minute 0, hour 0, day-of-month 1, any month, any day of the week. You can build and preview this schedule in the [Cron Expression Generator](/cron-generator) to check the next run times before you deploy it."
+      },
+      {
+        "type": "p",
+        "text": "The expression itself is simple. The surprises come from how standard cron combines the two day fields, and from the fact that cron has no built-in way to say \"last day of the month.\" This post covers both."
+      },
+      {
+        "type": "h2",
+        "text": "The first-of-month expression"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 0 1 * *\n│ │ │ │ └─ day of week (any)\n│ │ │ └─── month (any)\n│ │ └───── day of month (1)\n│ └─────── hour (0)\n└───────── minute (0)"
+      },
+      {
+        "type": "p",
+        "text": "Here are a few variants people often need alongside it:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "`0 0 1 * *`: midnight on the 1st of every month.",
+          "`0 6 1 * *`: 06:00 on the 1st of every month.",
+          "`30 2 1 * *`: 02:30 on the 1st of every month.",
+          "`0 0 1 1,4,7,10 *`: midnight on the 1st of January, April, July and October (quarterly).",
+          "`0 0 1 1 *`: midnight on January 1st only (yearly)."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The hour and minute are evaluated in the timezone the cron daemon or scheduler uses. On many servers that is UTC, so check the timezone setting of your environment before you assume local midnight."
+      },
+      {
+        "type": "h2",
+        "text": "Day-of-month and day-of-week are OR-ed"
+      },
+      {
+        "type": "p",
+        "text": "In standard Vixie-style cron, if both the day-of-month and day-of-week fields are restricted (neither is `*`), the job runs when either field matches. It does not require both to match. This is the most common source of confusion with this schedule."
+      },
+      {
+        "type": "p",
+        "text": "For example, this expression looks like it should run only on Mondays that fall on the 1st:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 0 1 * 1"
+      },
+      {
+        "type": "p",
+        "text": "In standard cron it runs on the 1st of every month and on every Monday. Mondays occur about four to five times a month, so that adds about four to five extra Monday runs per month, plus the 1st itself when it is not a Monday."
+      },
+      {
+        "type": "p",
+        "text": "The rules are:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "If day-of-month is `*` and day-of-week is restricted, the job runs only on matching weekdays.",
+          "If day-of-month is restricted and day-of-week is `*`, the job runs only on matching dates.",
+          "If both are restricted, the job runs on days that match either one.",
+          "If both are `*`, the job runs every day."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you want the 1st of the month only, leave day-of-week as `*`. If you want a weekday-based schedule, leave day-of-month as `*`. Do not combine them unless you really want the OR behavior. For more on weekday fields, see [Cron Every Monday: Expressions and Weekly Schedules](/blog/cron-every-monday-weekly-schedule)."
+      },
+      {
+        "type": "h2",
+        "text": "Why there is no last-day syntax"
+      },
+      {
+        "type": "p",
+        "text": "Standard 5-field cron has no `L` modifier, so you cannot write \"last day of the month\" as a single expression. Some schedulers add extensions for this, but those are not part of the standard syntax, and their behavior varies. If your scheduler does not document it, do not rely on it."
+      },
+      {
+        "type": "p",
+        "text": "The portable workaround is to run the job more often and check the date inside your script. The last day of a month is always 28, 29, 30 or 31, so you can run the job daily and exit early unless tomorrow is the 1st."
+      },
+      {
+        "type": "p",
+        "text": "A daily schedule at midnight looks like this:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 0 * * *"
+      },
+      {
+        "type": "p",
+        "text": "Then the script decides whether to do the work. Here is a check in JavaScript (Node.js) that tests whether today is the last day of the month:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "function isLastDayOfMonth(date = new Date()) {\n  const tomorrow = new Date(date);\n  tomorrow.setDate(date.getDate() + 1);\n  return tomorrow.getDate() === 1;\n}\n\nif (!isLastDayOfMonth()) {\n  process.exit(0);\n}\n// run the monthly job here"
+      },
+      {
+        "type": "p",
+        "text": "The same idea in Python:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import datetime\nimport sys\n\ntomorrow = datetime.date.today() + datetime.timedelta(days=1)\nif tomorrow.day != 1:\n    sys.exit(0)\n# run the last-day job here"
+      },
+      {
+        "type": "p",
+        "text": "Both checks compare tomorrow's day with 1. That avoids needing to know how many days the month has."
+      },
+      {
+        "type": "h3",
+        "text": "Pitfalls with the last-day workaround"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Time zones: `getDate()` and `date.today()` use the timezone of the machine running the script. If the cron daemon runs in UTC and your business day is in another zone, the check can fire on the wrong day. Compare against the timezone you actually care about.",
+          "Daylight saving changes: a job scheduled near local midnight can behave unexpectedly on DST transition days. Choosing a time away from midnight, such as 12:00, reduces that risk.",
+          "Overlapping runs: the daily job runs about 365 times a year, so make sure the early exit is cheap and does not hold locks."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Running on the first business day"
+      },
+      {
+        "type": "p",
+        "text": "Sometimes the requirement is \"first weekday of the month,\" not the literal first. Standard cron cannot express that either, but a small script can handle it. Schedule the job for days 1 through 3, since the first weekday is always within that range. A weekend 1st moves the first weekday to the 2nd or 3rd."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 0 1-3 * *"
+      },
+      {
+        "type": "p",
+        "text": "The script then needs to know two things: whether today is a weekday, and whether this month's run has already happened. The second part is state, and cron does not store it for you. A marker file keyed by year and month works well. The script checks for the file, exits if it exists, does the work, and then creates the file."
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "#!/bin/bash\nMARKER='/var/lib/myjob/done-'$(date +%Y-%m)\n[ -e \"$MARKER\" ] && exit 0\nDOW=$(date +%u)\n[ \"$DOW\" -gt 5 ] && exit 0\n# run the first-business-day job here\ntouch \"$MARKER\""
+      },
+      {
+        "type": "p",
+        "text": "Here is how the logic plays out. If the 1st is a Saturday, the runs on the 1st and 2nd exit because it is the weekend, and the run on the 3rd, a Monday, does the work and writes the marker. Later runs that month see the marker and exit."
+      },
+      {
+        "type": "p",
+        "text": "A few details matter here. `date +%u` returns 1 for Monday through 7 for Sunday. The marker directory must be on persistent storage, or the check will repeat after a reboot or container restart."
+      },
+      {
+        "type": "p",
+        "text": "Retries are limited by the schedule. `0 0 1-3 * *` runs only on the 1st, 2nd and 3rd, so if the job fails before `touch` runs, it is retried on the next day only if that day is still 1 to 3. A failure on the 3rd is not retried until the 1st of next month. If you need a retry on later days, widen the day range, or add a separate retry job. If a failure should not trigger another attempt, write the marker first and handle errors separately."
+      },
+      {
+        "type": "h2",
+        "text": "Checking your expression"
+      },
+      {
+        "type": "p",
+        "text": "Before you deploy, confirm that the expression produces the dates you expect. The [Cron Expression Generator](/cron-generator) shows next run times for a 5-field expression, which makes the OR behavior easy to spot. If you run jobs on a fixed interval instead, see [Cron Every Day at Midnight](/blog/cron-every-day-at-midnight) for daily variants."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "How do I run a job on the 15th and also on every Friday?"
+      },
+      {
+        "type": "p",
+        "text": "Use `0 0 15 * 5`. Because day-of-month and day-of-week are both restricted, standard cron runs the job on the 15th of every month and on every Friday. That OR behavior is exactly what you want here. If you only wanted the 15th when it falls on a Friday, no single standard expression can do that, so you would need a check in the script."
+      },
+      {
+        "type": "h3",
+        "text": "Does 0 0 1 * * run at midnight in my local timezone?"
+      },
+      {
+        "type": "p",
+        "text": "It runs at midnight in whatever timezone the cron daemon or scheduler uses. Many servers default to UTC. Check your scheduler's settings or the server's timezone before relying on local time."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use L for last day of month in cron?"
+      },
+      {
+        "type": "p",
+        "text": "Not in standard 5-field cron. Some schedulers support an L extension, but it is not portable. Use a daily schedule and a date check in your script instead."
+      },
+      {
+        "type": "h3",
+        "text": "Why did my monthly job run more often than once a month?"
+      },
+      {
+        "type": "p",
+        "text": "Most likely the day-of-week field is not `*`. When both day-of-month and day-of-week are restricted, standard cron runs on days matching either one. Set day-of-week to `*` to run only on the 1st."
+      }
+    ],
+    "relatedTool": "cron-generator"
+  },
+  "review": {
+    "title_ko": "첫 날 실행을 위한 Cron 표현식: 0 0 1 * *",
+    "summary_ko": [
+      "매월 1일 자정에 작업을 실행하려면 `0 0 1 * *`을 사용하며, 요일은 제한하지 않습니다.",
+      "`0 0 1 * *`의 필드 설명과 시간 변형(06:00, 02:30, 분기별, 연간)을 소개합니다.",
+      "표준 cron에서 일(day-of-month)과 요일(day-of-week)이 둘 다 제한되면 OR로 동작한다는 점을 설명하고, `0 0 1 * 1`의 예를 듭니다.",
+      "표준 cron에는 'L'(월말) 문법이 없으므로, 매일 실행하고 스크립트에서 내일이 1일인지 확인하는 우회법을 JavaScript와 Python 코드로 보여줍니다.",
+      "매월 첫 평일 실행을 위해 `0 0 1-3 * *`과 마커 파일을 쓰는 bash 스크립트를 소개하며, 재시도 한계도 설명합니다.",
+      "생성기로 다음 실행 시각을 확인하고, FAQ에서 OR 동작, 시간대, L 문법, 예상보다 자주 실행되는 문제를 다룹니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"0 0 1 * 1\"이 \"roughly five extra runs per month\"(한 달에 약 5회 추가 실행)이라고 했는데, 월요일은 한 달에 대략 4~5번이고 1일은 월요일과 겹치지 않으면 추가 실행이므로 표현이 다소 부정확합니다.",
+      "\"First business day\" 절의 \"run on days 1 through 3 and have the script check whether today is a weekday and whether it is the first weekday that has not already been handled\"는 어떻게 이미 처리된 날을 판단하는지 설명이 부족해 모호합니다.",
+      "FAQ 답변 \"You cannot separate those in one standard expression without getting the OR behavior, which is what you want here\"는 질문과 맞지 않는 설명이라 혼란스럽습니다. 질문은 15일과 모든 금요일이며, 답은 `0 0 15 * 5`가 OR로 동작한다는 것이므로 바로 그 점을 명확히 쓰는 것이 좋습니다.",
+      "\"If the job fails before `touch` runs, the next day's run will try again\"에서 '다음 날 실행'은 스케줄이 1~3일에만 실행되는 점을 고려하지 않아 모호합니다. 3일에 실패하면 그 달에는 재시도되지 않습니다."
+    ],
+    "word_count": 1332
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 18,
+  "api_calls": 6,
+  "telegram_message_id": 101
+}

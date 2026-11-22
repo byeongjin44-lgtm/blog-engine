@@ -1,0 +1,295 @@
+{
+  "id": "9483a100",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-22T03:32:58Z",
+  "topic": {
+    "title": "How much blown-in insulation for a 1,000 sq ft attic?",
+    "keyword": "how much blown in insulation do i need",
+    "related_tool": "insulation-calculator",
+    "calculations": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 1000,
+          "targetR": 49,
+          "rPerInch": 2.5,
+          "sqFtPerPackage": 40
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-blown-in-insulation-attic",
+    "title": "How Much Blown In Insulation Do I Need for a 1,000 Sq Ft Attic?",
+    "description": "At R-49 with a product rated 2.5 R per inch, a 1,000 sq ft attic needs 19.6 in of blown-in insulation, or 25 packages at 40 sq ft each. Check your bag label.",
+    "body": [
+      {
+        "type": "p",
+        "text": "For a 1,000 sq ft attic at a target of R-49, using a blown-in product rated at 2.5 R per inch, you need 19.6 in of insulation depth and 25 packages at 40 sq ft per package. Run your own measurements through the [Insulation Calculator](/insulation-calculator), and check the coverage printed on your bag, because products differ."
+      },
+      {
+        "type": "h2",
+        "text": "The two numbers that decide the amount"
+      },
+      {
+        "type": "p",
+        "text": "Blown-in insulation is rated by R-value, which measures how well a layer resists heat flow. Two numbers decide how much you buy: the depth you need to reach your target R-value, and how many packages cover your attic floor at that depth."
+      },
+      {
+        "type": "p",
+        "text": "Your target R-value depends on your climate and local requirements. Ask a qualified professional which target fits your home. Your product's R per inch is printed on the bag or on the manufacturer's data sheet. Use that number, not a general figure from a table, because products vary."
+      },
+      {
+        "type": "h2",
+        "text": "Step 1: Find the depth"
+      },
+      {
+        "type": "p",
+        "text": "Depth is your target R-value divided by your product's R per inch. The worked example uses R-49 and 2.5 R per inch."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Write down your target R-value. The example uses R-49.",
+          "Find the R per inch printed on your product's bag. The example uses 2.5.",
+          "Divide the target by the R per inch. The result is the depth in inches. In the example, 49 divided by 2.5 gives 19.6 in."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Many people mark the target depth on the attic floor with a stick or a strip of tape, so they can see when the layer reaches the right height as they work."
+      },
+      {
+        "type": "h2",
+        "text": "Step 2: Find the package count"
+      },
+      {
+        "type": "p",
+        "text": "Package count is your area divided by the coverage per package, rounded up to a whole package. Coverage is not a fixed number. A deeper layer uses more product per square foot, so the coverage per package changes with the R-value you are targeting. That is why the coverage chart on the bag matters."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Measure the attic floor you are insulating. For this example, the area is 1,000 sq ft.",
+          "Find the line on the bag's coverage chart that matches your target R-value and depth. Do not use a coverage number from a different R-value line.",
+          "Divide the area by the coverage per package. The example uses 40 sq ft per package.",
+          "Round up only if the division leaves a remainder. Rounding up helps when the division is not exact."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "In this example, 1,000 divided by 40 is exactly 25, so rounding up adds nothing. You get 25 packages with no spare. Rounding up only helps when the division is not exact, for example when a remainder leaves part of a package still needed. Plan for some extra if you want a margin for uneven spots."
+      },
+      {
+        "type": "p",
+        "text": "The 40 sq ft figure is an input for this example only. Your bag may list a different coverage at R-49, so always use the number on your own label."
+      },
+      {
+        "type": "h2",
+        "text": "Worked example: 1,000 sq ft at R-49"
+      },
+      {
+        "type": "p",
+        "text": "These are the inputs used for the calculation:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Area to insulate: 1,000 sq ft",
+          "Target R-value: R-49",
+          "R per inch of the product: 2.5",
+          "Coverage per package at R-49: 40 sq ft"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Dividing R-49 by 2.5 gives a depth of 19.6 in. At that depth, 1,000 sq ft divided by 40 sq ft per package gives exactly 25 packages. The calculator also rounds up, but that step changes nothing here because the division is exact. The count does not account for installation losses or areas where the depth is uneven, so measure carefully."
+      },
+      {
+        "type": "p",
+        "text": "If your attic is not one open rectangle, measure each section separately and add the areas together. The [Square Footage Calculator](/square-footage-calculator) handles rectangles, triangles and circles. Our guide on [how to calculate square footage of a room](/blog/how-to-calculate-square-footage-of-a-room) walks through the method step by step."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Using the coverage number for a different R-value. A bag covers more area at a shallow depth than at a deep one.",
+          "Measuring the living space below instead of the attic floor. Measure the surface that receives the insulation.",
+          "Assuming a spare package. When the division is exact, as in the example, there is no spare.",
+          "Ignoring areas where the depth changes, such as edges or around an access opening. Those spots may need a separate estimate.",
+          "Using the example inputs for your own project. Replace every input with the figures from your bag and your own measurements."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "To see how other targets change the depth and count, read the guide on [how much insulation to reach a target R-value](/blog/how-much-insulation-to-reach-r38). For wall cavities, see [how much insulation do I need for walls](/blog/how-much-insulation-do-i-need-for-walls)."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same package count for every R-value?"
+      },
+      {
+        "type": "p",
+        "text": "No. Coverage per package changes with the R-value because deeper layers use more product per square foot. Use the chart line that matches your target."
+      },
+      {
+        "type": "h3",
+        "text": "Where do I find my product's R per inch?"
+      },
+      {
+        "type": "p",
+        "text": "It is printed on the bag or listed on the manufacturer's product data sheet. If you cannot find it, ask the supplier before you buy."
+      },
+      {
+        "type": "h3",
+        "text": "Should I buy extra packages?"
+      },
+      {
+        "type": "p",
+        "text": "If the division is exact, the calculator adds no spare. If your attic has uneven depth or unusual shapes, a qualified professional can help you plan a margin."
+      },
+      {
+        "type": "h3",
+        "text": "Does the calculator choose my R-value?"
+      },
+      {
+        "type": "p",
+        "text": "No. You enter the target as an input. Choosing the right R-value for your home is a question for a qualified professional."
+      }
+    ],
+    "relatedTool": "insulation-calculator",
+    "sources": [
+      {
+        "title": "U.S. Department of Energy: Guide to home insulation",
+        "url": "https://www.energy.gov/sites/prod/files/guide_to_home_insulation.pdf"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 1000,
+          "targetR": 49,
+          "rPerInch": 2.5,
+          "sqFtPerPackage": 40
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 1000,
+          "targetR": 49,
+          "rPerInch": 2.5,
+          "sqFtPerPackage": 40
+        },
+        "results": [
+          {
+            "key": "thicknessIn",
+            "label": "Thickness needed",
+            "value": 19.6,
+            "unit": "in",
+            "digits": 2,
+            "primary": true,
+            "number": "19.6",
+            "display": "19.6 in"
+          },
+          {
+            "key": "packages",
+            "label": "Packages to buy",
+            "value": 25,
+            "unit": "packages",
+            "digits": 0,
+            "primary": true,
+            "number": "25",
+            "display": "25 packages"
+          },
+          {
+            "key": "packagesExact",
+            "label": "Exact package count",
+            "value": 25,
+            "unit": "packages",
+            "digits": 2,
+            "primary": false,
+            "number": "25",
+            "display": "25 packages"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "insulation-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "areaSqFt",
+            "label": "Area to insulate",
+            "unit": "sq ft",
+            "default": 500,
+            "step": 10
+          },
+          {
+            "kind": "number",
+            "key": "targetR",
+            "label": "Target R-value",
+            "default": 15,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "rPerInch",
+            "label": "R-value per inch of your product",
+            "default": 5,
+            "step": 0.1,
+            "help": "Printed on the product label. See the reference table below."
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerPackage",
+            "label": "Coverage per package",
+            "unit": "sq ft",
+            "default": 40,
+            "step": 1,
+            "help": "Printed on the package for the thickness you need."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "1,000 sq ft 다락방에 필요한 블로운인(blown-in) 단열재 양은? ",
+    "summary_ko": [
+      "1,000 sq ft 다락방을 목표 R-49로, 제품 R-per-inch 2.5 기준으로 계산하면 단열재 깊이는 19.6 in이며, 40 sq ft 포장 기준 25포장이 필요하다고 설명합니다.",
+      "도입부에서 단열재 계산기로 직접 측정값을 넣어 보고, 포장지에 적힌 커버리지를 확인하라고 안내합니다.",
+      "'필요한 양을 결정하는 두 가지 숫자' 섹션에서는 R-value가 열 흐름 저항을 나타내며, 목표 깊이와 바닥 면적당 포장 수가 양을 결정한다고 설명합니다.",
+      "1단계는 목표 R-value를 제품의 inch당 R값으로 나누어 깊이를 구하는 방법입니다. 예시는 49 ÷ 2.5 = 19.6 in입니다.",
+      "2단계는 면적을 포장당 커버리지로 나누고 나머지가 있을 때만 올림하는 방법입니다. 예시는 1,000 ÷ 40 = 25포장으로 나누어떨어집니다.",
+      "예시 입력값(면적 1,000 sq ft, R-49, 2.5, 40 sq ft/포장)과 함께 설치 손실이나 불균일한 깊이는 계산에 반영되지 않는다는 점을 짚습니다.",
+      "흔한 실수와 FAQ에서는 다른 R-value의 커버리지 사용, 거실 면적 측정, 여분 포장 가정 등을 다루며, 목표 R-value 선택은 전문가에게 맡기라고 안내합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "'Loose-fill products commonly fall in a range near 2.2 to 3.75 R per inch according to Department of Energy reference figures'의 2.2~3.75 R per inch 범위는 계산기 입력이나 결과가 아닌 외부 인용 수치입니다. 출처를 검증할 수 없고 계산기 기준 밖의 수치이므로 삭제하거나 검증된 출처 문구로 명확히 표시해야 합니다.",
+      "링크 주소의 'how-much-insulation-to-reach-r38'에 있는 R-38은 본문 계산 수치가 아니지만, 계산기 입력과 다른 목표 R값이므로 독자에게 혼동을 줄 수 있습니다.",
+      "'you will not come up short if the attic is measured accurately'는 측정이 정확하다는 전제가 있어도 과도하게 확신하는 표현입니다. 실제 설치 손실이나 깊이 편차를 고려해 완화하는 것이 좋습니다.",
+      "\"The count is rounded up to a whole package, which leaves a small margin.\" 예시에서 1,000 ÷ 40은 정확히 25이므로 올림이 적용되지 않아 여유분이 생기지 않습니다. 독자가 여유가 있다고 오해할 수 있습니다."
+    ],
+    "word_count": 906
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 16,
+  "api_calls": 6,
+  "telegram_message_id": 102
+}
