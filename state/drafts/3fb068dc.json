@@ -1,0 +1,213 @@
+{
+  "id": "3fb068dc",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-23T04:00:33Z",
+  "topic": {
+    "title": "Cron Expression for Weekdays Only (Monday to Friday)",
+    "keyword": "cron weekdays only",
+    "related_tool": "cron-generator"
+  },
+  "post": {
+    "slug": "cron-expression-weekdays-only-monday-friday",
+    "title": "Cron Expression for Weekdays Only (Monday to Friday)",
+    "description": "Use 0 9 * * 1-5 or 0 9 * * MON-FRI to run a cron job Monday to Friday only. Covers day numbering, Sunday as 0 or 7, and timezone pitfalls.",
+    "body": [
+      {
+        "type": "p",
+        "text": "The cron expression for weekdays only is 1-5 in the day-of-week field, or MON-FRI. For example, 30 8 * * 1-5 runs at 8:30 AM, Monday through Friday. To build and preview these schedules, use the [Cron Expression Generator](/cron-generator)."
+      },
+      {
+        "type": "h2",
+        "text": "How the day-of-week field works"
+      },
+      {
+        "type": "p",
+        "text": "A standard cron expression has five fields in this order: minute, hour, day of month, month, and day of week. Weekdays only is a restriction on the last field. The other four fields usually stay as *, which means every value."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Minute: 0-59",
+          "Hour: 0-23",
+          "Day of month: 1-31",
+          "Month: 1-12 or JAN-DEC",
+          "Day of week: 0-6 or SUN-SAT, where 0 is Sunday"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Weekdays with numbers or names"
+      },
+      {
+        "type": "p",
+        "text": "Both forms below are usually accepted by cron implementations and cron libraries. They select the same days."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "30 8 * * 1-5 /usr/local/bin/report.sh\n30 8 * * MON-FRI /usr/local/bin/report.sh"
+      },
+      {
+        "type": "p",
+        "text": "A few details to know:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "1-5 means Monday, Tuesday, Wednesday, Thursday, Friday.",
+          "MON-FRI is easier to read but relies on name support. Most Vixie-style cron implementations accept it, and so do most cron libraries, but a few schedulers do not.",
+          "Names are case-insensitive in most implementations, but use uppercase to be safe.",
+          "A list such as 1,2,3,4,5 also works, but a range is shorter and clearer."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Why avoid 7 for Sunday"
+      },
+      {
+        "type": "p",
+        "text": "In standard cron, 0 is Sunday and 6 is Saturday. Many implementations also accept 7 as Sunday, but not all of them do. Because of that, avoid 7 entirely. Writing 1-5 for weekdays sidesteps the problem, since it never touches Sunday or Saturday."
+      },
+      {
+        "type": "p",
+        "text": "If you ever need a range that includes the weekend, such as Saturday and Sunday, write 6,0 instead of 6-7."
+      },
+      {
+        "type": "h2",
+        "text": "Common weekday schedules"
+      },
+      {
+        "type": "p",
+        "text": "Here are some variants that use the same day-of-week pattern:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 9 * * 1-5          # 9:00 AM, weekdays\n0 0 * * 1-5          # midnight, weekdays\n0 * * * 1-5          # top of every hour, weekdays\n*/15 9-17 * * 1-5    # every 15 minutes from 9:00 to 17:45, weekdays\n30 18 * * 1-5        # 6:30 PM, weekdays"
+      },
+      {
+        "type": "p",
+        "text": "For a single day, such as only Mondays, see [Cron Every Monday](/blog/cron-every-monday-weekly-schedule). For daily jobs that run every day, see [Cron Every Day at Midnight](/blog/cron-every-day-at-midnight)."
+      },
+      {
+        "type": "h2",
+        "text": "Cron has no timezone field"
+      },
+      {
+        "type": "p",
+        "text": "This is the most common mistake. Standard cron has no way to say which timezone a schedule uses. It runs against the clock of the machine where it lives. If your server is set to UTC, then 30 8 * * 1-5 means 8:30 AM UTC, not 8:30 AM in your office."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Check the server timezone before you set the schedule. Compare the output of date with the timezone you expect.",
+          "Daylight saving time changes can cause a job to skip a run or, in some implementations, run twice. A job set near 2:00 AM is the most exposed.",
+          "Some cron implementations support a timezone setting, such as a CRON_TZ variable in cronie. Support varies, so check your platform's documentation before relying on it.",
+          "Hosted schedulers have their own timezone settings. Set them explicitly rather than assuming the default."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Cloud schedulers use different syntax"
+      },
+      {
+        "type": "p",
+        "text": "Many cloud schedulers do not use the standard five-field format. AWS EventBridge, for example, uses six fields and requires one of the two day fields to be a question mark. Its day-of-week numbering can also differ, with 1 as Sunday. Check the current docs for your provider. The weekday version in EventBridge looks like this:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "cron(30 8 ? * MON-FRI *)"
+      },
+      {
+        "type": "h2",
+        "text": "Skipping public holidays"
+      },
+      {
+        "type": "p",
+        "text": "Cron cannot skip holidays on its own. The usual approach is to keep the weekday schedule and add a check at the start of the script. The date command's %u format returns 1 for Monday through 7 for Sunday, which is handy here."
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "#!/bin/bash\nif [ \"$(date +%u)\" -gt 5 ]; then exit 0; fi\nif grep -qx \"$(date +%F)\" /etc/holidays.txt; then exit 0; fi\n/usr/local/bin/report.sh"
+      },
+      {
+        "type": "p",
+        "text": "The holidays file holds one YYYY-MM-DD date per line. This keeps the schedule simple and moves the calendar logic into code you can test."
+      },
+      {
+        "type": "h2",
+        "text": "Common mistakes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Restricting both day fields. In standard cron, when both day-of-month and day-of-week are restricted, the job runs when either one matches. For example, 0 9 13 * 5 runs on the 13th and on every Friday, not only on Friday the 13th. Keep day-of-month as * for weekday jobs.",
+          "Assuming 0 is Monday. Python's datetime.weekday() uses Monday as 0, but cron uses Sunday as 0. Mixing the two is an easy way to run a job on the wrong days.",
+          "Using 7 for Sunday, as noted above.",
+          "Expecting timezone handling from cron itself, as covered above."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Check your expression before deploying"
+      },
+      {
+        "type": "p",
+        "text": "Paste the expression into the [Cron Expression Generator](/cron-generator) to see a plain-language description and the next run times. Check that the first few dates are Monday through Friday and that the time matches the timezone your server uses."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Does 1-5 work in every cron version?"
+      },
+      {
+        "type": "p",
+        "text": "Numeric ranges are part of standard cron and work in most implementations. Name-based values such as MON-FRI are a common extension. They are widely supported, but test them on your platform if you are unsure."
+      },
+      {
+        "type": "h3",
+        "text": "How do I run a job on weekdays every hour?"
+      },
+      {
+        "type": "p",
+        "text": "Use 0 * * * 1-5. The minute field is 0, so the job runs at the top of every hour, and the day-of-week field limits it to Monday through Friday."
+      },
+      {
+        "type": "h3",
+        "text": "Can cron skip public holidays?"
+      },
+      {
+        "type": "p",
+        "text": "Not by itself. Add a check in the script that exits early on holiday dates, as shown above, or use a scheduler that supports a holiday calendar."
+      }
+    ],
+    "relatedTool": "cron-generator"
+  },
+  "review": {
+    "title_ko": "평일만 실행하는 크론 표현식 (월요일~금요일)",
+    "summary_ko": [
+      "평일(월~금)만 실행하려면 요일 필드에 1-5 또는 MON-FRI를 쓴다. 예: 30 8 * * 1-5는 월~금 오전 8시 30분에 실행된다.",
+      "표준 크론은 분, 시, 일, 월, 요일의 5개 필드를 사용하며, 요일은 0(일요일)~6(토요일) 또는 SUN-SAT로 지정한다.",
+      "숫자(1-5)와 이름(MON-FRI) 표기는 같은 요일을 선택하지만, 이름 지원은 일부 스케줄러에서 되지 않을 수 있다. 일요일을 7로 쓰는 것은 구현에 따라 다르므로 피하고, 주말을 포함하려면 6,0을 쓰라고 안내한다.",
+      "매일 9시, 자정, 매시 정각, 9~17시 15분 간격 등 평일 스케줄 예시를 제공한다.",
+      "크론에는 시간대 설정이 없어 서버 시스템 시간을 따르며, DST 변경과 CRON_TZ 같은 구현별 설정, 호스팅 스케줄러의 시간대 설정을 확인하라고 안내한다.",
+      "AWS EventBridge는 6개 필드를 쓰고 일/요일 중 하나를 ?로 지정해야 하며 요일 번호가 다르다(예: cron(30 8 ? * MON-FRI *)). 공휴일은 date +%u로 스크립트에서 건너뛰는 방법을 소개한다.",
+      "흔한 실수로 일과 요일을 둘 다 제한하면 OR로 동작하는 점, Python의 weekday() 기준(월요일=0)과 크론(일요일=0)의 차이, 7 사용, 시간대 오해를 정리하고 생성기로 다음 실행 시각을 확인하라고 권한다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [],
+    "word_count": 920
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 6,
+  "api_calls": 2,
+  "telegram_message_id": 105
+}

@@ -1,0 +1,398 @@
+{
+  "id": "07c73f2f",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-23T04:00:57Z",
+  "topic": {
+    "title": "How many bags of concrete for a 12x12 slab?",
+    "keyword": "how many bags of concrete for a 12x12 slab",
+    "related_tool": "concrete-calculator",
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        }
+      },
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "thicknessIn": 4,
+          "bagLb": "60"
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-many-bags-concrete-12x12-slab",
+    "title": "How Many Bags of Concrete for a 12x12 Slab? 4-Inch Example",
+    "description": "A 12x12 slab 4 inches thick needs 1.78 cubic yards of concrete, or 80 bags of 80 lb mix or 107 bags of 60 lb mix. Here is how the count works.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 12 by 12 foot slab 4 inches thick needs 80 bags if you use 80 lb bags, or 107 bags if you use 60 lb bags. Those counts assume no extra for spillage, so add a margin if you want one."
+      },
+      {
+        "type": "p",
+        "text": "To get your own number, enter your length, width, thickness and bag size into the [Concrete Calculator](/concrete-calculator). The worked example below shows how the result is built, so you can check it against your own measurements."
+      },
+      {
+        "type": "h2",
+        "text": "The inputs for this example"
+      },
+      {
+        "type": "p",
+        "text": "This example uses a slab that is 12 feet long, 12 feet wide and 4 inches thick. It is priced out for two common bag sizes, 80 lb and 60 lb, with 0 percent extra for spillage."
+      },
+      {
+        "type": "h2",
+        "text": "Step 1: Find the volume in cubic feet"
+      },
+      {
+        "type": "p",
+        "text": "Concrete volume is length times width times thickness. The thickness has to be in feet, so you divide the inches by 12 first. Multiply the length, the width and that thickness in feet, and you get the volume in cubic feet."
+      },
+      {
+        "type": "p",
+        "text": "For this slab, the result is 48 cubic feet."
+      },
+      {
+        "type": "h2",
+        "text": "Step 2: Convert the volume to cubic yards"
+      },
+      {
+        "type": "p",
+        "text": "Ready-mix concrete is sold by the cubic yard, and there are 27 cubic feet in a cubic yard. Divide the cubic feet by 27."
+      },
+      {
+        "type": "p",
+        "text": "For this slab, the volume is 1.78 cubic yards. That is the figure to use if you compare ready-mix quotes."
+      },
+      {
+        "type": "h2",
+        "text": "Step 3: Divide by the yield of one bag"
+      },
+      {
+        "type": "p",
+        "text": "Each bag of premixed concrete yields a set amount of concrete once mixed with water. Bag yield depends on the bag weight. The published yields the calculator uses for Quikrete bags are 0.45 cubic feet for a 60 lb bag and 0.6 cubic feet for an 80 lb bag."
+      },
+      {
+        "type": "p",
+        "text": "Divide the 48 cubic feet by the yield of the bag you choose, then round up to a whole bag."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "80 lb bags: 48 cubic feet divided by 0.6 cubic feet per bag gives an exact count of 80 bags, so you buy 80 bags.",
+          "60 lb bags: 48 cubic feet divided by 0.45 cubic feet per bag gives an exact count of 106.7 bags, which rounds up to 107 bags."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The 80 lb option needs fewer bags because each bag yields more concrete. Both options come out to the same total amount of concrete, so the choice is about handling and how many trips you make, not about getting more or less material."
+      },
+      {
+        "type": "h2",
+        "text": "Check the yield on your bag"
+      },
+      {
+        "type": "p",
+        "text": "The yields above are the published figures the calculator uses. Products differ, and a different brand or mix can yield a little more or less than these numbers. Always check the coverage or yield printed on the product label before you buy, and adjust your count if the label gives a different figure."
+      },
+      {
+        "type": "h2",
+        "text": "When ready-mix is worth comparing"
+      },
+      {
+        "type": "p",
+        "text": "Bags make sense for small jobs, but a 4-inch slab that is 12 by 12 feet takes 80 or 107 bags, which means a lot of lifting and a lot of mixing. For a slab this size, it is worth asking a ready-mix supplier for a quote on 1.78 cubic yards."
+      },
+      {
+        "type": "p",
+        "text": "Ready-mix comes in a truck, so you do not mix anything by hand. Suppliers usually have a minimum order and a delivery charge, so ask about both when you call. Compare the delivered cost of the ready-mix with the cost of buying the bags, and do not forget the extra trips to haul the bags home."
+      },
+      {
+        "type": "p",
+        "text": "Ready-mix also needs to be placed quickly once it arrives, so have your helpers and tools ready before the truck shows up."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls readers hit"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Mixing up inches and feet. The thickness must be converted to feet before you multiply, so a 4-inch slab is not 4 feet thick.",
+          "Forgetting that the bag count is for the concrete in the slab only. Add a margin if you expect spillage or want extra on hand.",
+          "Buying the wrong bag size for the yield you planned on. Always match the yield to the bag you actually bought.",
+          "Assuming all bags yield the same amount. Check the label on each bag type."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you want a rough sense of how the numbers scale, the [10x10 slab post](/blog/how-many-bags-of-concrete-for-10x10-slab) walks through a smaller slab using the same steps."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Do I need to add extra concrete for spillage?"
+      },
+      {
+        "type": "p",
+        "text": "The example above uses 0 percent extra. Many people add a little margin to cover spillage and uneven spots in the form, but how much is up to you. Use the calculator's extra field to see how a margin changes the count."
+      },
+      {
+        "type": "h3",
+        "text": "Why does the 60 lb bag count come out higher?"
+      },
+      {
+        "type": "p",
+        "text": "Each 60 lb bag yields less concrete than an 80 lb bag, so you need more of them to fill the same volume. The total concrete is the same either way."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same count for a different slab size?"
+      },
+      {
+        "type": "p",
+        "text": "No. The count depends on the length, width and thickness of your slab. Enter your own measurements into the [Concrete Calculator](/concrete-calculator) to get a count for your project."
+      },
+      {
+        "type": "h3",
+        "text": "Should I ask a professional about the slab itself?"
+      },
+      {
+        "type": "p",
+        "text": "This site only estimates material quantities. For questions about how the slab should be built, ask a qualified professional."
+      }
+    ],
+    "relatedTool": "concrete-calculator",
+    "sources": [
+      {
+        "title": "Quikrete Concrete Mix No. 1101 data sheet",
+        "url": "https://www.quikrete.com/pdfs/data_sheet-concrete%20mix%201101.pdf"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        }
+      },
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "thicknessIn": 4,
+          "bagLb": "60"
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        },
+        "results": [
+          {
+            "key": "bags",
+            "label": "Bags to buy",
+            "value": 80,
+            "unit": "bags",
+            "digits": 0,
+            "primary": true,
+            "number": "80",
+            "display": "80 bags"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 1.78,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": false,
+            "number": "1.78",
+            "display": "1.78 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 48,
+            "unit": "cu ft",
+            "digits": 2,
+            "primary": false,
+            "number": "48",
+            "display": "48 cu ft"
+          },
+          {
+            "key": "bagsExact",
+            "label": "Exact bag count",
+            "value": 80,
+            "unit": "bags",
+            "digits": 1,
+            "primary": false,
+            "number": "80",
+            "display": "80 bags"
+          }
+        ]
+      },
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 12,
+          "thicknessIn": 4,
+          "bagLb": "60"
+        },
+        "results": [
+          {
+            "key": "bags",
+            "label": "Bags to buy",
+            "value": 107,
+            "unit": "bags",
+            "digits": 0,
+            "primary": true,
+            "number": "107",
+            "display": "107 bags"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 1.78,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": false,
+            "number": "1.78",
+            "display": "1.78 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 48,
+            "unit": "cu ft",
+            "digits": 2,
+            "primary": false,
+            "number": "48",
+            "display": "48 cu ft"
+          },
+          {
+            "key": "bagsExact",
+            "label": "Exact bag count",
+            "value": 106.7,
+            "unit": "bags",
+            "digits": 1,
+            "primary": false,
+            "number": "106.7",
+            "display": "106.7 bags"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "concrete-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "thicknessIn",
+            "label": "Thickness",
+            "unit": "in",
+            "default": 4,
+            "step": 0.5
+          },
+          {
+            "kind": "select",
+            "key": "bagLb",
+            "label": "Bag size",
+            "default": "80",
+            "options": [
+              {
+                "value": "40",
+                "label": "40 lb (0.3 cu ft)"
+              },
+              {
+                "value": "50",
+                "label": "50 lb (0.375 cu ft)"
+              },
+              {
+                "value": "60",
+                "label": "60 lb (0.45 cu ft)"
+              },
+              {
+                "value": "80",
+                "label": "80 lb (0.6 cu ft)"
+              },
+              {
+                "value": "90",
+                "label": "90 lb (0.675 cu ft)"
+              }
+            ]
+          },
+          {
+            "kind": "number",
+            "key": "wastePct",
+            "label": "Extra for spillage",
+            "unit": "%",
+            "default": 0,
+            "step": 1,
+            "help": "Optional. Adds a safety margin to the bag count."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "12x12 슬래브에 콘크리트 몇 포대가 필요한가? 4인치 예시",
+    "summary_ko": [
+      "12피트 x 12피트, 두께 4인치 슬래브는 80 lb 포대 기준 80포대, 60 lb 포대 기준 107포대가 필요하며, 여유분(스필 대비 추가분)은 0%로 계산한다.",
+      "계산 입력을 위해 길이·너비·두께를 모두 피트 단위로 맞춘다. 두께 4인치는 12로 나눠 피트로 바꿔야 한다.",
+      "부피는 48 입방피트이며, 27로 나눠 1.78 입방야드가 된다. 레디믹스 견적을 비교할 때 이 수치를 쓴다.",
+      "포대 수율은 Quikrete 기준 60 lb 포대 0.45 입방피트, 80 lb 포대 0.6 입방피트이며, 48을 수율로 나눈 뒤 올림한다.",
+      "80 lb는 정확히 80포대, 60 lb는 106.7포대에서 올림해 107포대가 된다. 총 콘크리트량은 같고 운반 횟수만 다르다.",
+      "포대 라벨의 수율을 확인하라는 안내, 레디믹스가 유리한 경우, 흔한 실수(인치/피트 혼동, 여유분, 포대 종류별 수율 차이)를 정리한다.",
+      "FAQ에서 여유분, 60 lb 포대 수량이 더 많은 이유, 다른 크기 슬래브에 적용 가능한지, 슬래브 시공은 전문가에게 문의하라는 내용을 다룬다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [],
+    "word_count": 873
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 5,
+  "api_calls": 2,
+  "telegram_message_id": 106
+}
