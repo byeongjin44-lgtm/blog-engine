@@ -1,7 +1,7 @@
 {
   "id": "3fb068dc",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-23T04:00:33Z",
   "topic": {
     "title": "Cron Expression for Weekdays Only (Monday to Friday)",
@@ -187,7 +187,8 @@
         "text": "Not by itself. Add a check in the script that exits early on holiday dates, as shown above, or use a scheduler that supports a holiday calendar."
       }
     ],
-    "relatedTool": "cron-generator"
+    "relatedTool": "cron-generator",
+    "published": "2026-11-23"
   },
   "review": {
     "title_ko": "평일만 실행하는 크론 표현식 (월요일~금요일)",
@@ -209,5 +210,7 @@
   "recovered_from": [],
   "cost_krw": 6,
   "api_calls": 2,
-  "telegram_message_id": 105
+  "telegram_message_id": 105,
+  "decided": "2026-11-23T04:41:22Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/cron-expression-weekdays-only-monday-friday.json"
 }

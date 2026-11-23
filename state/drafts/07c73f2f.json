@@ -1,7 +1,7 @@
 {
   "id": "07c73f2f",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-23T04:00:57Z",
   "topic": {
     "title": "How many bags of concrete for a 12x12 slab?",
@@ -372,7 +372,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-23"
   },
   "review": {
     "title_ko": "12x12 슬래브에 콘크리트 몇 포대가 필요한가? 4인치 예시",
@@ -394,5 +395,7 @@
   "recovered_from": [],
   "cost_krw": 5,
   "api_calls": 2,
-  "telegram_message_id": 106
+  "telegram_message_id": 106,
+  "decided": "2026-11-23T04:41:19Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-bags-concrete-12x12-slab.json"
 }
