@@ -1,0 +1,311 @@
+{
+  "id": "881008c8",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-24T07:07:37Z",
+  "topic": {
+    "title": "Why Does My Cron Job Not Run? Common Causes and Fixes",
+    "keyword": "cron job not running",
+    "related_tool": "cron-generator"
+  },
+  "post": {
+    "slug": "cron-job-not-running-common-causes-fixes",
+    "title": "Cron Job Not Running? Common Causes and Fixes",
+    "description": "Cron job not running? Usual causes: a short PATH, relative paths, no newline at the end of the crontab, unescaped % signs, timezone or day-of-week surprises.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A cron job that does not run is usually a problem with the environment, the crontab file, or the schedule itself, not with cron. The most common causes are a PATH that is much shorter than your shell's, relative file paths, a missing newline at the end of the crontab, an unescaped % sign in the command, a server timezone you did not expect, and a day-of-month and day-of-week combination that matches more days than you intended."
+      },
+      {
+        "type": "p",
+        "text": "Before you change anything, confirm the schedule. Paste your expression into the [Cron Expression Generator](/cron-generator) to see the next run times. If the next run is not when you expect, fix the expression first. If the times look right, work through the checklist below."
+      },
+      {
+        "type": "h2",
+        "text": "Step 1: Confirm cron is running the job at all"
+      },
+      {
+        "type": "p",
+        "text": "Add a line that writes to a file so you can see whether cron fires. Redirect both standard output and standard error, so you see failures too:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "*/5 * * * * /usr/bin/date >> /tmp/cron-test.log 2>&1"
+      },
+      {
+        "type": "p",
+        "text": "Wait for the schedule to fire, then check the file. If nothing is written, cron did not run the line. Check that the crontab is installed for the user you expect with crontab -l, and check your system's cron log for entries about that command. Where the log lives depends on the system."
+      },
+      {
+        "type": "p",
+        "text": "If the test line works but your real job does not, the problem is in the job's environment or command. The next steps cover that."
+      },
+      {
+        "type": "h2",
+        "text": "Step 2: Fix the PATH"
+      },
+      {
+        "type": "p",
+        "text": "Cron does not load your shell profile. Your interactive shell may have a long PATH that includes directories added by nvm, pyenv, Homebrew, or a project's bin folder. Cron often starts with a much smaller PATH, sometimes just /usr/bin and /bin. A command like node or python that works in your terminal can fail with \"command not found\" under cron."
+      },
+      {
+        "type": "p",
+        "text": "To reproduce cron's environment by hand, clear the environment and set a minimal PATH, then run the command with its full path:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "env -i PATH=/usr/bin:/bin /home/deploy/scripts/cleanup.sh"
+      },
+      {
+        "type": "p",
+        "text": "If this fails while your normal shell works, the command is relying on PATH. There are two fixes. The first is to use the absolute path to the program. Find it from your terminal:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "which node\nwhich python3"
+      },
+      {
+        "type": "p",
+        "text": "Then use that path in the crontab:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "0 3 * * * /usr/bin/python3 /home/deploy/app/cleanup.py >> /home/deploy/cleanup.log 2>&1"
+      },
+      {
+        "type": "p",
+        "text": "The second fix is to set PATH at the top of the crontab, so every job inherits it:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "PATH=/usr/local/bin:/usr/bin:/bin\n0 3 * * * cleanup.sh >> /home/deploy/cleanup.log 2>&1"
+      },
+      {
+        "type": "p",
+        "text": "Absolute paths are the more predictable choice, because they make it clear which binary runs. Version managers like nvm and pyenv often install tools in per-user directories, so the absolute path can change when you upgrade. If you use one, call the binary by its full path inside the version manager's directory, or write a small wrapper script that activates the environment and run that instead."
+      },
+      {
+        "type": "h2",
+        "text": "Step 3: Replace relative paths with absolute paths"
+      },
+      {
+        "type": "p",
+        "text": "Cron does not run your command from the directory that holds your script. The working directory is usually the user's home directory, so anything that relies on the current directory breaks. This includes relative script paths, relative config files, and relative output paths."
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "# Breaks: ./backup.sh and config.yml are resolved from the home directory\n0 2 * * * ./scripts/backup.sh\n\n# Works: absolute paths everywhere\n0 2 * * * /home/deploy/scripts/backup.sh >> /home/deploy/logs/backup.log 2>&1"
+      },
+      {
+        "type": "p",
+        "text": "If your script reads files, the easiest fix is to change into the project directory first, so the script behaves the same as when you run it by hand:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "0 2 * * * cd /home/deploy/app && /usr/bin/python3 backup.py >> /home/deploy/logs/backup.log 2>&1"
+      },
+      {
+        "type": "p",
+        "text": "Also check that the script file has execute permission, and that the user who owns the crontab can read and run it."
+      },
+      {
+        "type": "h2",
+        "text": "Step 4: Add a newline at the end of the crontab"
+      },
+      {
+        "type": "p",
+        "text": "Some cron implementations ignore the last line of a crontab if the file does not end with a newline. The line looks correct when you read it, but it never runs. This happens easily when you paste a line into an editor or generate the file with a tool that does not add a trailing newline."
+      },
+      {
+        "type": "p",
+        "text": "Make sure the file ends with a blank line or at least a newline after the last job. If you edit the crontab with crontab -e, most editors add the newline for you. If you install the file from a script, write it with a final newline explicitly."
+      },
+      {
+        "type": "h2",
+        "text": "Step 5: Escape percent signs as \\%"
+      },
+      {
+        "type": "p",
+        "text": "In a crontab, an unescaped % is special. The first % ends the command, and anything after it is passed to the command as standard input. The rest of the line is treated as input, not as part of the command. A date format like date +%Y-%m-%d is a common example of a command that silently fails."
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "# Broken: cron splits the line at the first % sign\n0 1 * * * /bin/date +%Y-%m-%d >> /tmp/day.log\n\n# Fixed: escape each percent sign with a backslash\n0 1 * * * /bin/date +\\%Y-\\%m-\\%d >> /tmp/day.log"
+      },
+      {
+        "type": "p",
+        "text": "Escape every % in the command, including those in date formats, URLs with encoded characters, and inline scripts. If you need a literal percent sign in the output, \\% is the correct form in the crontab. To check the escaping, put the command in a script file and run it from cron, since cron errors are easy to miss. Then compare the log output with what you get when you run the script by hand."
+      },
+      {
+        "type": "h2",
+        "text": "Step 6: Check the server timezone"
+      },
+      {
+        "type": "p",
+        "text": "Cron uses the server's local timezone by default. If your team thinks in US Eastern time but the server runs in UTC, a job set for 09:00 runs at 09:00 UTC, which is a different local time. Daylight saving time adds another layer. Jobs scheduled inside a skipped DST hour may not run, and jobs in a repeated hour may run twice, depending on the implementation."
+      },
+      {
+        "type": "p",
+        "text": "Check the timezone with date and compare the result with the time you intended:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "date\ndate -u"
+      },
+      {
+        "type": "p",
+        "text": "If your cron implementation supports a CRON_TZ variable, you can set it in the crontab. Check your cron man page, because support varies. If it is not supported, schedule in the server's timezone and document that choice. For jobs that must run at a fixed UTC time, use UTC on the server."
+      },
+      {
+        "type": "h2",
+        "text": "Step 7: Understand day-of-month and day-of-week together"
+      },
+      {
+        "type": "p",
+        "text": "This is the most surprising rule in cron. If both the day-of-month field and the day-of-week field are restricted (neither is *), standard cron runs the job when either field matches. It does not run only on days that match both."
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "0 0 1 * 1   runs at midnight on the 1st of every month OR every Monday"
+      },
+      {
+        "type": "p",
+        "text": "If you want the 1st of the month only when it is a Monday, cron cannot express that in one line. Run the job every Monday and check the date in the crontab line, for example:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "0 0 * * 1 [ \"$(date +\\%d)\" = \"01\" ] && /home/deploy/scripts/report.sh"
+      },
+      {
+        "type": "p",
+        "text": "This runs at midnight every Monday, and the script runs only when the day of the month is 01. For background on the first-of-month pattern, see [Cron Expression for First Day of the Month](/blog/cron-expression-first-day-of-month). For weekday schedules, see [Cron Expression for Weekdays Only](/blog/cron-expression-weekdays-only-monday-friday)."
+      },
+      {
+        "type": "h2",
+        "text": "Step 8: Check for overlap and silent failures"
+      },
+      {
+        "type": "p",
+        "text": "A job that takes longer than its interval can overlap with the next run. If the job uses a shared file or database table, the second copy may fail or leave data inconsistent. Use a lock file, such as flock, to skip a run when the previous one is still going:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "*/5 * * * * /usr/bin/flock -n /tmp/sync.lock /home/deploy/scripts/sync.sh >> /home/deploy/sync.log 2>&1"
+      },
+      {
+        "type": "p",
+        "text": "Also check the exit code. Cron does not show you a failed command in your terminal. Add a log line at the start and end of the script, and check the log after the next scheduled run."
+      },
+      {
+        "type": "h2",
+        "text": "A quick troubleshooting order"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Confirm the expression and next run times with the [Cron Expression Generator](/cron-generator).",
+          "Reproduce the job in a minimal environment with env -i PATH=/usr/bin:/bin followed by the full path to the command, and compare the result with your normal run.",
+          "Replace every program name with an absolute path, and every relative path with an absolute one.",
+          "Set or check PATH at the top of the crontab.",
+          "Escape every % as \\%.",
+          "Make sure the crontab ends with a newline.",
+          "Redirect output to a log file with >> file 2>&1.",
+          "Check the server timezone and any DST effect on the scheduled time.",
+          "Review day-of-month and day-of-week rules if both are restricted."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If your schedule is for every few minutes or hours, the [minute interval guide](/blog/cron-every-5-minutes-and-other-minute-intervals) and the [every 2 hours guide](/blog/cron-every-2-hours-expression) show the step syntax with next run times to compare against."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Why does my cron job work when I run it by hand but not from cron?"
+      },
+      {
+        "type": "p",
+        "text": "Your shell loads a profile, sets a long PATH, and runs in your home directory or project directory. Cron runs with a minimal environment. Use absolute paths for programs and files, set PATH in the crontab, and redirect output to a log so you can see the error."
+      },
+      {
+        "type": "h3",
+        "text": "How do I know if cron is running my job?"
+      },
+      {
+        "type": "p",
+        "text": "Write output to a log file with >> /path/to/log 2>&1 at the end of the line. If the log has new entries after the scheduled time, cron ran the job, and the log will show whether it succeeded."
+      },
+      {
+        "type": "h3",
+        "text": "Does the crontab need a trailing newline?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, in practice. Some cron implementations skip the last line if the file does not end with a newline. Add a newline after the final job to avoid this."
+      },
+      {
+        "type": "h3",
+        "text": "Is it safe to paste my cron command into an online tool?"
+      },
+      {
+        "type": "p",
+        "text": "Schedule expressions are safe to test in the [Cron Expression Generator](/cron-generator). Avoid pasting full commands that contain passwords, tokens, or connection strings into any online tool, including this one. Replace secrets with placeholders and read them from environment variables or a protected file instead."
+      }
+    ],
+    "relatedTool": "cron-generator"
+  },
+  "review": {
+    "title_ko": "크론 작업이 실행되지 않나요? 흔한 원인과 해결법",
+    "summary_ko": [
+      "크론 작업이 실행되지 않는 원인은 크론 자체보다 실행 환경, crontab 파일, 일정 표현식에 있는 경우가 대부분이라고 설명합니다.",
+      "먼저 Cron Expression Generator로 다음 실행 시각을 확인하고, 맞으면 체크리스트를 따르라고 안내합니다.",
+      "1단계: 테스트용 줄을 추가해 파일에 기록하고, 표준 출력과 표준 에러를 모두 리다이렉션해 크론이 실행하는지 확인합니다.",
+      "2단계: 크론은 셸 프로필을 읽지 않아 PATH가 짧으므로, env -i로 재현하고 절대 경로를 쓰거나 crontab 상단에 PATH를 설정합니다.",
+      "3단계: 상대 경로 대신 절대 경로를 쓰고, 필요하면 cd로 프로젝트 디렉터리에 들어간 뒤 실행하며, 실행 권한도 확인합니다.",
+      "4~5단계: crontab 마지막에 줄바꿈을 넣고, 명령 안의 %는 \\%로 이스케이프해야 한다고 설명합니다.",
+      "6~8단계: 서버 시간대와 DST 영향, 요일과 날짜 필드를 함께 지정할 때의 OR 동작(예시 우회법 포함), flock으로 중복 실행 방지와 로그 확인을 다룹니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "3단계의 주석 \"# Breaks: ./backup.sh and config.yml ...\"에서 config.yml을 언급하지만, 바로 아래 예시 명령에는 config.yml이 사용되지 않아 주석과 예시가 맞지 않습니다.",
+        "en": "The Step 3 comment mentions config.yml, but the example command never uses it."
+      },
+      {
+        "severity": "low",
+        "ko": "5단계의 \"put the command in a script file and run it from cron ... to check the escaping\" 문장은 논리가 어색합니다. 스크립트 파일로 옮기면 %를 이스케이프할 필요가 없어질 뿐, 이스케이프를 검증하는 방법은 아닙니다.",
+        "en": "Step 5 says to put the command in a script to check escaping. A script avoids the % problem rather than verifying escapes, so the sentence is muddled. Consider saying: move the command into a script to avoid escaping, or run the escaped line under cron and check the log."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "\"Run the job daily with a check in the script\"라고 되어 있지만, 예시 코드는 \"0 0 * * 1\"로 매주 월요일에만 실행되고 날짜 확인도 스크립트가 아니라 crontab 줄에 있습니다. 설명과 코드가 맞지 않습니다.",
+      "\"Test any command with % in a file first, because the error may not appear anywhere you are looking.\" 문장이 모호합니다. 무엇을 어떻게 테스트하라는 것인지 명확하지 않습니다.",
+      "FAQ의 \"The Cron Expression Generator runs in your browser, so the expression you test is not sent to a server.\" 주장은 제품 동작에 대한 사실 주장입니다. 게시 전에 실제로 클라이언트 측에서만 처리되는지 확인하세요.",
+      "\"0 0 1 * 1 runs at midnight on the 1st of every month AND every Monday\"에서 'AND'라고 썼지만, 앞서 설명한 대로 cron은 두 필드 중 하나라도 맞으면 실행하므로 'OR'(또는)이어야 합니다. 이 오류는 글의 핵심 규칙과 모순됩니다.",
+      "점검 순서 2번 \"compare the output in a clean environment, for example with env -i\"에서 env -i는 환경을 완전히 비우기만 하고 cron의 최소 PATH를 재현하지 않아 모호합니다. 예를 들어 env -i PATH=/usr/bin:/bin 처럼 PATH를 명시하면 더 정확합니다."
+    ],
+    "word_count": 1712
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 24,
+  "api_calls": 6,
+  "telegram_message_id": 109
+}

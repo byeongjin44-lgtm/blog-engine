@@ -1,0 +1,282 @@
+{
+  "id": "25998090",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-24T07:09:03Z",
+  "topic": {
+    "title": "How many boxes of 12x24 tile for a 10x10 floor?",
+    "keyword": "how many boxes of 12x24 tile do i need",
+    "related_tool": "tile-calculator",
+    "calculations": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 10,
+          "sqFtPerBox": 16
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-many-boxes-of-12x24-tile-10x10-floor",
+    "title": "How Many Boxes of 12x24 Tile for a 10x10 Floor?",
+    "description": "A 10x10 floor with 16 sq ft boxes of 12x24 tile needs 7 boxes, including 10% extra for cuts. See the steps and why large tiles may need more.",
+    "body": [
+      {
+        "type": "p",
+        "text": "For a 10x10 floor tiled with 12x24 tile that covers 16 sq ft per box, you need 7 boxes. That number already includes 10% extra for cuts and breakage. You can plug in your own room size and box coverage in the [Tile Calculator](/tile-calculator) to get the answer for your project."
+      },
+      {
+        "type": "h2",
+        "text": "The worked example, step by step"
+      },
+      {
+        "type": "p",
+        "text": "Here is how the calculator gets to 7 boxes for a 10x10 floor:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the floor area: 10 ft x 10 ft = 100 sq ft.",
+          "Add the 10% extra for cuts and breakage. That brings the tile you need to 110 sq ft.",
+          "Divide by the coverage printed on the box. With 16 sq ft per box, 110 sq ft divided by 16 sq ft per box comes out to a bit under 7 boxes.",
+          "Round up to whole boxes. You can't buy part of a box, so you buy 7 boxes."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The key point is the rounding. Always round up, never down. Running short by even a few tiles means a second trip, and a later purchase may come from a different dye lot with a slightly different shade."
+      },
+      {
+        "type": "h2",
+        "text": "Check the coverage on your box"
+      },
+      {
+        "type": "p",
+        "text": "The 16 sq ft per box figure is only an example. Coverage per box varies by brand, thickness and tile line, so the square footage on your label may be quite different. Read the coverage printed on the box or in the product listing, then use that number in the calculator. If your box covers less than 16 sq ft, you will need more boxes. If it covers more, you may need fewer."
+      },
+      {
+        "type": "h2",
+        "text": "Why large tiles can need more extra in a small room"
+      },
+      {
+        "type": "p",
+        "text": "The 10% extra is the common starting point for cuts and breakage, and it is what the calculator uses in the example above. For a deeper look at when to go higher, see our guide on [how much overage for tile cuts and waste](/blog/how-much-overage-for-tile-cuts-and-waste)."
+      },
+      {
+        "type": "p",
+        "text": "Large tiles like 12x24 can call for a higher percentage in a small room, for a few reasons:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Each cut wastes more. When a tile is 24 inches long, trimming it to fit along a wall can leave an offcut too short or awkward to reuse elsewhere.",
+          "There are fewer tiles overall. In a small floor, a few ruined pieces take up a bigger share of your total than they would in a large room.",
+          "Pattern choices add waste. A straight lay uses the least. A diagonal layout or a brick-style offset creates more angled and trimmed pieces.",
+          "Odd room shapes add cuts. Alcoves, closets, doorways and corners all produce extra trimming."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If your layout is diagonal, your room has several jogs, or you are new to cutting tile, try a higher extra percentage in the calculator and see how the box count changes. A 10x10 room is small enough that one or two broken tiles matter. The right percentage for your layout is a judgment call, so the 10% in this example is a starting point, not a guarantee."
+      },
+      {
+        "type": "h2",
+        "text": "Why a spare box can be worth it"
+      },
+      {
+        "type": "p",
+        "text": "Even if the math lands close to a whole number, a little extra margin is a reasonable safeguard. Leftover tile is useful later for repairs, since a cracked tile years down the road is much easier to swap if you still have matching pieces from the same lot. Check the store's return policy before you buy, and keep unopened boxes if returns are allowed."
+      },
+      {
+        "type": "h2",
+        "text": "Quick tips before you order"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Measure the actual floor, not the room's outer dimensions. If the room isn't a perfect rectangle, break it into sections. Our post on [how to calculate square footage of a room](/blog/how-to-calculate-square-footage-of-a-room) walks through it.",
+          "Don't subtract for cabinets or a tub unless they are permanent and you are certain no tile goes under them.",
+          "Buy all your boxes at once so the shade and dye lot match.",
+          "Use the coverage per box printed on the label, since it already accounts for the tile's true size."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If you are tiling a smaller space, like a bathroom, see [how much tile for a 5x8 bathroom](/blog/how-much-tile-for-5x8-bathroom) for another example."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Do I need to buy extra if I'm using 12x24 tile?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. The calculator adds 10% extra for cuts and breakage. Large tiles waste more per cut, so in a small room or with a diagonal pattern you may want to raise that percentage in the calculator."
+      },
+      {
+        "type": "h3",
+        "text": "What if my box covers a different number of square feet?"
+      },
+      {
+        "type": "p",
+        "text": "Use the coverage printed on your box. The 16 sq ft per box in this example is just one possibility. Enter your real number in the [Tile Calculator](/tile-calculator) and the box count will adjust."
+      },
+      {
+        "type": "h3",
+        "text": "Should I round down if I'm only a little over a box?"
+      },
+      {
+        "type": "p",
+        "text": "No. Always round up to the next whole box. If you come up short, you have to reorder, and later boxes may not match in color."
+      },
+      {
+        "type": "h3",
+        "text": "Does the layout pattern change how many boxes I need?"
+      },
+      {
+        "type": "p",
+        "text": "It can. A straight lay wastes the least, while diagonal or offset patterns create more cut pieces. If you plan anything other than a straight lay, raise the extra percentage before ordering."
+      }
+    ],
+    "relatedTool": "tile-calculator",
+    "sources": [
+      {
+        "title": "Lowe's tile flooring calculator",
+        "url": "https://www.lowes.com/n/calculators/tile-floor-calculator"
+      },
+      {
+        "title": "Daltile tile & stone FAQs",
+        "url": "https://www.daltile.com/how-to/faqs"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 10,
+          "sqFtPerBox": 16
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 10,
+          "sqFtPerBox": 16
+        },
+        "results": [
+          {
+            "key": "boxes",
+            "label": "Boxes to buy",
+            "value": 7,
+            "unit": "boxes",
+            "digits": 0,
+            "primary": true,
+            "number": "7",
+            "display": "7 boxes"
+          },
+          {
+            "key": "neededSqFt",
+            "label": "Tile needed incl. extra",
+            "value": 110,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "110",
+            "display": "110 sq ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Floor area",
+            "value": 100,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "100",
+            "display": "100 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "tile-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Floor length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Floor width",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerBox",
+            "label": "Coverage per box",
+            "unit": "sq ft",
+            "default": 11,
+            "step": 0.1,
+            "help": "Printed on the tile box or product page."
+          },
+          {
+            "kind": "number",
+            "key": "wastePct",
+            "label": "Extra for cuts",
+            "unit": "%",
+            "default": 10,
+            "step": 1
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "10x10 바닥에 12x24 타일 몇 박스가 필요할까?",
+    "summary_ko": [
+      "결론: 16 sq ft 상자에 담긴 12x24 타일로 10x10 바닥을 시공하려면 7박스가 필요하며, 이 수치에는 절단과 파손을 위한 10% 여분이 포함되어 있습니다.",
+      "계산 단계: 바닥 면적 100 sq ft에 10%를 더해 110 sq ft를 구한 뒤, 상자당 16 sq ft로 나누면 7박스보다 약간 적은 값이 나오고, 상자는 쪼갤 수 없으므로 올림해 7박스를 구입합니다.",
+      "올림 원칙: 항상 올림해야 하며, 부족하면 재주문 시 같은 염료 로트가 아닐 수 있어 색상 차이가 생길 수 있습니다.",
+      "상자 표시 면적 확인: 16 sq ft는 예시일 뿐이므로 제품 라벨의 실제 커버리지를 계산기에 입력해야 합니다.",
+      "여분 비율: 12x24 같은 큰 타일은 절단당 낭비가 커서 작은 방, 대각선 패턴, 복잡한 공간 모양에서는 여분 비율을 높이는 것이 좋습니다.",
+      "추가 조언: 여분 타일은 나중의 보수용으로 유용하며, 반품 정책을 확인하고 모든 상자를 한 번에 구입하는 것이 권장됩니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"The 10% extra is the common starting point for cuts and breakage\" 문장에서 10%가 업계 통상 기준이라고 하지만 출처가 본문에 명시되어 있지 않습니다. 출처 목록의 Lowe's 또는 Daltile 페이지를 근거로 인용하거나 표현을 완화하는 것이 좋습니다.",
+        "en": "The claim that 10% is the common starting point is not attributed to any cited source in the body. Either cite Lowe's or Daltile for it, or soften the wording."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "'consider raising the extra to 15% in the calculator' 부분의 15%는 계산기 입력이나 결과가 아니라 작성자가 임의로 제시한 수치입니다. 계산기에서 15%로 실행한 결과가 없으므로 근거 없는 수량으로 보입니다.",
+      "FAQ의 '15% is a safer choice' 역시 계산기 결과가 아닌 작성자가 정한 수치입니다. 본문과 같은 문제입니다.",
+      "FAQ의 'Coming up short usually costs more than a single extra box'는 근거 없는 일반화입니다. 출처를 밝히거나 'often'처럼 표현을 완화하는 편이 좋습니다."
+    ],
+    "word_count": 857
+  },
+  "model": "claude-sonnet-5-5",
+  "recovered_from": [
+    "How many boxes of 12x24 tile for a 10x10 floor? / claude-haiku-5-5: DraftError: draft failed validation twice: number 1.10 does not come from the calculator results — use only the numbers provided"
+  ],
+  "cost_krw": 147,
+  "api_calls": 7,
+  "telegram_message_id": 110
+}
