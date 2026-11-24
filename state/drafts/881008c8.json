@@ -1,7 +1,7 @@
 {
   "id": "881008c8",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-24T07:07:37Z",
   "topic": {
     "title": "Why Does My Cron Job Not Run? Common Causes and Fixes",
@@ -268,7 +268,8 @@
         "text": "Schedule expressions are safe to test in the [Cron Expression Generator](/cron-generator). Avoid pasting full commands that contain passwords, tokens, or connection strings into any online tool, including this one. Replace secrets with placeholders and read them from environment variables or a protected file instead."
       }
     ],
-    "relatedTool": "cron-generator"
+    "relatedTool": "cron-generator",
+    "published": "2026-11-24"
   },
   "review": {
     "title_ko": "크론 작업이 실행되지 않나요? 흔한 원인과 해결법",
@@ -307,5 +308,7 @@
   "recovered_from": [],
   "cost_krw": 24,
   "api_calls": 6,
-  "telegram_message_id": 109
+  "telegram_message_id": 109,
+  "decided": "2026-11-24T07:30:48Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/cron-job-not-running-common-causes-fixes.json"
 }

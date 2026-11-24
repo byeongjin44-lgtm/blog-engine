@@ -1,7 +1,7 @@
 {
   "id": "25998090",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-24T07:09:03Z",
   "topic": {
     "title": "How many boxes of 12x24 tile for a 10x10 floor?",
@@ -245,7 +245,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-24"
   },
   "review": {
     "title_ko": "10x10 바닥에 12x24 타일 몇 박스가 필요할까?",
@@ -278,5 +279,7 @@
   ],
   "cost_krw": 147,
   "api_calls": 7,
-  "telegram_message_id": 110
+  "telegram_message_id": 110,
+  "decided": "2026-11-24T07:30:44Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-boxes-of-12x24-tile-10x10-floor.json"
 }
