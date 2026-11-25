@@ -211,6 +211,11 @@ _FORBIDDEN_PATTERNS = [
 ]
 MANUFACTURER_NOTE_RE = re.compile(r"manufacturer|product label|on the (?:bag|box|can|package|label)", re.I)
 DECIMAL_RE = re.compile(r"(?<![\d.,])\d[\d,]*\.\d+(?![\d])")
+# Fractional amounts in words slip past DECIMAL_RE ("adds about a ton and a half", 2026-11-18 post).
+_UNITS = r"(?:tons?|gallons?|(?:cubic |cu\.? ?)?(?:yards?|yds?|feet|ft)|bags?|boxes?|rolls?|pounds?|lbs?|square feet|sq\.? ?ft)"
+WORD_FRACTION_RE = re.compile(
+    r"\b(?:(?:a|an|one|two|three|four|five)\s+" + _UNITS + r"\s+and\s+a\s+(?:half|quarter|third)"
+    r"|(?:half|a\s+quarter|a\s+third|three\s+quarters)\s+(?:of\s+)?an?\s+" + _UNITS + r")\b", re.I)
 EXTERNAL_LINK_RE = re.compile(r"\]\((?!/)[^)]*\)|https?://", re.I)
 
 
@@ -287,6 +292,8 @@ def validate_homerivet(post: dict, site: Site, existing_slugs: set[str]) -> list
     for m in DECIMAL_RE.findall(text):
         if float(m.replace(",", "")) not in known:
             errors.append(f"number {m} does not come from the calculator results — use only the numbers provided")
+    for m in WORD_FRACTION_RE.finditer(text):
+        errors.append(f"\"{m.group(0)}\" is a quantity the calculator did not give — state only the calculator results")
     return errors
 
 

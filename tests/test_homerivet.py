@@ -116,6 +116,14 @@ class FormatTests(unittest.TestCase):
         post = finalized(make_post(extra=[{"type": "p", "text": "A bigger room needs 4.75 gallons."}]))
         self.assertTrue(any("4.75" in e for e in validate_homerivet(post, SITE, set())))
 
+    def test_fractional_amount_in_words_is_rejected(self):
+        for phrase in ["the extra inch adds about a ton and a half", "you need half a gallon more",
+                       "plan on one gallon and a half", "about three quarters of a ton"]:
+            post = finalized(make_post(extra=[{"type": "p", "text": f"Note: {phrase} to the order."}]))
+            self.assertTrue(any("calculator did not give" in e for e in validate_homerivet(post, SITE, set())), phrase)
+        ok = finalized(make_post(extra=[{"type": "p", "text": "Does a room need one gallon or two? Half the time it is two coats."}]))
+        self.assertEqual(validate_homerivet(ok, SITE, set()), [])
+
     def test_forbidden_topic_manufacturer_note_and_external_links(self):
         post = finalized(make_post(extra=[{"type": "p", "text": "Turn off the circuit breaker. See [this](https://example.com)."}]))
         errors = validate_homerivet(post, SITE, set())
@@ -167,9 +175,11 @@ class FlowTests(unittest.TestCase):
         prompt = llm.calls[0][1]["messages"][0]["content"]
         self.assertIn("Paint to buy: 3 gallons (HEADLINE", prompt)
         self.assertIn("Never calculate", prompt)
+        self.assertIn("no differences or comparisons between results", prompt)
         self.assertIn("Room length: 12 ft", prompt)
         review_prompt = llm.calls[1][1]["messages"][0]["content"]
         self.assertIn("must come only from these calculator results", review_prompt)
+        self.assertIn("never suggest a replacement number", review_prompt)
         self.assertNotIn("_calc_results", review_prompt)
         self.assertIn("🧮 paint-calculator: 3 gallons", tg.sent[0]["text"])
 

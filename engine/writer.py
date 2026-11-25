@@ -84,6 +84,10 @@ def _calc_block(calc: dict | None) -> str:
         "- Never calculate, estimate, round or convert any quantity yourself. Do not add other worked examples, "
         "\"for a bigger room\" variations, totals, prices or costs. Only these inputs and results may appear as numbers, "
         "plus the published figures stated on the calculator page (its formula constants).\n"
+        "- This also means: no differences or comparisons between results (\"the extra inch adds X tons\", \"Y more bags\"), "
+        "no percentages, and no quantities written in words or fractions (\"a ton and a half\", \"half a gallon\", "
+        "\"about two tons\"). To compare two results, state both results as given and describe the change in plain words "
+        "(e.g. \"the deeper layer needs noticeably more gravel\").\n"
         "- Tell readers to use the calculator for their own measurements, and to check the coverage or yield printed on "
         "the product label, because products differ."
     )
@@ -163,7 +167,10 @@ def review_post(site: Site, post: dict, transport: Transport | None = None, calc
             + calculator.describe(calc["results"], calc["fields"])
             + "\nFlag as high severity any quantity in the post that is not one of these inputs or results "
             "(for example a figure the writer calculated or estimated itself), and any advice beyond estimating "
-            "material quantities (electrical, structural, gas, roofing, hazardous materials, building codes)."
+            "material quantities (electrical, structural, gas, roofing, hazardous materials, building codes). "
+            "This includes differences between results and amounts written in words (\"a ton and a half\"). "
+            "When you flag such a figure, never suggest a replacement number: suggest removing it or restating only "
+            "the listed results, because any other number is rejected by the site's number check."
         )
     call = dict(model=site.reviewer_model, system=system, prompt=prompt, schema=REVIEW_SCHEMA,
                 max_tokens=REVIEW_MAX_TOKENS, transport=transport)
