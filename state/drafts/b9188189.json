@@ -1,7 +1,7 @@
 {
   "id": "b9188189",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-25T02:27:29Z",
   "topic": {
     "title": "How to Read a Cron Expression: Field-by-Field Explanation",
@@ -186,7 +186,8 @@
         "text": "Usually yes. Most implementations accept three-letter names for months (JAN to DEC) and days of the week (SUN to SAT). Names are easier to read in long expressions, but check your scheduler's documentation if you are unsure."
       }
     ],
-    "relatedTool": "cron-generator"
+    "relatedTool": "cron-generator",
+    "published": "2026-11-25"
   },
   "review": {
     "title_ko": "크론 표현식 읽는 법: 필드별 설명",
@@ -218,5 +219,7 @@
   "recovered_from": [],
   "cost_krw": 19,
   "api_calls": 6,
-  "telegram_message_id": 114
+  "telegram_message_id": 114,
+  "decided": "2026-11-25T02:58:22Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/how-to-read-cron-expression-field-by-field.json"
 }

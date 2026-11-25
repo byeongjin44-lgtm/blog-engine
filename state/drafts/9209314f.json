@@ -1,7 +1,7 @@
 {
   "id": "9209314f",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-25T02:28:53Z",
   "topic": {
     "title": "How much paint do I need for a 10x12 room?",
@@ -309,7 +309,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-25"
   },
   "review": {
     "title_ko": "10x12 방에 페인트가 얼마나 필요할까? 필요한 갤런 수",
@@ -345,5 +346,7 @@
   "recovered_from": [],
   "cost_krw": 19,
   "api_calls": 7,
-  "telegram_message_id": 115
+  "telegram_message_id": 115,
+  "decided": "2026-11-25T02:58:25Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-paint-for-10x12-room.json"
 }
