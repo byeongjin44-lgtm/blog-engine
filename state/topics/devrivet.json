@@ -86,5 +86,85 @@
     "notes": "Practical how-to: encode a value containing &, =, #, +, and non-ASCII characters before appending it to a query string. Show the encoded output and why & and = break parsing. Use encodeURIComponent as the reference and link to the URL encoder for testing. Avoid re-explaining encodeURI vs encodeURIComponent or the space-to-%20 vs + topic.",
     "title_ko": "특수문자가 포함된 쿼리 파라미터 URL 인코딩 단계별 가이드",
     "added": "2026-11-14T03:33:50Z"
+  },
+  {
+    "title": "JSON Comments Are Not Allowed: How to Remove or Work Around Them",
+    "keyword": "json comments invalid",
+    "related_tool": "json-formatter",
+    "notes": "Explain that standard JSON has no comment syntax, so // and /* */ cause parse errors. Show how to strip comments before parsing, and when to use JSONC or JSON5 instead. Cover the common mistake of assuming a config file's comments are valid JSON, and note that the validator reports the line and column of the first comment.",
+    "title_ko": "JSON 주석은 허용되지 않는 이유: 제거 방법과 대안",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "SQL Dialect Differences: Formatting MySQL vs PostgreSQL Queries",
+    "keyword": "sql formatter mysql vs postgresql",
+    "related_tool": "sql-formatter",
+    "notes": "Compare dialect-specific syntax that trips up formatters and developers: backtick vs double-quote identifiers, LIMIT/OFFSET, RETURNING, and :: casts. Show the same query formatted for each dialect and explain why picking the right dialect matters. Avoid claims about specific version support.",
+    "title_ko": "SQL 방언 차이: MySQL과 PostgreSQL 쿼리 포맷팅",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "JavaScript Regex Multiline Flag: How ^ and $ Match Each Line",
+    "keyword": "javascript regex multiline flag",
+    "related_tool": "regex-tester",
+    "notes": "Explain the m flag, how ^ and $ behave with and without it, and the difference between newline characters and line endings. Show a log-line example. Common mistake: expecting . to match newlines; cover the s (dotAll) flag as the fix. Keep it to JavaScript behavior.",
+    "title_ko": "JavaScript 정규식 멀티라인 플래그: ^와 $가 줄마다 매칭되는 방식",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "Convert ISO 8601 Date to Unix Timestamp (With and Without Timezone)",
+    "keyword": "iso 8601 to unix timestamp",
+    "related_tool": "timestamp-converter",
+    "notes": "Show how to convert strings like 2024-05-01T12:00:00Z into epoch seconds and back. Highlight the timezone trap: a string without Z or an offset is parsed as local time in many environments. Include the seconds vs milliseconds check. Avoid tying examples to any specific current date.",
+    "title_ko": "ISO 8601 날짜를 Unix 타임스탬프로 변환하기 (타임존 포함)",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "JWT Claims Explained: iss, sub, aud, iat and What Each Means",
+    "keyword": "jwt claims explained",
+    "related_tool": "jwt-decoder",
+    "notes": "Give a short definition and example for each registered claim: iss, sub, aud, exp, nbf, iat, jti. Explain that claims are only readable, not trusted, until the signature is verified elsewhere. Mention the common mistake of treating an aud value as checked just because it is present in the payload. Do not repeat the exp-checking or decode-vs-verify content.",
+    "title_ko": "JWT 클레임 설명: iss, sub, aud, iat의 의미",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "MD5 vs SHA-256 for File Checksums: Which Hash Should You Use?",
+    "keyword": "md5 vs sha256 checksum",
+    "related_tool": "hash-generator",
+    "notes": "Explain when a checksum is for accidental corruption detection versus tamper resistance. Show how to compare a downloaded file's hash with a published value. Cover the mistake of using MD5 or SHA-1 where an attacker could forge matching content, and recommend SHA-256 for new work. Do not repeat the SHA-1 security article or the password hashing article.",
+    "title_ko": "파일 체크섬에서 MD5 vs SHA-256: 어떤 해시를 써야 할까",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "Double Encoded URLs: Why You See %25 and How to Fix It",
+    "keyword": "double encoded url %25",
+    "related_tool": "url-encoder",
+    "notes": "Explain how a percent sign in the original text becomes %25 and how encoding an already encoded string produces sequences like %2520. Show how to spot double encoding in logs or redirects and how to decode it step by step. Mention the common mistake of encoding a full URL with encodeURIComponent, which also escapes the : and / characters.",
+    "title_ko": "이중 인코딩된 URL: %25가 보이는 이유와 해결 방법",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "Generate a UUID Default in PostgreSQL with gen_random_uuid()",
+    "keyword": "postgres generate uuid default",
+    "related_tool": "uuid-generator",
+    "notes": "Show how to set a UUID primary key default in a PostgreSQL table, how to insert rows, and how to generate a UUID for a query. Explain that gen_random_uuid() returns version 4 UUIDs and compare with generating in the application. Common mistake: using a UUID column type without a default and then getting NULLs. Avoid version-specific availability claims.",
+    "title_ko": "PostgreSQL에서 gen_random_uuid()로 UUID 기본값 생성하기",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "Cron Timezone: How to Run a Cron Job in UTC or Your Local Time",
+    "keyword": "cron timezone",
+    "related_tool": "cron-generator",
+    "notes": "Explain that standard cron typically uses the server's local timezone, and that a server in UTC can make a 9 AM schedule fire at the wrong local hour. Show how to check the timezone setting, how to set TZ or CRON_TZ where supported, and how to convert the intended time to UTC. Mention daylight saving time shifts and the risk of jobs skipping or running twice. Avoid claiming one behavior applies to every cron implementation.",
+    "title_ko": "Cron 타임존 설정: UTC 또는 현지 시간으로 작업 실행하기",
+    "added": "2026-11-25T02:26:06Z"
+  },
+  {
+    "title": "Base64 Image in HTML and CSS: How to Build a Data URI",
+    "keyword": "base64 image data uri",
+    "related_tool": "base64",
+    "notes": "Show the data:image/png;base64, prefix format, how to encode a small image file, and how to use it in an img src or CSS background-image. Explain the tradeoff: fewer HTTP requests versus larger HTML/CSS and no browser caching. Common mistake: wrong MIME type in the prefix, or including the file's line breaks. Do not repeat the 33% size explanation or the Base64 vs Base64URL comparison.",
+    "title_ko": "HTML과 CSS에서 Base64 이미지 사용하기: 데이터 URI 만들기",
+    "added": "2026-11-25T02:26:06Z"
   }
 ]

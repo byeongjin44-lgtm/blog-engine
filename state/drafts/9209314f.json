@@ -1,0 +1,349 @@
+{
+  "id": "9209314f",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-25T02:28:53Z",
+  "topic": {
+    "title": "How much paint do I need for a 10x12 room?",
+    "keyword": "how much paint for a 10x12 room",
+    "related_tool": "paint-calculator",
+    "calculations": [
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-paint-for-10x12-room",
+    "title": "How Much Paint for a 10x12 Room? Gallons Needed",
+    "description": "For a 10x12 room with 8-foot walls, one door, one window, and two coats, you need 2 gallons of paint at 350 sq ft per gallon. Here is the math.",
+    "body": [
+      {
+        "type": "p",
+        "text": "For a 10x12 room with 8-foot walls, one door, one window, and two coats, you need 2 gallons of paint at the default coverage of 350 sq ft per gallon. That figure covers the walls only. Ceilings and trim are separate surfaces and need their own estimates."
+      },
+      {
+        "type": "p",
+        "text": "Use the [Paint Calculator](/paint-calculator) with your own measurements, since your wall height, number of doors and windows, and number of coats may be different. Then check the coverage printed on the paint can or product label, because products differ and the default 350 sq ft per gallon may not match the paint you buy."
+      },
+      {
+        "type": "h2",
+        "text": "How the wall area is calculated"
+      },
+      {
+        "type": "p",
+        "text": "Paint covers the walls, not the floor or the ceiling. To find the total wall area, add the room's length and width, double that total because the room has two long walls and two short walls, and then multiply by the wall height."
+      },
+      {
+        "type": "p",
+        "text": "In this example, the room is 10 feet long and 12 feet wide, with walls 8 feet tall. That gives a total wall area of 352 sq ft."
+      },
+      {
+        "type": "h2",
+        "text": "Subtract doors and windows"
+      },
+      {
+        "type": "p",
+        "text": "Openings take no paint, so the calculator removes 20 sq ft for each door and each window. This room has one door and one window, so 40 sq ft is deducted. That leaves 312 sq ft of paintable wall."
+      },
+      {
+        "type": "p",
+        "text": "The deduction is a standard allowance, not a measurement of your actual openings. If your door or window is much larger or smaller than usual, measure it and use the Paint Calculator again with your own numbers, especially if your result is close to a whole gallon."
+      },
+      {
+        "type": "h2",
+        "text": "Turn wall area into gallons"
+      },
+      {
+        "type": "p",
+        "text": "Once you have the paintable area, the rest is a short set of steps:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Start with the total wall area, which is 352 sq ft for this room.",
+          "Subtract 20 sq ft for each door and each window. With one door and one window, that is 40 sq ft, leaving 312 sq ft of paintable wall.",
+          "Multiply the paintable area by the number of coats. This example uses 2 coats, so you need enough paint for two full passes over the wall.",
+          "Divide by the coverage per gallon. The calculator default is 350 sq ft per gallon, but use the number printed on your product label if it differs.",
+          "Round up to whole gallons for planning."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "For this room, the exact amount is 1.78 gallons. Rounding up gives you 2 gallons to buy."
+      },
+      {
+        "type": "h2",
+        "text": "Why the amount is rounded up"
+      },
+      {
+        "type": "p",
+        "text": "Paint is sold in several container sizes, so you are not limited to buying full gallons. The calculator reports whole gallons because that is the practical unit for planning a room, and rounding up leaves a margin for touch-ups and for paint that soaks into the roller, brush, and tray."
+      },
+      {
+        "type": "p",
+        "text": "If your exact result is just past a whole gallon, buying the extra amount is usually the safer choice. Running short mid-wall can mean a second trip and a slightly different shade if the batch differs. You can mix container sizes if that suits you, but buy enough that the total covers the rounded figure, and use paint from the same batch where possible."
+      },
+      {
+        "type": "p",
+        "text": "Leftover paint is useful later for scuffs, nail holes, and patches. Keep the can sealed and label it with the room and the paint color."
+      },
+      {
+        "type": "h2",
+        "text": "What this estimate does not include"
+      },
+      {
+        "type": "p",
+        "text": "The wall estimate leaves out several surfaces you may also want to paint. Estimate each one separately:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Ceilings: measure the length and width of the ceiling, since it is a separate surface from the walls and often needs its own product.",
+          "Trim, baseboards, and window casings: these take paint in smaller amounts, but they add up in a room with a lot of trim.",
+          "Doors themselves: the calculator only deducts their openings, so a painted door needs its own estimate.",
+          "Different colors or finishes: an accent wall or a different sheen for trim needs its own coverage figure."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Tips for accurate measurements"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Measure wall height from floor to ceiling. If the height varies across the room, measure the tallest and shortest points and enter a value that reflects the typical height.",
+          "Count every door and window opening you will not paint, and enter those counts.",
+          "If the room has alcoves or built-in shelves, measure those walls separately and add them to the total.",
+          "Check the product label for coverage on rough, textured, or porous surfaces, which often take more paint than smooth drywall."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Related estimates"
+      },
+      {
+        "type": "p",
+        "text": "If you are weighing one coat against two, see [How Much Paint for Two Coats? One vs Two Coat Estimate](/blog/how-much-paint-for-two-coats). If you plan to replace the floor in the same room, the [Flooring Calculator](/flooring-calculator) handles laminate, hardwood, and vinyl plank."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Does the 350 sq ft per gallon coverage always apply?"
+      },
+      {
+        "type": "p",
+        "text": "No. The calculator uses 350 sq ft per gallon as its default. Check the coverage printed on your product label and enter that value for a more accurate result, since coverage differs between paints and primers."
+      },
+      {
+        "type": "h3",
+        "text": "Should I buy more than the rounded amount?"
+      },
+      {
+        "type": "p",
+        "text": "The result is already rounded up for planning. Some people buy a bit more for planned touch-ups or future repairs, but for many rooms the rounded amount is enough, especially if you keep the leftover."
+      },
+      {
+        "type": "h3",
+        "text": "What if my room has no door or window?"
+      },
+      {
+        "type": "p",
+        "text": "Enter 0 for doors and windows. The calculator then takes no deduction, and the paintable area equals the total wall area."
+      }
+    ],
+    "relatedTool": "paint-calculator",
+    "sources": [
+      {
+        "title": "Sherwin-Williams paint calculator",
+        "url": "https://www.sherwin-williams.com/en-us/color/color-tools/paint-calculator"
+      },
+      {
+        "title": "Sherwin-Williams: How to estimate how much wallpaper you need",
+        "url": "https://www.sherwin-williams.com/homeowners/how-to/wallpapering-how-tos/sw-article-dir-howtoestimate"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 12,
+          "heightFt": 8,
+          "doors": 1,
+          "windows": 1
+        },
+        "results": [
+          {
+            "key": "gallons",
+            "label": "Paint to buy",
+            "value": 2,
+            "unit": "gallons",
+            "digits": 0,
+            "primary": true,
+            "number": "2",
+            "display": "2 gallons"
+          },
+          {
+            "key": "gallonsExact",
+            "label": "Exact amount",
+            "value": 1.78,
+            "unit": "gallons",
+            "digits": 2,
+            "primary": false,
+            "number": "1.78",
+            "display": "1.78 gallons"
+          },
+          {
+            "key": "paintableSqFt",
+            "label": "Paintable wall area",
+            "value": 312,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "312",
+            "display": "312 sq ft"
+          },
+          {
+            "key": "wallSqFt",
+            "label": "Total wall area",
+            "value": 352,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "352",
+            "display": "352 sq ft"
+          },
+          {
+            "key": "openingsSqFt",
+            "label": "Doors and windows deducted",
+            "value": 40,
+            "unit": "sq ft",
+            "digits": 0,
+            "primary": false,
+            "number": "40",
+            "display": "40 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "paint-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Room length",
+            "unit": "ft",
+            "default": 12,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Room width",
+            "unit": "ft",
+            "default": 15,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "heightFt",
+            "label": "Wall height",
+            "unit": "ft",
+            "default": 8,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "doors",
+            "label": "Doors",
+            "default": 1,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "windows",
+            "label": "Windows",
+            "default": 2,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "coats",
+            "label": "Coats",
+            "default": 2,
+            "step": 1
+          },
+          {
+            "kind": "number",
+            "key": "sqFtPerGallon",
+            "label": "Coverage per gallon",
+            "unit": "sq ft",
+            "default": 350,
+            "step": 25,
+            "help": "Use the coverage printed on your paint can if it differs."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "10x12 방에 페인트가 얼마나 필요할까? 필요한 갤런 수",
+    "summary_ko": [
+      "10x12피트 방, 벽 높이 8피트, 문 1개, 창문 1개, 2회 도장 기준으로 갤런당 350평방피트 coverage를 적용하면 2갤런이 필요합니다.",
+      "이 수치는 벽만 계산하며, 천장과 몰딩은 별도로 추정해야 합니다.",
+      "전체 벽 면적은 (10+12)×2×8 = 352평방피트입니다.",
+      "문과 창문 개구부는 각각 20평방피트씩 차감하여 총 40평방피트를 빼고, 도장 가능한 벽 면적은 312평방피트입니다.",
+      "312평방피트에 2회 도장을 곱하고 350으로 나누면 정확한 양은 1.78갤런이며, 올림하여 2갤런을 구매하라고 안내합니다.",
+      "실제 제품 라벨의 coverage 값을 확인하고, 계산기로 자신의 치수를 다시 입력하라고 권장합니다.",
+      "천장, 몰딩, 문짝, 포인트 벽 등 제외된 면은 따로 계산하라는 내용과 자주 묻는 질문(기본 coverage, 추가 구매, 문·창문이 없는 경우)을 다룹니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"Paint is sold in several container sizes, so you are not limited to buying full gallons\"라고 했지만, 바로 아래에서는 \"Round up to whole gallons\"라고 하여 전체 갤런 단위 구매를 안내합니다. 두 문장의 메시지가 충돌하는 것처럼 읽힙니다.",
+        "en": "The post says you are not limited to full gallons, then tells readers to round up to whole gallons. Clarify that the rounding is for planning, and that smaller containers can be mixed to reach the total."
+      },
+      {
+        "severity": "low",
+        "ko": "\"The deduction is a standard allowance\" 및 \"removes 20 sq ft for each door and each window\"에서 사용된 20평방피트 값은 계산기 결과로 제공된 수치가 아니라, 결과 40평방피트를 개구부 2개로 나눈 값입니다. 계산기가 실제로 이 값을 쓰는지 확인하고 출처를 밝히는 것이 좋습니다.",
+        "en": "The 20 sq ft per opening figure is not among the calculator outputs. It is inferred from the 40 sq ft deduction for one door and one window. Confirm it against the calculator's logic before stating it as the calculator's fixed allowance."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "\"since stores sell paint by the gallon\"이라는 설명은 과도하게 단순합니다. 많은 매장에서 쿼트(1/4갤런) 단위 용기도 판매하므로, 올림 이유를 \"매장에서 갤런 단위로만 판매하기 때문\"이 아니라 \"정확한 양을 맞추기 어렵기 때문\"처럼 더 정확하게 쓰는 것이 좋습니다.",
+      "출처 목록의 \"Sherwin-Williams: How to estimate how much wallpaper you need\"는 벽지 산정 글인데, 페인트 계산의 근거처럼 인용되어 있습니다. 페인트 관련 출처로 바꾸거나 설명을 덧붙이는 것이 좋겠습니다."
+    ],
+    "word_count": 903
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 19,
+  "api_calls": 7,
+  "telegram_message_id": 115
+}

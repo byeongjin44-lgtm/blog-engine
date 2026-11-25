@@ -1,0 +1,222 @@
+{
+  "id": "b9188189",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-25T02:27:29Z",
+  "topic": {
+    "title": "How to Read a Cron Expression: Field-by-Field Explanation",
+    "keyword": "how to read cron expression",
+    "related_tool": "cron-generator"
+  },
+  "post": {
+    "slug": "how-to-read-cron-expression-field-by-field",
+    "title": "How to Read a Cron Expression: Field-by-Field Explanation",
+    "description": "Minute, hour, day of month, month, day of week: learn each field's range, the special characters, and how to decode any 5-field cron expression.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A standard cron expression has five fields, separated by spaces, in this order: minute, hour, day of month, month, day of week. Each field accepts a number, a range, a list, or a wildcard, and together they define when a job runs. Read them left to right, one field at a time, and the schedule becomes clear."
+      },
+      {
+        "type": "p",
+        "text": "If you want to build an expression instead of reading one, the [Cron Expression Generator](/cron-generator) lets you pick values for each field and shows the plain-English meaning and the next run times. It is also a quick way to check your reading of an expression you did not write."
+      },
+      {
+        "type": "h2",
+        "text": "The five fields and their allowed ranges"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "# ┌───────────── minute (0-59)\n# │ ┌─────────── hour (0-23)\n# │ │ ┌───────── day of month (1-31)\n# │ │ │ ┌─────── month (1-12, or JAN-DEC)\n# │ │ │ │ ┌───── day of week (0-7, or SUN-SAT)\n# │ │ │ │ │\n# * * * * *"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Minute: 0 to 59. The first field. `0` means the top of the hour.",
+          "Hour: 0 to 23, using 24-hour time. `0` is midnight and `14` is 2 PM.",
+          "Day of month: 1 to 31. Note that it starts at 1, not 0.",
+          "Month: 1 to 12, where `1` is January. Most implementations also accept the names JAN through DEC, usually case-insensitive.",
+          "Day of week: 0 to 7, where both `0` and `7` mean Sunday. Most implementations also accept SUN through SAT. In standard cron, `1` is Monday, so `1-5` means Monday through Friday."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Ranges are inclusive. `1-5` in the day-of-week field covers five values, and `9-17` in the hour field covers 9 AM through 5 PM, including the 5 PM hour."
+      },
+      {
+        "type": "h2",
+        "text": "The special characters"
+      },
+      {
+        "type": "p",
+        "text": "Five characters cover almost every expression you will see in a standard crontab:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "`*` means every valid value for that field. In the hour field, `*` means every hour.",
+          "`,` separates a list of values. `15,45` means minute 15 and minute 45.",
+          "`-` defines an inclusive range. `1-6` means 1, 2, 3, 4, 5 and 6.",
+          "`/` defines a step. `*/15` means every 15 values across the full range, so minutes 0, 15, 30 and 45. `10-30/5` means 10, 15, 20, 25 and 30.",
+          "`?` is not part of standard 5-field cron. You will see it in Quartz and some other schedulers, where it means 'no specific value' for day of month or day of week. If you paste a `?` into a Linux crontab, it will fail. Use `*` instead."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The step syntax applies to the range before the slash. `*/2` in the hour field means hours 0, 2, 4 and so on up to 22. It does not mean every two days, and it does not reset cleanly at the end of the month. For day-based schedules, use a specific day list or a separate rule rather than a step."
+      },
+      {
+        "type": "h2",
+        "text": "How to decode an unfamiliar expression"
+      },
+      {
+        "type": "p",
+        "text": "Take this expression:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "15,45 14 * 1-6 1-5"
+      },
+      {
+        "type": "p",
+        "text": "Go field by field:"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Minute `15,45`: the job fires at minute 15 and minute 45 of the hour.",
+          "Hour `14`: that is 2 PM in 24-hour time, so the hour is 14:00 to 14:59.",
+          "Day of month `*`: any day of the month.",
+          "Month `1-6`: January through June.",
+          "Day of week `1-5`: Monday through Friday, using the standard convention that `1` is Monday."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Put together, the job runs at 14:15 and 14:45 on weekdays from January through June. Nothing runs on weekends, in July through December, or at any other time."
+      },
+      {
+        "type": "p",
+        "text": "When you read an expression, do the minute and hour first, because they usually give you the time of day. Then check the date fields. A wildcard `*` in a date field is a common reason a schedule runs more often than expected."
+      },
+      {
+        "type": "h2",
+        "text": "Common expressions and what they mean"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "`0 0 * * *`: every day at midnight. See [Cron Every Day at Midnight](/blog/cron-every-day-at-midnight).",
+          "`*/5 * * * *`: every 5 minutes, all day. See [Cron Every 5 Minutes](/blog/cron-every-5-minutes-and-other-minute-intervals).",
+          "`0 */2 * * *`: at minute 0 of every second hour, starting at midnight. See [Cron Every 2 Hours](/blog/cron-every-2-hours-expression).",
+          "`0 9 * * 1-5`: 9:00 AM on Monday through Friday. See [Cron Expression for Weekdays Only](/blog/cron-expression-weekdays-only-monday-friday).",
+          "`0 0 1 * *`: midnight on the first day of every month. See [Cron Expression for First Day of the Month](/blog/cron-expression-first-day-of-month)."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls that catch developers"
+      },
+      {
+        "type": "p",
+        "text": "Most cron mistakes come from a few habits:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Reading the fields in the wrong order. The minute comes first, not the hour. `0 9 * * *` is 9:00 AM, while `9 0 * * *` is 12:09 AM.",
+          "Assuming `*/n` in the day-of-month field means every n days. `*/2` in that field means days 1, 3, 5 and so on, which is not a fixed two-day cycle across months.",
+          "Forgetting that day of month and day of week combine. In traditional Vixie cron, and most implementations derived from it, if both fields are restricted (neither is `*`), the job runs when either one matches. So `0 0 13 * 5` runs on every Friday and also on the 13th of every month. If you want Friday the 13th only, you need a script or a different scheduler.",
+          "Expecting seconds. A standard crontab has five fields and no seconds field. Some schedulers add a sixth field for seconds, and that changes the meaning of every other field, so check which format your tool uses.",
+          "Ignoring the time zone. Cron usually uses the server's local time zone, not UTC. Daylight saving time changes can skip or repeat an hour. Check the server's time zone before you rely on an exact hour.",
+          "Assuming a valid expression means the job will run. A syntactically correct expression can still fail to run if the environment is wrong. If a job silently does nothing, see [Cron Job Not Running? Common Causes and Fixes](/blog/cron-job-not-running-common-causes-fixes)."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "A quick checklist for reading any expression"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Confirm there are exactly five fields. If there are six or seven, the scheduler is using a non-standard format.",
+          "Read the minute and hour to get the time of day.",
+          "Read the day of month and month to get the dates.",
+          "Read the day of week, remembering that `0` and `7` are both Sunday.",
+          "Check whether the day-of-month and day-of-week fields are both restricted. If so, remember the OR behavior in Vixie cron.",
+          "Run the expression through the [Cron Expression Generator](/cron-generator) to confirm the next run times match what you expect."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "What does the 0 in a cron expression mean?"
+      },
+      {
+        "type": "p",
+        "text": "In the minute field, `0` means the top of the hour. In the hour field, `0` means midnight. In the day-of-week field, `0` means Sunday. The meaning depends on the field the value sits in."
+      },
+      {
+        "type": "h3",
+        "text": "Is there a difference between Sunday as 0 and Sunday as 7?"
+      },
+      {
+        "type": "p",
+        "text": "In standard cron, no. Both `0` and `7` mean Sunday in the day-of-week field, and they can be used interchangeably. Other schedulers may only accept one of them, so use `0` if you want the most portable option."
+      },
+      {
+        "type": "h3",
+        "text": "Why does my job run on the 13th when I only wanted Fridays?"
+      },
+      {
+        "type": "p",
+        "text": "In Vixie cron, when both the day-of-month and day-of-week fields are restricted, the job runs when either condition is true. Set one of them to `*` if you want the other to apply on its own."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use names like MON instead of numbers?"
+      },
+      {
+        "type": "p",
+        "text": "Usually yes. Most implementations accept three-letter names for months (JAN to DEC) and days of the week (SUN to SAT). Names are easier to read in long expressions, but check your scheduler's documentation if you are unsure."
+      }
+    ],
+    "relatedTool": "cron-generator"
+  },
+  "review": {
+    "title_ko": "크론 표현식 읽는 법: 필드별 설명",
+    "summary_ko": [
+      "표준 크론 표현식은 분, 시, 일, 월, 요일 순서의 5개 필드로 구성되며, 각 필드는 숫자, 범위, 목록, 와일드카드를 사용할 수 있습니다.",
+      "각 필드의 허용 범위를 설명합니다: 분 0-59, 시 0-23, 일 1-31, 월 1-12(JAN-DEC), 요일 0-7(0과 7은 모두 일요일, 1은 월요일).",
+      "특수 문자 *, ,, -, /의 의미를 예시와 함께 설명하고, 크론에 없는 ?는 Quartz 등에서만 쓰이므로 리눅스 crontab에서는 *를 쓰라고 안내합니다.",
+      "예시 '15,45 14 * 1-6 1-5'를 필드별로 해석해 1월부터 6월까지 평일 오후 2시 15분과 45분에 실행된다고 설명합니다.",
+      "자주 쓰는 표현식 5개(매일 자정, 5분마다, 2시간마다, 평일 오전 9시, 매월 1일)와 관련 글 링크를 제공합니다.",
+      "흔한 실수를 정리합니다: 분과 시 순서 혼동, */n의 일 필드 의미, 일과 요일을 함께 지정할 때의 OR 동작(Vixie cron), 초 단위 필드 차이, 서버 시간대와 DST 문제.",
+      "마지막으로 표현식을 읽는 체크리스트와 FAQ 4개를 제공하며, 대부분의 내용은 기술적으로 정확합니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"Check whether the day-of-month and day-of-week fields are both restricted (neither is `*`)\"라는 설명이 다소 부정확합니다. Vixie cron은 필드가 `*`로 시작하는지를 기준으로 판단하므로, `*/2` 같은 값도 제한되지 않은 것으로 취급됩니다.",
+        "en": "The rule is stated as 'neither is `*`', but Vixie cron treats a field as unrestricted if it begins with `*`, so `*/2` in day-of-month disables the OR behavior. Consider saying 'neither starts with `*`' for accuracy."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "\"Some treat `1` as Monday\"라는 문장은 어떤 스케줄러가 1을 월요일로 보지 않는지 명시하지 않아 모호합니다. 표준 크론에서 1은 월요일이므로, 예외 사례를 구체적으로 적거나 문장을 단순화하는 편이 좋습니다.",
+      "\"The wildcard `*` in a date field is the most common reason a schedule runs more often than expected.\"에서 '가장 흔한 원인'이라는 주장은 근거가 제시되지 않았습니다. '흔한 원인 중 하나'처럼 완화하는 편이 안전합니다.",
+      "\"Expecting the job to run when the expression is correct\" 항목 제목이 문장만으로는 어떤 함정인지 불분명합니다. 실제 의미는 '표현식이 유효하다고 해서 작업이 실행된다는 보장은 없다'는 것이므로, 이 점이 드러나도록 고치면 좋겠습니다."
+    ],
+    "word_count": 1208
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 19,
+  "api_calls": 6,
+  "telegram_message_id": 114
+}
