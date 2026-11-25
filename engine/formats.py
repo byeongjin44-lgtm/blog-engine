@@ -213,9 +213,12 @@ MANUFACTURER_NOTE_RE = re.compile(r"manufacturer|product label|on the (?:bag|box
 DECIMAL_RE = re.compile(r"(?<![\d.,])\d[\d,]*\.\d+(?![\d])")
 # Fractional amounts in words slip past DECIMAL_RE ("adds about a ton and a half", 2026-11-18 post).
 _UNITS = r"(?:tons?|gallons?|(?:cubic |cu\.? ?)?(?:yards?|yds?|feet|ft)|bags?|boxes?|rolls?|pounds?|lbs?|square feet|sq\.? ?ft)"
+_NUM_WORD = r"(?:a|an|one|two|three|four|five|six|seven|eight|nine|ten|\d+)"
 WORD_FRACTION_RE = re.compile(
-    r"\b(?:(?:a|an|one|two|three|four|five)\s+" + _UNITS + r"\s+and\s+a\s+(?:half|quarter|third)"
-    r"|(?:half|a\s+quarter|a\s+third|three\s+quarters)\s+(?:of\s+)?an?\s+" + _UNITS + r")\b", re.I)
+    r"(?:\b" + _NUM_WORD + r"\s+(?:" + _UNITS + r"\s+)?and\s+a\s+(?:half|quarter|third)(?:\s+" + _UNITS + r")?"
+    r"|\b(?:half|a\s+quarter|a\s+third|three[\s-]+quarters)\s+(?:of\s+)?an?\s+" + _UNITS +
+    r"|\ba\s+(?:half|quarter|third)\s+" + _UNITS +
+    r"|\d*\s*[½¼¾⅓⅔]\s*" + _UNITS + r"|\b\d+\s+\d/\d\s*" + _UNITS + r")\b", re.I)
 EXTERNAL_LINK_RE = re.compile(r"\]\((?!/)[^)]*\)|https?://", re.I)
 
 

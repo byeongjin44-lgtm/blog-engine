@@ -85,7 +85,7 @@ def _calc_block(calc: dict | None) -> str:
         "\"for a bigger room\" variations, totals, prices or costs. Only these inputs and results may appear as numbers, "
         "plus the published figures stated on the calculator page (its formula constants).\n"
         "- This also means: no differences or comparisons between results (\"the extra inch adds X tons\", \"Y more bags\"), "
-        "no percentages, and no quantities written in words or fractions (\"a ton and a half\", \"half a gallon\", "
+        "no percentages you worked out yourself (input percentages such as the waste % are fine), and no quantities written in words or fractions (\"a ton and a half\", \"half a gallon\", "
         "\"about two tons\"). To compare two results, state both results as given and describe the change in plain words "
         "(e.g. \"the deeper layer needs noticeably more gravel\").\n"
         "- Tell readers to use the calculator for their own measurements, and to check the coverage or yield printed on "
