@@ -1,7 +1,7 @@
 {
   "id": "0714ac1c",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-26T05:31:20Z",
   "topic": {
     "title": "How many bags of concrete for a 4x4 pad?",
@@ -272,7 +272,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-26"
   },
   "review": {
     "title_ko": "80lb 포대 기준, 4x4 패드에 콘크리트 몇 포대가 필요할까?",
@@ -304,5 +305,7 @@
   "recovered_from": [],
   "cost_krw": 17,
   "api_calls": 7,
-  "telegram_message_id": 119
+  "telegram_message_id": 119,
+  "decided": "2026-11-26T05:49:38Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-many-bags-of-concrete-for-4x4-pad.json"
 }

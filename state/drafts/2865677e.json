@@ -1,7 +1,7 @@
 {
   "id": "2865677e",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-26T05:30:07Z",
   "topic": {
     "title": "Base64 Encode Emoji and Non-ASCII Text in JavaScript",
@@ -164,7 +164,8 @@
         "text": "Usually you do not, unless the protocol or documentation says so. If decoding produces sequences like Ã© instead of é, the data was probably UTF-8 bytes read as Latin-1. Check the producer's documentation when you can."
       }
     ],
-    "relatedTool": "base64"
+    "relatedTool": "base64",
+    "published": "2026-11-26"
   },
   "review": {
     "title_ko": "JavaScript에서 유니코드 Base64 인코딩: 이모지와 UTF-8 해결법",
@@ -193,5 +194,7 @@
   "recovered_from": [],
   "cost_krw": 21,
   "api_calls": 6,
-  "telegram_message_id": 118
+  "telegram_message_id": 118,
+  "decided": "2026-11-26T05:49:34Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/base64-encode-unicode-javascript.json"
 }
