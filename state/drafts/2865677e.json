@@ -1,0 +1,197 @@
+{
+  "id": "2865677e",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-26T05:30:07Z",
+  "topic": {
+    "title": "Base64 Encode Emoji and Non-ASCII Text in JavaScript",
+    "keyword": "base64 encode unicode javascript",
+    "related_tool": "base64"
+  },
+  "post": {
+    "slug": "base64-encode-unicode-javascript",
+    "title": "Base64 Encode Unicode in JavaScript: Emoji and UTF-8 Fix",
+    "description": "btoa() throws on emoji and non-Latin-1 text. Encode UTF-8 bytes with TextEncoder first, then btoa(). Includes TextDecoder decoding and Node.js Buffer.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To base64 encode Unicode text in JavaScript, convert the string to UTF-8 bytes with TextEncoder, turn those bytes into a binary string, and pass that string to btoa(). Calling btoa() on the original string throws for any character above U+00FF, which includes emoji and most non-Latin scripts. To check an encoding without writing code, the [Base64 Encoder / Decoder](/base64) handles full UTF-8 input."
+      },
+      {
+        "type": "h2",
+        "text": "Why btoa() throws on emoji"
+      },
+      {
+        "type": "p",
+        "text": "btoa() takes a string and writes each character as one byte. It only accepts characters in the Latin-1 range, code points 0 to 255. Anything larger is rejected."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "btoa('hello')\n// 'aGVsbG8='\n\nbtoa('héllo')\n// 'aOlsbG8='  (é is U+00E9, which fits in one Latin-1 byte, E9)\n\nbtoa('😀')\n// Typical browser console output (wording varies by browser):\n// Uncaught DOMException: Failed to execute 'btoa' on 'Window': The string to be encoded contains characters outside of the Latin1 range."
+      },
+      {
+        "type": "p",
+        "text": "The error happens because the emoji 😀 is U+1F600, far above 255. It has no single-byte form, so btoa() has nothing to encode. Node.js throws a DOMException for the same call, but with different wording, so match on the error type rather than the message."
+      },
+      {
+        "type": "p",
+        "text": "The fix is to choose a byte representation first. Base64 encodes bytes, not characters. For text, the usual choice is UTF-8, which most APIs, files and protocols expect."
+      },
+      {
+        "type": "h2",
+        "text": "Encode Unicode text to Base64 with TextEncoder"
+      },
+      {
+        "type": "p",
+        "text": "TextEncoder is available in modern browsers and in Node.js. It converts a string to a Uint8Array of UTF-8 bytes. You then build a binary string where each character is one byte, and call btoa() on it."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "function base64EncodeUnicode(str) {\n  const bytes = new TextEncoder().encode(str);\n  let binary = '';\n  for (const byte of bytes) {\n    binary += String.fromCharCode(byte);\n  }\n  return btoa(binary);\n}\n\nbase64EncodeUnicode('😀')\n// '8J+YgA=='\n\nbase64EncodeUnicode('héllo')\n// 'aMOpbGxv'"
+      },
+      {
+        "type": "p",
+        "text": "The emoji 😀 becomes the four UTF-8 bytes F0 9F 98 80, which Base64 encodes as 8J+YgA==. This matches the Node.js output shown later, so the result is the same across platforms."
+      },
+      {
+        "type": "p",
+        "text": "The plain btoa() call and the wrapper give different results for 'héllo'. btoa() returns 'aOlsbG8=' because it writes é as the single Latin-1 byte E9. The wrapper returns 'aMOpbGxv' because it writes é as the UTF-8 bytes C3 A9. Most systems expect the UTF-8 form when the input is text."
+      },
+      {
+        "type": "h2",
+        "text": "Decode Base64 back to Unicode text with TextDecoder"
+      },
+      {
+        "type": "p",
+        "text": "Decoding reverses the steps. atob() returns a binary string with one character per byte. You copy those byte values into a Uint8Array and let TextDecoder read them as UTF-8."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "function base64DecodeUnicode(b64) {\n  const binary = atob(b64);\n  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));\n  return new TextDecoder().decode(bytes);\n}\n\nbase64DecodeUnicode('8J+YgA==')\n// '😀'\n\nbase64DecodeUnicode('aMOpbGxv')\n// 'héllo'"
+      },
+      {
+        "type": "p",
+        "text": "If you call atob() alone on '8J+YgA==', you get four characters: U+00F0, U+009F, U+0098 and U+0080. The first one, ð, is visible. The other three are control characters that most consoles show as nothing or as odd symbols. Those four characters are the raw UTF-8 bytes read as Latin-1. Passing the bytes through TextDecoder restores the emoji."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Skipping the decode step. If you use atob() on data that was encoded from UTF-8, you get mojibake, not an error. When the source is text, always decode the bytes as UTF-8.",
+          "Using encodeURIComponent() as a shortcut. It produces percent-encoding for URLs, not Base64. If you need Base64 text, encode the bytes instead.",
+          "Assuming string length equals byte length. '😀'.length is 2 in JavaScript because it is a surrogate pair, but its UTF-8 form is 4 bytes. Size calculations should use the encoded bytes.",
+          "Mixing up standard Base64 and Base64URL. The code above produces standard Base64, with + and / and = padding. For URL-safe output, see [Base64 vs Base64URL](/blog/base64-vs-base64url-differences-when-to-use)."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Node.js: Buffer does the UTF-8 step for you"
+      },
+      {
+        "type": "p",
+        "text": "In Node.js, Buffer converts strings to bytes directly. Pass 'utf8' explicitly so the encoding is clear to the next reader."
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "Buffer.from('😀', 'utf8').toString('base64')\n// '8J+YgA=='\n\nBuffer.from('8J+YgA==', 'base64').toString('utf8')\n// '😀'"
+      },
+      {
+        "type": "p",
+        "text": "Buffer is Node-only. Browsers do not provide it by default, so use the TextEncoder and TextDecoder approach in front-end code."
+      },
+      {
+        "type": "h2",
+        "text": "Python for comparison"
+      },
+      {
+        "type": "p",
+        "text": "Python's base64 module works on bytes, so encode the string to UTF-8 first. Emoji need no special handling."
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import base64\n\nbase64.b64encode('😀'.encode('utf-8')).decode('ascii')\n# '8J+YgA=='\n\nbase64.b64decode('8J+YgA==').decode('utf-8')\n# '😀'"
+      },
+      {
+        "type": "h2",
+        "text": "Test with real data carefully"
+      },
+      {
+        "type": "p",
+        "text": "Base64 is encoding, not encryption. Anyone who has the encoded text can decode it. If you are testing with tokens, passwords or other secrets, avoid pasting them into any online tool unless you have checked how that tool handles input. For secrets, local code is the safest choice."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Where exactly does btoa() stop accepting characters?"
+      },
+      {
+        "type": "p",
+        "text": "btoa() accepts characters with code points up to 255 (U+00FF), the Latin-1 range. That includes letters such as é and ñ. Characters above U+00FF, such as € (U+20AC) or any emoji, cause an error. The TextEncoder method works for all of them."
+      },
+      {
+        "type": "h3",
+        "text": "Is the output of the TextEncoder method standard Base64?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. It uses the standard Base64 alphabet with = padding. Only the input bytes differ from a naive approach, and those bytes are the UTF-8 encoding that most systems use."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same code for large strings?"
+      },
+      {
+        "type": "p",
+        "text": "The loop above is fine for typical payloads. For very large inputs, consider processing in chunks or using a streaming API, because building a long binary string one character at a time can be slow."
+      },
+      {
+        "type": "h3",
+        "text": "How do I know the Base64 I received was UTF-8?"
+      },
+      {
+        "type": "p",
+        "text": "Usually you do not, unless the protocol or documentation says so. If decoding produces sequences like Ã© instead of é, the data was probably UTF-8 bytes read as Latin-1. Check the producer's documentation when you can."
+      }
+    ],
+    "relatedTool": "base64"
+  },
+  "review": {
+    "title_ko": "JavaScript에서 유니코드 Base64 인코딩: 이모지와 UTF-8 해결법",
+    "summary_ko": [
+      "btoa()는 U+00FF를 넘는 문자(이모지, 대부분의 비라틴 문자)에서 예외를 던지므로, 먼저 TextEncoder로 UTF-8 바이트를 만든 뒤 바이너리 문자열로 바꿔 btoa()에 넘겨야 한다고 설명한다.",
+      "btoa()가 문자를 1바이트로 쓰고 Latin-1 범위(0~255)만 받는다는 점을 예시('hello', 'héllo', '😀')와 함께 보여준다.",
+      "래퍼 함수 base64EncodeUnicode를 제시한다. '😀'은 F0 9F 98 80이므로 '8J+YgA=='가 되고, 'héllo'는 'aMOpbGxv'가 된다.",
+      "TextDecoder로 디코딩하는 방법을 설명한다. atob()만 쓰면 깨진 문자가 나오며, 바이트를 UTF-8로 읽어야 이모지가 복원된다.",
+      "흔한 실수(디코딩 생략, encodeURIComponent 오용, length와 바이트 길이 혼동, Base64URL 혼동)를 정리한다.",
+      "Node.js의 Buffer, Python의 base64 모듈과 비교하고, Base64는 암호화가 아니므로 비밀 값 처리에 주의하라고 권고한다.",
+      "FAQ에서 btoa() 허용 범위, 표준 Base64 여부, 대용량 처리, 수신 데이터의 인코딩 확인 방법을 다룬다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"btoa('héllo') // 'aMOpbGxv'\"는 잘못된 값입니다. btoa()는 é를 Latin-1 바이트 E9로 처리하므로 실제 결과는 'aOlsbG8='입니다. 'aMOpbGxv'는 UTF-8 바이트(C3 A9)를 인코딩한 결과입니다.",
+      "\"Note that 'héllo' gives the same result as the plain btoa() call.\"은 사실이 아닙니다. 래퍼는 'aMOpbGxv'를, 일반 btoa()는 'aOlsbG8='를 반환하므로 결과가 다릅니다. 이어지는 설명도 이 잘못된 전제에 기반합니다.",
+      "\"'ðŸ\\x98\\x80'\" 예시에서 9F 바이트는 Latin-1 문자 U+009F(제어문자)로 표시되며 'Ÿ'가 아닙니다. 'such as'로 시작하므로 예시 자체는 허용 가능하지만 정확도를 위해 수정하면 좋습니다.",
+      "\"The DevRivet Base64 tool runs in your browser, so the input is not sent to a server.\"는 사이트 도구의 동작에 대한 주장입니다. 게시 전에 실제 구현을 확인하세요. 사실이 아니면 개인정보 관련 오해를 낳을 수 있습니다.",
+      "FAQ 제목 \"Why does btoa() work for some accented letters but not others?\"는 마치 악센트 문자별로 동작이 다른 것처럼 읽힙니다. 실제 기준은 코드 포인트 255 이하인지 여부이므로 제목을 바꾸는 편이 정확합니다.",
+      "\"Uncaught DOMException: Failed to execute 'btoa' on 'Window'...\" 오류 메시지는 브라우저 전용 문구입니다. Node.js의 btoa()는 다른 메시지로 실패하므로, 브라우저 예시라는 점을 명시하면 좋습니다."
+    ],
+    "word_count": 937
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 21,
+  "api_calls": 6,
+  "telegram_message_id": 118
+}

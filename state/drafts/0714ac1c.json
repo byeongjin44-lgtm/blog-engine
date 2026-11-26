@@ -1,0 +1,308 @@
+{
+  "id": "0714ac1c",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-26T05:31:20Z",
+  "topic": {
+    "title": "How many bags of concrete for a 4x4 pad?",
+    "keyword": "how many bags of concrete for a 4x4 pad",
+    "related_tool": "concrete-calculator",
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 4,
+          "widthFt": 4,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-many-bags-of-concrete-for-4x4-pad",
+    "title": "How Many Bags of Concrete for a 4x4 Pad? 80 lb Bag Count",
+    "description": "A 4x4 pad 4 inches thick needs 9 bags of 80 lb concrete. Here is the math, the cubic yard figure, and how to check your own pad size.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 4x4 pad that is 4 inches thick needs 9 bags of 80 lb concrete. That is the answer from our [Concrete Calculator](/concrete-calculator) with the inputs 4 ft long, 4 ft wide, 4 in thick, 80 lb bags, and no extra allowance for spillage."
+      },
+      {
+        "type": "p",
+        "text": "Small pads like this are a common DIY job. Think of a base under an outdoor AC unit, a trash bin, or a pair of stepping spots by a door. The method below works for any rectangle, so you can use your own measurements."
+      },
+      {
+        "type": "h2",
+        "text": "The worked example: 4x4 pad, 4 inches thick"
+      },
+      {
+        "type": "p",
+        "text": "The calculator works in three steps. You can check each one by hand with a calculator in hand."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Find the volume in cubic feet. Multiply length by width by thickness in inches, then divide by 12, because thickness is entered in inches and the volume is in feet. For this pad, 4 ft x 4 ft x 4 in / 12 gives 5.33 cu ft.",
+          "Convert cubic feet to cubic yards by dividing by 27. The same pad comes to 0.2 cu yd. Cubic yards are the unit bulk concrete is sold in, but small volumes like this usually are not delivered in bulk, because suppliers often have minimum orders and delivery charges.",
+          "Divide the cubic feet by the yield of one bag. An 80 lb bag yields 0.6 cu ft, so 5.33 cu ft / 0.6 gives 8.9 bags. You cannot buy a fraction of a bag, so you round up to 9 bags."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "The exact bag count is 8.9 bags, and the number to buy is 9 bags. Always round up. If you run short partway through the pour, a second batch from a later trip may not match the first in color or set time."
+      },
+      {
+        "type": "h2",
+        "text": "Why the 80 lb bag suits a pad this size"
+      },
+      {
+        "type": "p",
+        "text": "Bagged concrete comes in sizes that suit small jobs. For this pad, the 80 lb bag yields 0.6 cu ft, so the 5.33 cu ft volume becomes 9 bags to buy. Bag size changes the count a lot, so check the size before you shop."
+      },
+      {
+        "type": "p",
+        "text": "Always check the yield printed on the product label, because products differ. The yield on your bag may not match the figure the calculator uses, so compare the label before you buy."
+      },
+      {
+        "type": "p",
+        "text": "For a volume of 0.2 cu yd, bags are usually the practical choice. Suppliers rarely deliver amounts this small in bulk, and a bulk delivery comes with a minimum volume and a delivery charge. Bags let you mix only what you need and pour in stages."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls that cause a short or an extra trip"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Using the wrong thickness. A 4 inch pad uses 4 in in the formula. If you enter 4 ft by mistake, the result will be far too large.",
+          "Measuring the outside edge of a form instead of the inside. Measure the space the concrete will fill.",
+          "Forgetting to add spillage. The calculator lets you add an extra percentage. This example uses 0 %, so the 9 bags assume no waste. If you expect to lose some concrete to uneven ground or edges, add extra.",
+          "Mixing bags with different yields. Buy all the bags in one size and brand so the count matches the label."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "How to use the calculator with your own measurements"
+      },
+      {
+        "type": "p",
+        "text": "Measure the length and width of the area in feet, and the thickness in inches. Enter those into the [Concrete Calculator](/concrete-calculator), pick your bag size, and add any spillage percentage you want. The tool rounds up to whole bags for you."
+      },
+      {
+        "type": "p",
+        "text": "If your pad is larger, the same steps apply. For bigger slabs, see [How Many Bags of Concrete for a 12x12 Slab? 4-Inch Example](/blog/how-many-bags-concrete-12x12-slab) or [How Many Bags of Concrete for a 10x10 Slab? 4-Inch Example](/blog/how-many-bags-of-concrete-for-10x10-slab)."
+      },
+      {
+        "type": "p",
+        "text": "This page estimates material only. For anything about the ground under the pad or how it should be built, ask a qualified professional."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I buy fewer bags than the calculator says?"
+      },
+      {
+        "type": "p",
+        "text": "The calculator's exact count is 8.9 bags, which rounds up to 9 bags to buy. Buying fewer leaves you short, so buy the rounded-up number, or more if you want to allow for spillage."
+      },
+      {
+        "type": "h3",
+        "text": "Is 0.2 cu yd the same as 5.33 cu ft?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, they describe the same volume in different units. Cubic yards are cubic feet divided by 27, so 5.33 cu ft is about 0.2 cu yd."
+      },
+      {
+        "type": "h3",
+        "text": "Do I need extra concrete for spillage?"
+      },
+      {
+        "type": "p",
+        "text": "It depends on the ground and how carefully you pour. The example here uses 0 %. If you want a margin, enter a percentage in the calculator and it will show the added bags."
+      },
+      {
+        "type": "h3",
+        "text": "Does the yield on the bag matter?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Bag yields change with bag size and product. Check the yield printed on the label, because products differ, and use the calculator with that number if it differs from the figure it uses."
+      }
+    ],
+    "relatedTool": "concrete-calculator",
+    "sources": [
+      {
+        "title": "Quikrete Concrete Mix No. 1101 data sheet",
+        "url": "https://www.quikrete.com/pdfs/data_sheet-concrete%20mix%201101.pdf"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 4,
+          "widthFt": 4,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 4,
+          "widthFt": 4,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        },
+        "results": [
+          {
+            "key": "bags",
+            "label": "Bags to buy",
+            "value": 9,
+            "unit": "bags",
+            "digits": 0,
+            "primary": true,
+            "number": "9",
+            "display": "9 bags"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 0.2,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": false,
+            "number": "0.2",
+            "display": "0.2 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 5.33,
+            "unit": "cu ft",
+            "digits": 2,
+            "primary": false,
+            "number": "5.33",
+            "display": "5.33 cu ft"
+          },
+          {
+            "key": "bagsExact",
+            "label": "Exact bag count",
+            "value": 8.9,
+            "unit": "bags",
+            "digits": 1,
+            "primary": false,
+            "number": "8.9",
+            "display": "8.9 bags"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "concrete-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "thicknessIn",
+            "label": "Thickness",
+            "unit": "in",
+            "default": 4,
+            "step": 0.5
+          },
+          {
+            "kind": "select",
+            "key": "bagLb",
+            "label": "Bag size",
+            "default": "80",
+            "options": [
+              {
+                "value": "40",
+                "label": "40 lb (0.3 cu ft)"
+              },
+              {
+                "value": "50",
+                "label": "50 lb (0.375 cu ft)"
+              },
+              {
+                "value": "60",
+                "label": "60 lb (0.45 cu ft)"
+              },
+              {
+                "value": "80",
+                "label": "80 lb (0.6 cu ft)"
+              },
+              {
+                "value": "90",
+                "label": "90 lb (0.675 cu ft)"
+              }
+            ]
+          },
+          {
+            "kind": "number",
+            "key": "wastePct",
+            "label": "Extra for spillage",
+            "unit": "%",
+            "default": 0,
+            "step": 1,
+            "help": "Optional. Adds a safety margin to the bag count."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "80lb 포대 기준, 4x4 패드에 콘크리트 몇 포대가 필요할까?",
+    "summary_ko": [
+      "두께 4인치, 4x4피트 패드에는 80lb 콘크리트 9포대가 필요하다고 설명합니다. 입력값은 길이 4ft, 너비 4ft, 두께 4in, 80lb 포대, 여유분 0%입니다.",
+      "작은 패드의 예로 야외 에어컨 받침, 쓰레기통 받침, 문 앞 디딤돌을 듭니다.",
+      "계산 과정: 4ft x 4ft x 4in / 12 = 5.33 cu ft, 이를 27로 나누면 약 0.2 cu yd입니다.",
+      "80lb 포대 1개의 수율은 0.6 cu ft입니다. 5.33 / 0.6 = 8.9포대이고, 반올림해서 9포대를 사라고 안내합니다.",
+      "포대 수율은 제품 라벨을 확인하라고 권하고, 소량은 벌크 배송보다 포대가 현실적이라고 설명합니다.",
+      "흔한 실수로 두께 단위 혼동, 거푸집 바깥 치수 측정, 여유분 미반영, 서로 다른 수율의 포대 혼용을 듭니다.",
+      "더 큰 슬래브는 다른 글 두 편을 참고하라고 링크하고, 이 글은 재료량 추정만 다룬다고 밝힙니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"Suppliers often have minimum orders and delivery charges\" 및 \"suppliers rarely deliver amounts this small in bulk\"는 출처 없이 일반화된 사실로 제시되어 있습니다. 지역이나 업체에 따라 다를 수 있으니 '보통은'처럼 완화하거나 근거를 붙이는 것이 좋습니다.",
+        "en": "The claims that suppliers have minimum orders and rarely deliver small volumes in bulk are stated as general fact without a source or qualifier. Consider softening them, since they vary by supplier and region."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "\"0.30 cu ft\", \"0.375 cu ft\", \"0.45 cu ft\", \"0.675 cu ft\" 등 40lb, 50lb, 60lb, 90lb 포대의 수율 수치가 계산기 결과에 없는 값입니다. 작성자가 임의로 넣었거나 출처 없이 가져온 수치일 수 있으므로 계산기 데이터나 제품 자료로 확인해야 합니다. 80lb의 0.6 cu ft만 확인된 값입니다.",
+      "FAQ의 \"Can I just buy 8 bags for a 4x4 pad?\" 답변에 나오는 \"8 bags\"는 계산기 결과가 아닌 수치입니다. 계산기 정확 개수 8.9포대와 헤드라인 9포대 외의 숫자이므로 근거를 확인해야 합니다.",
+      "\"which is the figure a ready-mix supplier would quote if you ordered by the yard\"(\"레디믹스 업체가 야드 단위로 주문받을 때 제시하는 수치\"라는 문장)는 소량 주문 현실과 맞지 않을 수 있다. 같은 글에서 벌크 배송에는 최소 물량과 배송비가 있다고 설명하므로, 0.2 cu yd 주문이 가능하다는 인상을 줄 수 있다."
+    ],
+    "word_count": 822
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 17,
+  "api_calls": 7,
+  "telegram_message_id": 119
+}
