@@ -1,0 +1,306 @@
+{
+  "id": "c9c4c366",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-27T05:24:18Z",
+  "topic": {
+    "title": "How much concrete for an 8x10 shed base?",
+    "keyword": "how much concrete for an 8x10 shed slab",
+    "related_tool": "concrete-calculator",
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 8,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-concrete-for-8x10-shed-slab",
+    "title": "How Much Concrete for an 8x10 Shed Slab? 4-Inch Example",
+    "description": "An 8x10 shed slab poured 4 inches thick needs 0.99 cu yd of concrete, or 45 bags of 80 lb mix. See how the count works and when to compare ready-mix.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A shed slab 10 feet long, 8 feet wide and 4 inches thick needs 0.99 cu yd of concrete, which works out to 45 bags of 80 lb mix with no extra added for spillage. Your pad may be a different size, so enter your own measurements into the [Concrete Calculator](/concrete-calculator) before you buy."
+      },
+      {
+        "type": "h2",
+        "text": "The worked example"
+      },
+      {
+        "type": "p",
+        "text": "This example uses a slab 10 feet long, 8 feet wide and 4 inches thick. Measure the pad you plan to pour, since its size may not match the shed's outside dimensions. A slab that extends past the shed walls or is smaller than the footprint will change the result, so use the pad's own measurements."
+      },
+      {
+        "type": "h2",
+        "text": "How the volume is calculated"
+      },
+      {
+        "type": "p",
+        "text": "The calculator works through the same steps you would use with a pencil. Here is how each step applies to this slab."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Multiply length by width to get the area, then multiply that area by the thickness in inches. Divide the result by 12 to convert inches to feet. The answer is cubic feet of concrete. For this slab, the volume is 26.67 cu ft.",
+          "Divide the cubic feet by 27 to get cubic yards. For this slab, the volume is 0.99 cu yd.",
+          "Divide the cubic feet by the yield of one bag. An 80 lb bag yields 0.6 cu ft, so the exact count is 44.4 bags.",
+          "Round up to whole bags. The result is 45 bags."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Why the bag count is 45"
+      },
+      {
+        "type": "p",
+        "text": "The exact count is 44.4 bags, but you cannot buy part of a bag, so the calculator rounds up to 45 bags. Rounding up means you have enough material to finish the pour, so you do not run short partway through."
+      },
+      {
+        "type": "p",
+        "text": "The 0.6 cubic foot yield is the figure used for an 80 lb bag in the calculator. Products differ, so check the cubic feet per bag printed on the label of the bag you actually buy. If the label shows a different yield, divide the 26.67 cu ft by that number instead and round up."
+      },
+      {
+        "type": "h2",
+        "text": "When to compare ready-mix delivery"
+      },
+      {
+        "type": "p",
+        "text": "At 0.99 cu yd, you are close to one full cubic yard. That is the point where it is worth asking a ready-mix supplier for a quote and comparing it with buying 45 bags."
+      },
+      {
+        "type": "p",
+        "text": "Whether a truck makes sense depends on your local supplier's minimum order, delivery fees and how far you are from the plant. Some suppliers may not deliver a load this small at all, so ask before you plan around it."
+      },
+      {
+        "type": "p",
+        "text": "Each bag weighs 80 pounds, so 45 bags means a lot of hauling, mixing and placing by hand. Weigh that physical work against the delivery cost, and consider whether you have the help and time to mix and place the full amount in one session."
+      },
+      {
+        "type": "h2",
+        "text": "Adding extra for spillage"
+      },
+      {
+        "type": "p",
+        "text": "This example uses 0 percent extra. If you expect spills, uneven ground or a rough edge, the calculator lets you add an allowance before it rounds up. Rerun the calculator with your own percentage to see the new bag count. The extra amount changes the volume before the bags are counted, so the bag count can rise."
+      },
+      {
+        "type": "h2",
+        "text": "Pitfalls to avoid"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Measuring the shed instead of the slab. The pad may be larger or smaller than the shed's outside dimensions.",
+          "Mixing up units. Length and width go in feet, and thickness goes in inches.",
+          "Treating 4 inches as 4 feet. Thickness must be entered in inches, or the volume will be far too large.",
+          "Buying bags by weight alone. Check the cubic feet per bag on the label, because products differ.",
+          "Forgetting to round up. A result of 44.4 bags means you need 45 bags, not 44."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Plan the pour"
+      },
+      {
+        "type": "p",
+        "text": "Confirm your dimensions, thickness and bag count before you order or mix. Keep the bag label handy so you can check the yield on the exact product you buy. For other sizes and bag types, see [how many bags of concrete for a 10x10 slab](/blog/how-many-bags-of-concrete-for-10x10-slab) and [how many yards of concrete for a 20x20 patio](/blog/how-many-yards-of-concrete-for-20x20-patio). If you are weighing gravel under the slab, the [how much gravel for a shed base](/blog/how-much-gravel-for-shed-base-12x12) post shows a similar calculation in tons."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Can I use this count for a shed slab of a different size?"
+      },
+      {
+        "type": "p",
+        "text": "No. The steps work for any length, width and thickness, but the numbers in this example only apply to a 10 by 8 foot slab, 4 inches thick. Enter your own measurements into the [Concrete Calculator](/concrete-calculator) to get your count."
+      },
+      {
+        "type": "h3",
+        "text": "Why does the calculator round up to whole bags?"
+      },
+      {
+        "type": "p",
+        "text": "Concrete mix is sold in whole bags, so a fractional bag does not help you finish the pour. Rounding up gives you enough material to complete the slab."
+      },
+      {
+        "type": "h3",
+        "text": "Does the calculator replace the product label?"
+      },
+      {
+        "type": "p",
+        "text": "No. Always check the coverage or yield printed on the product label, because products differ. Use the calculator with your own measurements, then confirm the cubic feet per bag on the bag you buy."
+      }
+    ],
+    "relatedTool": "concrete-calculator",
+    "sources": [
+      {
+        "title": "Quikrete Concrete Mix No. 1101 data sheet",
+        "url": "https://www.quikrete.com/pdfs/data_sheet-concrete%20mix%201101.pdf"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 8,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 8,
+          "thicknessIn": 4,
+          "bagLb": "80"
+        },
+        "results": [
+          {
+            "key": "bags",
+            "label": "Bags to buy",
+            "value": 45,
+            "unit": "bags",
+            "digits": 0,
+            "primary": true,
+            "number": "45",
+            "display": "45 bags"
+          },
+          {
+            "key": "cuYd",
+            "label": "Volume",
+            "value": 0.99,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": false,
+            "number": "0.99",
+            "display": "0.99 cu yd"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 26.67,
+            "unit": "cu ft",
+            "digits": 2,
+            "primary": false,
+            "number": "26.67",
+            "display": "26.67 cu ft"
+          },
+          {
+            "key": "bagsExact",
+            "label": "Exact bag count",
+            "value": 44.4,
+            "unit": "bags",
+            "digits": 1,
+            "primary": false,
+            "number": "44.4",
+            "display": "44.4 bags"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "concrete-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Length",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "thicknessIn",
+            "label": "Thickness",
+            "unit": "in",
+            "default": 4,
+            "step": 0.5
+          },
+          {
+            "kind": "select",
+            "key": "bagLb",
+            "label": "Bag size",
+            "default": "80",
+            "options": [
+              {
+                "value": "40",
+                "label": "40 lb (0.3 cu ft)"
+              },
+              {
+                "value": "50",
+                "label": "50 lb (0.375 cu ft)"
+              },
+              {
+                "value": "60",
+                "label": "60 lb (0.45 cu ft)"
+              },
+              {
+                "value": "80",
+                "label": "80 lb (0.6 cu ft)"
+              },
+              {
+                "value": "90",
+                "label": "90 lb (0.675 cu ft)"
+              }
+            ]
+          },
+          {
+            "kind": "number",
+            "key": "wastePct",
+            "label": "Extra for spillage",
+            "unit": "%",
+            "default": 0,
+            "step": 1,
+            "help": "Optional. Adds a safety margin to the bag count."
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "8x10 shed 슬랩에 콘크리트가 얼마나 필요한가? 4인치 예시",
+    "summary_ko": [
+      "10피트 길이, 8피트 너비, 4인치 두께의 shed 슬랩에는 0.99 cu yd의 콘크리트가 필요하며, 이는 80 lb 믹스 45포대에 해당합니다(여유분 0%).",
+      "글은 슬랩 크기가 shed의 외벽 치수와 다를 수 있으므로 실제 패드를 직접 측정하라고 안내합니다.",
+      "계산 과정: 면적 × 두께(인치) ÷ 12 = 26.67 cu ft, ÷ 27 = 0.99 cu yd, ÷ 0.6(80 lb 포대 수율) = 44.4포대, 올림하여 45포대.",
+      "포대 수율은 제품마다 다르므로 실제 구매하는 포대 라벨의 cu ft 수치를 확인하고 다르면 26.67을 그 값으로 나누라고 설명합니다.",
+      "0.99 cu yd는 1 cu yd에 가까워 레디믹스 배달 견적과 45포대 구매를 비교해볼 만한 지점이라고 봅니다. 최소 주문량, 배달비, 거리를 확인하라고 합니다.",
+      "여유분(spillage) 설정 방법과 흔한 실수(shed와 슬랩 혼동, 단위 혼동, 4인치를 4피트로 입력, 라벨 확인 누락, 올림 누락)를 정리하고 FAQ와 관련 글 링크를 제공합니다."
+    ],
+    "issues": [],
+    "verdict": "ok",
+    "applied": [
+      "\"That is the point where comparing 45 bags with a ready-mix delivery becomes worthwhile.\" 약 1입방야드가 레디믹스를 비교할 기준점이라는 주장은 근거가 제시되지 않은 판단입니다. 기준을 낮추거나 '지역 공급업체의 최소 주문량에 따라 다르다'처럼 조건을 붙이는 편이 좋습니다.",
+      "\"instead of stopping short with a partial batch left unmixed\" 표현은 부분 배치가 '섞이지 않은 채 남는다'는 뜻으로 읽혀 어색합니다. '포대가 모자라 작업을 중간에 멈추지 않도록'처럼 단순하게 쓰는 편이 명확합니다."
+    ],
+    "word_count": 836
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 13,
+  "api_calls": 5,
+  "telegram_message_id": 124
+}

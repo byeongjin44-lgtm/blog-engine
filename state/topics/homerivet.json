@@ -1,0 +1,195 @@
+[
+  {
+    "title": "How Much Paint for a 14x16 Room with 9 ft Ceilings?",
+    "keyword": "how much paint for a 9 foot ceiling room",
+    "related_tool": "paint-calculator",
+    "notes": "Walk through wall area from perimeter times height, then subtract 20 sq ft per door and window. Explain why a 9 ft wall adds about 12% over an 8 ft wall. Cover the 2-coat default, the 350 sq ft per gallon default, and checking the coverage printed on the can. Common mistakes: forgetting to subtract openings, ignoring ceiling paint, and not rounding up to whole gallons.",
+    "title_ko": "14x16 공간(천장 9피트)에 페인트는 얼마나 필요할까?",
+    "calculations": [
+      {
+        "calculator": "paint-calculator",
+        "input": {
+          "lengthFt": 14,
+          "widthFt": 16,
+          "heightFt": 9,
+          "doors": 2,
+          "windows": 3
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:20Z"
+  },
+  {
+    "title": "60 lb vs 80 lb Concrete Bags: Which Should You Buy?",
+    "keyword": "60 lb vs 80 lb concrete",
+    "related_tool": "concrete-calculator",
+    "notes": "Compare yield per bag: 60 lb gives 0.45 cu ft and 80 lb gives 0.60 cu ft. Show the bag count for the same 8x8 ft, 4 in slab with each size. Explain tradeoffs: lighter bags are easier to carry and mix by hand, heavier bags need fewer trips. Mention that bag count is a rounded-up estimate and that spillage and subgrade irregularity matter. Note that the number of bags does not change the cubic yards needed.",
+    "title_ko": "60파운드 대 80파운드 콘크리트 봉투: 어느 쪽을 사야 할까?",
+    "calculations": [
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 8,
+          "widthFt": 8,
+          "bagLb": 60
+        }
+      },
+      {
+        "calculator": "concrete-calculator",
+        "input": {
+          "lengthFt": 8,
+          "widthFt": 8,
+          "bagLb": 80
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:20Z"
+  },
+  {
+    "title": "How Many Boxes of Tile for a 4x6 Entryway?",
+    "keyword": "how many boxes of tile for a 4x6 entryway",
+    "related_tool": "tile-calculator",
+    "notes": "Show area first (floor length times width), then the 10% cut allowance, then division by coverage per box, rounded up. Explain that small rooms with many cuts or a diagonal layout need more waste. Mention checking dye lot and buying a spare box. Common mistake: using the box count instead of square feet, or forgetting that the coverage figure is per box and not per tile.",
+    "title_ko": "4x6 현관에 타일 상자는 몇 개가 필요할까?",
+    "calculations": [
+      {
+        "calculator": "tile-calculator",
+        "input": {
+          "lengthFt": 4,
+          "widthFt": 6,
+          "sqFtPerBox": 13
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:20Z"
+  },
+  {
+    "title": "How Many Boxes of Vinyl Plank for a Diagonal Layout?",
+    "keyword": "how many boxes of vinyl plank diagonal",
+    "related_tool": "flooring-calculator",
+    "notes": "Explain the difference between straight and diagonal installs, with 7% versus 15% extra. Use a 14x20 room and a 24 sq ft per box product. Describe why diagonal cuts at walls create more offcuts. Mention that the box count is rounded up and that buying the extra box at the start protects against later shortages from the same dye lot.",
+    "title_ko": "대각선 배치를 위한 비닐 플랭크 박스는 몇 개가 필요할까?",
+    "calculations": [
+      {
+        "calculator": "flooring-calculator",
+        "input": {
+          "lengthFt": 14,
+          "widthFt": 20,
+          "sqFtPerBox": 24,
+          "layout": "diagonal"
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:20Z"
+  },
+  {
+    "title": "How Many Bags of Mulch for a 15x12 Bed?",
+    "keyword": "how many bags of mulch for a 15x12 bed",
+    "related_tool": "mulch-calculator",
+    "notes": "Explain the cubic yard math: area times depth in inches divided by 324, then convert to bags of 1.5, 2 or 3 cu ft. Recommend 2 to 3 inches for mulch and note that settling over the season can reduce depth. Common mistakes: using 3 inches as the depth in feet, and mixing up cubic feet and cubic yards when comparing bag sizes.",
+    "title_ko": "15x12 화단에 멀치 봉투는 몇 개가 필요할까?",
+    "calculations": [
+      {
+        "calculator": "mulch-calculator",
+        "input": {
+          "lengthFt": 15,
+          "widthFt": 12
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:20Z"
+  },
+  {
+    "title": "How to Calculate Square Footage of a Triangle-Shaped Garden Bed",
+    "keyword": "how to calculate square footage of a triangle",
+    "related_tool": "square-footage-calculator",
+    "notes": "Explain the formula of one half times base times height and show a 12 ft base by 8 ft height example, giving 48 sq ft. Explain how to measure the height as a perpendicular distance, not the slanted side. Cover converting to square yards for bulk mulch or soil. Common mistake: using the slanted side length as the height.",
+    "title_ko": "삼각형 화단의 면적을 계산하는 방법",
+    "calculations": [
+      {
+        "calculator": "square-footage-calculator",
+        "input": {
+          "shape": "triangle",
+          "baseFt": 12,
+          "heightFt": 8
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:20Z"
+  },
+  {
+    "title": "How Many Wallpaper Rolls for a Room with a 22 in Pattern Repeat?",
+    "keyword": "wallpaper rolls for pattern repeat",
+    "related_tool": "wallpaper-calculator",
+    "notes": "Explain the pattern repeat effect: larger repeats waste more paper because each drop must match. Use a 10x10 room with 9 ft walls, one door and one window. Show the table bands (up to 6, 12, 18 and 23 in) and how usable square feet per roll drops. Mention that double rolls equal singles divided by two, rounded up, and advise buying a spare roll from the same dye lot.",
+    "title_ko": "패턴 반복 22인치 벽지는 몇 롤이 필요할까?",
+    "calculations": [
+      {
+        "calculator": "wallpaper-calculator",
+        "input": {
+          "lengthFt": 10,
+          "widthFt": 10,
+          "heightFt": 9,
+          "repeatIn": 22
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:20Z"
+  },
+  {
+    "title": "How Much Gravel for a 2 Inch Base Under a 12x16 Patio?",
+    "keyword": "how much gravel for a 2 inch base",
+    "related_tool": "gravel-calculator",
+    "notes": "Explain converting a 2 inch layer into cubic yards with area times depth divided by 324, then tons using the weight per cubic yard. Note that the default 1.4 tons per cubic yard is typical, but the supplier should confirm the weight of the exact material. Common mistakes: entering depth in feet, and ordering by cubic yards while the supplier sells by ton. Advise rounding up and mention delivery minimums.",
+    "title_ko": "12x16 패티오 아래 2인치 자갈 기초에 자갈은 얼마나 필요할까?",
+    "calculations": [
+      {
+        "calculator": "gravel-calculator",
+        "input": {
+          "lengthFt": 12,
+          "widthFt": 16,
+          "depthIn": 2
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:20Z"
+  },
+  {
+    "title": "How Many Deck Boards for a 14x20 Deck with 1/4 Inch Gaps?",
+    "keyword": "deck boards 1/4 inch gap",
+    "related_tool": "deck-board-calculator",
+    "notes": "Explain how changing the gap from 3/16 in to 1/4 in changes the row count, using a 14x20 deck and 12 ft boards. Show rows as deck width divided by board width plus gap, and boards per row as deck length divided by board length, both rounded up. Mention that this covers surface boards only, not fascia or framing. Common mistake: swapping deck length and width, which changes which direction the boards run.",
+    "title_ko": "14x20 데크에 1/4인치 간격이면 데크 보드는 몇 개가 필요할까?",
+    "calculations": [
+      {
+        "calculator": "deck-board-calculator",
+        "input": {
+          "deckLengthFt": 20,
+          "deckWidthFt": 14,
+          "boardLengthFt": 12,
+          "gapIn": 0.25
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:21Z"
+  },
+  {
+    "title": "How Many Packages of Rigid Foam for R-10 on 400 sq ft?",
+    "keyword": "how many packages of rigid foam for R-10",
+    "related_tool": "insulation-calculator",
+    "notes": "Explain the thickness formula: target R-value divided by R per inch. For XPS at about R-5 per inch, R-10 needs 2 inches. Use 400 sq ft and a package coverage of 24 sq ft for this example. Note that packages are the count to buy, and that the product label controls the R per inch. Common mistake: using the total R-value of a multi-layer assembly, or buying packages sized for the wrong thickness.",
+    "title_ko": "400평방피트에 R-10을 위한 리지드 폼 패키지는 몇 개가 필요할까?",
+    "calculations": [
+      {
+        "calculator": "insulation-calculator",
+        "input": {
+          "areaSqFt": 400,
+          "targetR": 10,
+          "rPerInch": 5,
+          "sqFtPerPackage": 24
+        }
+      }
+    ],
+    "added": "2026-11-27T05:23:21Z"
+  }
+]
