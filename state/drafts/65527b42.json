@@ -1,7 +1,7 @@
 {
   "id": "65527b42",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-27T05:22:48Z",
   "topic": {
     "title": "Fix Invalid Character Error When Using btoa() in JavaScript",
@@ -206,7 +206,8 @@
         "text": "Use `Buffer` in Node.js. Use `TextEncoder` and `TextDecoder` in browsers and in environments that follow the web platform APIs, such as Deno and Bun. The output is the same when both use UTF-8."
       }
     ],
-    "relatedTool": "base64"
+    "relatedTool": "base64",
+    "published": "2026-11-27"
   },
   "review": {
     "title_ko": "JavaScript에서 btoa Invalid character 오류 해결하기",
@@ -231,5 +232,7 @@
   "recovered_from": [],
   "cost_krw": 14,
   "api_calls": 4,
-  "telegram_message_id": 122
+  "telegram_message_id": 122,
+  "decided": "2026-11-27T05:27:59Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/btoa-invalid-character-error-fix.json"
 }

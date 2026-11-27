@@ -1,7 +1,7 @@
 {
   "id": "c9c4c366",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-27T05:24:18Z",
   "topic": {
     "title": "How much concrete for an 8x10 shed base?",
@@ -278,7 +278,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-27"
   },
   "review": {
     "title_ko": "8x10 shed 슬랩에 콘크리트가 얼마나 필요한가? 4인치 예시",
@@ -302,5 +303,7 @@
   "recovered_from": [],
   "cost_krw": 13,
   "api_calls": 5,
-  "telegram_message_id": 124
+  "telegram_message_id": 124,
+  "decided": "2026-11-27T05:28:05Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-concrete-for-8x10-shed-slab.json"
 }
