@@ -1,0 +1,267 @@
+{
+  "id": "fbe87cc5",
+  "site": "devrivet",
+  "status": "pending",
+  "created": "2026-11-28T04:59:08Z",
+  "topic": {
+    "title": "Generate UUIDs in Bash, Python and Node.js Without Libraries",
+    "keyword": "generate uuid command line",
+    "related_tool": "uuid-generator"
+  },
+  "post": {
+    "slug": "generate-uuid-command-line-bash-python-nodejs",
+    "title": "Generate UUID on the Command Line, in Python and Node.js",
+    "description": "Generate a UUID v4 from the command line with uuidgen, or in Python with uuid.uuid4() and in Node.js with crypto.randomUUID(). No external libraries needed.",
+    "body": [
+      {
+        "type": "p",
+        "text": "To generate a UUID on the command line, run uuidgen on macOS or most Linux distributions. It prints a random version 4 UUID such as 3f2b8c1e-9a4d-4e6f-8b7a-1c2d3e4f5a6b. In Python, use uuid.uuid4(). In Node.js, use crypto.randomUUID(). None of these need third-party packages."
+      },
+      {
+        "type": "p",
+        "text": "If you need a quick value without touching a terminal, the [UUID Generator](/uuid-generator) on DevRivet produces v4 and v7 UUIDs in the browser, and it can bulk generate many at once. The rest of this post shows how to do it in your own scripts."
+      },
+      {
+        "type": "h2",
+        "text": "Generate a UUID with uuidgen"
+      },
+      {
+        "type": "p",
+        "text": "uuidgen is part of the util-linux package on most Linux distributions and ships with macOS. Run it with no arguments:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "uuidgen"
+      },
+      {
+        "type": "p",
+        "text": "Sample output:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "9b1d7e52-4c3a-4f8e-a2d6-0e5f7b8c9d1a"
+      },
+      {
+        "type": "p",
+        "text": "The output is uppercase on macOS and may be lowercase on Linux. UUIDs are case-insensitive, so both forms are valid, but a string comparison will fail if you mix them. Normalize with tr if needed:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "uuidgen | tr 'A-Z' 'a-z'"
+      },
+      {
+        "type": "p",
+        "text": "To generate several UUIDs, loop over a sequence:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "for i in $(seq 1 5); do uuidgen; done"
+      },
+      {
+        "type": "p",
+        "text": "If uuidgen is missing on a minimal Linux image, install it with your package manager (for example, the uuid-runtime package on Debian and Ubuntu). Alternatively, read from the kernel directly, which works on any Linux system:"
+      },
+      {
+        "type": "code",
+        "lang": "bash",
+        "text": "cat /proc/sys/kernel/random/uuid"
+      },
+      {
+        "type": "p",
+        "text": "That path exists only on Linux. On macOS, use uuidgen."
+      },
+      {
+        "type": "h2",
+        "text": "Generate a UUID in Python"
+      },
+      {
+        "type": "p",
+        "text": "The standard library uuid module includes uuid4(), which returns a UUID object. Convert it to a string with str():"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import uuid\n\nvalue = str(uuid.uuid4())\nprint(value)"
+      },
+      {
+        "type": "p",
+        "text": "Sample output:"
+      },
+      {
+        "type": "code",
+        "lang": "text",
+        "text": "6a0f3c2e-8d1b-4c7a-9e5f-2b3d4c5e6f70"
+      },
+      {
+        "type": "p",
+        "text": "Some useful variants:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "uuid.uuid4().hex returns 32 hex characters with no hyphens, such as 6a0f3c2e8d1b4c7a9e5f2b3d4c5e6f70.",
+          "uuid.uuid4().urn returns the form urn:uuid: followed by the canonical string.",
+          "Use str(uuid.uuid4()) when you need the standard hyphenated, lowercase form for logs, database keys or JSON."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Note that uuid.uuid4() returns a UUID object, not a string. If you concatenate it directly with a string, you get a TypeError. Wrap it in str() first."
+      },
+      {
+        "type": "p",
+        "text": "If you need version 7 values, the standard library call depends on your Python version, so check the uuid module documentation for your interpreter. The [UUID Generator](/uuid-generator) also produces v7 UUIDs without any code."
+      },
+      {
+        "type": "h2",
+        "text": "Generate a UUID in Node.js"
+      },
+      {
+        "type": "p",
+        "text": "The built-in crypto module provides crypto.randomUUID(), which returns a lowercase, hyphenated version 4 UUID:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const { randomUUID } = require('crypto');\n\nconsole.log(randomUUID());"
+      },
+      {
+        "type": "p",
+        "text": "In an ES module, import it instead:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "import { randomUUID } from 'node:crypto';\n\nconsole.log(randomUUID());"
+      },
+      {
+        "type": "p",
+        "text": "In browsers, crypto.randomUUID() is available only in a secure context, which means HTTPS or localhost. On a plain http:// page served from another host, the function is unavailable and calling it fails. If you hit this during local development, serve the page over localhost or HTTPS. If you must support an environment without the function, you can build a v4 UUID from crypto.getRandomValues(), but avoid Math.random() for identifiers."
+      },
+      {
+        "type": "h2",
+        "text": "Bulk generation"
+      },
+      {
+        "type": "p",
+        "text": "For a one-off batch, a short loop is enough. In Python:"
+      },
+      {
+        "type": "code",
+        "lang": "python",
+        "text": "import uuid\n\nfor _ in range(10):\n    print(uuid.uuid4())"
+      },
+      {
+        "type": "p",
+        "text": "In Node.js:"
+      },
+      {
+        "type": "code",
+        "lang": "javascript",
+        "text": "const { randomUUID } = require('crypto');\n\nconst ids = Array.from({ length: 10 }, () => randomUUID());\nconsole.log(ids.join('\\n'));"
+      },
+      {
+        "type": "p",
+        "text": "When you need a large list to paste into a fixture file or spreadsheet and do not want to write a script, the bulk mode in the [UUID Generator](/uuid-generator) covers that case. Generated test data is a good fit for this. Treat the output with care in other cases. A UUID that acts as a secret, such as a password reset link or an access token, should be handled like any other secret. Do not paste production identifiers you want to keep private into any online tool. DevRivet's tools run in your browser, but the safest habit is to generate test values rather than copy real ones."
+      },
+      {
+        "type": "h2",
+        "text": "Which version do you get?"
+      },
+      {
+        "type": "p",
+        "text": "All three methods above produce version 4 UUIDs, which are 122 random bits with fixed version and variant bits. Version 4 is a good default when you only need uniqueness. If you want values that sort roughly by creation time, which helps with database index locality, look at version 7. The [UUID v4 vs v7 guide](/blog/uuid-v4-vs-v7-which-to-use) explains the trade-off."
+      },
+      {
+        "type": "p",
+        "text": "For a sense of how unlikely collisions are with random v4 values, see [UUID collision probability explained](/blog/uuid-collision-probability-explained)."
+      },
+      {
+        "type": "h2",
+        "text": "Common pitfalls"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Using uuidgen on Windows: it is not installed by default. Use PowerShell with [guid]::NewGuid() or run the commands above inside WSL.",
+          "Comparing UUIDs case-sensitively: normalize to lowercase before comparing strings or using them as map keys.",
+          "Calling crypto.randomUUID() in a non-secure browser context: serve the page over HTTPS or localhost.",
+          "Forgetting str() in Python when building strings or JSON. json.dumps() will fail on a raw UUID object.",
+          "Using Math.random() or other non-cryptographic generators to build identifiers that other users or systems might guess."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Is a UUID generated by uuidgen cryptographically secure?"
+      },
+      {
+        "type": "p",
+        "text": "uuidgen output is suitable for identifiers, such as record keys, request IDs and correlation IDs. For secrets such as session tokens, API keys or password reset links, use a dedicated secure token generator with enough length and entropy rather than relying on a UUID's format."
+      },
+      {
+        "type": "h3",
+        "text": "Can I get a UUID in a single line without installing anything in Python?"
+      },
+      {
+        "type": "p",
+        "text": "Yes. Run python3 -c \"import uuid; print(uuid.uuid4())\". This works anywhere Python 3 is installed."
+      },
+      {
+        "type": "h3",
+        "text": "Does crypto.randomUUID() return uppercase or lowercase?"
+      },
+      {
+        "type": "p",
+        "text": "It returns lowercase hexadecimal digits with hyphens in the standard 8-4-4-4-12 layout."
+      },
+      {
+        "type": "h3",
+        "text": "Should I store UUIDs as strings or binary?"
+      },
+      {
+        "type": "p",
+        "text": "Strings are easier to read and debug. Binary storage saves space and can be faster in some databases. Pick based on your database and index needs, and be consistent across services."
+      }
+    ],
+    "relatedTool": "uuid-generator"
+  },
+  "review": {
+    "title_ko": "명령줄, Python, Node.js에서 UUID 생성하기",
+    "summary_ko": [
+      "명령줄에서는 macOS와 대부분의 Linux에서 uuidgen으로 버전 4 UUID를 생성한다고 설명합니다.",
+      "uuidgen 출력은 macOS에서 대문자, Linux에서 소문자일 수 있으며, tr로 소문자 정규화하는 방법과 여러 개를 반복 생성하는 for 루프를 소개합니다.",
+      "Linux 전용인 /proc/sys/kernel/random/uuid 경로를 대안으로 제시하고, macOS에서는 uuidgen을 쓰라고 안내합니다.",
+      "Python에서는 uuid.uuid4()를 str()로 감싸 문자열로 쓰고, .hex와 .urn 변형을 소개합니다. UUID 객체를 문자열과 바로 연결하면 TypeError가 난다고 경고합니다.",
+      "Node.js에서는 crypto.randomUUID()를 require와 ES 모듈 import 두 방식으로 보여주고, 브라우저에서는 보안 컨텍스트(HTTPS 또는 localhost)에서만 동작한다고 설명합니다.",
+      "대량 생성 예제, 버전 4와 v7의 차이, 흔한 실수 목록(Windows에서 uuidgen 미설치, 대소문자 비교, Math.random 사용 등)과 FAQ를 다룹니다."
+    ],
+    "issues": [
+      {
+        "severity": "low",
+        "ko": "\"uuidgen is part of the util-linux package on most Linux distributions\" 문장이 부정확합니다. Debian과 Ubuntu에서는 uuidgen이 util-linux가 아니라 uuid-runtime 패키지에 들어 있고, 글 뒷부분에서도 uuid-runtime을 언급해 서로 모순됩니다.",
+        "en": "On Debian and Ubuntu, uuidgen ships in uuid-runtime, not util-linux. Either say 'util-linux on some distributions, uuid-runtime on Debian and Ubuntu' or drop the package name here so it does not contradict the later install note."
+      }
+    ],
+    "verdict": "ok",
+    "applied": [
+      "'The standard libraries above do not generate v7 directly'라는 문장은 최신 Python에서 사실과 다를 수 있습니다. Python 3.14부터 표준 라이브러리 uuid 모듈에 uuid.uuid7()이 추가되어, 독자가 서드파티 패키지가 필요하다고 오해할 수 있습니다. Python 버전별로 정정하거나 해당 내용을 명시해야 합니다.",
+      "FAQ의 'suitable for identifiers and most tokens-like uses'는 문법적으로 어색합니다.",
+      "'Generating UUIDs is not a secret operation'이라는 문장은 의미가 모호합니다. UUID 생성 자체는 민감하지 않지만, 뒤 문장과 연결하여 테스트 데이터 용도와 비밀 값의 차이를 명확히 쓰는 편이 좋습니다.",
+      "FAQ에서 \"uuidgen ... suitable for identifiers and most token-like uses\"라고 한 부분이 다소 과장되어 있습니다. UUID v4는 122비트 랜덤이지만, 세션 토큰이나 API 키 용도로 권장하기에는 애매하므로 표현을 더 조심스럽게 다듬는 것이 좋습니다."
+    ],
+    "word_count": 943
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 17,
+  "api_calls": 6,
+  "telegram_message_id": 127
+}

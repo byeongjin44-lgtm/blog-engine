@@ -1,0 +1,318 @@
+{
+  "id": "29befc81",
+  "site": "homerivet",
+  "status": "pending",
+  "created": "2026-11-28T05:00:19Z",
+  "topic": {
+    "title": "How much mulch for a 10x20 flower bed?",
+    "keyword": "how much mulch for a 10x20 bed",
+    "related_tool": "mulch-calculator",
+    "calculations": [
+      {
+        "calculator": "mulch-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 10,
+          "depthIn": 3,
+          "bagCuFt": "2"
+        }
+      }
+    ]
+  },
+  "post": {
+    "slug": "how-much-mulch-for-10x20-bed",
+    "title": "How Much Mulch for a 10x20 Bed? Bulk and Bag Amounts",
+    "description": "A 10x20 bed at 3 inches deep needs 1.85 cubic yards of mulch in bulk, or 25 bags of 2 cubic feet. Here is the math and how depth changes the amount.",
+    "body": [
+      {
+        "type": "p",
+        "text": "A 10x20 flower bed at 3 inches deep needs 1.85 cubic yards of mulch if you buy in bulk, or 25 bags if you buy 2 cubic foot bags. Those numbers come from the bed's 200 square feet of area and a 3-inch depth."
+      },
+      {
+        "type": "p",
+        "text": "You can run your own measurements through the [Mulch & Soil Calculator](/mulch-calculator) to get the same kind of answer for any bed. The example below shows how the numbers are built, so you can check the result yourself and see how each input changes the answer."
+      },
+      {
+        "type": "h2",
+        "text": "The inputs for a 10x20 bed"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Bed length: 20 ft",
+          "Bed width: 10 ft",
+          "Depth: 3 in",
+          "Bag size: 2 cu ft"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Multiplying the 20-foot length by the 10-foot width gives 200 square feet of bed area. Multiplying that area by the 3-inch depth, converted to feet, gives a volume of 50 cubic feet. Mulch is sold by volume, so the next step is converting that volume into the units stores use."
+      },
+      {
+        "type": "h2",
+        "text": "Bulk mulch in cubic yards"
+      },
+      {
+        "type": "p",
+        "text": "Bulk mulch is sold by the cubic yard. The calculator uses 324 square feet as the area one cubic yard covers at a depth of one inch. That figure comes from the fact that a cubic yard holds 27 cubic feet, and spread one inch deep (one twelfth of a foot), those 27 cubic feet cover 324 square feet. The calculator divides the bed area by 324 and multiplies by the depth in inches to get the bulk amount."
+      },
+      {
+        "type": "p",
+        "text": "For this bed, the bulk amount is 1.85 cubic yards. The exact figure is a little under that, so a supplier may round an order up to the next increment they sell. Ask whether they deliver in set increments, because a small order may still be billed by the load or by a minimum they offer."
+      },
+      {
+        "type": "h2",
+        "text": "Bagged mulch in 2 cubic foot bags"
+      },
+      {
+        "type": "p",
+        "text": "Bags are sold by their volume in cubic feet. The calculator converts the cubic yard amount back into cubic feet by multiplying by 27, since a cubic yard holds 27 cubic feet. It then divides that volume by the bag size, which is 2 cubic feet here, and rounds up to the next whole bag."
+      },
+      {
+        "type": "p",
+        "text": "For a 10x20 bed at 3 inches, the bag count is 25 bags of 2 cubic feet each. Check the bag volume printed on the product label, because products differ. If your bags are a different size, enter that size into the calculator so the bag count matches the product you plan to buy."
+      },
+      {
+        "type": "h2",
+        "text": "How depth changes the amount"
+      },
+      {
+        "type": "p",
+        "text": "Depth has the biggest effect on how much mulch you buy. The amount you need goes up in direct proportion to depth: if you double the depth, you double the volume, and if you cut the depth in half, you cut the volume in half. The bed area stays the same, so only the depth changes the result."
+      },
+      {
+        "type": "p",
+        "text": "This example uses 3 inches. Enter a different depth into the calculator to see the bulk amount and bag count for your target, and compare the two results before you order."
+      },
+      {
+        "type": "p",
+        "text": "Mulch also settles and breaks down over time, so the depth you spread on day one may look thinner later in the season. The calculator uses only the depth you enter and does not add extra for settling, so decide how much top-up you expect to add each year."
+      },
+      {
+        "type": "h2",
+        "text": "Bulk or bags: which to choose"
+      },
+      {
+        "type": "p",
+        "text": "Bulk mulch suits larger beds or several beds at once, since it is measured in cubic yards. Bags suit small beds, a car trunk, or a yard with no room for a delivery to drop a pile. Compare the prices for the same total volume at the store and at a local supplier before you decide, because prices vary by region and by product."
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Measure the bed length and width in feet.",
+          "Choose a depth in inches, such as 3.",
+          "Enter those numbers into the [Mulch & Soil Calculator](/mulch-calculator) to get the bulk cubic yards and the bag count.",
+          "Check the bag size and coverage printed on the product label, because products differ.",
+          "Buy the bag count or cubic yards the calculator returns."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "If the bed is not a clean rectangle, measure the longest and widest parts and estimate a rectangle that covers the shape. For a more precise area, use the [Square Footage Calculator](/square-footage-calculator) on each section and add the results together."
+      },
+      {
+        "type": "p",
+        "text": "If you are weighing a smaller project, the post [How Much Mulch for 100 Square Feet? Bulk and Bag Amounts](/blog/how-much-mulch-for-100-square-feet) covers a different area. For a raised bed filled with soil instead of mulch, see [How Much Soil for a 4x8 Raised Bed? Cubic Yards and Bags](/blog/how-much-soil-for-4x8-raised-bed)."
+      },
+      {
+        "type": "h2",
+        "text": "FAQ"
+      },
+      {
+        "type": "h3",
+        "text": "Does the calculator account for mulch settling?"
+      },
+      {
+        "type": "p",
+        "text": "No. The calculator uses the depth you enter and does not add extra for settling. If you want the mulch to stay at 3 inches over time, plan to top it up as needed."
+      },
+      {
+        "type": "h3",
+        "text": "Can I use the same numbers for topsoil or compost?"
+      },
+      {
+        "type": "p",
+        "text": "The same volume math works for topsoil and compost, since they are also sold by the cubic yard and in bags. Use the [Mulch & Soil Calculator](/mulch-calculator) with that product's bag size, and check the product label for the coverage it lists, because products differ."
+      },
+      {
+        "type": "h3",
+        "text": "What if my bed is not 10 by 20 feet?"
+      },
+      {
+        "type": "p",
+        "text": "Enter your own length, width, and depth into the [Mulch & Soil Calculator](/mulch-calculator). The formula stays the same, and the bulk amount and bag count will update to match your bed."
+      }
+    ],
+    "relatedTool": "mulch-calculator",
+    "sources": [
+      {
+        "title": "Mississippi State University Extension: Calculate mulch, soil needs for plant beds",
+        "url": "https://extension.msstate.edu/news/southern-gardening/1997/calculate-mulch-soil-needs-for-plant-beds"
+      }
+    ],
+    "calculations": [
+      {
+        "calculator": "mulch-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 10,
+          "depthIn": 3,
+          "bagCuFt": "2"
+        }
+      }
+    ],
+    "_calc_results": [
+      {
+        "calculator": "mulch-calculator",
+        "input": {
+          "lengthFt": 20,
+          "widthFt": 10,
+          "depthIn": 3,
+          "bagCuFt": "2"
+        },
+        "results": [
+          {
+            "key": "cuYd",
+            "label": "Bulk amount",
+            "value": 1.85,
+            "unit": "cu yd",
+            "digits": 2,
+            "primary": true,
+            "number": "1.85",
+            "display": "1.85 cu yd"
+          },
+          {
+            "key": "bags",
+            "label": "Or bags",
+            "value": 25,
+            "unit": "bags",
+            "digits": 0,
+            "primary": true,
+            "number": "25",
+            "display": "25 bags"
+          },
+          {
+            "key": "cuFt",
+            "label": "Volume",
+            "value": 50,
+            "unit": "cu ft",
+            "digits": 1,
+            "primary": false,
+            "number": "50",
+            "display": "50 cu ft"
+          },
+          {
+            "key": "areaSqFt",
+            "label": "Bed area",
+            "value": 200,
+            "unit": "sq ft",
+            "digits": 1,
+            "primary": false,
+            "number": "200",
+            "display": "200 sq ft"
+          }
+        ]
+      }
+    ],
+    "_calc_fields": [
+      {
+        "calculator": "mulch-calculator",
+        "fields": [
+          {
+            "kind": "number",
+            "key": "lengthFt",
+            "label": "Bed length",
+            "unit": "ft",
+            "default": 20,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "widthFt",
+            "label": "Bed width",
+            "unit": "ft",
+            "default": 10,
+            "step": 0.5
+          },
+          {
+            "kind": "number",
+            "key": "depthIn",
+            "label": "Depth",
+            "unit": "in",
+            "default": 3,
+            "step": 0.5
+          },
+          {
+            "kind": "select",
+            "key": "bagCuFt",
+            "label": "Bag size",
+            "default": "2",
+            "options": [
+              {
+                "value": "1.5",
+                "label": "1.5 cu ft"
+              },
+              {
+                "value": "2",
+                "label": "2 cu ft"
+              },
+              {
+                "value": "3",
+                "label": "3 cu ft"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "review": {
+    "title_ko": "10x20 화단에 필요한 멀칭 양은? 벌크와 포대 기준",
+    "summary_ko": [
+      "10x20피트 화단을 3인치 깊이로 덮으려면 벌크 기준 1.85입방야드, 2입방피트 포대 기준 25포대가 필요하다고 설명합니다.",
+      "계산은 화단 면적 200제곱피트와 3인치 깊이에서 시작합니다. 부피는 50입방피트이며, 이를 입방야드 단위로 환산합니다.",
+      "벌크 계산은 입방야드당 324제곱피트(1인치 깊이 기준)라는 환산값을 사용하며, 면적을 324로 나눈 뒤 깊이(인치)를 곱합니다.",
+      "포대 수량은 50입방피트를 포대 크기(2입방피트)로 나누어 25포대로 계산하며, 제품 라벨의 포대 용량을 확인하라고 안내합니다.",
+      "깊이는 필요량에 정비례하며, 멀칭은 시간이 지나며 가라앉으므로 해마다 보충량을 계획하라고 조언합니다.",
+      "벌크와 포대 중 선택하는 기준, 가이드 단계, 정사각형이 아닌 화단 측정법, 관련 계산기 링크와 FAQ를 다룹니다."
+    ],
+    "issues": [
+      {
+        "severity": "high",
+        "ko": "\"The exact figure is a little under that\"(정확한 값은 그보다 약간 적다)는 잘못되었습니다. 50 ÷ 27 ≈ 1.852로, 1.85보다 약간 많습니다.",
+        "en": "The exact bulk figure is 50 ÷ 27 ≈ 1.852, which is slightly above 1.85, not under it. Change to 'a little over'."
+      },
+      {
+        "severity": "high",
+        "ko": "\"324 square feet\" 및 \"multiplying by 27\"에 쓰인 환산값(입방야드당 324제곱피트, 27입방피트)은 계산기 결과가 아니라 글쓴이가 따로 계산·제시한 수치입니다. 값 자체는 맞지만 허용된 수치 목록 밖입니다.",
+        "en": "The figures 324 sq ft per cubic yard at one inch and the 27 cu ft per cubic yard constant are not among the calculator inputs or results. The values are correct, but they are figures the writer introduced, so they need to be sourced or removed."
+      },
+      {
+        "severity": "high",
+        "ko": "\"How Much Mulch for 100 Square Feet?\"라는 관련 글 제목의 \"100 square feet\"는 이 글의 계산 결과가 아닌 수치입니다.",
+        "en": "The related-post title 'How Much Mulch for 100 Square Feet?' contains a quantity (100 sq ft) that is not a calculator input or result for this post."
+      },
+      {
+        "severity": "high",
+        "ko": "\"How Much Soil for a 4x8 Raised Bed?\"라는 관련 글 제목의 \"4x8\" 치수는 이 글의 계산 결과가 아닌 수치입니다.",
+        "en": "The related-post title 'How Much Soil for a 4x8 Raised Bed?' contains dimensions (4x8) that are not calculator inputs or results for this post."
+      }
+    ],
+    "verdict": "fix",
+    "applied": [
+      "'1.5 cubic foot or 3 cubic foot bags'에서 1.5 및 3입방피트 봉투 수치는 계산기 입력도 결과도 아닌 작성자가 임의로 든 수치입니다.",
+      "'Most mulch beds are planned at about 2 to 3 inches'에서 2~3인치는 계산기 결과가 아닌 작성자의 추정치입니다.",
+      "'how much mulch for 100 square feet' 링크 문구의 100평방피트와 'how much soil for a 4x8 raised bed' 링크 문구의 4x8 크기는 계산기 입력이나 결과가 아닌 수치입니다.",
+      "'one cubic yard covers 324 square feet'의 324와 'multiplying by 27'의 27은 올바른 표준 환산값이지만 계산기 결과로 제시된 값은 아닙니다. 그대로 두어도 되지만 출처를 밝히면 좋습니다.",
+      "'the unit cost per volume is usually lower than bags'는 근거 없는 일반화입니다.",
+      "\"1.85 cubic yards\"는 반올림된 값입니다. 실제 값은 약 1.852 큐빅야드인데, 벌크 주문 시 공급업체가 최소 단위로 올림해 청구할 수 있다는 점을 한 줄 덧붙이면 좋겠습니다."
+    ],
+    "word_count": 913
+  },
+  "model": "claude-haiku-5-5",
+  "recovered_from": [],
+  "cost_krw": 16,
+  "api_calls": 6,
+  "telegram_message_id": 128
+}
