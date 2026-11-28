@@ -1,7 +1,7 @@
 {
   "id": "29befc81",
   "site": "homerivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-28T05:00:19Z",
   "topic": {
     "title": "How much mulch for a 10x20 flower bed?",
@@ -265,7 +265,8 @@
           }
         ]
       }
-    ]
+    ],
+    "published": "2026-11-28"
   },
   "review": {
     "title_ko": "10x20 화단에 필요한 멀칭 양은? 벌크와 포대 기준",
@@ -314,5 +315,7 @@
   "recovered_from": [],
   "cost_krw": 16,
   "api_calls": 6,
-  "telegram_message_id": 128
+  "telegram_message_id": 128,
+  "decided": "2026-11-28T05:36:34Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/homerivettools/blob/main/content/blog/how-much-mulch-for-10x20-bed.json"
 }

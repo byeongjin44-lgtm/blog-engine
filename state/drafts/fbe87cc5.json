@@ -1,7 +1,7 @@
 {
   "id": "fbe87cc5",
   "site": "devrivet",
-  "status": "pending",
+  "status": "published",
   "created": "2026-11-28T04:59:08Z",
   "topic": {
     "title": "Generate UUIDs in Bash, Python and Node.js Without Libraries",
@@ -231,7 +231,8 @@
         "text": "Strings are easier to read and debug. Binary storage saves space and can be faster in some databases. Pick based on your database and index needs, and be consistent across services."
       }
     ],
-    "relatedTool": "uuid-generator"
+    "relatedTool": "uuid-generator",
+    "published": "2026-11-28"
   },
   "review": {
     "title_ko": "명령줄, Python, Node.js에서 UUID 생성하기",
@@ -263,5 +264,7 @@
   "recovered_from": [],
   "cost_krw": 17,
   "api_calls": 6,
-  "telegram_message_id": 127
+  "telegram_message_id": 127,
+  "decided": "2026-11-28T05:36:32Z",
+  "published_file": "https://github.com/byeongjin44-lgtm/devrivet/blob/master/content/blog/generate-uuid-command-line-bash-python-nodejs.json"
 }
